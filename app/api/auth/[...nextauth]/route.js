@@ -9,7 +9,8 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@/libs/prismadb';
 import { createUserWithAccount, getUserByEmail } from '@/app/utils/user';
 
-// Validation schema for credentials
+// Validation schema for credentials (not provided in the code snippet)
+// Consider using a validation library like Joi or Yup
 
 const authOptions = {
   adapter: PrismaAdapter(prisma),
@@ -24,7 +25,7 @@ const authOptions = {
     }),
     CredentialsProviders({
       id: 'credentials',
-      name: 'credentials',
+      name: 'Credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
@@ -33,18 +34,18 @@ const authOptions = {
         try {
           const user = await getUserByEmail(credentials.email);
           if (!user) {
-            return Promise.reject(new Error('No user found with this email.'));
+            throw new Error('No user found with this email.');
           }
           const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
             user.password
           );
           if (!isPasswordCorrect) {
-            return Promise.reject(new Error('Incorrect password.'));
+            throw new Error('Incorrect password.');
           }
           return user;
         } catch (error) {
-          console.error(error);
+          console.error('Error during user authorization:', error);
           throw new Error('Failed to login user');
         }
       },
@@ -53,64 +54,48 @@ const authOptions = {
 
   callbacks: {
     async signIn({ user, account }) {
-      console.log(user, account);
+      console.log('User:', user);
+      console.log('Account:', account);
+
       if (account.provider === 'credentials') {
         return true;
       }
-      if (account.provider === 'google' ) {
-        const { email, name} = user;
-        try {
-          const userExists = await getUserByEmail(email);
-          if (!userExists) {
-            const res = await fetch('http://localhost:3000/api/register', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ name, email,image }),
-            });
-            if (res.ok) {
-              return user;
-            }
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      if (account.provider === 'github') {
+
+      if (['google', 'github'].includes(account.provider)) {
         const { email, name, image } = user;
         try {
-          
           const userExists = await getUserByEmail(email);
-          
           if (!userExists) {
             const res = await fetch('http://localhost:3000/api/register', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ name, email,image }),
+              body: JSON.stringify({ name, email, image }),
             });
             if (res.ok) {
-              return user;
+              return true;
+            } else {
+              throw new Error('Failed to register user via OAuth');
             }
           }
         } catch (error) {
-          console.log(error);
+          console.error('Error during OAuth sign-in:', error);
+          return false;
         }
       }
-
-      return user;
+      return true;
     },
   },
   session: {
     strategy: 'jwt',
   },
   pages: {
-    singIn: '/login',
+    signIn: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
   database: process.env.DATABASE_URL,
 };
+
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

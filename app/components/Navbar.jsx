@@ -5,8 +5,9 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 const Navbar = () => {
-  const { status, data } = useSession();
+  const { status, data: session } = useSession();
   const [show, setShow] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const popupRef = useRef(null);
 
   const handleClickOutside = (event) => {
@@ -25,14 +26,37 @@ const Navbar = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [show]);
+
   const getInitial = (name) => {
     return name ? name.charAt(0).toUpperCase() : '';
   };
+
   return (
     <nav className="px-5 max-w-6xl mx-auto border-b">
       <div className="container mx-auto py-4 flex justify-between items-center">
         <h1 className="text-2xl font-bold text-gray-500">RapidTutorials</h1>
-        <div className="lg:flex hidden items-center space-x-2 bg-white py-1 px-2 rounded-full">
+        <div className="lg:hidden flex items-center">
+          <button
+            className="text-gray-500 hover:text-gray-700 focus:outline-none"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <svg
+              className="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="hidden lg:flex items-center space-x-2 bg-white py-1 px-2 rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 text-gray-600 cursor-pointer"
@@ -47,9 +71,13 @@ const Navbar = () => {
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
-          <input className="outline-none" type="text" placeholder="Search" />
+          <input
+            className="outline-none bg-transparent"
+            type="text"
+            placeholder="Search"
+          />
         </div>
-        <div className="flex space-x-10">
+        <div className="hidden lg:flex space-x-10 items-center">
           <div className="flex items-center space-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +93,7 @@ const Navbar = () => {
                 d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
               />
             </svg>
-            <Link href="/blog" className="text-gray-500">
+            <Link href="/blogs" className="text-gray-500">
               Blogs
             </Link>
           </div>
@@ -104,10 +132,10 @@ const Navbar = () => {
                   className="flex w-full justify-center items-center rounded-full px-2 py-2 ring-1 ring-pink-500 ring-inset border bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                   onClick={() => setShow(!show)}
                 >
-                  <span className="mr-2">{data?.user?.name}</span>
-                  {data?.user?.image ? (
+                  <span className="mr-2">{session?.user?.name}</span>
+                  {session?.user?.image ? (
                     <Image
-                      src={data?.user?.image}
+                      src={session?.user?.image}
                       width={25}
                       height={25}
                       alt="Profile Image"
@@ -115,7 +143,7 @@ const Navbar = () => {
                     />
                   ) : (
                     <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
-                      {getInitial(data?.user?.name)}
+                      {getInitial(session?.user?.name)}
                     </div>
                   )}
                 </button>
@@ -129,13 +157,13 @@ const Navbar = () => {
                   tabIndex="-1"
                 >
                   <div className="py-1" role="none">
-                    {data && (
+                    {session && (
                       <div className="flex flex-col">
                         <span className="block font-bold px-4 py-2 text-sm text-gray-700">
-                          {data?.user?.name}
+                          {session?.user?.name}
                         </span>
                         <span className="block text-sm px-4 text-gray-700">
-                          {data?.user?.email}
+                          {session?.user?.email}
                         </span>
                       </div>
                     )}
@@ -184,6 +212,59 @@ const Navbar = () => {
           )}
         </div>
       </div>
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden bg-white border-t">
+          <div className="p-4">
+            <Link href="/blogs" className="block py-2 text-gray-500">
+              Blogs
+            </Link>
+            <Link href="/dashboard" className="block py-2 text-gray-500">
+              Dashboard
+            </Link>
+            <Link href="/create-post" className="block py-2 text-gray-500">
+              Create Post
+            </Link>
+            {status == 'authenticated' && (
+              <>
+                <div className="flex flex-col py-2">
+                  <span className="font-bold text-gray-700">
+                    {session?.user?.name}
+                  </span>
+                  <span className="text-sm text-gray-700">
+                    {session?.user?.email}
+                  </span>
+                </div>
+                <div className="py-2">
+                  <button
+                    type="submit"
+                    className="block w-full text-center font-bold text-white rounded-md bg-slate-500 hover:bg-slate-800 py-2 text-sm"
+                    onClick={() => signOut()}
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </>
+            )}
+            {status !== 'authenticated' && (
+              <div className="flex items-center gap-2 py-2">
+                <Link
+                  className="block w-full text-center font-bold text-gray-700 bg-gray-50 hover:bg-gray-100 py-2 rounded-md"
+                  href="/login"
+                >
+                  Login
+                </Link>
+                <Link
+                  className="block w-full text-center font-bold text-gray-700 bg-gray-50 hover:bg-gray-100 py-2 rounded-md"
+                  href="/register"
+                >
+                  Register
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

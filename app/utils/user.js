@@ -1,5 +1,5 @@
 import prisma from '@/libs/prismadb';
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function createUserWithAccount({ name, email, password }) {
   try {
@@ -8,17 +8,17 @@ export async function createUserWithAccount({ name, email, password }) {
         name,
         email,
         password,
-        // accounts: {
-        //   create: {
-        //     type: 'credentials',
-        //     provider: 'credentials',
-        //     providerAccountId: uuidv4(),
-        //   },
-        // },
+        accounts: {
+          create: {
+            type: 'credentials',
+            provider: 'credentials',
+            providerAccountId: uuidv4(),
+          },
+        },
       },
-      // include:{
-      //   accounts:true
-      // }
+      include:{
+        accounts:true
+      }
     });
   } catch (error) {
     console.log('Error creating user', error);
@@ -29,6 +29,9 @@ export async function getUserByEmail(email) {
   try {
     const user = await prisma.user.findUnique({
       where: { email },
+      include: {
+        accounts: true,
+      },
     });
     return user;
   } catch (error) {

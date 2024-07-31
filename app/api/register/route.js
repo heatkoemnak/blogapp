@@ -6,29 +6,10 @@ import { NextResponse } from 'next/server';
 import { createUserWithAccount, getUserByEmail } from '@/app/utils/user';
 export async function POST(req) {
   try {
-    // Parse the request body
     const body = await req.json();
     const { name, email,image, password } = body;
-
-    // Basic validation
-    // if (!name || !email || !password || !confirmPassword) {
-    //   return NextResponse.json({ errors: { general: 'All fields are required' } }, { status: 500 });
-    // }
-    // Validate the user data
     await userValidate.validate(body, { abortEarly: false });
 
-    // Connect to MongoDB
-    // await connectMongoDB();
-
-    // Check if user already exists
-    // const userExists = await User.findOne({ email });
-    // if (userExists) {
-    //   return NextResponse.json(
-    //     { message: 'User already exists.' },
-    //     { status: 400 }
-    //   );
-    // }
-    // Check if user already exists
     const userExists = await getUserByEmail(email);
     if (userExists) {
       return NextResponse.json(

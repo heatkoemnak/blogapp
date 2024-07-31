@@ -49,7 +49,7 @@ const Login = () => {
 
   useEffect(() => {
     if (status === 'authenticated' && data) {
-      redirect('/blog');
+      redirect('/blogs');
     }
   }, [status, data]);
 

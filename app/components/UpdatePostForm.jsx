@@ -6,33 +6,23 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import Image from 'next/image';
-const CreatePostForm = () => {
+
+const UpdatePostForm = ({ post }) => {
+    console.log(post)
   const { data: session } = useSession();
   const router = useRouter();
-
-  const [links, setLinks] = useState([]);
+  const [title, setTitle] = useState(post?.title);
+  const [categoryId, setCategoryId] = useState(post?.categoryId);
+  const [links, setLinks] = useState(post?.links || []);
   const [linkInput, setLinkInput] = useState('');
   const [email, setEmail] = useState(session?.user?.email);
-  const [title, setTitle] = useState('');
-  const [image, setImage] = useState('');
-  const [body, setBody] = useState('');
-  const [category, setCategory] = useState('');
+  const [image, setImage] = useState(post?.image);
+  const [body, setBody] = useState(post?.body);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [imageSrc, setImageSrc] = useState('');
-
-  const date = new Date();
-
-  const options = {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  };
-
-  const formattedDate = date.toLocaleDateString('en-US', options);
-  console.log(formattedDate);
-  // const formattedDate = moment().format('MMMM Do YYYY');
+  const [imageSrc, setImageSrc] = useState(post.image);
+  const formattedDate = moment().format('MMMM Do YYYY');
 
   const handleFileChange = (e) => {
     const img = e.target.files[0];
@@ -46,47 +36,55 @@ const CreatePostForm = () => {
       setImage(img);
     });
   };
+
   const submitPost = async (event) => {
     event.preventDefault();
     setLoading(true);
-    const formData = new FormData();
-    formData.append('file', image);
-    formData.append(
-      'upload_preset',
-      process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
-    );
 
-    try {
-      const uploadResponse = await fetch(
-        `https://api.cloudinary.com/v1_1/dakqa3htw/image/upload`,
-        {
+    let uploadedImageData;
+    if (image && image !== post.image) {
+      const formData = new FormData();
+      formData.append('file', image);
+      formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME);
+
+      try {
+        const uploadResponse = await fetch(`https://api.cloudinary.com/v1_1/dakqa3htw/image/upload`, {
           method: 'POST',
           body: formData,
-        }
-      );
-      const uploadedImageData = await uploadResponse.json();
-      console.log(uploadedImageData)
-      const response = await fetch('/api/blog', {
-        method: 'POST',
+        });
+        uploadedImageData = await uploadResponse.json();
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+        return;
+      }
+    }
+
+    try {
+      const response = await fetch(`/api/blog/${post.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
           title,
           body,
-          image: uploadedImageData.secure_url,
+          image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
           authorEmail: email,
-          categoryId: category,
+          categoryId,
           links,
           publishedAt: formattedDate,
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to upload image');
+        throw new Error('Failed to update post');
       }
-      if (response.ok) {
-        router.push('/blogs');
-      }
+
+      router.push('/blogs');
     } catch (error) {
       console.log(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -111,16 +109,18 @@ const CreatePostForm = () => {
   const addLink = (e) => {
     e.preventDefault();
     if (linkInput.trim() !== '') {
-      setLinks((link) => [...link, linkInput]);
+      setLinks((prevLinks) => [...prevLinks, linkInput]);
       setLinkInput('');
     }
   };
+
   const removeLink = (index) => {
-    setLinks((prev) => prev.filter((l, i) => i !== index));
+    setLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
   };
+
   return (
     <div>
-      <form>
+      <form onSubmit={submitPost}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-5 grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
@@ -128,6 +128,7 @@ const CreatePostForm = () => {
                 <div className="mt-1">
                   <input
                     type="text"
+                    value={title}
                     placeholder="Title"
                     onChange={(e) => setTitle(e.target.value)}
                     className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -147,50 +148,45 @@ const CreatePostForm = () => {
               </div>
               <div className="col-span-full">
                 {links &&
-                  links.map((link, i) => {
-                    return (
-                      <div key={i} className="flex items-center gap-2">
+                  links.map((link, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-4"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+                        />
+                      </svg>
+                      <Link href={link} className="px-2 py-1 rounded text-purple-700">
+                        {link}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => removeLink(i)}
+                        className="text-red-500"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          className="size-4"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                          className="size-4 text-red-600 cursor-pointer"
                         >
                           <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+                            fillRule="evenodd"
+                            d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"
+                            clipRule="evenodd"
                           />
                         </svg>
-                        <Link
-                          href={link}
-                          className="px-2 py-1 rounded text-purple-700"
-                        >
-                          {link}
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => removeLink(i)}
-                          className="text-red-500"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            className="size-4 text-red-600 cursor-pointer"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    );
-                  })}
+                      </button>
+                    </div>
+                  ))}
               </div>
               <div className="sm:col-span-full">
                 <div className="mt-1 flex items-center gap-2">
@@ -213,11 +209,7 @@ const CreatePostForm = () => {
                       stroke="currentColor"
                       className="size-4"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 4.5v15m7.5-7.5h-15"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
                     Add
                   </button>
@@ -226,8 +218,8 @@ const CreatePostForm = () => {
               <div className="sm:col-span-full">
                 <div className="relative mt-2 h-10 w-72 min-w-[200px]">
                   <select
-                    onChange={(e) => setCategory(e.target.value)}
-                    value={category}
+                    onChange={(e) => setCategoryId(e.target.value)}
+                    value={categoryId}
                     className="peer h-full w-full rounded-[7px] border border-purple-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-2 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   >
                     {categories.map((category) => (
@@ -255,10 +247,7 @@ const CreatePostForm = () => {
                     </div>
                   ) : (
                     <div className="text-center">
-                      <PhotoIcon
-                        aria-hidden="true"
-                        className="mx-auto h-12 w-12 text-gray-300"
-                      />
+                      <PhotoIcon aria-hidden="true" className="mx-auto h-12 w-12 text-gray-300" />
                       <div className="mt-4 flex text-sm leading-6 text-gray-600">
                         <label
                           htmlFor="file-upload"
@@ -275,27 +264,21 @@ const CreatePostForm = () => {
                         </label>
                         <p className="pl-1">or drag and drop</p>
                       </div>
-                      <p className="text-xs leading-5 text-gray-600">
-                        PNG, JPG, GIF up to 10MB
-                      </p>
+                      <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
                     </div>
                   )}
                 </div>
               </div>
             </div>
             <div className="mt-4 flex items-center justify-end gap-x-6">
-              <button
-                type="button"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
+              <button type="button" onClick={() => router.push('/posts')} className="text-sm font-semibold leading-6 text-gray-900">
                 Cancel
               </button>
               <button
                 type="submit"
-                onClick={submitPost}
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Create
+                Save
               </button>
             </div>
           </div>
@@ -305,4 +288,4 @@ const CreatePostForm = () => {
   );
 };
 
-export default CreatePostForm;
+export default UpdatePostForm;

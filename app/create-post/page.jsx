@@ -1,19 +1,39 @@
 'use client';
 import CreatePostForm from '../components/CreatePostForm';
-import { useSession } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 import { useEffect } from 'react';
-import { redirect } from 'next/navigation';
 const CreatePost = () => {
-  const { status, data } = useSession();
+  const { status, data: session } = useSession();
+
+
+
   useEffect(() => {
-    if (status !== 'authenticated' && !data) {
-      redirect('/login');
+    if (status === 'unauthenticated') {
+      signIn();
     }
-  }, [status, data]);
+  }, [status]);
+
+
+
+  
+
+  if (status === 'loading') {
+    return (
+      <div className="flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-blue-500"></div>
+      </div>
+    );
+  }
   return (
     <div className="max-w-3xl mx-auto">
       <h2 className="font-bold">Create Post</h2>
-      <CreatePostForm />
+      {session ? (
+        <CreatePostForm />
+      ) : (
+        <div className="flex items-center justify-center">
+          <div className="w-16 h-16 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-blue-500"></div>
+        </div>
+      )}
     </div>
   );
 };
