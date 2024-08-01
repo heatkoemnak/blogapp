@@ -4,10 +4,12 @@ import styles from '@/app/globals.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import Comment from './Comment';
 import Comments from './Comments';
+import { useRouter } from 'next/navigation';
+import { fetchPosts } from '../utils/api';
 
 const Post = ({ post }) => {
+  const router = useRouter();
   const { data: session } = useSession();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,9 +17,9 @@ const Post = ({ post }) => {
   const [isExpanded, setIsExpanded] = useState(false); // State for toggling text display
 
   const deletePost = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this post?')) {
-      return;
-    }
+    // if (!window.confirm('Are you sure you want to delete this post?')) {
+    //   return;
+    // }
     try {
       setLoading(true);
       const response = await fetch(`/api/blog/${id}`, {
@@ -26,11 +28,10 @@ const Post = ({ post }) => {
       if (!response.ok) {
         throw new Error('Failed to delete the post');
       }
-      // If you have a list of posts, remove the deleted post from the list here
-      // setPosts((prevPosts) => prevPosts.filter((p) => p.id !== id));
+      await fetchPosts();
     } catch (error) {
-      console.error(error);
-      setError(error.message);r                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       1
+      console.log(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -50,26 +51,32 @@ const Post = ({ post }) => {
               {post?.publishedAt}
             </div>
             <div className="relative">
-              <Link href={`/blogs/${post.id}`}>
-                {post.image ? (
-                  <Image
-                    src={post.image}
-                    className="w-full max-w-full min-w-full"
-                    alt="Post Image"
-                    width={1200}
-                    height={750}
-                    quality={100}
-                  />
-                ) : (
-                  <Image
-                    src={`/youtube-thumbnail.png`}
-                    alt="Post Image"
-                    className={styles.postImage}
-                    width={500}
-                    height={200}
-                  />
-                )}
-              </Link>
+              <div className="max-w-2xl mx-auto">
+                <Link href={`/blogs/${post.id}`}>
+                  {post.image ? (
+                    <Image
+                      src={post.image}
+                      className="w-full max-w-full min-w-full"
+                      alt="Post Image"
+                      width={1200}
+                      height={750}
+                      quality={100}
+                      placeholder="blur"
+                      blurDataURL={post?.image}
+                      // layout="responsive"
+                      objectFit="cover"
+                    />
+                  ) : (
+                    <Image
+                      src={`/youtube-thumbnail.png`}
+                      alt="Post Image"
+                      className={styles.postImage}
+                      width={500}
+                      height={200}
+                    />
+                  )}
+                </Link>
+              </div>
               <Link
                 href={`/blogs/category/${post.category.id}`}
                 className="absolute top-4 left-4 text-white bg-slate-800 rounded-full py-1 px-2 text-xs"
@@ -96,7 +103,7 @@ const Post = ({ post }) => {
                     </svg>
                   </div>
                   <Link
-                    href={`blogs/update/${post.id}`}
+                    href={`/blogs/update/${post.id}`}
                     className="cursor-pointer text-white bg-blue-500 p-1 rounded-full hover:bg-blue-700"
                   >
                     <svg
@@ -124,39 +131,57 @@ const Post = ({ post }) => {
             </p>
           </div>
           {showComment && <Comments post={post} />}
-          <div className="flex items-center mt-5">
-            <span className="mr-3 inline-flex items-center cursor-pointer">
+          <div className="flex items-center justify-between mt-5">
+            <div>
+              <span className="mr-3 inline-flex items-center cursor-pointer">
+                <svg
+                  className="fill-heart text-gray-700 inline-block h-7 w-7 heart"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+              </span>
+              <span
+                className="mr-3 inline-flex items-center cursor-pointer"
+                onClick={() => setShowComment(!showComment)}
+              >
+                <svg
+                  className="text-gray-700 inline-block h-7 w-7"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <span className="flex justify-end">
               <svg
-                className="fill-heart text-gray-700 inline-block h-7 w-7 heart"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
+                strokeWidth={1.5}
                 stroke="currentColor"
+                className="size-6"
               >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
-            </span>
-            <span
-              className="mr-3 inline-flex items-center cursor-pointer"
-              onClick={() => setShowComment(!showComment)}
-            >
-              <svg
-                className="text-gray-700 inline-block h-7 w-7"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
                 />
               </svg>
             </span>
@@ -165,7 +190,10 @@ const Post = ({ post }) => {
             className="text-gray-600 text-sm font-bold cursor-pointer"
             onClick={() => setShowComment(!showComment)}
           >
-            2344 Likes {post?.comments?.length} Comments{' '}
+            2344 Likes {post?.comments?.length}
+            <span className="ml-2">
+              {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
+            </span>
           </span>
         </div>
       </div>

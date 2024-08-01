@@ -6,11 +6,13 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import Image from 'next/image';
-
+import { UploadImage,submitPost } from '../utils/api';
+import { useBlogContext } from '../context/BlogProvider';
 const UpdatePostForm = ({ post }) => {
-    console.log(post)
+  console.log(post);
   const { data: session } = useSession();
   const router = useRouter();
+  const { categories, setCategories } = useBlogContext();
   const [title, setTitle] = useState(post?.title);
   const [categoryId, setCategoryId] = useState(post?.categoryId);
   const [links, setLinks] = useState(post?.links || []);
@@ -18,7 +20,6 @@ const UpdatePostForm = ({ post }) => {
   const [email, setEmail] = useState(session?.user?.email);
   const [image, setImage] = useState(post?.image);
   const [body, setBody] = useState(post?.body);
-  const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState(post.image);
@@ -37,7 +38,7 @@ const UpdatePostForm = ({ post }) => {
     });
   };
 
-  const submitPost = async (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
 
@@ -45,66 +46,26 @@ const UpdatePostForm = ({ post }) => {
     if (image && image !== post.image) {
       const formData = new FormData();
       formData.append('file', image);
-      formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME);
-
-      try {
-        const uploadResponse = await fetch(`https://api.cloudinary.com/v1_1/dakqa3htw/image/upload`, {
-          method: 'POST',
-          body: formData,
-        });
-        uploadedImageData = await uploadResponse.json();
-      } catch (error) {
-        console.log(error);
-        setLoading(false);
-        return;
-      }
+      formData.append(
+        'upload_preset',
+        process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
+      );
+      uploadedImageData = await uploadImage(formData);
     }
 
-    try {
-      const response = await fetch(`/api/blog/${post.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title,
-          body,
-          image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
-          authorEmail: email,
-          categoryId,
-          links,
-          publishedAt: formattedDate,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update post');
-      }
-
-      router.push('/blogs');
-    } catch (error) {
-      console.log(error);
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
+    await submitPost({
+      method:'PUT',
+      postId:post.id,
+      title,
+      body,
+      image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
+      authorEmail: email,
+      categoryId,
+      links,
+      publishedAt: formattedDate,
+    });
+    router.push('/blogs');
   };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('/api/categories');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-    fetchCategories();
-  }, []);
 
   const addLink = (e) => {
     e.preventDefault();
@@ -120,7 +81,7 @@ const UpdatePostForm = ({ post }) => {
 
   return (
     <div>
-      <form onSubmit={submitPost}>
+      <form onSubmit={submitHandler}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-5 grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
@@ -164,7 +125,10 @@ const UpdatePostForm = ({ post }) => {
                           d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
                         />
                       </svg>
-                      <Link href={link} className="px-2 py-1 rounded text-purple-700">
+                      <Link
+                        href={link}
+                        className="px-2 py-1 rounded text-purple-700"
+                      >
                         {link}
                       </Link>
                       <button
@@ -209,7 +173,11 @@ const UpdatePostForm = ({ post }) => {
                       stroke="currentColor"
                       className="size-4"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                      />
                     </svg>
                     Add
                   </button>
@@ -247,7 +215,10 @@ const UpdatePostForm = ({ post }) => {
                     </div>
                   ) : (
                     <div className="text-center">
-                      <PhotoIcon aria-hidden="true" className="mx-auto h-12 w-12 text-gray-300" />
+                      <PhotoIcon
+                        aria-hidden="true"
+                        className="mx-auto h-12 w-12 text-gray-300"
+                      />
                       <div className="mt-4 flex text-sm leading-6 text-gray-600">
                         <label
                           htmlFor="file-upload"
@@ -264,14 +235,20 @@ const UpdatePostForm = ({ post }) => {
                         </label>
                         <p className="pl-1">or drag and drop</p>
                       </div>
-                      <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                      <p className="text-xs leading-5 text-gray-600">
+                        PNG, JPG, GIF up to 10MB
+                      </p>
                     </div>
                   )}
                 </div>
               </div>
             </div>
             <div className="mt-4 flex items-center justify-end gap-x-6">
-              <button type="button" onClick={() => router.push('/posts')} className="text-sm font-semibold leading-6 text-gray-900">
+              <button
+                type="button"
+                onClick={() => router.push('/posts')}
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
                 Cancel
               </button>
               <button

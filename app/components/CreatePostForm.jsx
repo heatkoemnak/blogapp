@@ -6,19 +6,22 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import Image from 'next/image';
+import { useBlogContext } from '../context/BlogProvider';
+import LoadingSpinner from './LoadingSpinner';
+import Error from './Error';
+import { submitPost, uploadImage } from '../utils/api';
 const CreatePostForm = () => {
   const { data: session } = useSession();
   const router = useRouter();
-
+  const { categories } = useBlogContext();
   const [links, setLinks] = useState([]);
   const [linkInput, setLinkInput] = useState('');
   const [email, setEmail] = useState(session?.user?.email);
   const [title, setTitle] = useState('');
   const [image, setImage] = useState('');
   const [body, setBody] = useState('');
-  const [category, setCategory] = useState('');
-  const [categories, setCategories] = useState([]);
-  const [error, setError] = useState(null);
+  const [categoryId, setCategoryId] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
 
@@ -31,8 +34,6 @@ const CreatePostForm = () => {
   };
 
   const formattedDate = date.toLocaleDateString('en-US', options);
-  console.log(formattedDate);
-  // const formattedDate = moment().format('MMMM Do YYYY');
 
   const handleFileChange = (e) => {
     const img = e.target.files[0];
@@ -46,67 +47,31 @@ const CreatePostForm = () => {
       setImage(img);
     });
   };
-  const submitPost = async (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    let uploadedImageData;
     const formData = new FormData();
     formData.append('file', image);
     formData.append(
       'upload_preset',
       process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
     );
-
-    try {
-      const uploadResponse = await fetch(
-        `https://api.cloudinary.com/v1_1/dakqa3htw/image/upload`,
-        {
-          method: 'POST',
-          body: formData,
-        }
-      );
-      const uploadedImageData = await uploadResponse.json();
-      console.log(uploadedImageData)
-      const response = await fetch('/api/blog', {
-        method: 'POST',
-        body: JSON.stringify({
-          title,
-          body,
-          image: uploadedImageData.secure_url,
-          authorEmail: email,
-          categoryId: category,
-          links,
-          publishedAt: formattedDate,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to upload image');
-      }
-      if (response.ok) {
-        router.push('/blogs');
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    uploadedImageData = await uploadImage(formData);
+    await submitPost({
+      method: 'POST',
+      postId: '',
+      title,
+      body,
+      image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
+      authorEmail: email,
+      categoryId,
+      links,
+      publishedAt: formattedDate,
+    });
+    router.push('/blogs');
   };
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('/api/categories');
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setCategories(data);
-      } catch (error) {
-        setError(error.message);
-      }
-    };
-    fetchCategories();
-  }, []);
 
   const addLink = (e) => {
     e.preventDefault();
@@ -118,9 +83,15 @@ const CreatePostForm = () => {
   const removeLink = (index) => {
     setLinks((prev) => prev.filter((l, i) => i !== index));
   };
+  if (error) {
+    return <Error error={error} />;
+  }
+  if (loading) {
+    return <LoadingSpinner />;
+  }
   return (
     <div>
-      <form>
+      <form onSubmit={submitHandler}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-5 grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
@@ -226,8 +197,8 @@ const CreatePostForm = () => {
               <div className="sm:col-span-full">
                 <div className="relative mt-2 h-10 w-72 min-w-[200px]">
                   <select
-                    onChange={(e) => setCategory(e.target.value)}
-                    value={category}
+                    onChange={(e) => setCategoryId(e.target.value)}
+                    value={categoryId}
                     className="peer h-full w-full rounded-[7px] border border-purple-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-2 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   >
                     {categories.map((category) => (
@@ -292,7 +263,6 @@ const CreatePostForm = () => {
               </button>
               <button
                 type="submit"
-                onClick={submitPost}
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Create

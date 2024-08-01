@@ -3,6 +3,7 @@ import './globals.css';
 import AuthProvider from './components/AuthProvider/AuthProvider';
 import { getServerSession } from 'next-auth';
 import Navbar from './components/Navbar';
+import { BlogProvider } from './context/BlogProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,17 +14,17 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession();
-  console.log(session);
 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider session={session}>
-          <Navbar />
-          <div className="max-w-6xl mx-auto px-5 py-5 ">{children}</div>
-        </AuthProvider>
+        <BlogProvider>
+          <AuthProvider session={session}>
+            <Navbar />
+            <div className="max-w-6xl mx-auto px-5 py-5 ">{children}</div>
+          </AuthProvider>
+        </BlogProvider>
       </body>
     </html>
   );
 }
-

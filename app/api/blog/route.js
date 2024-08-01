@@ -3,7 +3,8 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   try {
-    const { title, body, image, authorEmail, categoryId, links, publishedAt } = await request.json();
+    const { title, body, image, authorEmail, categoryId, links, publishedAt } =
+      await request.json();
 
     const newPost = await prisma.post.create({
       data: {
@@ -20,7 +21,10 @@ export async function POST(request) {
     return NextResponse.json(newPost, { status: 201 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: 'Something went wrong' }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Something went wrong' },
+      { status: 500 }
+    );
   }
 }
 export async function GET() {
@@ -40,6 +44,9 @@ export async function GET() {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
     if (!posts) {
       throw new Error('Post not found .');
@@ -56,7 +63,8 @@ export async function GET() {
 }
 export async function PUT(request, { params }) {
   try {
-    const { title, body, image, authorEmail, categoryId, links, publishedAt } = await request.json();
+    const { title, body, image, authorEmail, categoryId, links, publishedAt } =
+      await request.json();
     const { id } = params;
 
     const updatedPost = await prisma.post.update({
@@ -75,7 +83,10 @@ export async function PUT(request, { params }) {
     return NextResponse.json(updatedPost, { status: 200 });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: 'Something went wrong' }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Something went wrong' },
+      { status: 500 }
+    );
   }
 }
 export async function DELETE(request, { params }) {
@@ -86,9 +97,15 @@ export async function DELETE(request, { params }) {
       where: { id: id },
     });
 
-    return NextResponse.json({ message: 'Post deleted successfully' }, { status: 200 });
+    return NextResponse.json(
+      { message: 'Post deleted successfully' },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: 'Something went wrong' }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Something went wrong' },
+      { status: 500 }
+    );
   }
 }
