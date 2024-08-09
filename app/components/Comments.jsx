@@ -9,7 +9,6 @@ const Comments = ({ post }) => {
   const { data: session } = useSession();
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState(post?.comments || []);
-  console.log(comments);
 
   useEffect(() => {
     setComments(post.comments || []);
