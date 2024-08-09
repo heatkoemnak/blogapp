@@ -53,20 +53,20 @@ const Post = ({ post }) => {
             </div>
             <div className="relative">
               <div className="max-w-full mx-auto">
-              <Link href={`/blogs/${post.id}`}>
-                <Image
-                  src={post.image || '/youtube-thumbnail.png'}
-                  className="w-full max-h-[550px] object-cover" // Ensures the image covers the container
-                  alt="Post Image"
-                  width={1200}
-                  height={550}
-                  quality={100}
-                  placeholder="blur"
-                  layout="responsive"
-                  loading="lazy"
-                  blurDataURL={post?.image}
-                />
-              </Link>
+                <Link href={`/blogs/${post.id}`}>
+                  <Image
+                    src={post?.image ? post?.image : '/youtube-thumbnail.png'}
+                    className="w-full max-h-[550px] object-cover" // Ensures the image covers the container
+                    alt="Post Image"
+                    width={1200}
+                    height={550}
+                    quality={100}
+                    placeholder="blur"
+                    layout="responsive"
+                    loading="lazy"
+                    blurDataURL={post?.image}
+                  />
+                </Link>
               </div>
               <Link
                 href={`/blogs/category/${post.category.id}`}
