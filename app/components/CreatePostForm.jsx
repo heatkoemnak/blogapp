@@ -1,15 +1,14 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import moment from 'moment';
 import Image from 'next/image';
 import { useBlogContext } from '../context/BlogProvider';
 import LoadingSpinner from './LoadingSpinner';
 import Error from './Error';
-import { fetchPosts, submitPost, uploadImage } from '../utils/api';
+import {  submitPost, uploadImage } from '../utils/api';
 const CreatePostForm = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -258,12 +257,16 @@ const CreatePostForm = () => {
               </div>
             </div>
             <div className="mt-4 flex items-center justify-end gap-x-6">
+              <Link href={'/blogs'}>
+              
+              
               <button
                 type="button"
                 className="text-sm font-semibold leading-6 text-gray-900"
               >
                 Cancel
               </button>
+              </Link>
               <button
                 type="submit"
                 className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

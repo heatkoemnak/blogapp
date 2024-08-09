@@ -44,11 +44,12 @@ const Post = ({ post }) => {
 
   return (
     <>
-      <div className="bg-white overflow-hidden shadow-none border px-5 py-5">
+      <div className="bg-white overflow-hidden shadow-none border px-0 py-5">
         <div className="flex flex-col min-w-full">
           <div className="relative col-span-2 w-full">
-            <div className="mb-2">
-              Posted by: <span className="font-bold">{post?.author?.name}</span>{' '}
+            <div className="mb-2 ml-2">
+              Posted by:{' '}
+              <span className="font-bold ">{post?.author?.name}</span>{' '}
               {post?.publishedAt}
             </div>
             <div className="relative">
@@ -111,24 +112,26 @@ const Post = ({ post }) => {
                 </div>
               )}
             </div>
-            <h1 className="font-bold py-2">{post.title}</h1>
-            <p>
-              {isExpanded ? post.body : post.body.substring(0, 250) + '...'}{' '}
-              <span
-                onClick={toggleText}
-                className="text-blue-500 cursor-pointer"
-              >
-                {isExpanded ? 'Show Less' : 'Show More'}
-              </span>
-            </p>
+            <div className="ml-2">
+              <h1 className="font-bold py-2">{post.title}</h1>
+              <p>
+                {isExpanded ? post.body : post.body.substring(0, 250) + '...'}{' '}
+                <span
+                  onClick={toggleText}
+                  className="text-blue-500 cursor-pointer"
+                >
+                  {isExpanded ? 'Show Less' : 'Show More'}
+                </span>
+              </p>
+            </div>
           </div>
           {showComment && <Comments post={post} />}
-          <div className="flex items-center justify-between mt-5">
+          <div className="flex items-center justify-between mt-5 mx-2">
             <span
               className="flex justify-end text-gray-600 text-sm font-bold cursor-pointer "
               onClick={() => setShowComment(!showComment)}
             >
-              {post?.comments?.length}
+              {post?.comments &&post?.comments?.length}
               <span className="ml-2">
                 {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
               </span>
