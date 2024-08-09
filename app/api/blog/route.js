@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   try {
-    const { title, body, image, authorEmail, categoryId, links, publishedAt } =
+    const { title, body, image,public_id, authorEmail, categoryId, links, publishedAt } =
       await request.json();
 
     const newPost = await prisma.post.create({
@@ -11,6 +11,7 @@ export async function POST(request) {
         title,
         body,
         image,
+        public_id,
         authorEmail,
         categoryId,
         links,
@@ -31,11 +32,23 @@ export async function GET() {
   try {
     const posts = await prisma.post.findMany({
       include: {
-        author: true,
+        author: {
+          select: {
+            id:true,
+            name: true,
+            image: true,
+            email:true
+          },
+        },
         category: true,
         comments: {
           include: {
-            author: true,
+            author: {
+              select: {
+                name: true,
+                image: true,
+              },
+            },
             replies: {
               include: {
                 author: true,
@@ -55,54 +68,6 @@ export async function GET() {
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
     console.log(error);
-    return NextResponse.json(
-      { message: 'Something went wrong' },
-      { status: 500 }
-    );
-  }
-}
-export async function PUT(request, { params }) {
-  try {
-    const { title, body, image, authorEmail, categoryId, links, publishedAt } =
-      await request.json();
-    const { id } = params;
-
-    const updatedPost = await prisma.post.update({
-      where: { id: id },
-      data: {
-        title,
-        body,
-        image,
-        authorEmail,
-        categoryId,
-        links,
-        publishedAt,
-      },
-    });
-
-    return NextResponse.json(updatedPost, { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { message: 'Something went wrong' },
-      { status: 500 }
-    );
-  }
-}
-export async function DELETE(request, { params }) {
-  try {
-    const { id } = params;
-
-    await prisma.post.delete({
-      where: { id: id },
-    });
-
-    return NextResponse.json(
-      { message: 'Post deleted successfully' },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { message: 'Something went wrong' },
       { status: 500 }

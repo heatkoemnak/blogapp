@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Post from '@/app/components/Post'; // Adjust the import path as needed
+import Error from '@/app/components/Error';
+import LoadingSpinner from '@/app/components/LoadingSpinner';
 // import { useSearchParams } from 'next/navigation';
 
 const CategoryPage = ({ params }) => {
@@ -23,7 +25,7 @@ const CategoryPage = ({ params }) => {
           throw new Error('Category not found');
         }
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         setCategory(data);
       } catch (error) {
         console.log(error);
@@ -34,11 +36,14 @@ const CategoryPage = ({ params }) => {
     };
     fetchCategory();
   }, [id]);
-
+  if (error) {
+    return <Error error={error} />;
+  }
+  if (loading) {
+    return <LoadingSpinner />;
+  }
   return (
     <div>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
       {category ? (
         <div>
           <h1 className="text-2xl font-bold">{category.name}</h1>

@@ -33,6 +33,7 @@ model Category {
   title     String
   body      String
   image     String?
+  public_id String?
   author    User     @relation(fields: [authorEmail], references: [email], onDelete: Cascade)
   authorEmail String  
   category  Category @relation(fields: [categoryId], references: [id])

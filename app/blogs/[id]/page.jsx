@@ -1,5 +1,7 @@
 'use client';
 
+import Error from '@/app/components/Error';
+import LoadingSpinner from '@/app/components/LoadingSpinner';
 import Post from '@/app/components/Post';
 import { useEffect, useState } from 'react';
 
@@ -30,6 +32,12 @@ const BlogDetails = ({ params }) => {
     fetchPost();
   }, [id]);
   console.log(id);
+  if (error) {
+    return <Error error={error} />;
+  }
+  if (loading) {
+    return <LoadingSpinner />;
+  }
   return (
     <div>
       {post && <Post post={post} />}

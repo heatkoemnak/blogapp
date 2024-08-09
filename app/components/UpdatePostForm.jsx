@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import Image from 'next/image';
-import { UploadImage,submitPost } from '../utils/api';
+import { uploadImage, submitPost, removeImage } from '../utils/api';
 import { useBlogContext } from '../context/BlogProvider';
 const UpdatePostForm = ({ post }) => {
   console.log(post);
@@ -19,6 +19,7 @@ const UpdatePostForm = ({ post }) => {
   const [linkInput, setLinkInput] = useState('');
   const [email, setEmail] = useState(session?.user?.email);
   const [image, setImage] = useState(post?.image);
+  const [public_id, setPublicId] = useState(post?.public_id);
   const [body, setBody] = useState(post?.body);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -54,8 +55,8 @@ const UpdatePostForm = ({ post }) => {
     }
 
     await submitPost({
-      method:'PUT',
-      postId:post.id,
+      method: 'PUT',
+      postId: post.id,
       title,
       body,
       image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
@@ -66,7 +67,7 @@ const UpdatePostForm = ({ post }) => {
     });
     router.push('/blogs');
   };
-
+  
   const addLink = (e) => {
     e.preventDefault();
     if (linkInput.trim() !== '') {
@@ -210,8 +211,14 @@ const UpdatePostForm = ({ post }) => {
                         alt="Uploaded"
                         width={500}
                         height={350}
-                        className="object-cover"
+                        className="min-w-full object-cover"
                       />
+                      <button
+                        onClick={() => removeImage(public_id)}
+                        className="btn py-2 px-4 mt-4 rounded-md bg-red-600 text-white mb-4"
+                      >
+                        Remove Image
+                      </button>
                     </div>
                   ) : (
                     <div className="text-center">

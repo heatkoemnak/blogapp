@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { useBlogContext } from '../context/BlogProvider';
 import LoadingSpinner from './LoadingSpinner';
 import Error from './Error';
-import { submitPost, uploadImage } from '../utils/api';
+import { fetchPosts, submitPost, uploadImage } from '../utils/api';
 const CreatePostForm = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -59,11 +59,13 @@ const CreatePostForm = () => {
       process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
     );
     uploadedImageData = await uploadImage(formData);
+    console.log(uploadedImageData)
     await submitPost({
       method: 'POST',
       postId: '',
       title,
       body,
+      public_id:uploadedImageData ? uploadedImageData.public_id : imageSrc,
       image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
       authorEmail: email,
       categoryId,
@@ -167,7 +169,7 @@ const CreatePostForm = () => {
                 <div className="mt-1 flex items-center gap-2">
                   <input
                     type="text"
-                    placeholder="Links"
+                    placeholder="Past the links and click to add"
                     value={linkInput}
                     onChange={(e) => setLinkInput(e.target.value)}
                     className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -221,8 +223,9 @@ const CreatePostForm = () => {
                         alt="Uploaded"
                         width={500}
                         height={350}
-                        className="object-cover"
+                        className="min-w-full object-cover"
                       />
+                    <button onClick={()=>setImageSrc('')} className='btn py-2 px-4 mt-4 rounded-md bg-red-600 text-white mb-4'>Remove Image</button>
                     </div>
                   ) : (
                     <div className="text-center">

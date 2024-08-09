@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { redirect, useRouter } from 'next/navigation';
+
 const Login = () => {
   const { status, data } = useSession();
   const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrors({});
-   
+    
     if (!email) {
       setErrors({ email: 'This field is required.' });
       return;
@@ -54,164 +55,127 @@ const Login = () => {
   }, [status, data]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <div className="relative flex flex-col rounded-xl bg-transparent bg-clip-border text-gray-700 shadow-none">
-        <h4 className="block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-          Login
-        </h4>
-        <p className="mt-1 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-          Enter your details to login.
-        </p>
-        <form
-          onSubmit={handleLogin}
-          className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
-        >
-          <div className="mb-4 flex flex-col gap-6">
-            <div className="relative h-11 w-full min-w-[200px]">
+    <div className="flex min-h-screen items-center justify-center px-4 sm:px-6 lg:px-8 ">
+      <div className="w-full max-w-md space-y-2 p-4 mb-12 bg-white">
+        <div>
+          <h4 className="text-center text-2xl font-extrabold text-gray-900">Login</h4>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Enter your details to login.
+          </p>
+        </div>
+        <form onSubmit={handleLogin} className="mt-8 space-y-6">
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="email-address" className="sr-only">Email address</label>
               <input
+                id="email-address"
+                name="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`peer h-full w-full rounded-md border ${
-                  errors.email ? 'border-red-500' : 'border-blue-gray-200'
-                } bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50`}
-                placeholder=" "
+                autoComplete="email"
+                required
+                className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
+                  errors.email ? 'border-red-500' : 'border-gray-300'
+                } placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                placeholder="Email address"
               />
-              <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-pink-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-pink-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                Email
-              </label>
-              {errors.email && email.length > 0 ? null : (
+              {errors.email && email.length > 0 && (
                 <p className="text-red-500 text-xs mt-1">{errors.email}</p>
               )}
-              {/* {errors.email && (
-                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-              )} */}
             </div>
-            <div className="relative h-11 w-full min-w-[200px]">
+            <div>
+              <label htmlFor="password" className="sr-only">Password</label>
               <input
+                id="password"
+                name="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`peer h-full w-full rounded-md border ${
-                  errors.password ? 'border-red-500' : 'border-blue-gray-200'
-                } bg-transparent px-3 py-3 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-pink-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50`}
-                placeholder=" "
+                autoComplete="current-password"
+                required
+                className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
+                  errors.password ? 'border-red-500' : 'border-gray-300'
+                } placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                placeholder="Password"
               />
-              <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[4.1] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-pink-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:!border-pink-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-pink-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                Password
-              </label>
-              {password && password.length > 0 && password.length < 6 && (
-                <p className="text-red-500 text-xs mt-1">
-                  {password.length} characters minimum.
-                </p>
-              )}
-              {password.length > 0 && errors.password ? null : (
+              {errors.password && (
                 <p className="text-red-500 text-xs mt-1">{errors.password}</p>
               )}
             </div>
           </div>
-          <p className="text-right font-sans text-sm font-normal leading-normal text-gray-700 antialiased">
-            <Link
-              className="font-semibold transition-colors hover:text-pink-500 "
-              href="#"
-            >
-              &nbsp;Forgot your password
-            </Link>
-          </p>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <input
+                id="remember-me"
+                name="remember-me"
+                type="checkbox"
+                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              />
+              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                Remember me
+              </label>
+            </div>
+
+            <div className="text-sm">
+              <Link href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                Forgot your password?
+              </Link>
+            </div>
+          </div>
+
           {errors?.general && (
             <p className="text-red-500 mx-3 text-xs mt-1">{errors.general}</p>
           )}
-          <div className="inline-flex items-center">
-            <label
-              className="relative -ml-2.5 flex cursor-pointer items-center rounded-full p-3"
-              htmlFor="checkbox"
-              data-ripple-dark="true"
+
+          <div>
+            <button
+              type="submit"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              <input
-                type="checkbox"
-                className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-pink-500 checked:bg-pink-500 checked:before:bg-pink-500 hover:before:opacity-10"
-                id="checkbox"
-              />
-              <span className="pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3.5 w-3.5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </span>
-            </label>
-            <label
-              className="mt-px cursor-pointer select-none font-light text-gray-700"
-              htmlFor="checkbox"
-            >
-              <p className="flex items-center font-sans text-sm font-normal leading-normal text-gray-700 antialiased">
-                I agree the
-                <a
-                  className="font-semibold transition-colors hover:text-pink-500"
-                  href="#"
-                >
-                  &nbsp;Terms and Conditions
-                </a>
-              </p>
-            </label>
+              Login
+            </button>
           </div>
-          <button
-            className="mt-6 block w-full select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="submit"
-            data-ripple-light="true"
-          >
-            Login
-          </button>
-          <p className="mt-4 block text-center font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
-            Do not have account?
-            <Link
-              className="font-semibold text-pink-500 transition-colors hover:text-blue-700"
-              href="/register"
+
+          <div className="mt-4 text-center text-sm text-gray-600">
+            <p>
+              Do not have an account?{' '}
+              <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+                Sign up
+              </Link>
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <button
+              type="button"
+              onClick={() => signIn('github')}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >
-              Sign up
-            </Link>
-          </p>
-          <button
-            className="mt-6 flex items-center justify-center gap-2 border w-full select-none rounded-lg bg-gray-250 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-            data-ripple-light="true"
-            onClick={() => signIn('github')}
-          >
-            <span className="">
               <Image
                 src={`/github-mark.svg`}
                 width={25}
                 height={25}
                 alt="Github Logo"
+                className="mr-2"
               />
-            </span>
-            Login with Github
-          </button>
-          <button
-            className="mt-6 flex items-center justify-center gap-2 border  w-full  select-none rounded-lg bg-gray-50 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-            type="button"
-            data-ripple-light="true"
-            onClick={() => signIn('google')}
-          >
-            <span className="">
+              Login with Github
+            </button>
+            <button
+              type="button"
+              onClick={() => signIn('google')}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
               <Image
                 src={`/google-icon.svg`}
                 width={25}
                 height={25}
-                alt="Github Logo"
+                alt="Google Logo"
+                className="mr-2"
               />
-            </span>
-            Login with Google
-          </button>
+              Login with Google
+            </button>
+          </div>
         </form>
       </div>
     </div>

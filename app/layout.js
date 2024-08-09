@@ -4,6 +4,7 @@ import AuthProvider from './components/AuthProvider/AuthProvider';
 import { getServerSession } from 'next-auth';
 import Navbar from './components/Navbar';
 import { BlogProvider } from './context/BlogProvider';
+import Footer from './components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 

@@ -1,27 +1,34 @@
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { fetchCategories } from '../utils/api';
+import { fetchCategories, fetchPosts } from '../utils/api';
 
 const BlogContext = createContext();
 
 export function BlogProvider({ children }) {
   const [categories, setCategories] = useState([]);
+  const [posts, setPosts] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchCategory = async () => {
+    const fetchData = async () => {
       try {
-        const data = await fetchCategories();
-        setCategories(data);
+        setLoading(true);
+        const cateData = await fetchCategories();
+        const postData = await fetchPosts();
+        setPosts(postData);
+        setCategories(cateData);
       } catch (error) {
         setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchCategory();
-  }, [setCategories]);
+    fetchData();
+  }, []);
 
   return (
-    <BlogContext.Provider value={{ error, categories, setCategories }}>
+    <BlogContext.Provider value={{loading, error,posts, categories, setCategories }}>
       {children}
     </BlogContext.Provider>
   );

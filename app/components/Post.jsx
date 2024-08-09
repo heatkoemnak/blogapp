@@ -6,7 +6,9 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import Comments from './Comments';
 import { useRouter } from 'next/navigation';
-import { fetchPosts } from '../utils/api';
+import Error from './Error';
+import LoadingSpinner from './LoadingSpinner';
+import { deleteResource } from '../utils/api';
 
 const Post = ({ post }) => {
   const router = useRouter();
@@ -17,29 +19,28 @@ const Post = ({ post }) => {
   const [isExpanded, setIsExpanded] = useState(false); // State for toggling text display
 
   const deletePost = async (id) => {
-    // if (!window.confirm('Are you sure you want to delete this post?')) {
-    //   return;
-    // }
+    if (!window.confirm('Are you sure you want to delete this post?')) {
+      return;
+    }
+    console.log(id);
     try {
-      setLoading(true);
-      const response = await fetch(`/api/blog/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error('Failed to delete the post');
-      }
-      await fetchPosts();
+      await deleteResource(id);
+      window.location.reload();
     } catch (error) {
       console.log(error);
       setError(error.message);
-    } finally {
-      setLoading(false);
     }
   };
 
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };
+  if (error) {
+    return <Error error={error} />;
+  }
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <>
@@ -51,31 +52,21 @@ const Post = ({ post }) => {
               {post?.publishedAt}
             </div>
             <div className="relative">
-              <div className="max-w-2xl mx-auto">
-                <Link href={`/blogs/${post.id}`}>
-                  {post.image ? (
-                    <Image
-                      src={post.image}
-                      className="w-full max-w-full min-w-full"
-                      alt="Post Image"
-                      width={1200}
-                      height={750}
-                      quality={100}
-                      placeholder="blur"
-                      blurDataURL={post?.image}
-                      // layout="responsive"
-                      objectFit="cover"
-                    />
-                  ) : (
-                    <Image
-                      src={`/youtube-thumbnail.png`}
-                      alt="Post Image"
-                      className={styles.postImage}
-                      width={500}
-                      height={200}
-                    />
-                  )}
-                </Link>
+              <div className="max-w-full mx-auto">
+              <Link href={`/blogs/${post.id}`}>
+                <Image
+                  src={post.image || '/youtube-thumbnail.png'}
+                  className="w-full max-h-[550px] object-cover" // Ensures the image covers the container
+                  alt="Post Image"
+                  width={1200}
+                  height={550}
+                  quality={100}
+                  placeholder="blur"
+                  layout="responsive"
+                  loading="lazy"
+                  blurDataURL={post?.image}
+                />
+              </Link>
               </div>
               <Link
                 href={`/blogs/category/${post.category.id}`}
@@ -85,7 +76,8 @@ const Post = ({ post }) => {
               </Link>
               {session?.user?.email === post.author.email && (
                 <div className="absolute top-4 right-4 flex items-center gap-2">
-                  <div
+                  <button
+                    type="button"
                     onClick={() => deletePost(post.id)}
                     className="cursor-pointer text-white bg-red-500 p-1 rounded-full hover:bg-red-700"
                   >
@@ -101,7 +93,7 @@ const Post = ({ post }) => {
                         clipRule="evenodd"
                       />
                     </svg>
-                  </div>
+                  </button>
                   <Link
                     href={`/blogs/update/${post.id}`}
                     className="cursor-pointer text-white bg-blue-500 p-1 rounded-full hover:bg-blue-700"
@@ -132,44 +124,16 @@ const Post = ({ post }) => {
           </div>
           {showComment && <Comments post={post} />}
           <div className="flex items-center justify-between mt-5">
-            <div>
-              <span className="mr-3 inline-flex items-center cursor-pointer">
-                <svg
-                  className="fill-heart text-gray-700 inline-block h-7 w-7 heart"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
+            <span
+              className="flex justify-end text-gray-600 text-sm font-bold cursor-pointer "
+              onClick={() => setShowComment(!showComment)}
+            >
+              {post?.comments?.length}
+              <span className="ml-2">
+                {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
               </span>
-              <span
-                className="mr-3 inline-flex items-center cursor-pointer"
-                onClick={() => setShowComment(!showComment)}
-              >
-                <svg
-                  className="text-gray-700 inline-block h-7 w-7"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                  />
-                </svg>
-              </span>
-            </div>
-            <span className="flex justify-end">
+            </span>
+            <span className="flex justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -186,15 +150,6 @@ const Post = ({ post }) => {
               </svg>
             </span>
           </div>
-          <span
-            className="text-gray-600 text-sm font-bold cursor-pointer"
-            onClick={() => setShowComment(!showComment)}
-          >
-            2344 Likes {post?.comments?.length}
-            <span className="ml-2">
-              {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
-            </span>
-          </span>
         </div>
       </div>
     </>

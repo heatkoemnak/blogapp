@@ -1,38 +1,67 @@
-'use client'
-import { useContext } from 'react';
-import { useBlogContext } from './context/BlogProvider';
+'use client';
+
+import Image from 'next/image';
+import Categories from './components/Categories';
+import RecentPost from './components/RecentPost';
+import PopularCategories from './components/PopularCategories';
 
 export default function Home() {
-  const { theme, setTheme } = useBlogContext();
-  console.log(theme);
   return (
     <>
-      <div class="lg:px-24 lg:py-24 md:py-20 md:px-44 px-4 py-24 items-center flex justify-center flex-col-reverse lg:flex-row md:gap-28 gap-16">
-        <div class="xl:pt-24 w-full xl:w-1/2 relative pb-12 lg:pb-0">
-          <div class="relative">
-            <div class="absolute">
-              <div class="">
-                <h1 class="my-2 text-gray-800 font-bold text-2xl">
-                  Looks like you have found the doorway to the great nothing
-                </h1>
-                <p class="my-2 text-gray-800">
-                  Sorry about that! Please visit our hompage to get where you
-                  need to go.
-                </p>
-                <button class="sm:w-full lg:w-auto my-2 border rounded md py-4 px-8 text-center bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-opacity-50">
-                  Take me there!
-                </button>
-              </div>
-            </div>
-            <div>
-              <img src="https://i.ibb.co/G9DC8S0/404-2.png" />
+      <div className="flex bg-white" style={{ height: '600px' }}>
+        <div className="flex items-center text-center lg:text-left px-8 md:px-12 lg:w-1/2">
+          <div>
+            <h1 class="text-5xl sm:text-6xl bg-red-700 lg:text-5xl xl:text-6xl text-yellow-500 font-bold my-8">
+              Bring Your Ideas to <span class="text-blue-400">Life</span>
+            </h1>
+            <p class="text-xl text-red font-semibold ">
+              Become the best in your industry! Start today our universal quik
+              start program
+            </p>
+            <p className="mt-2 text-sm text-gray-500 md:text-base">
+              Discover cutting-edge solutions tailored to your needs. Our team
+              leverages the latest technologies to bring your innovative ideas
+              to life, ensuring efficiency and quality in every step. Join us in
+              shaping the future of technology and business.
+            </p>
+            <div className="flex justify-center lg:justify-start mt-6">
+              <a
+                className="px-4 py-3 bg-gray-900 text-gray-200 text-xs font-semibold rounded hover:bg-gray-800"
+                href="#"
+              >
+                Get Started
+              </a>
+              <a
+                className="mx-4 px-4 py-3 bg-gray-300 text-gray-900 text-xs font-semibold rounded hover:bg-gray-400"
+                href="#"
+              >
+                Learn More
+              </a>
             </div>
           </div>
         </div>
-        <div>
-          <img src="https://i.ibb.co/ck1SGFJ/Group.png" />
+        <div
+          className="  lg:w-1/2"
+          style={{ clipPath: 'polygon(10% 0, 100% 0%, 100% 100%, 0 100%)' }}
+        >
+          <div
+            className="h-full object-cover"
+            style={{
+              backgroundImage:
+                'url(https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80)',
+            }}
+          >
+            <div className="h-full bg-black "></div>
+          </div>
         </div>
       </div>
+      <div>
+        <h1 className="md:text-4xl font-bold">Popular categories</h1>
+        <div className="mt-5">
+          <PopularCategories />
+        </div>
+      </div>
+      <RecentPost />
     </>
   );
 }
