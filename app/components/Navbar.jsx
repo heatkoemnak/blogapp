@@ -50,14 +50,14 @@ const Navbar = () => {
           {status === 'authenticated' ? (
             <button
               type="button"
-              className="flex w-full justify-center items-center gap-1 rounded-full px-2 py-2 ring-pink-500 ring-inset border-gray-100 bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 hover:bg-gray-50"
-              onClick={() => setShow(!show)}
+              className="flex w-full justify-center items-center gap-1 rounded-full px-2 py-2ring-inset border-gray-100 bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 hover:bg-gray-50"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {session?.user?.image ? (
                 <Image
                   src={session?.user?.image}
-                  width={25}
-                  height={25}
+                  width={30}
+                  height={30}
                   alt="Profile Image"
                   className="rounded-full"
                 />
