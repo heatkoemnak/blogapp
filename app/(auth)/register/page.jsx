@@ -74,9 +74,9 @@ const Register = () => {
     <div className="flex min-h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-2 p-4 mb-12 bg-white">
         <div>
-          <h4 className="text-center text-2xl font-extrabold text-gray-900">Sign Up</h4>
+          <h4 className="text-center text-2xl font-extrabold text-gray-900">Create your account</h4>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Enter your details to register.
+            Enter your details to register an account.
           </p>
         </div>
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">

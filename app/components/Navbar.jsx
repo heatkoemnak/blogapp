@@ -262,7 +262,7 @@ const Navbar = () => {
           <div className="p-4">
             <Link
               href="/blogs"
-              className={`block py-2 ${
+              className={`block py-2 hover:bg-gray-300 ${
                 currentPath === '/blogs'
                   ? 'text-blue-500 font-semibold'
                   : 'text-gray-500'
@@ -272,7 +272,7 @@ const Navbar = () => {
             </Link>
             <Link
               href="/my-blog"
-              className={`block py-2 ${
+              className={`block py-2 hover:bg-gray-300 ${
                 currentPath === '/my-blog'
                   ? 'text-blue-500 font-semibold'
                   : 'text-gray-500'
@@ -282,13 +282,13 @@ const Navbar = () => {
             </Link>
             <Link
               href="/create-post"
-              className={`block py-2 ${
+              className={`block py-2 hover:bg-gray-300 ${
                 currentPath === '/create-post'
                   ? 'text-blue-500 font-semibold'
                   : 'text-gray-500'
               }`}
             >
-              Create Post
+              Create new post
             </Link>
             {status === 'authenticated' && (
               <>
