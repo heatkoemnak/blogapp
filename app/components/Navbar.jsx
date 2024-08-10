@@ -47,10 +47,10 @@ const Navbar = () => {
           </h1>
         </Link>
         <div className="lg:hidden flex items-center">
-          {status === 'authenticated' ? (
+          {status !== 'authenticated' ? (
             <button
               type="button"
-              className="flex w-full justify-center items-center gap-1 rounded-full px-2 py-2ring-inset border-gray-100 bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 hover:bg-gray-50"
+              className="flex w-full justify-center items-center gap-1 rounded-full px-2 py-2x bg-white text-sm font-semibold text-gray-900 hover:bg-gray-50"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {session?.user?.image ? (
@@ -59,11 +59,12 @@ const Navbar = () => {
                   width={30}
                   height={30}
                   alt="Profile Image"
-                  className="rounded-full"
+                  className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full"
                 />
               ) : (
-                <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
-                  {getInitial(session?.user?.name)}
+                <div className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full">
+                  {/* {getInitial(session?.user?.name)} */}
+                  K
                 </div>
               )}
               <svg
@@ -262,7 +263,7 @@ const Navbar = () => {
           <div className="p-4">
             <Link
               href="/blogs"
-              className={`block py-2 hover:bg-gray-300 ${
+              className={`block py-2 ${
                 currentPath === '/blogs'
                   ? 'text-blue-500 font-semibold'
                   : 'text-gray-500'
@@ -272,7 +273,7 @@ const Navbar = () => {
             </Link>
             <Link
               href="/my-blog"
-              className={`block py-2 hover:bg-gray-300 ${
+              className={`block py-2 ${
                 currentPath === '/my-blog'
                   ? 'text-blue-500 font-semibold'
                   : 'text-gray-500'
@@ -282,7 +283,7 @@ const Navbar = () => {
             </Link>
             <Link
               href="/create-post"
-              className={`block py-2 hover:bg-gray-300 ${
+              className={`block py-2 ${
                 currentPath === '/create-post'
                   ? 'text-blue-500 font-semibold'
                   : 'text-gray-500'
@@ -314,13 +315,13 @@ const Navbar = () => {
             {status !== 'authenticated' && (
               <div className="flex items-center gap-2 py-2">
                 <Link
-                  className="block w-full text-center font-bold text-gray-700 bg-gray-50 hover:bg-gray-100 py-2 rounded-md"
+                  className="block w-full text-center font-bold text-gray-700 shadow-sm  bg-gray-50 hover:bg-gray-100 py-2 rounded-full hover:ring-purple-400"
                   href="/login"
                 >
                   Login
                 </Link>
                 <Link
-                  className="block w-full text-center font-bold text-gray-700 bg-gray-50 hover:bg-gray-100 py-2 rounded-md"
+                  className="block w-full text-center font-bold text-gray-700 shadow-sm  bg-gray-50 hover:bg-gray-100 py-2 rounded-full"
                   href="/register"
                 >
                   Register
