@@ -47,7 +47,7 @@ const Navbar = () => {
           </h1>
         </Link>
         <div className="lg:hidden flex items-center">
-          {status == 'authenticated' ? (
+          {status === 'authenticated' ? (
             <button
               type="button"
               className="flex w-full justify-center items-center gap-1 rounded-full px-2 py-2x bg-white text-sm font-semibold text-gray-900 hover:bg-gray-50"
