@@ -12,7 +12,7 @@ export default function Home() {
       <div className="flex bg-white" style={{ height: '600px' }}>
         <div className="flex items-center text-center lg:text-left px-8 md:px-12 lg:w-1/2">
           <div>
-            <h1 class="text-5xl sm:text-6xl bg-red-700 lg:text-5xl xl:text-6xl text-yellow-500 font-bold my-8">
+            <h1 class="text-5xl sm:text-6xl lg:text-5xl xl:text-6xl text-yellow-500  my-8 bg-gradient-to-r from-yellow-400 font-black via-purple-500 to-pink-500 bg-clip-text text-transparent">
               Bring Your Ideas to <span class="text-blue-400">Life</span>
             </h1>
             <p class="text-xl text-red font-semibold ">

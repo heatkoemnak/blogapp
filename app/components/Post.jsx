@@ -31,7 +31,7 @@ const Post = ({ post }) => {
       setError(error.message);
     }
   };
-
+  const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };
@@ -44,7 +44,7 @@ const Post = ({ post }) => {
 
   return (
     <>
-      <div className="bg-white overflow-hidden shadow-none border px-0 py-5">
+      <div className="bg-white overflow-hidden px-0 py-5">
         <div className="flex flex-col min-w-full">
           <div className="relative col-span-2 w-full">
             <div className="mb-2 ml-2">
@@ -131,7 +131,7 @@ const Post = ({ post }) => {
               className="flex justify-end text-gray-600 text-sm font-bold cursor-pointer "
               onClick={() => setShowComment(!showComment)}
             >
-              {post?.comments &&post?.comments?.length}
+              {post?.comments && post?.comments?.length}
               <span className="ml-2">
                 {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
               </span>
@@ -153,6 +153,7 @@ const Post = ({ post }) => {
               </svg>
             </span>
           </div>
+          
         </div>
       </div>
     </>

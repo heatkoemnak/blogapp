@@ -46,7 +46,7 @@ const PostList = () => {
           <h1 className="font-bold py-6">Posts</h1>
           
             {posts.map((post, index) => (
-              <div className="flex flex-col" key={index}>
+              <div className="flex flex-col mt-1 shadow-md" key={index}>
                 <Post post={post} />
               </div>
             ))}

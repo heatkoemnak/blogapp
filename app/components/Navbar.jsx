@@ -14,14 +14,13 @@ const Navbar = () => {
   const mobileMenuRef = useRef(null);
 
   const handleClickOutside = (event) => {
-    console.log(mobileMenuOpen)
-    if (
-      (popupRef.current && !popupRef.current.contains(event.target))
-    ) {
+    console.log(mobileMenuOpen);
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
       setShow(false);
     }
     if (
-      (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target))
+      mobileMenuRef.current &&
+      !mobileMenuRef.current.contains(event.target)
     ) {
       setMobileMenuOpen(!mobileMenuOpen);
     }
@@ -44,9 +43,9 @@ const Navbar = () => {
     <nav className="px-5 max-w-6xl mx-auto border-b">
       <div className="container mx-auto py-4 flex justify-between items-center">
         <Link href={'/'}>
-        <h1 class="font-bold text-gray-700 text-xl">
-            TA<span class="text-yellow-400">-CO</span>
-          </h1>
+        <h1 class="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl text-yellow-500  bg-gradient-to-r from-yellow-400 font-black via-purple-500 to-blue-500 bg-clip-text text-transparent">
+              Forbes
+            </h1>
         </Link>
         <div className="lg:hidden flex items-center">
           <button
@@ -109,7 +108,7 @@ const Navbar = () => {
                 : 'text-gray-500'
             }
           >
-             My dashboard
+            My dashboard
           </Link>
           <Link
             href="/create-post"
@@ -191,7 +190,7 @@ const Navbar = () => {
                       onClick={() => setShow(false)}
                       className="block hover:underline px-4 py-2 text-sm text-gray-700"
                     >
-                       My dashboard
+                      My dashboard
                     </Link>
                     <div className="mx-2 my-2">
                       <button
