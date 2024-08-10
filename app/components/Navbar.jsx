@@ -43,11 +43,31 @@ const Navbar = () => {
     <nav className="px-5 max-w-6xl mx-auto border-b">
       <div className="container mx-auto py-4 flex justify-between items-center">
         <Link href={'/'}>
-        <h1 class="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl bg-gradient-to-r from-yellow-400 font-black via-purple-500 to-blue-500 bg-clip-text text-transparent">
-              Forbes
-            </h1>
+          <h1 class="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl bg-gradient-to-r from-yellow-400 font-black via-purple-500 to-blue-500 bg-clip-text text-transparent">
+            Forbes
+          </h1>
         </Link>
         <div className="lg:hidden flex items-center">
+          <button
+            type="button"
+            className="flex w-full justify-center items-center rounded-full px-2 py-2 ring-pink-500 ring-inset border bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 hover:bg-gray-50"
+            onClick={() => setShow(!show)}
+          >
+            <span className="mr-2">{session?.user?.name}</span>
+            {session?.user?.image ? (
+              <Image
+                src={session?.user?.image}
+                width={25}
+                height={25}
+                alt="Profile Image"
+                className="rounded-full"
+              />
+            ) : (
+              <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
+                {getInitial(session?.user?.name)}
+              </div>
+            )}
+          </button>
           <button
             className="text-gray-500 hover:text-gray-700 focus:outline-none"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -68,6 +88,7 @@ const Navbar = () => {
             </svg>
           </button>
         </div>
+        {/* search */}
         <div className="hidden lg:flex items-center space-x-2 bg-white py-1 px-2 rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
