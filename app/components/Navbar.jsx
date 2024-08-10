@@ -14,7 +14,6 @@ const Navbar = () => {
   const mobileMenuRef = useRef(null);
 
   const handleClickOutside = (event) => {
-    console.log(mobileMenuOpen);
     if (popupRef.current && !popupRef.current.contains(event.target)) {
       setShow(false);
     }
@@ -44,49 +43,63 @@ const Navbar = () => {
       <div className="container mx-auto py-4 flex justify-between items-center">
         <Link href={'/'}>
           <h1 class="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl bg-gradient-to-r from-yellow-400 font-black via-purple-500 to-blue-500 bg-clip-text text-transparent">
-            Forbes
+            Forbes.
           </h1>
         </Link>
         <div className="lg:hidden flex items-center">
-          <button
-            type="button"
-            className="flex w-full justify-center items-center rounded-full px-2 py-2 ring-pink-500 ring-inset border bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 hover:bg-gray-50"
-            onClick={() => setShow(!show)}
-          >
-            <span className="mr-2">{session?.user?.name}</span>
-            {session?.user?.image ? (
-              <Image
-                src={session?.user?.image}
-                width={25}
-                height={25}
-                alt="Profile Image"
-                className="rounded-full"
-              />
-            ) : (
-              <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
-                {getInitial(session?.user?.name)}
-              </div>
-            )}
-          </button>
-          <button
-            className="text-gray-500 hover:text-gray-700 focus:outline-none"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <svg
-              className="w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          {status === 'authenticated' ? (
+            <button
+              type="button"
+              className="flex w-full justify-center items-center gap-1 rounded-full px-2 py-2 ring-pink-500 ring-inset border-gray-100 bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 hover:bg-gray-50"
+              onClick={() => setShow(!show)}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
-          </button>
+              {session?.user?.image ? (
+                <Image
+                  src={session?.user?.image}
+                  width={25}
+                  height={25}
+                  alt="Profile Image"
+                  className="rounded-full"
+                />
+              ) : (
+                <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
+                  {getInitial(session?.user?.name)}
+                </div>
+              )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                className="size-5"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+          ) : (
+            <button
+              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <svg
+                className="w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            </button>
+          )}
         </div>
         {/* search */}
         <div className="hidden lg:flex items-center space-x-2 bg-white py-1 px-2 rounded-full">
