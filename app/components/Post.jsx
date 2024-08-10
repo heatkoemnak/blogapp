@@ -115,23 +115,28 @@ const Post = ({ post }) => {
             <div className="ml-2">
               <h1 className="font-bold py-2">{post.title}</h1>
               <p>
-                {isExpanded ? post.body : post.body.substring(0, 250) + '...'}{' '}
-                <span
-                  onClick={toggleText}
-                  className="text-blue-500 cursor-pointer"
-                >
-                  {isExpanded ? 'Show Less' : 'Show More'}
-                </span>
+                {isExpanded ? post.body : post.body.substring(0, 250)}
+                {post.body && post.body.length >= 250 && (
+                  <span
+                    onClick={toggleText}
+                    className="text-blue-500 cursor-pointer"
+                  >
+                    ...
+                    {isExpanded ? 'Show Less' : 'Show More'}
+                  </span>
+                )}
               </p>
             </div>
           </div>
-          {showComment && <Comments post={post} />}
+
           <div className="flex items-center justify-between mt-5 mx-2">
             <span
               className="flex justify-end text-gray-600 text-sm font-bold cursor-pointer "
               onClick={() => setShowComment(!showComment)}
             >
-              {post?.comments && post?.comments?.length}
+              {post?.comments && post?.comments?.length > 0
+                ? post?.comments?.length
+                : ''}
               <span className="ml-2">
                 {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
               </span>
@@ -153,7 +158,7 @@ const Post = ({ post }) => {
               </svg>
             </span>
           </div>
-          
+          {showComment && <Comments post={post} />}
         </div>
       </div>
     </>
