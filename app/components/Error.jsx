@@ -22,6 +22,7 @@ const Error = ({ error }) => {
       </div>
     </div>
   );
+
 };
 
 export default Error;

@@ -43,7 +43,7 @@ const Navbar = () => {
       <div className="container mx-auto py-4 flex justify-between items-center">
         <Link href={'/'}>
           <h1 class="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl bg-gradient-to-r from-yellow-400 font-black via-purple-500 to-blue-500 bg-clip-text text-transparent">
-            Forbes.
+            Powerme.
           </h1>
         </Link>
         <div className="lg:hidden flex items-center">

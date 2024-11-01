@@ -83,6 +83,7 @@ const Comments = ({ post }) => {
           <div className="flex justify-center mt-5">
             <span>This post has no comments yet.</span>
           </div>
+        
         )}
         <div>
           <div className="pt-0">
