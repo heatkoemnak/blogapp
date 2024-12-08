@@ -4,6 +4,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { FaRegEdit } from 'react-icons/fa';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -39,11 +40,11 @@ const Navbar = () => {
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
 
   return (
-    <nav className="px-5 max-w-6xl mx-auto border-b">
+    <nav className="px-5 max-w-8xl mx-auto border-b">
       <div className="container mx-auto py-4 flex justify-between items-center">
         <Link href={'/'}>
-          <h1 class="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl bg-gradient-to-r from-yellow-400 font-black via-purple-500 to-blue-500 bg-clip-text text-transparent">
-            Powerme.
+          <h1 class="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl bg-gradient-to-r from-orange-400 font-black to-purple-500 bg-clip-text text-transparent">
+            Power.ME
           </h1>
         </Link>
         <div className="lg:hidden flex items-center">
@@ -82,7 +83,7 @@ const Navbar = () => {
             </button>
           ) : (
             <button
-              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              className="text-gray-900 hover:text-gray-700 focus:outline-none"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <svg
@@ -124,13 +125,13 @@ const Navbar = () => {
             placeholder="Search"
           />
         </div>
-        <div className="hidden lg:flex space-x-10 items-center">
+        <div className="hidden lg:flex space-x-5 items-center">
           <Link
             href="/blogs"
             className={
               currentPath === '/blogs'
                 ? 'text-blue-500 font-semibold'
-                : 'text-gray-500'
+                : 'text-gray-900'
             }
           >
             Blogs
@@ -140,34 +141,21 @@ const Navbar = () => {
             className={
               currentPath === '/my-blog'
                 ? 'text-blue-500 font-semibold'
-                : 'text-gray-500'
+                : 'text-gray-900'
             }
           >
             My dashboard
           </Link>
           <Link
-            href="/create-post"
-            className={`flex items-center gap-1 ${
+            className={`flex gap-2 items-center text-white bg-gradient-to-r from-orange-500 to-purple-500 hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  ${
               currentPath === '/create-post'
                 ? 'text-blue-500 font-semibold'
-                : 'text-gray-500'
+                : 'text-gray-900'
             }`}
+            href="/create-post"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            Create Post
+            <FaRegEdit />
+            Write
           </Link>
           {status === 'authenticated' ? (
             <div className="relative inline-block text-left" ref={popupRef}>
@@ -220,6 +208,7 @@ const Navbar = () => {
                     >
                       Create post
                     </Link>
+
                     <Link
                       href="/my-blog"
                       onClick={() => setShow(false)}
@@ -235,6 +224,12 @@ const Navbar = () => {
                       >
                         Sign out
                       </button>
+                      <button
+                        type="button"
+                        class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                      >
+                        Purple to Pink
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -243,16 +238,10 @@ const Navbar = () => {
           ) : (
             <div className="flex items-center gap-2">
               <Link
-                className="block px-4 py-3 leading-loose text-sm text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl"
+                class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 "
                 href="/login"
               >
-                Login
-              </Link>
-              <Link
-                className="block px-4 py-3 leading-loose text-sm text-center font-semibold bg-gray-50 hover:bg-gray-100 rounded-xl"
-                href="/register"
-              >
-                Register
+                Login or Create Account
               </Link>
             </div>
           )}
@@ -266,7 +255,7 @@ const Navbar = () => {
               className={`block py-2 ${
                 currentPath === '/blogs'
                   ? 'text-blue-500 font-semibold'
-                  : 'text-gray-500'
+                  : 'text-gray-900'
               }`}
             >
               Blogs
@@ -276,7 +265,7 @@ const Navbar = () => {
               className={`block py-2 ${
                 currentPath === '/my-blog'
                   ? 'text-blue-500 font-semibold'
-                  : 'text-gray-500'
+                  : 'text-gray-900'
               }`}
             >
               My dashboard
@@ -286,7 +275,7 @@ const Navbar = () => {
               className={`block py-2 ${
                 currentPath === '/create-post'
                   ? 'text-blue-500 font-semibold'
-                  : 'text-gray-500'
+                  : 'text-gray-900'
               }`}
             >
               Create new post
@@ -301,30 +290,28 @@ const Navbar = () => {
                     {session?.user?.email}
                   </span>
                 </div>
+
                 <div className="py-2">
-                  <button
-                    type="submit"
-                    className="block w-full text-center font-bold text-white rounded-md bg-slate-500 hover:bg-slate-800 py-2 text-sm"
-                    onClick={() => signOut()}
-                  >
-                    Sign out
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2"
+                      onClick={() => signOut()}
+                    >
+                      Sign out
+                    </Link>
+                  </div>
                 </div>
               </>
             )}
             {status !== 'authenticated' && (
               <div className="flex items-center gap-2 py-2">
-                <Link
-                  className="block w-full text-center font-bold text-gray-700 shadow-sm  bg-gray-50 hover:bg-gray-100 py-2 rounded-full hover:ring-purple-400"
-                  href="/login"
-                >
-                  Login
-                </Link>
-                <Link
-                  className="block w-full text-center font-bold text-gray-700 shadow-sm  bg-gray-50 hover:bg-gray-100 py-2 rounded-full"
-                  href="/register"
-                >
-                  Register
+                <Link href="/login">
+                  <button
+                    type="submit"
+                    className="lg:p-2 w-full text-center font-bold text-white rounded-full bg-slate-800 hover:bg-slate-500 p-4 text-sm"
+                  >
+                    Login or Create account
+                  </button>
                 </Link>
               </div>
             )}

@@ -54,25 +54,9 @@ const Comments = ({ post }) => {
   return (
     <div className="pl-4 border rounded-md mt-2">
       <>
-        <header className="flex justify-between ml-2 mr-2 items-center border-b border-grey-400">
-          <Link
-            href="#"
-            className="cursor-pointer py-4 flex items-center text-sm outline-none focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
-          >
-            <Image
-              src={post?.author?.image}
-              className="h-9 w-9 rounded-full object-cover"
-              alt={post?.author?.name}
-              width={39}
-              height={30}
-            />
-            <p className="block ml-2 font-bold">{post?.author?.name}</p>
-          </Link>
-          <span className="text-gray-600 text-sm font-bold">
-            {post?.comments.length} Discussion
-          </span>
-        </header>
-        <h3 class="mb-4 text-lg font-semibold text-gray-900">Comments</h3>
+        <hr className="mt-2 mb-2" />
+        <p className="text-gray-800 font-semibold">Comment</p>
+        <hr className="mt-2 mb-2" />
         {post?.comments && post?.comments?.length > 0 ? (
           post?.comments.map((comment, index) => (
             <section class="bg-white py-2 lg:py-1 " key={index}>
@@ -83,7 +67,6 @@ const Comments = ({ post }) => {
           <div className="flex justify-center mt-5">
             <span>This post has no comments yet.</span>
           </div>
-        
         )}
         <div>
           <div className="pt-0">

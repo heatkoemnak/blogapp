@@ -43,20 +43,18 @@ const PostList = () => {
     <div>
       {!loading ? (
         <>
-          <h1 className="font-bold py-6">Posts</h1>
-          
-            {posts.map((post, index) => (
-              <div className="flex flex-col mt-1 shadow-md" key={index}>
-                <Post post={post} />
-              </div>
-            ))}
-          
+          <h1 className="font-bold text-3xl py-6">All posts</h1>
+          {posts.map((post, index) => (
+            <div className="flex flex-col border my-4 " key={index}>
+              <Post post={post} />
+            </div>
+          ))}
         </>
       ) : (
         <LoadingSpinner />
       )}
     </div>
-  )
+  );
 };
 
 export default PostList;

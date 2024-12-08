@@ -22,146 +22,117 @@ const Post = ({ post }) => {
     if (!window.confirm('Are you sure you want to delete this post?')) {
       return;
     }
-    console.log(id);
     try {
       await deleteResource(id);
       window.location.reload();
     } catch (error) {
-      console.log(error);
       setError(error.message);
     }
   };
-  const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
+
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };
+
   if (error) {
     return <Error error={error} />;
   }
+
   if (loading) {
     return <LoadingSpinner />;
   }
 
   return (
-    <>
-      <div className="bg-white overflow-hidden px-0 py-5">
-        <div className="flex flex-col min-w-full">
-          <div className="relative col-span-2 w-full">
-            <div className="mb-2 ml-2">
-              Posted by:{' '}
-              <span className="font-bold ">{post?.author?.name}</span>{' '}
-              {post?.publishedAt}
-            </div>
-            <div className="relative">
-              <div className="max-w-full mx-auto">
-                <Link href={`/blogs/${post.id}`}>
-                  <Image
-                    src={post?.image ? post?.image : '/youtube-thumbnail.png'}
-                    className="w-full max-h-[550px] object-cover" // Ensures the image covers the container
-                    alt="Post Image"
-                    width={1200}
-                    height={550}
-                    quality={100}
-                    placeholder="blur"
-                    layout="responsive"
-                    loading="lazy"
-                    blurDataURL={post?.image}
-                  />
-                </Link>
-              </div>
-              <Link
-                href={`/blogs/category/${post.category.id}`}
-                className="absolute top-4 left-4 text-white bg-slate-800 rounded-full py-1 px-2 text-xs"
+    <section className="bg-white dark:bg-gray-900">
+      <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+        <div className="mr-auto place-self-center lg:col-span-5">
+          <h1 className="max-w-90 mb-4 text-1xl font-extrabold tracking-tight text-[#201515] md:text-2xl xl:text-4xl">
+            {post.title}
+          </h1>
+          <p className="max-w-96 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+            {isExpanded ? post.body : post.body.substring(0, 300)}
+            {post.body?.length >= 250 && (
+              <span
+                onClick={toggleText}
+                className="text-blue-500 cursor-pointer"
               >
-                {post.category.name}
-              </Link>
-              {session?.user?.email === post.author.email && (
-                <div className="absolute top-4 right-4 flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => deletePost(post.id)}
-                    className="cursor-pointer text-white bg-red-500 p-1 rounded-full hover:bg-red-700"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                  <Link
-                    href={`/blogs/update/${post.id}`}
-                    className="cursor-pointer text-white bg-blue-500 p-1 rounded-full hover:bg-blue-700"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                      <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-                    </svg>
-                  </Link>
-                </div>
-              )}
-            </div>
-            <div className="ml-2">
-              <h1 className="font-bold py-2">{post.title}</h1>
-              <p>
-                {isExpanded ? post.body : post.body.substring(0, 250)}
-                {post.body && post.body.length >= 250 && (
-                  <span
-                    onClick={toggleText}
-                    className="text-blue-500 cursor-pointer"
-                  >
-                    ...
-                    {isExpanded ? 'Show Less' : 'Show More'}
-                  </span>
-                )}
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between mt-5 mx-2">
-            <span
-              className="flex justify-end text-gray-600 text-sm font-bold cursor-pointer "
-              onClick={() => setShowComment(!showComment)}
-            >
-              {post?.comments && post?.comments?.length > 0
-                ? post?.comments?.length
-                : ''}
-              <span className="ml-2">
-                {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
+                <a
+                  href="#"
+                  className="inline-flex items-center justify-center px-5 py-2 text-xs font-sm text-center text-gray-900 "
+                >
+                  {isExpanded ? 'Show Less' : 'Show More'}
+                </a>
               </span>
-            </span>
-            <span className="flex justify-start">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-                />
-              </svg>
+            )}
+          </p>
+
+          <div className="flex gap-2 items-center mb-2 ml-2">
+            <Link href={`/blogs/${post.id}`}>
+              <Image
+                src={
+                  post?.author?.image ||
+                  'https://getillustrations.b-cdn.net//photos/pack/3d-avatar-male_lg.png'
+                }
+                className="rounded-full border-2 p-1"
+                alt="Post Author"
+                width={45}
+                height={45}
+              />
+            </Link>
+            <span className="font-bold">{post?.author?.name}</span>
+            <span className="font-sans text-sm mx-2 text-gray-500">
+              {post?.publishedAt}
             </span>
           </div>
-          {showComment && <Comments post={post} />}
+        </div>
+        <div className="lg:col-span-7 lg:flex rounded-lg">
+          <Link href={`/blogs/${post.id}`}>
+            <Image
+              src={post?.image || '/youtube-thumbnail.png'}
+              className="rounded-lg"
+              alt="Post Image"
+              width={1200}
+              height={550}
+              quality={100}
+              loading="lazy"
+            />
+          </Link>
         </div>
       </div>
-    </>
+      <div className="flex items-center justify-between text-gray-500">
+        <button className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
+          <svg
+            className="w-5 h-5 fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 21.35l-1.45-1.32C6.11 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-4.11 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+          <span>42 Likes</span>
+        </button>
+        <button
+          className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"
+          onClick={() => setShowComment(!showComment)}
+        >
+          <svg
+            className="w-5 h-5 fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fillRule="evenodd"
+              clipRule="evenodd"
+              d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22ZM8 13.25C7.58579 13.25 7.25 13.5858 7.25 14C7.25 14.4142 7.58579 14.75 8 14.75H13.5C13.9142 14.75 14.25 14.4142 14.25 14C14.25 13.5858 13.9142 13.25 13.5 13.25H8ZM7.25 10.5C7.25 10.0858 7.58579 9.75 8 9.75H16C16.4142 9.75 16.75 10.0858 16.75 10.5C16.75 10.9142 16.4142 11.25 16 11.25H8C7.58579 11.25 7.25 10.9142 7.25 10.5Z"
+            />
+          </svg>
+          <span>
+            {post?.comments?.length || 0}{' '}
+            {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
+          </span>
+        </button>
+      </div>
+      {showComment && <Comments post={post} />}
+    </section>
   );
 };
 
