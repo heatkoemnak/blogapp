@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FaRegEdit } from 'react-icons/fa';
+import Logo from './Logo';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -42,11 +43,7 @@ const Navbar = () => {
   return (
     <nav className="px-5 max-w-8xl mx-auto border-b">
       <div className="container mx-auto py-4 flex justify-between items-center">
-        <Link href={'/'}>
-          <h1 class="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl bg-gradient-to-r from-orange-400 font-black to-purple-500 bg-clip-text text-transparent">
-            Power.ME
-          </h1>
-        </Link>
+        <Logo />
         <div className="lg:hidden flex items-center">
           {status === 'authenticated' ? (
             <button
@@ -224,12 +221,6 @@ const Navbar = () => {
                       >
                         Sign out
                       </button>
-                      <button
-                        type="button"
-                        class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-                      >
-                        Purple to Pink
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -238,7 +229,7 @@ const Navbar = () => {
           ) : (
             <div className="flex items-center gap-2">
               <Link
-                class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 "
+                class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-1 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 "
                 href="/login"
               >
                 Login or Create Account
@@ -270,17 +261,19 @@ const Navbar = () => {
             >
               My dashboard
             </Link>
+
             <Link
-              href="/create-post"
-              className={`block py-2 ${
+              className={`flex gap-2 items-center text-white bg-gradient-to-r from-orange-500 to-purple-500 hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  ${
                 currentPath === '/create-post'
                   ? 'text-blue-500 font-semibold'
                   : 'text-gray-900'
               }`}
+              href="/create-post"
             >
-              Create new post
+              <FaRegEdit />
+              Write
             </Link>
-            {status === 'authenticated' && (
+            {status === 'authenticated' ? (
               <>
                 <div className="flex flex-col py-2">
                   <span className="font-bold text-gray-700">
@@ -290,7 +283,6 @@ const Navbar = () => {
                     {session?.user?.email}
                   </span>
                 </div>
-
                 <div className="py-2">
                   <div className="flex items-center gap-2">
                     <Link
@@ -302,8 +294,7 @@ const Navbar = () => {
                   </div>
                 </div>
               </>
-            )}
-            {status !== 'authenticated' && (
+            ) : (
               <div className="flex items-center gap-2 py-2">
                 <Link href="/login">
                   <button

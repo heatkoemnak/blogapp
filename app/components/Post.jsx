@@ -43,43 +43,63 @@ const Post = ({ post }) => {
   }
 
   return (
-    <section className="bg-white dark:bg-gray-900">
-      <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+    <section className="bg-white ">
+      <div className="grid max-w-screen-xl p-5 mx-auto lg:gap-8 xl:gap-0 lg:grid-cols-12">
         <div className="mr-auto place-self-center lg:col-span-5">
-          <h1 className="max-w-90 mb-4 text-1xl font-extrabold tracking-tight text-[#201515] md:text-2xl xl:text-4xl">
+          <div className="lg:hidden flex gap-2 items-center mb-2 ml-2">
+            <Link className="lg:flex" href={`/blogs/${post.id}`}>
+              <Image
+                src={
+                  post?.author?.image ||
+                  'https://getillustrations.b-cdn.net//photos/pack/3d-avatar-male_lg.png'
+                }
+                className="rounded-full border-1"
+                alt="Post Author"
+                width={35}
+                height={35}
+              />
+            </Link>
+            <span className="font-semibold text-gray-600">
+              {post?.author?.name}
+            </span>
+            <span className="font-sans text-sm mx-2 text-gray-500">
+              {post?.publishedAt}
+            </span>
+          </div>
+          <h1 className="max-w-90 mb-4 text-2xl lg:font-extrabold tracking-tight text-[#201515] md:text-2xl xl:text-4xl">
             {post.title}
           </h1>
-          <p className="max-w-96 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+          <p className="max-w-96 font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl ">
             {isExpanded ? post.body : post.body.substring(0, 300)}
             {post.body?.length >= 250 && (
               <span
                 onClick={toggleText}
                 className="text-blue-500 cursor-pointer"
               >
-                <a
-                  href="#"
-                  className="inline-flex items-center justify-center px-5 py-2 text-xs font-sm text-center text-gray-900 "
-                >
-                  {isExpanded ? 'Show Less' : 'Show More'}
-                </a>
+                ...
+                <span className="inline-flex font-sans text-sm items-center justify-center font-semibold text-blue-500 duration-200 hover:text-blue-500 focus:outline-none focus-visible:outline-gray-600">
+                  {isExpanded ? 'Read Less' : 'Read More'} &nbsp; →{' '}
+                </span>
               </span>
             )}
           </p>
 
           <div className="flex gap-2 items-center mb-2 ml-2">
-            <Link href={`/blogs/${post.id}`}>
+            <Link className="hidden lg:flex" href={`/blogs/${post.id}`}>
               <Image
                 src={
                   post?.author?.image ||
                   'https://getillustrations.b-cdn.net//photos/pack/3d-avatar-male_lg.png'
                 }
-                className="rounded-full border-2 p-1"
+                className="rounded-full border-1"
                 alt="Post Author"
-                width={45}
-                height={45}
+                width={35}
+                height={35}
               />
             </Link>
-            <span className="font-bold">{post?.author?.name}</span>
+            <span className="font-semibold text-gray-600">
+              {post?.author?.name}
+            </span>
             <span className="font-sans text-sm mx-2 text-gray-500">
               {post?.publishedAt}
             </span>
@@ -99,7 +119,7 @@ const Post = ({ post }) => {
           </Link>
         </div>
       </div>
-      <div className="flex items-center justify-between text-gray-500">
+      <div className="flex pb-5 px-5 items-center justify-between text-gray-500">
         <button className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
           <svg
             className="w-5 h-5 fill-current"

@@ -55,8 +55,8 @@ const Login = () => {
   }, [status, data]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 sm:px-6 lg:px-8 ">
-      <div className="w-full max-w-md space-y-2 p-4 mb-12 bg-white">
+    <div className="flex  min-h-screen items-center justify-center px-4 sm:px-6 lg:px-8 ">
+      <div className="w-full max-w-md rounded-2xl space-y-2 p-8 mb-12 bg-white">
         <div>
           <h4 className="text-center text-2xl font-extrabold text-gray-900">
             Login to your account
@@ -143,7 +143,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="bg-gradient-to-r from-orange-400 font-black to-purple-500 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Login
             </button>

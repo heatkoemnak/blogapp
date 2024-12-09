@@ -18,7 +18,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="bg-gradient-to-r from-slate-100 to-slate-200">
         <BlogProvider>
           <AuthProvider session={session}>
             <Navbar />
