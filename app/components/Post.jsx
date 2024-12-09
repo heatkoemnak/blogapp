@@ -84,8 +84,8 @@ const Post = ({ post }) => {
             )}
           </p>
 
-          <div className="flex gap-2 items-center mb-2 ml-2">
-            <Link className="hidden lg:flex" href={`/blogs/${post.id}`}>
+          <div className="hidden lg:flex  gap-2 items-center mb-2 ml-2">
+            <Link className=" " href={`/blogs/${post.id}`}>
               <Image
                 src={
                   post?.author?.image ||
@@ -134,6 +134,7 @@ const Post = ({ post }) => {
           className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"
           onClick={() => setShowComment(!showComment)}
         >
+          {/* comment icon */}
           <svg
             className="w-5 h-5 fill-current"
             xmlns="http://www.w3.org/2000/svg"

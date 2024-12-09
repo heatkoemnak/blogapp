@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FaRegEdit } from 'react-icons/fa';
 import Logo from './Logo';
+import ProfileDropdown from './ProfileDropdown';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -44,8 +45,9 @@ const Navbar = () => {
     <nav className="px-5 max-w-8xl mx-auto border-b">
       <div className="container mx-auto py-4 flex justify-between items-center">
         <Logo />
+
         <div className="lg:hidden flex items-center">
-          {status === 'authenticated' ? (
+          {status !== 'authenticated' ? (
             <button
               type="button"
               className="flex w-full justify-center items-center gap-1 rounded-full px-2 py-2x bg-white text-sm font-semibold text-gray-900 hover:bg-gray-50"
@@ -122,6 +124,9 @@ const Navbar = () => {
             placeholder="Search"
           />
         </div>
+
+        {/* close search */}
+
         <div className="hidden lg:flex space-x-5 items-center">
           <Link
             href="/blogs"
@@ -154,78 +159,81 @@ const Navbar = () => {
             <FaRegEdit />
             Write
           </Link>
-          {status === 'authenticated' ? (
-            <div className="relative inline-block text-left" ref={popupRef}>
-              <div>
-                <button
-                  type="button"
-                  className="flex w-full justify-center items-center rounded-full px-2 py-2 ring-pink-500 ring-inset border bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 hover:bg-gray-50"
-                  onClick={() => setShow(!show)}
-                >
-                  <span className="mr-2">{session?.user?.name}</span>
-                  {session?.user?.image ? (
-                    <Image
-                      src={session?.user?.image}
-                      width={25}
-                      height={25}
-                      alt="Profile Image"
-                      className="rounded-full"
-                    />
-                  ) : (
-                    <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
-                      {getInitial(session?.user?.name)}
-                    </div>
-                  )}
-                </button>
-              </div>
-              {show && (
-                <div
-                  className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                  role="menu"
-                  aria-orientation="vertical"
-                  onClick={() => setShow(false)}
-                  aria-labelledby="menu-button"
-                  tabIndex="-1"
-                >
-                  <div className="py-1" role="none">
-                    {session && (
-                      <div className="flex flex-col">
-                        <span className="block font-bold px-4 py-2 text-sm text-gray-700">
-                          {session?.user?.name}
-                        </span>
-                        <span className="block text-sm px-4 text-gray-700">
-                          {session?.user?.email}
-                        </span>
+          {status !== 'authenticated' ? (
+            <>
+              <div className="relative inline-block text-left" ref={popupRef}>
+                <div>
+                  <button
+                    type="button"
+                    className="flex w-full justify-center items-center rounded-full px-2 py-2 ring-pink-500 ring-inset border bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 hover:bg-gray-50"
+                    onClick={() => setShow(!show)}
+                  >
+                    <span className="mr-2">{session?.user?.name}</span>
+                    {session?.user?.image ? (
+                      <Image
+                        src={session?.user?.image}
+                        width={25}
+                        height={25}
+                        alt="Profile Image"
+                        className="rounded-full"
+                      />
+                    ) : (
+                      <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
+                        {getInitial(session?.user?.name)}
                       </div>
                     )}
-                    <Link
-                      href="/create-post"
-                      onClick={() => setShow(false)}
-                      className="block hover:underline px-4 py-2 text-sm text-gray-700"
-                    >
-                      Create post
-                    </Link>
-
-                    <Link
-                      href="/my-blog"
-                      onClick={() => setShow(false)}
-                      className="block hover:underline px-4 py-2 text-sm text-gray-700"
-                    >
-                      My dashboard
-                    </Link>
-                    <div className="mx-2 my-2">
-                      <button
-                        type="submit"
-                        className="block w-full text-center font-bold text-white rounded-md bg-slate-500 hover:bg-slate-800 py-2 text-sm"
-                        onClick={() => signOut()}
-                      >
-                        Sign out
-                      </button>
-                    </div>
-                  </div>
+                  </button>
                 </div>
-              )}
-            </div>
+                {show && (
+                  <ProfileDropdown />
+                  // <div
+                  //   className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  //   role="menu"
+                  //   aria-orientation="vertical"
+                  //   onClick={() => setShow(false)}
+                  //   aria-labelledby="menu-button"
+                  //   tabIndex="-1"
+                  // >
+                  //   <div className="py-1" role="none">
+                  //     {session && (
+                  //       <div className="flex flex-col">
+                  //         <span className="block font-bold px-4 py-2 text-sm text-gray-700">
+                  //           {session?.user?.name}
+                  //         </span>
+                  //         <span className="block text-sm px-4 text-gray-700">
+                  //           {session?.user?.email}
+                  //         </span>
+                  //       </div>
+                  //     )}
+                  //     <Link
+                  //       href="/create-post"
+                  //       onClick={() => setShow(false)}
+                  //       className="block hover:underline px-4 py-2 text-sm text-gray-700"
+                  //     >
+                  //       Create post
+                  //     </Link>
+
+                  //     <Link
+                  //       href="/my-blog"
+                  //       onClick={() => setShow(false)}
+                  //       className="block hover:underline px-4 py-2 text-sm text-gray-700"
+                  //     >
+                  //       My dashboard
+                  //     </Link>
+                  //     <div className="mx-2 my-2">
+                  //       <button
+                  //         type="submit"
+                  //         className="block w-full text-center font-bold text-white rounded-md bg-slate-500 hover:bg-slate-800 py-2 text-sm"
+                  //         onClick={() => signOut()}
+                  //       >
+                  //         Sign out
+                  //       </button>
+                  //     </div>
+                  //   </div>
+                  // </div>
+                )}
+              </div>
+            </>
           ) : (
             <div className="flex items-center gap-2">
               <Link
