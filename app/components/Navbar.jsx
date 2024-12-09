@@ -5,9 +5,10 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FaRegEdit } from 'react-icons/fa';
+import { CgClose } from 'react-icons/cg';
 import Logo from './Logo';
 import ProfileDropdown from './ProfileDropdown';
-
+import { HiMenu } from 'react-icons/hi';
 const Navbar = () => {
   const { status, data: session } = useSession();
   const currentPath = usePathname();
@@ -23,45 +24,41 @@ const Navbar = () => {
 
         <div className="lg:hidden flex items-center">
           {status === 'authenticated' ? (
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex w-full justify-center items-center gap-1 rounded-full px-2 py-2x text-sm font-semibold text-gray-900"
-            >
-              {session?.user?.image ? (
-                <Image
-                  src={session?.user?.image}
-                  width={30}
-                  height={30}
-                  alt="Profile Image"
-                  className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full"
-                />
-              ) : (
-                <div className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full">
-                  {getInitial(session?.user?.name)}
-                  {/* K */}
-                </div>
-              )}
-            </button>
+            <>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="flex w-full justify-center items-center gap-1 rounded-full px-2 py-2x text-sm font-semibold text-gray-900"
+              >
+                {session?.user?.image ? (
+                  <Image
+                    src={session?.user?.image}
+                    width={30}
+                    height={30}
+                    alt="Profile Image"
+                    className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full"
+                  />
+                ) : (
+                  <div className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full">
+                    {getInitial(session?.user?.name)}
+                    {/* K */}
+                  </div>
+                )}
+              </button>
+            </>
           ) : (
             <button
               className="text-gray-900 hover:text-gray-700 focus:outline-none"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              <svg
-                className="w-6 h-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
+              {!mobileMenuOpen ? (
+                <HiMenu size={30} />
+              ) : (
+                <CgClose
+                  size={30}
+                  className="bg-gradient-to-r from-orange-500 to-purple-500 p-1 text-white rounded-md"
                 />
-              </svg>
+              )}
             </button>
           )}
         </div>
