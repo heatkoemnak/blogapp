@@ -1,10 +1,12 @@
 import React from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { FaRegEdit } from 'react-icons/fa';
+import { usePathname } from 'next/navigation';
 
 const ProfileDropdown = () => {
   const { status, data: session } = useSession();
-
+  const currentPath = usePathname();
   return (
     <>
       <div className="absolute z-10 top-16 right-0 flex items-center justify-center">
@@ -23,7 +25,8 @@ const ProfileDropdown = () => {
                 <div className="font-medium relative text-xl leading-tight text-gray-900">
                   <span className="flex">
                     <span className="truncate relative pr-8">
-                      {session?.user.name}                  <span
+                      {session?.user.name}{' '}
+                      <span
                         aria-label="verified"
                         className="absolute top-1/2 -translate-y-1/2 right-0 inline-block rounded-full"
                       >
@@ -98,6 +101,17 @@ const ProfileDropdown = () => {
                   <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                 </svg>
                 <span>My Profile</span>
+              </Link>
+              <Link
+                className={`flex gap-2 items-center text-white bg-gradient-to-r from-orange-500 to-purple-500 hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  ${
+                  currentPath === '/create-post'
+                    ? 'text-blue-500 font-semibold'
+                    : 'text-gray-900'
+                }`}
+                href="/create-post"
+              >
+                <FaRegEdit size={24} />
+                Write
               </Link>
 
               <Link
@@ -174,34 +188,46 @@ const ProfileDropdown = () => {
               </Link>
             </nav>
           </div>
-
-          <div aria-label="footer" className="pt-2">
-            <button
-              type="button"
-              onClick={() => signOut()}
-              className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                className="w-5 h-5"
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+          {status === 'authenticated' ? (
+            <div aria-label="footer" className="pt-2">
+              <button
+                type="button"
+                onClick={() => signOut()}
+                className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
               >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                <path d="M9 12h12l-3 -3" />
-                <path d="M18 15l3 -3" />
-              </svg>
-              <span>Logout</span>
-            </button>
-          </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                  <path d="M9 12h12l-3 -3" />
+                  <path d="M18 15l3 -3" />
+                </svg>
+                <span>Logout</span>
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 py-2">
+              <Link href="/login">
+                <button
+                  type="submit"
+                  className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
+                >
+                  Login or Create account
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </>
