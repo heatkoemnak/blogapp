@@ -7,7 +7,7 @@ const ProfileDropdown = () => {
 
   return (
     <>
-      <div className="absolute z-10 right-0 flex items-center justify-center  bg-gray-100">
+      <div className="absolute z-10 top-16 right-0 flex items-center justify-center">
         <div className="w-full max-w-sm rounded-lg bg-white p-3 drop-shadow-xl divide-y divide-gray-200">
           <div aria-label="header" className="flex space-x-4 items-center p-4">
             <div
@@ -17,7 +17,7 @@ const ProfileDropdown = () => {
               <img
                 src={session?.user?.image}
                 alt="avatar Evan You"
-                className="w-16 h-16 shrink-0 rounded-full"
+                className="w-12 h-12 shrink-0 rounded-full"
               />
               <div className="space-y-2 flex flex-col flex-1 truncate">
                 <div className="font-medium relative text-xl leading-tight text-gray-900">
@@ -75,15 +75,15 @@ const ProfileDropdown = () => {
             </svg>
           </div>
           <div aria-label="navigation" className="py-2">
-            <nav className="grid gap-1">
+            <nav className="grid gap-1 text-md">
               <Link
                 href="/profile"
-                className="flex items-center leading-6 space-x-3 py-3 px-4 w-full text-lg text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
+                className="flex items-center space-x-3 py-2 px-4 w-full text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
-                  className="w-7 h-7"
+                  className="w-5 h-5"
                   width={24}
                   height={24}
                   viewBox="0 0 24 24"
@@ -102,12 +102,12 @@ const ProfileDropdown = () => {
 
               <Link
                 href="/my-blog"
-                className="flex items-center leading-6 space-x-3 py-3 px-4 w-full text-lg text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
+                className="flex items-center  space-x-3 py-2 px-4 w-full  text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
-                  className="w-7 h-7"
+                  className="w-5 h-5"
                   width={24}
                   height={24}
                   viewBox="0 0 24 24"
@@ -127,12 +127,12 @@ const ProfileDropdown = () => {
               </Link>
               <Link
                 href="/setting"
-                className="flex items-center leading-6 space-x-3 py-3 px-4 w-full text-lg text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
+                className="flex items-center  space-x-3 py-2 px-4 w-full  text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
-                  className="w-7 h-7"
+                  className="w-5 h-5"
                   width={24}
                   height={24}
                   viewBox="0 0 24 24"
@@ -150,12 +150,12 @@ const ProfileDropdown = () => {
               </Link>
               <Link
                 href="/help"
-                className="flex items-center leading-6 space-x-3 py-3 px-4 w-full text-lg text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
+                className="flex items-center  space-x-3 py-2 px-4 w-full  text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
-                  className="w-7 h-7"
+                  className="w-5 h-5"
                   width={24}
                   height={24}
                   viewBox="0 0 24 24"
@@ -179,12 +179,12 @@ const ProfileDropdown = () => {
             <button
               type="button"
               onClick={() => signOut()}
-              className="flex items-center space-x-3 py-3 px-4 w-full leading-6 text-lg text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
+              className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
-                className="w-7 h-7"
+                className="w-5 h-5"
                 width={24}
                 height={24}
                 viewBox="0 0 24 24"
