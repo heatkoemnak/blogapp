@@ -159,7 +159,7 @@ const Navbar = () => {
             <FaRegEdit />
             Write
           </Link>
-          {status !== 'authenticated' ? (
+          {status === 'authenticated' ? (
             <>
               <div className="relative inline-block text-left" ref={popupRef}>
                 <div>
