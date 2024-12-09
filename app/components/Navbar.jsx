@@ -161,9 +161,7 @@ const Navbar = () => {
       </div>
       {mobileMenuOpen && (
         <div className="lg:hidden">
-          <div className="p-4">
-            <ProfileDropdown />
-          </div>
+          <ProfileDropdown />
         </div>
       )}
     </nav>
