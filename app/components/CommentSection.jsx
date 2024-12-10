@@ -134,7 +134,7 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                     {activeSettings[comment.id] && (
                       <div className="absolute top-8 right-0 z-10 w-36 bg-white rounded-xl border">
                         <ul className="py-1 text-xs text-gray-700 ">
-                          {comment.author.email === session?.user?.email && (
+                          {comment.authorEmail === session?.user?.email && (
                             <>
                               <li>
                                 <a
@@ -254,6 +254,26 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                               class="py-1 text-sm text-gray-700 dark:text-gray-200"
                               aria-labelledby="dropdownMenuIconHorizontalButton"
                             >
+                              {reply.authorEmail === session?.user?.email && (
+                                <>
+                                  <li>
+                                    <a
+                                      href="#"
+                                      className="block py-2 px-4  hover:text-orange-700"
+                                    >
+                                      Edit
+                                    </a>
+                                  </li>
+                                  <li>
+                                    <a
+                                      href="#"
+                                      className="block py-2 px-4  hover:text-orange-700"
+                                    >
+                                      Delete
+                                    </a>
+                                  </li>
+                                </>
+                              )}
                               <li>
                                 <a
                                   href="#"
