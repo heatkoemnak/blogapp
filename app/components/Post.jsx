@@ -9,8 +9,10 @@ import { useRouter } from 'next/navigation';
 import Error from './Error';
 import LoadingSpinner from './LoadingSpinner';
 import { deleteResource } from '../utils/api';
+import CommentSection from './CommentSection';
 
 const Post = ({ post }) => {
+  console.log(post);
   const router = useRouter();
   const { data: session } = useSession();
   const [error, setError] = useState('');
@@ -71,6 +73,9 @@ const Post = ({ post }) => {
           </h1>
           <p className="max-w-96 font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl ">
             {isExpanded ? post.body : post.body.substring(0, 300)}
+            <br/>
+            <Link className='text-blue-500 ' href={post.links[0]}>{post.links[0]}</Link>
+            <br/>
             {post.body?.length >= 250 && (
               <span
                 onClick={toggleText}
@@ -152,7 +157,8 @@ const Post = ({ post }) => {
           </span>
         </button>
       </div>
-      {showComment && <Comments post={post} />}
+      {/* {showComment && <Comments post={post} />} */}
+      {showComment && <CommentSection post={post} />}
     </section>
   );
 };

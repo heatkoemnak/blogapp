@@ -64,7 +64,6 @@ export async function GET() {
     if (!posts) {
       throw new Error('Post not found .');
     }
-    console.log(posts);
     return NextResponse.json(posts, { status: 200 });
   } catch (error) {
     console.log(error);
