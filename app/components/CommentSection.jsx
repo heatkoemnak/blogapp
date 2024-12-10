@@ -12,6 +12,7 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
   console.log(post);
   const [loading, setLoading] = useState(false);
   const [activeSettings, setActiveSettings] = useState({});
+  const [activeReplySettings, setReplySettings] = useState({});
   const { data: session } = useSession();
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState(post?.comments || []);
@@ -60,6 +61,12 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
     setActiveSettings((prev) => ({
       ...prev,
       [commentId]: !prev[commentId], // Toggle the specific comment's settings visibility
+    }));
+  };
+  const toggleReplySetting = (replyId) => {
+    setReplySettings((prev) => ({
+      ...prev,
+      [replyId]: !prev[replyId], // Toggle the specific comment's settings visibility
     }));
   };
 
@@ -232,8 +239,7 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                             </div>
                           </div>
                           <button
-                            id="dropdownComment2Button"
-                            data-dropdown-toggle="dropdownComment2"
+                            onClick={() => toggleReplySetting(reply.id)}
                             class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40"
                             type="button"
                           >
@@ -246,60 +252,61 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                             >
                               <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
                             </svg>
-                            <span class="sr-only">Comment settings</span>
+                            <span class="sr-only">Reply settings</span>
                           </button>
                           {/* <!-- Dropdown menu --> */}
-                          <div class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                            <ul
-                              class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                              aria-labelledby="dropdownMenuIconHorizontalButton"
-                            >
-                              {reply.authorEmail === session?.user?.email && (
-                                <>
-                                  <li>
-                                    <a
-                                      href="#"
-                                      className="block py-2 px-4  hover:text-orange-700"
-                                    >
-                                      Edit
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a
-                                      href="#"
-                                      className="block py-2 px-4  hover:text-orange-700"
-                                    >
-                                      Delete
-                                    </a>
-                                  </li>
-                                </>
-                              )}
-                              <li>
-                                <a
-                                  href="#"
-                                  class="block py-2 px-4  hover:text-orange-700 dark:hover:text-white"
-                                >
-                                  Edit
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="#"
-                                  class="block py-2 px-4  hover:text-orange-700 dark:hover:text-white"
-                                >
-                                  Remove
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="#"
-                                  class="block py-2 px-4  hover:text-orange-700 dark:hover:text-white"
-                                >
-                                  Report
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
+                          {activeReplySettings[reply.id] && (
+                            <div class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                              <ul
+                                class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                              >
+                                {reply.authorEmail === session?.user?.email && (
+                                  <>
+                                    <li>
+                                      <a
+                                        href="#"
+                                        className="block py-2 px-4  hover:text-orange-700"
+                                      >
+                                        Edit
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a
+                                        href="#"
+                                        className="block py-2 px-4  hover:text-orange-700"
+                                      >
+                                        Delete
+                                      </a>
+                                    </li>
+                                  </>
+                                )}
+                                <li>
+                                  <a
+                                    href="#"
+                                    class="block py-2 px-4  hover:text-orange-700 dark:hover:text-white"
+                                  >
+                                    Edit
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    class="block py-2 px-4  hover:text-orange-700 dark:hover:text-white"
+                                  >
+                                    Remove
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    class="block py-2 px-4  hover:text-orange-700 dark:hover:text-white"
+                                  >
+                                    Report
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
                         </footer>
                         <p class="text-gray-500 dark:text-gray-400 ">
                           {reply.text}
