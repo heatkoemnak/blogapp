@@ -4,7 +4,7 @@ import { FaFacebook, FaInstagramSquare, FaTiktok, FaWhatsappSquare } from 'react
 
 const Footer = () => {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full -z-1">
       {/* Footer  */}
       <footer className="w-full h-fit bg-black text-white relative bottom-0">
         <div className="w-full mx-auto sm:px-10 px-4 pb-10">

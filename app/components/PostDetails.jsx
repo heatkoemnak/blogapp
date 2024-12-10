@@ -11,7 +11,7 @@ import LoadingSpinner from './LoadingSpinner';
 import { deleteResource } from '../utils/api';
 import CommentSection from './CommentSection';
 
-const Post = ({ post }) => {
+const PostDetails = ({ post }) => {
   console.log(post);
   const router = useRouter();
   const [error, setError] = useState('');
@@ -44,9 +44,22 @@ const Post = ({ post }) => {
   }
 
   return (
-    <section className="bg-white ">
-      <div className="grid max-w-screen-xl p-5 mx-auto lg:gap-8 xl:gap-0 lg:grid-cols-12">
-        <div className="mr-auto place-self-center lg:col-span-5">
+    <section className=" max-w-2xl lg:mx-auto  mt-10 mx-8">
+      <div className="lg:max-w-3xl ">
+        <div className="lg:col-span-7 lg:flex rounded-lg">
+          <Link href={`/blogs/${post.id}`}>
+            <Image
+              src={post?.image || '/youtube-thumbnail.png'}
+              className="rounded-lg"
+              alt="Post Image"
+              width={1200}
+              height={550}
+              quality={100}
+              loading="lazy"
+            />
+          </Link>
+        </div>
+        <div className="mr-auto place-self-center mt-2 lg:col-span-5">
           <div className="lg:hidden flex gap-2 items-center mb-2 ml-2">
             <Link className="lg:flex" href={`/blogs/${post.id}`}>
               <Image
@@ -70,7 +83,7 @@ const Post = ({ post }) => {
           <h1 className="max-w-90 mb-4 text-2xl lg:font-extrabold tracking-tight text-[#201515] md:text-2xl xl:text-4xl">
             {post.title}
           </h1>
-          <p className="max-w-96 font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl ">
+          <p className=" font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl ">
             {isExpanded ? post.body : post.body.substring(0, 300)}
             <br />
             <Link className="text-blue-500 " href={post.links[0]}>
@@ -111,21 +124,8 @@ const Post = ({ post }) => {
             </span>
           </div>
         </div>
-        <div className="lg:col-span-7 lg:flex rounded-lg">
-          <Link href={`/blogs/${post.id}`}>
-            <Image
-              src={post?.image || '/youtube-thumbnail.png'}
-              className="rounded-lg"
-              alt="Post Image"
-              width={1200}
-              height={550}
-              quality={100}
-              loading="lazy"
-            />
-          </Link>
-        </div>
       </div>
-      <div className="flex pb-5 px-5 items-center justify-between text-gray-500">
+      <div className="flex mt-5 mb-5 items-center justify-between text-gray-500">
         <button className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
           <svg
             className="w-5 h-5 fill-current"
@@ -158,11 +158,11 @@ const Post = ({ post }) => {
           </span>
         </button>
       </div>
-      
+
       {/* {showComment && <Comments post={post} />} */}
-      {showComment && <CommentSection post={post} showComment={showComment} setShowComment={setShowComment} />}
+      {/* {showComment && <CommentSection post={post} showComment={showComment} setShowComment={setShowComment} />} */}
     </section>
   );
 };
 
-export default Post;
+export default PostDetails;

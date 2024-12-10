@@ -2,40 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  margin: 5px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ff9100;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
+/* Handle */
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-} */
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ff9100;
+  
+}
 .post-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  
 }
 
 .post-card {
@@ -79,11 +68,19 @@ body {
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
