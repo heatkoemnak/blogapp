@@ -3,9 +3,11 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-
+import Error from './Error';
+import LoadingSpinner from './LoadingSpinner';
 const CommentSection = ({ post }) => {
   console.log(post);
+  const [loading, setLoading] = useState(false);
   const [activeSettings, setActiveSettings] = useState({});
   const { data: session } = useSession();
   const [commentText, setCommentText] = useState('');
@@ -18,7 +20,9 @@ const CommentSection = ({ post }) => {
   //   const formattedDate = date.toLocaleDateString('en-US', options);
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
+
     if (commentText.trim() === '') return;
+    setLoading(true);
     try {
       const response = await fetch('/api/comments', {
         method: 'POST',
@@ -39,6 +43,8 @@ const CommentSection = ({ post }) => {
       if (response.ok) {
         const newComment = await response.json();
         setComments([...comments, newComment]);
+        window.location.reload();
+        setLoading(false);
       } else {
         throw new Error('Failed to post comment');
       }
@@ -81,7 +87,11 @@ const CommentSection = ({ post }) => {
             type="submit"
             className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg bg-gradient-to-r from-orange-500 to-purple-500 focus:ring-1 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
           >
-            Post comment
+            {loading ? (
+              <div className="w-6 h-6 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-amber-500"></div>
+            ) : (
+              'Post comment'
+            )}
           </button>
         </form>
         {post?.comments?.length > 0 ? (
