@@ -3,22 +3,18 @@ import React, { useState } from 'react';
 import styles from '@/app/globals.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-import Comments from './Comments';
-import { useRouter } from 'next/navigation';
+import { BsThreeDots } from 'react-icons/bs';
 import Error from './Error';
 import LoadingSpinner from './LoadingSpinner';
 import { deleteResource } from '../utils/api';
-import CommentSection from './CommentSection';
+import { useSession } from 'next-auth/react';
 
 const PostDetails = ({ post }) => {
   console.log(post);
-  const router = useRouter();
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
   const [showComment, setShowComment] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false); // State for toggling text display
-
+  const [toggleThreeDot, setToggleThreeDot] = useState(false);
   const deletePost = async (id) => {
     if (!window.confirm('Are you sure you want to delete this post?')) {
       return;
@@ -34,18 +30,13 @@ const PostDetails = ({ post }) => {
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };
-
-  if (error) {
-    return <Error error={error} />;
-  }
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  const toggleThreeDots = () => {
+    setToggleThreeDot(!toggleThreeDot);
+  };
 
   return (
-    <section className=" max-w-2xl lg:mx-auto  mt-10 mx-8">
-      <div className="lg:max-w-3xl ">
+    <section className="max-w-2xl mx-auto mt-10 px-8 relative">
+      <div className="lg:max-w-3xl">
         <div className="lg:col-span-7 lg:flex rounded-lg">
           <Link href={`/blogs/${post.id}`}>
             <Image
@@ -59,31 +50,88 @@ const PostDetails = ({ post }) => {
             />
           </Link>
         </div>
-        <div className="mr-auto place-self-center mt-2 lg:col-span-5">
-          <div className="lg:hidden flex gap-2 items-center mb-2 ml-2">
-            <Link className="lg:flex" href={`/blogs/${post.id}`}>
-              <Image
-                src={
-                  post?.author?.image ||
-                  'https://getillustrations.b-cdn.net//photos/pack/3d-avatar-male_lg.png'
-                }
-                className="rounded-full border-1"
-                alt="Post Author"
-                width={35}
-                height={35}
-              />
-            </Link>
-            <span className="font-semibold text-gray-600">
-              {post?.author?.name}
-            </span>
-            <span className="font-sans text-sm mx-2 text-gray-500">
-              {post?.publishedAt}
-            </span>
+        <div className="mr-auto place-self-center  mt-2 lg:col-span-5">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <Link className="lg:flex" href={`/blogs/${post.id}`}>
+                <Image
+                  src={
+                    post?.author?.image ||
+                    'https://getillustrations.b-cdn.net//photos/pack/3d-avatar-male_lg.png'
+                  }
+                  className="rounded-full border-1"
+                  alt="Post Author"
+                  width={35}
+                  height={35}
+                />
+              </Link>
+              <div className="flex flex-col lg:flex-row">
+                <span className="font-semibold text-gray-600">
+                  {post?.author?.name}
+                </span>
+                <span className="font-sans text-sm mx-2 text-gray-500">
+                  {post?.publishedAt}
+                </span>
+              </div>
+            </div>
+            <div className="relative">
+              <button
+                onClick={toggleThreeDots}
+                className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"
+              >
+                <BsThreeDots />
+              </button>
+              {toggleThreeDot && (
+                <div className="absolute right-0 z-10 w-36 bg-white rounded-xl border">
+                  <ul className="py-1 text-xs text-gray-700">
+                    {post?.author?.authorEmail !== session?.user?.email && (
+                      <>
+                        <li>
+                          <a
+                            href="#"
+                            className="block py-2 px-4 hover:text-orange-700"
+                          >
+                            Edit
+                          </a>
+                        </li>
+                        <li>
+                          <button
+                            type="submit"
+                            onClick={() => deletePost(post.id)}
+                            className="block py-2 px-4 hover:text-orange-700"
+                          >
+                            Delete
+                          </button>
+                        </li>
+                      </>
+                    )}
+
+                    <li>
+                      <a
+                        href="#"
+                        className="block py-2 px-4 hover:text-orange-600"
+                      >
+                        Hide
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#"
+                        className="block py-2 px-4 hover:text-orange-700"
+                      >
+                        Report
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
+
           <h1 className="max-w-90 mb-4 text-2xl lg:font-extrabold tracking-tight text-[#201515] md:text-2xl xl:text-4xl">
             {post.title}
           </h1>
-          <p className=" font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl ">
+          <p className="font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl">
             {isExpanded ? post.body : post.body.substring(0, 300)}
             <br />
             <Link className="text-blue-500 " href={post.links[0]}>
@@ -97,32 +145,11 @@ const PostDetails = ({ post }) => {
               >
                 ...
                 <span className="inline-flex font-sans text-sm items-center justify-center font-semibold text-blue-500 duration-200 hover:text-blue-500 focus:outline-none focus-visible:outline-gray-600">
-                  {isExpanded ? 'Read Less' : 'Read More'} &nbsp; →{' '}
+                  {isExpanded ? 'Read Less' : 'Read More'} &nbsp; →
                 </span>
               </span>
             )}
           </p>
-
-          <div className="hidden lg:flex  gap-2 items-center mb-2 ml-2">
-            <Link className=" " href={`/blogs/${post.id}`}>
-              <Image
-                src={
-                  post?.author?.image ||
-                  'https://getillustrations.b-cdn.net//photos/pack/3d-avatar-male_lg.png'
-                }
-                className="rounded-full border-1"
-                alt="Post Author"
-                width={35}
-                height={35}
-              />
-            </Link>
-            <span className="font-semibold text-gray-600">
-              {post?.author?.name}
-            </span>
-            <span className="font-sans text-sm mx-2 text-gray-500">
-              {post?.publishedAt}
-            </span>
-          </div>
         </div>
       </div>
       <div className="flex mt-5 mb-5 items-center justify-between text-gray-500">
@@ -158,9 +185,6 @@ const PostDetails = ({ post }) => {
           </span>
         </button>
       </div>
-
-      {/* {showComment && <Comments post={post} />} */}
-      {/* {showComment && <CommentSection post={post} showComment={showComment} setShowComment={setShowComment} />} */}
     </section>
   );
 };

@@ -86,6 +86,40 @@ const ProfileDropdown = () => {
           <div aria-label="navigation" className="py-2">
             <nav className="grid gap-1 text-md">
               <Link
+                href="/blogs"
+                className="flex items-center space-x-3 py-2 px-4 w-full text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  className="w-5 h-5"
+                  width={24}
+                  height={24}
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                </svg>
+                <span>All blogs</span>
+              </Link>
+              <Link
+                className={`flex gap-2 items-center text-white bg-gradient-to-r from-orange-500 to-purple-500 hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  ${
+                  currentPath === '/create-post'
+                    ? 'text-blue-500 font-semibold'
+                    : 'text-gray-900'
+                }`}
+                href="/create-post"
+              >
+                <FaRegEdit size={24} />
+                Write
+              </Link>
+              <Link
                 href="/profile"
                 className="flex items-center space-x-3 py-2 px-4 w-full text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
               >
@@ -107,17 +141,6 @@ const ProfileDropdown = () => {
                   <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                 </svg>
                 <span>My Profile</span>
-              </Link>
-              <Link
-                className={`flex gap-2 items-center text-white bg-gradient-to-r from-orange-500 to-purple-500 hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  ${
-                  currentPath === '/create-post'
-                    ? 'text-blue-500 font-semibold'
-                    : 'text-gray-900'
-                }`}
-                href="/create-post"
-              >
-                <FaRegEdit size={24} />
-                Write
               </Link>
 
               <Link
@@ -241,3 +264,4 @@ const ProfileDropdown = () => {
 };
 
 export default ProfileDropdown;
+

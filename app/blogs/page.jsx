@@ -6,7 +6,7 @@ import PostList from '../components/PostList';
 const Blog = () => {
   return (
     <div className=''>
-      <Hero/>
+     
       <Categories />
       <PostList />
       <Footer/>

@@ -6,26 +6,19 @@ import React, { useEffect, useState } from 'react';
 import Error from './Error';
 import { LuReply } from 'react-icons/lu';
 import { CiMinimize1 } from 'react-icons/ci';
-import Post from './Post';
 import PostDetails from './PostDetails';
-const CommentSection = ({ post, showComment, setShowComment }) => {
-  console.log(post);
+const CommentSection = ({ post,  setShowComment }) => {
   const [loading, setLoading] = useState(false);
   const [activeSettings, setActiveSettings] = useState({});
   const [activeReplySettings, setReplySettings] = useState({});
   const { data: session } = useSession();
-  const [commentText, setCommentText] = useState('');
+  const [newCommentText, setCommentText] = useState('');
   const [comments, setComments] = useState(post?.comments || []);
 
-  useEffect(() => {
-    setComments(post.comments || []);
-  }, [post]);
-
-  //   const formattedDate = date.toLocaleDateString('en-US', options);
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
-    if (commentText.trim() === '') return;
+    if (newCommentText.trim() === '') return;
     setLoading(true);
     try {
       const response = await fetch('/api/comments', {
@@ -34,7 +27,7 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: commentText,
+          text: newCommentText,
           postId: post.id,
           authorEmail: session?.user?.email,
           publishedAt: new Date().toLocaleDateString('en-US', {
@@ -47,7 +40,6 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
       if (response.ok) {
         const newComment = await response.json();
         setComments([...comments, newComment]);
-        window.location.reload();
         setLoading(false);
       } else {
         throw new Error('Failed to post comment');
@@ -57,34 +49,38 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
     }
   };
 
-  const toggleCommentSetting = (commentId) => {
-    setActiveSettings((prev) => ({
-      ...prev,
-      [commentId]: !prev[commentId], // Toggle the specific comment's settings visibility
+  const toggleCommentSettings = (commentId) => {
+    setActiveSettings((prevSettings) => ({
+      ...prevSettings,
+      [commentId]: !prevSettings[commentId],
     }));
   };
-  const toggleReplySetting = (replyId) => {
-    setReplySettings((prev) => ({
-      ...prev,
-      [replyId]: !prev[replyId], // Toggle the specific comment's settings visibility
+
+  const toggleReplySettingsVisibility = (replyId) => {
+    setReplySettings((previousReplySettings) => ({
+      ...previousReplySettings,
+      [replyId]: !previousReplySettings[replyId],
     }));
   };
 
   return (
-    <div className="lg:flex h-screen overflow-y-scroll w-full fixed top-0 right-0 z-50 shadow-inner  bg-white dark:bg-gray-100 antialiased ">
+    <div
+      className="lg:flex h-screen overflow-y-scroll w-full fixed top-0 right-0 z-50 shadow-inner bg-white dark:bg-gray-100 antialiased "
+   
+    >
       <div className=" w-full ">
-        <PostDetails post={post} />
+        <PostDetails post={post}  />
       </div>
       <div className="lg:w-6/12 shadow-inner ">
         <div className="flex justify-between items-center p-4">
           <h2 className="text-lg lg:text-2xl font-bold text-gray-900">
             Discussion ({post.comments.length})
           </h2>
-          <div className="minimize">
-            <span className="lg:hidden">Most relevant</span>
+          <div className="flex items-center">
+            <span className="lg:hidden">Most Relevant</span>
             <CiMinimize1
               size={25}
-              onClick={() => setShowComment(!showComment)}
+              onClick={() => setShowComment(prevState => !prevState)}
               className="absolute top-6 right-5 cursor-pointer hover:text-orange-500"
             />
           </div>
@@ -127,7 +123,7 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                   <button
                     className="relative items-center p-2 text-sm font-medium text-gray-500 "
                     type="button"
-                    onClick={() => toggleCommentSetting(comment.id)}
+                    onClick={() => toggleCommentSettings(comment.id)}
                   >
                     <svg
                       className="w-4 h-4"
@@ -239,7 +235,7 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                             </div>
                           </div>
                           <button
-                            onClick={() => toggleReplySetting(reply.id)}
+                            onClick={() => toggleReplySettingsVisibility(reply.id)}
                             class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40"
                             type="button"
                           >
@@ -254,12 +250,9 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                             </svg>
                             <span class="sr-only">Reply settings</span>
                           </button>
-                          {/* <!-- Dropdown menu --> */}
                           {activeReplySettings[reply.id] && (
-                            <div class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                              <ul
-                                class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                              >
+                            <div className="absolute top-14 right-0 z-10 w-36 bg-white rounded-xl border">
+                              <ul className="py-1 text-xs text-gray-700 ">
                                 {reply.authorEmail === session?.user?.email && (
                                   <>
                                     <li>
@@ -283,23 +276,15 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                                 <li>
                                   <a
                                     href="#"
-                                    class="block py-2 px-4  hover:text-orange-700 dark:hover:text-white"
+                                    className="block py-2 px-4  hover:text-orange-700"
                                   >
-                                    Edit
+                                    Hide
                                   </a>
                                 </li>
                                 <li>
                                   <a
                                     href="#"
-                                    class="block py-2 px-4  hover:text-orange-700 dark:hover:text-white"
-                                  >
-                                    Remove
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="#"
-                                    class="block py-2 px-4  hover:text-orange-700 dark:hover:text-white"
+                                    className="block py-2 px-4  hover:text-orange-700"
                                   >
                                     Report
                                   </a>
@@ -362,7 +347,7 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
               id="comment"
               rows="4"
               onChange={(e) => setCommentText(e.target.value)}
-              value={commentText}
+              value={newCommentText}
               class="block p-2.5 w-full text-sm placeholder-gray-800  text-gray-900 rounded-lg "
               placeholder="Write your thoughts here..."
             ></textarea>
@@ -379,13 +364,13 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                 'Leave comment'
               )}
             </button>
-            <div class="flex ps-0 space-x-1 rtl:space-x-reverse sm:ps-2">
+            <div className="flex space-x-1 rtl:space-x-reverse sm:space-x-2">
               <button
                 type="button"
-                class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer  hover:text-orange-700"
+                className="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-orange-700"
               >
                 <svg
-                  class="w-4 h-4"
+                  className="w-4 h-4"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -393,19 +378,19 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"
                   />
                 </svg>
-                <span class="sr-only">Attach file</span>
+                <span className="sr-only">Attach file</span>
               </button>
               <button
                 type="button"
-                class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer  hover:text-orange-700"
+                className="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-orange-700"
               >
                 <svg
-                  class="w-4 h-4"
+                  className="w-4 h-4"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -413,14 +398,14 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                 >
                   <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
                 </svg>
-                <span class="sr-only">Set location</span>
+                <span className="sr-only">Set location</span>
               </button>
               <button
                 type="button"
-                class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer  hover:text-orange-700"
+                className="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-orange-700"
               >
                 <svg
-                  class="w-4 h-4"
+                  className="w-4 h-4"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -428,7 +413,7 @@ const CommentSection = ({ post, showComment, setShowComment }) => {
                 >
                   <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
                 </svg>
-                <span class="sr-only">Upload image</span>
+                <span className="sr-only">Upload image</span>
               </button>
             </div>
           </div>

@@ -158,8 +158,6 @@ const Post = ({ post }) => {
           </span>
         </button>
       </div>
-      
-      {/* {showComment && <Comments post={post} />} */}
       {showComment && <CommentSection post={post} showComment={showComment} setShowComment={setShowComment} />}
     </section>
   );
