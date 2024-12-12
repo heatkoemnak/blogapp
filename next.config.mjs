@@ -1,7 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['images.pexels.com','deep-image.ai','getillustrations.b-cdn.net','lh3.googleusercontent.com','avatars.githubusercontent.com','res.cloudinary.com','flowbite.com'],
+    domains: [
+      'images.pexels.com',
+      'images.unsplash.com',
+      'pagedone.io',
+      'deep-image.ai',
+      'getillustrations.b-cdn.net',
+      'lh3.googleusercontent.com',
+      'avatars.githubusercontent.com',
+      'res.cloudinary.com',
+      'flowbite.com',
+    ],
     remotePatterns: [
       {
         protocol: 'https',
@@ -9,7 +19,6 @@ const nextConfig = {
         port: '',
       },
     ],
-    
   },
 };
 export default nextConfig;

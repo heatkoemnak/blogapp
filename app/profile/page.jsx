@@ -1,20 +1,23 @@
 'use client';
-import { useSession } from 'next-auth/react';
 import React from 'react';
+import { useSession, signIn } from 'next-auth/react';
 
-const page = () => {
-    const { status, data: session } = useSession();
+const ProfilePage = () => {
+  const { data: session, status } = useSession();
   return (
     <section class="relative pt-36 pb-24">
       <img
+        className="absolute top-0 left-0 z-0 w-full h-60 object-cover"
         src="https://pagedone.io/asset/uploads/1705471739.png"
-        alt="cover-image"
-        class="w-full absolute top-0 left-0 z-0 h-60 object-cover"
+        alt="cover image"
       />
       <div class="w-full max-w-7xl mx-auto px-6 md:px-8">
         <div class="flex items-center justify-center relative z-10 mb-2.5">
           <img
-            src={session?.user.image || 'https://pagedone.io/asset/uploads/1705471668.png'}
+            src={
+              session?.user.image ||
+              'https://pagedone.io/asset/uploads/1705471668.png'
+            }
             alt="user-avatar-image"
             class="border-4 border-solid border-white rounded-full object-cover"
           />

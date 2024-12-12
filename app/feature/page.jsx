@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 const page = () => {
@@ -8,8 +9,8 @@ const page = () => {
           Our Features
         </h2>
         <p className="mt-1 text-gray-600 dark:text-neutral-700">
-          Our latest feature: "How to boost your online presence with our expert
-          tips and tricks"
+          Our latest feature:How to boost your online presence with our expert
+          tips and tricks
         </p>
       </div>
       <div class="relative overflow-hidden bg-white pt-16 pb-32 space-y-24">
@@ -59,12 +60,13 @@ const page = () => {
             </div>
             <div class="mt-12 sm:mt-16 lg:mt-0">
               <div class="-mr-48 pl-6 md:-mr-16 lg:relative lg:m-0 lg:h-full lg:px-0">
-                <img
-                  loading="lazy"
-                  width="647"
-                  height="486"
-                  class="w-full rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                <Image
                   src="https://images.unsplash.com/photo-1569144157591-c60f3f82f137"
+                  alt="Description of the image"
+                  width={647}
+                  height={486}
+                  className="w-full rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -116,13 +118,13 @@ const page = () => {
             </div>
             <div class="mt-12 sm:mt-16 lg:mt-0">
               <div class="-ml-48 pr-6 md:-ml-16 lg:relative lg:m-0 lg:h-full lg:px-0">
-                <img
+                <Image
                   alt="Inbox user interface"
-                  loading="lazy"
-                  width="647"
-                  height="486"
-                  class="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none"
                   src="https://images.unsplash.com/photo-1599134842279-fe807d23316e"
+                  width={647}
+                  height={486}
+                  className="w-full rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 lg:absolute lg:right-0 lg:h-full lg:w-auto lg:max-w-none"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -171,12 +173,12 @@ const page = () => {
             </div>
             <div class="mt-12 sm:mt-16 lg:mt-0">
               <div class="-mr-48 pl-6 md:-mr-16 lg:relative lg:m-0 lg:h-full lg:px-0">
-                <img
-                  loading="lazy"
-                  width="646"
-                  height="485"
-                  class="w-full rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
+                <Image
+                  width={646}
+                  height={485}
+                  className="w-full rounded-xl shadow-2xl ring-1 ring-black ring-opacity-5 lg:absolute lg:left-0 lg:h-full lg:w-auto lg:max-w-none"
                   src="https://images.unsplash.com/photo-1483478550801-ceba5fe50e8e"
+                  alt="Description of the image"
                 />
               </div>
             </div>

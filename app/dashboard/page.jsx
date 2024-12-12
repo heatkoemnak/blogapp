@@ -10,16 +10,13 @@ export default function Dashboard() {
   const { data: session, status } = useSession();
   const [cookiesVisible, setCookiesVisible] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getPosts = async () => {
       try {
-        setLoading(true);
         const data = await fetchPosts();
         setPosts(data);
       } catch (error) {
-        setError(error.message);
+        console.log(error)
       } finally {
         setLoading(false);
       }
@@ -33,9 +30,7 @@ export default function Dashboard() {
       return () => clearTimeout(timer);
     }
   }, [status]);
-  if (error) {
-    return <Error error={error} />;
-  }
+ 
 
   if (status === 'loading') {
     return <div>Loading...</div>;
