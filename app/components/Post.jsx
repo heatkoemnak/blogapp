@@ -67,7 +67,7 @@ const Post = ({ post }) => {
               {post?.publishedAt}
             </span>
           </div>
-          <h1 className="max-w-90 mb-4 text-2xl lg:font-extrabold tracking-tight text-[#201515] md:text-2xl xl:text-4xl">
+          <h1 className="xlg:font-medium  text-3xl first-letter:text-7xl first-letter:font-bold first-letter:text-gray-600  first-letter:me-3 first-letter:float-start ">
             {post.title}
           </h1>
           <p className="max-w-96 font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl ">

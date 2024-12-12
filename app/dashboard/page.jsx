@@ -3,19 +3,39 @@
 import { useSession, signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import PostList from '../components/PostList';
+import { fetchPosts } from '../utils/api';
+import Post from '../components/Post';
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
   const [cookiesVisible, setCookiesVisible] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchPosts();
+        setPosts(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getPosts();
+  }, []);
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      signIn();
+    if (status === 'authenticated') {
+      const timer = setTimeout(() => setCookiesVisible(true), 1500);
+      return () => clearTimeout(timer);
     }
-
-    const timer = setTimeout(() => setCookiesVisible(true), 1500);
-    return () => clearTimeout(timer);
   }, [status]);
+  if (error) {
+    return <Error error={error} />;
+  }
 
   if (status === 'loading') {
     return <div>Loading...</div>;
@@ -89,7 +109,15 @@ export default function Dashboard() {
         </div>
       </div>
       {cookiesVisible ? (
-          <PostList />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {posts.map((post, index) =>
+            post?.authorEmail === session?.user.email ? (
+              <Post key={index} post={post} />
+            ) : (
+              'No post created yet.'
+            )
+          )}
+        </div>
       ) : (
         <div>Redirecting to sign in...</div>
       )}

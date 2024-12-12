@@ -5,30 +5,32 @@ import { fetchCategories, fetchPosts } from '../utils/api';
 const BlogContext = createContext();
 
 export function BlogProvider({ children }) {
-  const [categories, setCategories] = useState([]);
-  const [posts, setPosts] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [categoryList, setCategoryList] = useState([]);
+  const [postList, setPostList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadData = async () => {
       try {
-        setLoading(true);
-        const cateData = await fetchCategories();
-        const postData = await fetchPosts();
-        setPosts(postData);
-        setCategories(cateData);
+        setIsLoading(true);
+        const [categories, posts] = await Promise.all([
+          fetchCategories(),
+          fetchPosts(),
+        ]);
+        setCategoryList(categories);
+        setPostList(posts);
       } catch (error) {
-        setError(error.message);
+        setErrorMessage(error.message);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
-    fetchData();
+    loadData();
   }, []);
 
   return (
-    <BlogContext.Provider value={{loading, error,posts, categories, setCategories }}>
+    <BlogContext.Provider value={{ isLoading, errorMessage, postList, categoryList, setCategoryList }}>
       {children}
     </BlogContext.Provider>
   );
@@ -37,3 +39,4 @@ export function BlogProvider({ children }) {
 export function useBlogContext() {
   return useContext(BlogContext);
 }
+

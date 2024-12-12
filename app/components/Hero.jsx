@@ -1,10 +1,17 @@
 import React from 'react';
+import Logo from './Logo';
+import Link from 'next/link';
+import AuthButton from './ui/AuthButton';
 
 const Hero = () => {
   return (
     <>
-      <section className="sticky">
-        <div className="max-w-lg px-4 sm:pt-24 pt-12 sm:pb-8 mx-auto text-left md:max-w-none md:text-center">
+      <section className="sticky ">
+        {/* <div className="flex justify-between">
+          <Logo />
+          <AuthButton />
+        </div> */}
+        <div className="max-w-lg px-4 sm:pt-24 pt-12  mx-auto text-left md:max-w-none md:text-center">
           <div className="text-center py-4 hidden sm:block">
             <button className="bg-white border border-[#E2E8F0] hover:bg-neutral-200 text-xs font-bold py-2.5 px-4 rounded-full inline-flex items-center">
               <svg
@@ -26,19 +33,20 @@ const Hero = () => {
             <span className="relative mt-2 bg-clip-text text-[#201515] md:inline-block">
               to Life
             </span>
-            <span className="relative mt-2 bg-clip-text text-[#FF4F01] md:inline-block">
-              .
-            </span>
+            <span className="relative mt-2 bg-clip-text text-[#FF4F01]">.</span>
           </h1>
         </div>
-        <div className="max-w-lg px-4 lg:pb-24 pb-5 mx-auto flex justify-center text-center md:max-w-none md:text-center">
+        <div className="max-w-lg px-4 mx-auto flex justify-center text-center md:text-center">
           <div className="flex text-center items-center lg:py-6 py-8 my-4 space-x-2  ">
             <button className="backdrop-blur-sm transition duration-500 ease-in-out bg-[#FF4F01] border border-[#E2E8F0] translate-y-1 text-white hover:bg-orange-200 text-md font-medium lg:py-3 lg:px-6 px-4 py-1 rounded-full inline-flex items-center">
               <span> Get Started</span>
             </button>
-            <button className="backdrop-blur-sm transition duration-500 ease-in-out bg-white border border-[#E2E8F0] translate-y-1 text-[#16161d] hover:bg-neutral-200 text-md font-medium lg:py-3 lg:px-6 px-4 py-1 rounded-full inline-flex items-center">
+            <Link
+              href={'/feature'}
+              className="backdrop-blur-sm transition duration-500 ease-in-out bg-white border border-[#E2E8F0] translate-y-1 text-[#16161d] hover:bg-neutral-200 text-md font-medium lg:py-3 lg:px-6 px-4 py-1 rounded-full inline-flex items-center"
+            >
               <span> Explore Features</span>
-            </button>
+            </Link>
           </div>
         </div>
       </section>

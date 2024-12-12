@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { useBlogContext } from '../context/BlogProvider';
 
 const Categories = () => {
-  const { categories } = useBlogContext();
+  const { categoryList } = useBlogContext();
 
   return (
     <div className="flex gap-2 text-sm flex-wrap">
-      {categories ? (
-        categories.map((category) => (
+      {categoryList ? (
+        categoryList.map((category) => (
           <Link
             href={`/blogs/category/${category.id}`}
             key={category.id}
