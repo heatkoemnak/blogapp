@@ -59,8 +59,8 @@ const Navbar = () => {
                     {session?.user?.image ? (
                       <Image
                         src={session?.user?.image}
-                        width={25}
-                        height={25}
+                        width={30}
+                        height={30}
                         alt="Profile Image"
                         className="rounded-full"
                       />
