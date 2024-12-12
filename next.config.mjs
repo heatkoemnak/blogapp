@@ -11,6 +11,7 @@ const nextConfig = {
       'avatars.githubusercontent.com',
       'res.cloudinary.com',
       'flowbite.com',
+      'img.buymeacoffee.com'
     ],
     remotePatterns: [
       {
