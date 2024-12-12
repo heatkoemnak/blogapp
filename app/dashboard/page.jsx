@@ -10,18 +10,21 @@ export default function Dashboard() {
   const { data: session, status } = useSession();
   const [cookiesVisible, setCookiesVisible] = useState(false);
   const [posts, setPosts] = useState([]);
+
+  // Fetch posts on component mount
   useEffect(() => {
     const getPosts = async () => {
       try {
         const data = await fetchPosts();
         setPosts(data);
       } catch (error) {
-        console.log(error);
+        console.error('Failed to fetch posts:', error);
       }
     };
     getPosts();
   }, []);
 
+  // Show cookie consent for authenticated users
   useEffect(() => {
     if (status === 'authenticated') {
       const timer = setTimeout(() => setCookiesVisible(true), 1500);
@@ -33,22 +36,30 @@ export default function Dashboard() {
     return <div>Loading...</div>;
   }
 
+  if (status !== 'authenticated') {
+    return (
+      <div>
+        <p>You need to sign in to access this dashboard.</p>
+        <button className="text-blue-500 underline" onClick={() => signIn()}>
+          Sign In
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <div className="flex gap-2">
+      {/* Buttons for filtering posts */}
+      <div className="flex gap-2 mb-4">
         <button
           className="uppercase text-sm px-3 py-2 bg-gray-900 text-white rounded-full"
           onClick={() => setCookiesVisible((prev) => !prev)}
         >
           All
         </button>
-        <button
-          className="uppercase text-sm px-3 py-2 bg-gray-900 text-white rounded-full"
-          onClick={() => setCookiesVisible((prev) => !prev)}
-        >
+        <button className="uppercase text-sm px-3 py-2 bg-gray-900 text-white rounded-full">
           Draft
         </button>
-
         <button className="uppercase flex items-center gap-1 text-sm px-3 py-2 bg-gray-900 text-white rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +67,7 @@ export default function Dashboard() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-4"
+            className="h-4 w-4"
           >
             <path
               strokeLinecap="round"
@@ -73,7 +84,7 @@ export default function Dashboard() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-4"
+            className="h-4 w-4"
           >
             <path
               strokeLinecap="round"
@@ -83,31 +94,20 @@ export default function Dashboard() {
           </svg>
           Saved
         </button>
-        <div className="flex items-end justify-end fixed bottom-0 right-0 mb-4 mr-4 z-10">
-          <div>
-            <a
-              title="Favorite"
-              href="https://www.buymeacoffee.com/tonyricher"
-              target="_blank"
-              className="block w-full h-12 rounded-full transition-all shadow hover:shadow-lg transform hover:scale-110 hover:rotate-12"
-            >
-              <img
-                className="object-cover object-center w-full h-full rounded-full"
-                src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=tonyricher&button_colour=FF5F5F&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"
-                alt="Buy me a coffee"
-              />
-            </a>
-          </div>
-        </div>
       </div>
-      {cookiesVisible &&
-        posts?.map((post, index) =>
-          post?.authorEmail === session?.user.email ? (
-            <Post key={index} post={post} />
-          ) : (
-            'Redirecting to sign in...'
-          )
-        )}
+
+      {/* Render posts */}
+      {cookiesVisible ? (
+        posts.length > 0 ? (
+          posts
+            .filter((post) => post.authorEmail === session?.user?.email)
+            .map((post) => <Post key={post.id} post={post} />)
+        ) : (
+          <div>No posts found.</div>
+        )
+      ) : (
+        <p>Cookies are hidden.</p>
+      )}
     </div>
   );
 }
