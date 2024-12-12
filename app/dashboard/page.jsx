@@ -16,9 +16,7 @@ export default function Dashboard() {
         const data = await fetchPosts();
         setPosts(data);
       } catch (error) {
-        console.log(error)
-      } finally {
-        setLoading(false);
+        console.log(error);
       }
     };
     getPosts();
@@ -30,7 +28,6 @@ export default function Dashboard() {
       return () => clearTimeout(timer);
     }
   }, [status]);
- 
 
   if (status === 'loading') {
     return <div>Loading...</div>;
