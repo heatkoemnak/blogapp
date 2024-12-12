@@ -46,7 +46,7 @@ const Features = () => {
               </h3>
               <p class="mt-1 text-neutral-400">
                 With the aim of optimizing customer interactions and boosting
-                brand loyalty, the team at Preline leveraged Mailchimp's
+                brand loyalty, the team at Preline leveraged Mailchimp
                 powerful tools and expertise to deliver exceptional results.
               </p>
             </div>
@@ -93,7 +93,7 @@ const Features = () => {
               <p class="mt-1 text-neutral-400">
                 In collaboration with Shopify, Preline embarked on a mission to
                 revolutionize the e-commerce experience for a fictitious fashion
-                brand, "StyleAura.".
+                brand
               </p>
             </div>
           </div>
@@ -144,7 +144,7 @@ const Features = () => {
                 {' '}
                 With the goal of accelerating project delivery and enhancing
                 collaboration among development teams, Preline leveraged
-                GitLab's comprehensive suite of tools and Preline's expertise in
+                GitLab comprehensive suite of tools and expertise in
                 digital product development.
               </p>
             </div>
