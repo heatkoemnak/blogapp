@@ -48,7 +48,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
+    <div className='mb-10'>
       {/* Buttons for filtering posts */}
       <div className="flex gap-2 mb-4">
         <button
