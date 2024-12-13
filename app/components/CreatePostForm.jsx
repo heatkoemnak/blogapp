@@ -12,7 +12,7 @@ import {  submitPost, uploadImage } from '../utils/api';
 const CreatePostForm = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  const { categories } = useBlogContext();
+  const { categoryList } = useBlogContext();
   const [links, setLinks] = useState([]);
   const [linkInput, setLinkInput] = useState('');
   const [email, setEmail] = useState(session?.user?.email);
@@ -202,7 +202,7 @@ const CreatePostForm = () => {
                     value={categoryId}
                     className="peer h-full w-full rounded-[7px] border border-purple-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-2 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                   >
-                    {categories.map((category) => (
+                    {categoryList.map((category) => (
                       <option key={category.id} value={category.id}>
                         {category.name}
                       </option>

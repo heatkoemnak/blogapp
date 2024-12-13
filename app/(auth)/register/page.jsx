@@ -71,7 +71,7 @@ const Register = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div className="flex  min-h-screen items-center justify-center">
       <div className="w-full max-w-md rounded-2xl space-y-2 p-8 mb-12 bg-white">
         <div>
           <h4 className="text-center text-2xl font-extrabold text-gray-900">Create your account</h4>
@@ -79,8 +79,8 @@ const Register = () => {
             Enter your details to register an account.
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-          <div className="rounded-md shadow-sm -space-y-px">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="flex gap-2 flex-col  rounded-xl shadow-sm ">
             <div>
               <label htmlFor="name" className="sr-only">Name</label>
               <input
@@ -89,9 +89,9 @@ const Register = () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
+                className={`relative block w-full px-3 py-2 border ${
                   errors.name ? 'border-red-500' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Name"
               />
               {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
@@ -104,9 +104,9 @@ const Register = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
+                className={`relative block w-full px-3 py-2 border ${
                   errors.email ? 'border-red-500' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Email address"
               />
               {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
@@ -119,9 +119,9 @@ const Register = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
+                className={`relative block w-full px-3 py-2 border ${
                   errors.password ? 'border-red-500' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Password"
               />
               {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
@@ -134,9 +134,9 @@ const Register = () => {
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`appearance-none rounded-none relative block w-full px-3 py-2 border ${
+                className={`relative block w-full px-3 py-2 border ${
                   errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Confirm Password"
               />
               {errors.confirmPassword && (

@@ -23,7 +23,7 @@ export default async function RootLayout({ children }) {
           <AuthProvider session={session}>
             <Navbar />
             <BottomMenu />
-            <div className="max-w-6xl mx-auto px-5 py-5 ">{children}</div>
+            <div className="max-w-6xl mx-auto px-2 py-5 ">{children}</div>
           </AuthProvider>
         </BlogProvider>
       </body>

@@ -35,13 +35,13 @@ const PostDetails = ({ post }) => {
   };
 
   return (
-    <section className="max-w-2xl mx-auto mt-10 px-8 relative">
+    <section className="max-w-2xl mx-auto lg:mt-5 relative bg-white">
       <div className="lg:max-w-3xl">
         <div className="lg:col-span-7 lg:flex rounded-lg">
           <Link href={`/blogs/${post.id}`}>
             <Image
               src={post?.image || '/youtube-thumbnail.png'}
-              className="rounded-lg"
+              className=" "
               alt="Post Image"
               width={1200}
               height={550}
@@ -50,7 +50,7 @@ const PostDetails = ({ post }) => {
             />
           </Link>
         </div>
-        <div className="mr-auto place-self-center  mt-2 lg:col-span-5">
+        <div className="mr-auto place-self-center p-3  lg:col-span-5">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <Link className="lg:flex" href={`/blogs/${post.id}`}>
@@ -65,11 +65,11 @@ const PostDetails = ({ post }) => {
                   height={35}
                 />
               </Link>
-              <div className="flex flex-col lg:flex-row">
+              <div className="flex flex-col items-center lg:gap-3 lg:flex-row">
                 <span className="font-semibold text-gray-600">
                   {post?.author?.name}
                 </span>
-                <span className="font-sans text-sm mx-2 text-gray-500">
+                <span className="font-sans text-sm  text-gray-500">
                   {post?.publishedAt}
                 </span>
               </div>
@@ -128,7 +128,7 @@ const PostDetails = ({ post }) => {
             </div>
           </div>
 
-          <h1 className="max-w-90 mb-4 text-2xl lg:font-extrabold tracking-tight text-[#201515] md:text-2xl xl:text-4xl">
+          <h1 className="max-w-90 my-2 text-2xl lg:font-extrabold  text-[#201515] md:text-2xl xl:text-4xl">
             {post.title}
           </h1>
           <p className="font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl">
@@ -152,7 +152,7 @@ const PostDetails = ({ post }) => {
           </p>
         </div>
       </div>
-      <div className="flex mt-5 mb-5 items-center justify-between text-gray-500">
+      <div className="flex  p-4 border-t items-center justify-between text-gray-500">
         <button className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
           <svg
             className="w-5 h-5 fill-current"
@@ -161,7 +161,7 @@ const PostDetails = ({ post }) => {
           >
             <path d="M12 21.35l-1.45-1.32C6.11 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-4.11 6.86-8.55 11.54L12 21.35z" />
           </svg>
-          <span>42 Likes</span>
+          <span>{post?.likes} Likes</span>
         </button>
         <button
           className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"

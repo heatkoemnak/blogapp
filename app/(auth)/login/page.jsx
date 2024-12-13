@@ -55,7 +55,7 @@ const Login = () => {
   }, [status, data]);
 
   return (
-    <div className="flex  min-h-screen items-center justify-center px-4 sm:px-6 lg:px-8 ">
+    <div className="flex  min-h-screen items-center justify-center ">
       <div className="w-full max-w-md rounded-2xl space-y-2 p-8 mb-12 bg-white">
         <div>
           <h4 className="text-center text-2xl font-extrabold text-gray-900">
@@ -110,30 +110,23 @@ const Login = () => {
               )}
             </div>
           </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="remember-me"
-                name="remember-me"
-                type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-              />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
-              >
-                Remember me
-              </label>
-            </div>
-
-            <div className="text-sm">
-              <Link
-                href="#"
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Forgot your password?
-              </Link>
-            </div>
+          <div className="inline-flex items-center ">
+            <input
+              id="terms"
+              name="terms"
+              type="checkbox"
+              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              required
+            />
+            <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
+              Remember
+            </label>
+            <Link
+              href="#"
+              className="mx-3 font-medium text-sm text-indigo-600 hover:text-indigo-500"
+            >
+              Forgot password
+            </Link>
           </div>
 
           {errors?.general && (
@@ -162,7 +155,6 @@ const Login = () => {
           </div>
 
           <div className="flex flex-col gap-4">
-           
             <button
               type="button"
               onClick={() => signIn('github')}

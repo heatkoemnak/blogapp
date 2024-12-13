@@ -45,7 +45,7 @@ const Post = ({ post }) => {
 
   return (
     <section className="bg-white ">
-      <div className="grid max-w-screen-xl p-5 mx-auto lg:gap-8 xl:gap-0 lg:grid-cols-12">
+      <div className="grid max-w-screen-xl p-3 mx-auto lg:gap-8 xl:gap-0 lg:grid-cols-12">
         <div className="mr-auto place-self-center lg:col-span-5">
           <div className="lg:hidden flex gap-2 items-center mb-2 ml-2">
             <Link className="lg:flex" href={`/blogs/${post.id}`}>
@@ -67,7 +67,7 @@ const Post = ({ post }) => {
               {post?.publishedAt}
             </span>
           </div>
-          <h1 className="xlg:font-medium  text-3xl first-letter:text-7xl first-letter:font-bold first-letter:text-gray-600  first-letter:me-3 first-letter:float-start ">
+          <h1 className=" text-3xl font-bold leading-tight text-gray-900 ">
             {post.title}
           </h1>
           <p className="max-w-96 font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl ">

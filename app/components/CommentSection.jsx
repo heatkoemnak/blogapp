@@ -81,7 +81,7 @@ const CommentSection = ({ post,  setShowComment }) => {
             <CiMinimize1
               size={25}
               onClick={() => setShowComment(prevState => !prevState)}
-              className="absolute top-6 right-5 cursor-pointer hover:text-orange-500"
+              className="absolute bg-slate-800 text-white top-5 right-5 cursor-pointer hover:text-orange-500"
             />
           </div>
         </div>
@@ -331,10 +331,10 @@ const CommentSection = ({ post,  setShowComment }) => {
             <span>No comments yet.</span>
           </div>
         )}
-        <form className="m-5 pb-10" onSubmit={handleCommentSubmit}>
+        <form className="m-5 " onSubmit={handleCommentSubmit}>
           <label
             for="message"
-            class="block mb-2 text-sm font-medium text-gray-900 "
+            class="block mx-5 text-sm font-medium text-gray-900 "
           >
             Leave your comment
           </label>
@@ -348,7 +348,7 @@ const CommentSection = ({ post,  setShowComment }) => {
               rows="4"
               onChange={(e) => setCommentText(e.target.value)}
               value={newCommentText}
-              class="block p-2.5 w-full text-sm placeholder-gray-800  text-gray-900 rounded-lg "
+              class="block p-2.5 w-full text-sm placeholder-gray-800 bg-slate-50  text-gray-900 rounded-lg "
               placeholder="Write your thoughts here..."
             ></textarea>
           </div>
@@ -356,7 +356,7 @@ const CommentSection = ({ post,  setShowComment }) => {
           <div class="flex items-center justify-between px-3 ">
             <button
               type="submit"
-              className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg bg-gradient-to-r from-orange-500 to-purple-500 focus:ring-1 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+              className="inline-flex items-center py-2 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg bg-gradient-to-r from-orange-500 to-purple-500 focus:ring-1 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
             >
               {loading ? (
                 <div className="w-6 h-6 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-amber-500"></div>

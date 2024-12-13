@@ -5,12 +5,13 @@ import PostList from '../components/PostList';
 
 const Blog = () => {
   return (
-    <div className=''>
-     
+    <>
       <Categories />
       <PostList />
-      <Footer/>
-    </div>
+      <div className="hidden lg:flex">
+        <Footer />
+      </div>
+    </>
   );
 };
 

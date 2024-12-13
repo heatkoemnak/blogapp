@@ -50,7 +50,7 @@ const Hero = () => {
           </div>
         </div>
       </section>
-      <div className="flex lg:flex-row flex-col p-10 rounded-3xl my-20 justify-between items-center gap-10 bg-gradient-to-r from-red-200 to-orange-200 ">
+      <div className="flex lg:flex-row flex-col p-10 rounded-3xl lg:my-20 my-5 justify-between items-center gap-10 bg-gradient-to-r from-red-200 to-orange-200 ">
         <div className=" ">
           <img
             className="object-cover rounded-3xl object-center w-full mx-auto bg-gray-300 lg:ml-auto"

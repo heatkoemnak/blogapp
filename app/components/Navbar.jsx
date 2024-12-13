@@ -22,7 +22,7 @@ const Navbar = () => {
 
   return (
     <nav className="px-5 max-w-8xl mx-auto border-b">
-      <div className="max-w-6xl mx-auto py-2 flex justify-between items-center">
+      <div className="max-w-6xl mx-auto py-4 flex justify-between items-center">
         <IoSearchCircle className="lg:hidden cursor-pointer" size={35} />
         <Logo />
 
@@ -99,8 +99,8 @@ const Navbar = () => {
                 {session?.user?.image ? (
                   <Image
                     src={session?.user?.image}
-                    width={20}
-                    height={20}
+                    width={25}
+                    height={25}
                     alt="Profile Image"
                     className="flex items-center justify-center bg-gray-500 text-white rounded-full"
                   />
@@ -118,7 +118,7 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {!mobileMenuOpen ? (
-                <HiMenu size={30} />
+                <HiMenu size={25} />
               ) : (
                 <CgClose
                   size={30}
