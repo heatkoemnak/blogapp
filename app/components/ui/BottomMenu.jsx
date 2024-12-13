@@ -1,15 +1,32 @@
+'use client';
+import { BottomNavLists } from '@/app/data';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import { BiLogoBlogger } from 'react-icons/bi';
 import { MdSpaceDashboard } from 'react-icons/md';
 import { RiAccountCircle2Fill } from 'react-icons/ri';
 const BottomMenu = () => {
+  const currentPath = usePathname();
   return (
-    <div class="fixed z-50 w-full lg:bottom-4 bottom-0 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full left-1/2 bg-gray-40 dark:border-gray-600">
+    <div class="fixed z-50 w-full lg:bottom-4 bottom-0 max-w-lg -translate-x-1/2 bg-white border border-gray-200 lg:rounded-full left-1/2 bg-gray-40 dark:border-gray-600">
       <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
+        {/* {BottomNavLists.map((link, index) => (
+          <Link
+            key={index}
+            href={link.href}
+            className={`w-20 flex items-center  justify-center p-3 hover:bg-gray-50 dark:hover:bg-gray-400 ${
+              index === 2
+                ? 'mx-2 rounded-full bg-gradient-to-r from-orange-500 to-purple-500'
+                : ''
+            }`}
+          >
+            {link.icon}
+          </Link>
+        ))} */}
         <Link
           href={'/'}
-          class="inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-900 dark:hover:bg-gray-400 group"
+          class="inline-flex flex-col items-center justify-center px-5 lg:rounded-s-full hover:bg-gray-900 dark:hover:bg-gray-400 group"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +40,7 @@ const BottomMenu = () => {
         </Link>
         <Link
           href={'/blogs'}
-          class="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-400 group"
+          class="inline-flex flex-col items-center justify-center p-4 hover:bg-gray-50 dark:hover:bg-gray-400 "
         >
           <BiLogoBlogger size={25} className="text-gray-900" />
         </Link>
@@ -54,7 +71,7 @@ const BottomMenu = () => {
         </Link>
         <Link
           href={'/profile'}
-          class="relative inline-flex flex-col items-center justify-center px-5 rounded-e-full group"
+          class="relative inline-flex flex-col items-center justify-center px-5 lg:rounded-e-full  hover:bg-gray-50 dark:hover:bg-gray-400 group"
         >
           <RiAccountCircle2Fill size={25} className="text-gray-900" />
         </Link>
