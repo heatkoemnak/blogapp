@@ -180,7 +180,7 @@ const CommentSection = ({ post,  setShowComment }) => {
                   </button>
                 </footer>
                 <div className="ml-10">
-                  <p className="text-gray-500 bg-white rounded-xl p-4 font-semibold dark:text-gray-700">
+                  <p className="text-gray-500 bg-slate-50 rounded-xl p-4 font-semibold dark:text-gray-700">
                     {comment.text || 'No comment content available.'}
                   </p>
                   <div class="flex items-center mt-1 mb-2 space-x-4">
