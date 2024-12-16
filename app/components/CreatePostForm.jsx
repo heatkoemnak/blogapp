@@ -1,5 +1,5 @@
 'use client';
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import { PhotoIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { useBlogContext } from '../context/BlogProvider';
 import LoadingSpinner from './LoadingSpinner';
 import Error from './Error';
-import {  submitPost, uploadImage } from '../utils/api';
+import { submitPost, uploadImage } from '../utils/api';
 const CreatePostForm = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -51,27 +51,33 @@ const CreatePostForm = () => {
     setLoading(true);
 
     let uploadedImageData;
-    const formData = new FormData();
-    formData.append('file', image);
-    formData.append(
-      'upload_preset',
-      process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
-    );
-    uploadedImageData = await uploadImage(formData);
-    console.log(uploadedImageData)
-    await submitPost({
-      method: 'POST',
-      postId: '',
-      title,
-      body,
-      public_id:uploadedImageData ? uploadedImageData.public_id : imageSrc,
-      image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
-      authorEmail: email,
-      categoryId,
-      links,
-      publishedAt: formattedDate,
-    });
-    router.push('/blogs');
+    try {
+      const formData = new FormData();
+      formData.append('file', image);
+      formData.append(
+        'upload_preset',
+        process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
+      );
+      uploadedImageData = await uploadImage(formData);
+      console.log(uploadedImageData);
+      await submitPost({
+        method: 'POST',
+        postId: '',
+        title,
+        body,
+        public_id: uploadedImageData ? uploadedImageData.public_id : imageSrc,
+        image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
+        authorEmail: email,
+        categoryId,
+        links: links || [],
+        publishedAt: formattedDate,
+      });
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+      router.push('/blogs');
+    }
   };
 
   const addLink = (e) => {
@@ -97,24 +103,38 @@ const CreatePostForm = () => {
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-5 grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
               <div className="sm:col-span-full">
-                <div className="mt-1">
+                <div class="w-full md:w-full px-3 mb-6">
+                  <label
+                    class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
+                    htmlFor="category_name"
+                  >
+                    Create post
+                  </label>
                   <input
+                    class="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-[#98c01d]"
                     type="text"
+                    name="name"
                     placeholder="Title"
                     onChange={(e) => setTitle(e.target.value)}
-                    className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    required
                   />
                 </div>
               </div>
               <div className="col-span-full">
-                <div className="mt-1">
+                <div class="w-full px-3 mb-6">
                   <textarea
-                    rows={3}
+                    textarea
+                    rows="4"
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
+                    class="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-[#98c01d]"
+                    type="text"
                     placeholder="Content"
-                    className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
+                    name="description"
+                    required
+                  >
+                    {' '}
+                  </textarea>
                 </div>
               </div>
               <div className="col-span-full">
@@ -164,14 +184,16 @@ const CreatePostForm = () => {
                     );
                   })}
               </div>
-              <div className="sm:col-span-full">
-                <div className="mt-1 flex items-center gap-2">
+              <div className="col-span-full mx-3">
+                <div className=" flex items-center gap-2">
                   <input
+                    class="appearance-none block w-full  bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-[#98c01d]"
                     type="text"
-                    placeholder="Past the links and click to add"
+                    name="name"
                     value={linkInput}
                     onChange={(e) => setLinkInput(e.target.value)}
-                    className="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    placeholder="Past the links and click to add"
+                    required
                   />
                   <button
                     onClick={addLink}
@@ -179,19 +201,17 @@ const CreatePostForm = () => {
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="size-4"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="size-5"
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M12 4.5v15m7.5-7.5h-15"
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-11.25a.75.75 0 0 0-1.5 0v2.5h-2.5a.75.75 0 0 0 0 1.5h2.5v2.5a.75.75 0 0 0 1.5 0v-2.5h2.5a.75.75 0 0 0 0-1.5h-2.5v-2.5Z"
+                        clipRule="evenodd"
                       />
                     </svg>
-                    Add
+                    Add links
                   </button>
                 </div>
               </div>
@@ -224,48 +244,90 @@ const CreatePostForm = () => {
                         height={350}
                         className="min-w-full object-cover"
                       />
-                    <button onClick={()=>setImageSrc('')} className='btn py-2 px-4 mt-4 rounded-md bg-red-600 text-white mb-4'>Remove Image</button>
+                      <button
+                        onClick={() => setImageSrc('')}
+                        className="btn py-2 px-4 mt-4 rounded-md bg-red-600 text-white mb-4"
+                      >
+                        Remove Image
+                      </button>
                     </div>
                   ) : (
-                    <div className="text-center">
-                      <PhotoIcon
-                        aria-hidden="true"
-                        className="mx-auto h-12 w-12 text-gray-300"
-                      />
-                      <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                        <label
-                          htmlFor="file-upload"
-                          className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                    <div class="w-full px-3 mb-8">
+                      <label
+                        class="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center justify-center rounded-xl border-2 border-dashed border-orange-400 bg-white p-6 text-center"
+                        htmlFor="file-upload"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-10 w-10 text-orange-800"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2"
                         >
-                          <span>Upload a file</span>
-                          <input
-                            id="file-upload"
-                            name="file-upload"
-                            type="file"
-                            className="sr-only"
-                            onChange={handleFileChange}
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                           />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
-                      </div>
-                      <p className="text-xs leading-5 text-gray-600">
-                        PNG, JPG, GIF up to 10MB
-                      </p>
+                        </svg>
+
+                        <h2 class="mt-4 text-xl font-medium text-gray-700 tracking-wide">
+                          Upload file image
+                        </h2>
+
+                        <p class="mt-2 text-gray-500 tracking-wide">
+                          Upload or drag & drop your file SVG, PNG, JPG or GIF
+                          up to 10MB
+                        </p>
+
+                        <input
+                          id="file-upload"
+                          name="file-upload"
+                          type="file"
+                          className="sr-only"
+                          onChange={handleFileChange}
+                          accept="image/png, image/jpeg, image/webp"
+                        />
+                      </label>
                     </div>
+                    // <div className="text-center">
+                    //   <PhotoIcon
+                    //     aria-hidden="true"
+                    //     className="mx-auto h-12 w-12 text-gray-300"
+                    //   />
+                    //   <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                    //     <label
+                    //       htmlFor="file-upload"
+                    //       className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                    //     >
+                    //       <span>Upload a file</span>
+                    //       <input
+                    //         id="file-upload"
+                    //         name="file-upload"
+                    //         type="file"
+                    //         className="sr-only"
+                    //         onChange={handleFileChange}
+                    //       />
+                    //     </label>
+                    //     <p className="pl-1">or drag and drop</p>
+                    //   </div>
+                    //   <p className="text-xs leading-5 text-gray-600">
+                    //     PNG, JPG, GIF up to 10MB
+                    //   </p>
+                    // </div>
                   )}
                 </div>
               </div>
             </div>
             <div className="mt-4 flex items-center justify-end gap-x-6">
               <Link href={'/blogs'}>
-              
-              
-              <button
-                type="button"
-                className="text-sm font-semibold leading-6 text-gray-900"
-              >
-                Cancel
-              </button>
+                <button
+                  type="button"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Cancel
+                </button>
               </Link>
               <button
                 type="submit"

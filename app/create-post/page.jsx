@@ -22,7 +22,6 @@ const CreatePost = () => {
     <div className="max-w-3xl mx-auto">
       {cookiesVisible ? (
         <>
-          <h2 className="font-bold">Create Post</h2>
           <CreatePostForm />
         </>
       ) : (
