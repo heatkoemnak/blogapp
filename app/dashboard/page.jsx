@@ -96,17 +96,17 @@ export default function Dashboard() {
       </div>
 
       {/* Render posts */}
-      {cookiesVisible ? (
+      {/* {cookiesVisible ? (
         posts.length > 0 ? (
           posts
-            .filter((post) => post.authorEmail === session?.user?.email)
-            .map((post) => <Post key={post.id} post={post} />)
+            .filter((post) => post?.authorEmail === session?.user?.email)
+            .map((post) => <Post key={post?.id} post={post} />)
         ) : (
           <div>No posts found.</div>
         )
       ) : (
         <p>Cookies are hidden.</p>
-      )}
+      )} */}
     </div>
   );
 }

@@ -21,7 +21,6 @@ const Post = ({ post }) => {
   console.log(likes);
 
   useEffect(() => {
-    // Listen for "postLiked" events
     socket.on('postLiked', (likes) => {
       console.log(likes);
     });
@@ -76,8 +75,20 @@ const Post = ({ post }) => {
 
   return (
     <section className="bg-white ">
-      <div className="grid max-w-screen-xl p-3 mx-auto lg:gap-8 xl:gap-0 lg:grid-cols-12">
-        <div className="mr-auto place-self-center lg:col-span-5">
+      <div className="grid  mx-auto lg:gap-8 xl:gap-0 lg:grid-cols-12">
+        {/* Post Image */}
+        <div className="lg:w-3xl">
+          <Link href={`/blogs/${post.id}`}>
+            <Image
+              src={post?.image || '/youtube-thumbnail.png'}
+              className=""
+              alt="Post Image"
+              width={1200}
+              height={550}
+            />
+          </Link>
+        </div>
+        <div className="mr-auto p-3 place-self-center lg:col-span-5">
           {/* Author Info */}
           <div className="lg:hidden flex gap-2 items-center mb-2 ml-2">
             <Link className="lg:flex" href={`/blogs/${post?.id}`}>
@@ -103,12 +114,24 @@ const Post = ({ post }) => {
           <h1 className="text-3xl font-bold leading-tight text-gray-900 ">
             {post.title}
           </h1>
+          <small>{post?.category?.name}</small>
           <p className="max-w-96 font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl ">
             {isExpanded ? post.body : post.body.substring(0, 300)}
             <br />
-            <Link className="text-blue-500 " href={post.links[0]}>
-              {post.links[0]}
-            </Link>
+            <span>
+              {post?.links.length > 0 &&
+                post?.links?.map((link, index) => (
+                  <Link
+                    className="text-blue-500 "
+                    href={link}
+                    target="_blank"
+                    key={index}
+                  >
+                    {link}
+                  </Link>
+                ))}
+            </span>
+
             <br />
             {post.body?.length >= 250 && (
               <span
@@ -143,20 +166,6 @@ const Post = ({ post }) => {
               {post?.publishedAt}
             </span>
           </div>
-        </div>
-        {/* Post Image */}
-        <div className="lg:col-span-7 lg:flex rounded-lg">
-          <Link href={`/blogs/${post.id}`}>
-            <Image
-              src={post?.image || '/youtube-thumbnail.png'}
-              className="rounded-lg"
-              alt="Post Image"
-              width={1200}
-              height={550}
-              quality={100}
-              loading="lazy"
-            />
-          </Link>
         </div>
       </div>
 

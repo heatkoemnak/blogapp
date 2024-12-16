@@ -2,31 +2,41 @@
 
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LuReply } from 'react-icons/lu';
 import { CiMinimize1 } from 'react-icons/ci';
 import PostDetails from './PostDetails';
 import { useSocket } from '../context/SocketProvider';
 import { useRouter } from 'next/navigation';
 import { timeAgo } from '../utils/timeAgo';
+import AddCommentButton from './ui/AddCommentButton';
+import BubbleComment from './ui/BubbleComment';
 
 const CommentSection = ({ post }) => {
   console.log(post);
-  const [loading, setLoading] = useState(false);
-
+  const [isOpen, setIsOpen] = useState(false);
   const { data: session } = useSession();
   const [newCommentText, setCommentText] = useState('');
   const [comments, setComments] = useState(post?.comments || []);
   const { socket } = useSocket();
   const router = useRouter();
-  console.log(comments);
+  const popupRef = useRef(null);
   const [activeSettings, setActiveSettings] = useState({});
   const [activeReplySettings, setReplySettings] = useState({});
+  console.log(comments);
   useEffect(() => {
     socket.on('newComment', (message) => {
       console.log(message);
     });
-  }, [socket]);
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [socket, isOpen]);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -72,12 +82,19 @@ const CommentSection = ({ post }) => {
       console.error('Error posting comment:', error);
     }
   };
+
+  const handleClickOutside = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      setIsOpen(false); // Close the popup
+    }
+  };
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       handleCommentSubmit(e); // Call handleCommentSubmit when Enter is pressed
     }
   };
   const toggleCommentSettings = (commentId) => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
     setActiveSettings((prevSettings) => ({
       ...prevSettings,
       [commentId]: !prevSettings[commentId],
@@ -85,6 +102,7 @@ const CommentSection = ({ post }) => {
   };
 
   const toggleReplySettingsVisibility = (replyId) => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
     setReplySettings((previousReplySettings) => ({
       ...previousReplySettings,
       [replyId]: !previousReplySettings[replyId],
@@ -116,87 +134,14 @@ const CommentSection = ({ post }) => {
           comments.map((comment, index) => (
             <div key={index}>
               <article className="max-w-xl mx-auto px-4 my-2 text-base">
-                <footer className="flex justify-between items-center mb-2">
-                  <div className="flex items-center">
-                    <Image
-                      className="mr-2 rounded-full"
-                      width={35}
-                      height={35}
-                      src={
-                        comment?.author?.image ||
-                        'https://flowbite.com/docs/images/people/profile-picture-2.jpg'
-                      }
-                      alt={'User'}
-                    />
-                    <div className="text ">
-                      <p className="inline-flex items-center mr-3 text-base font-semibold text-gray-900 dark:text-gray-600">
-                        {comment?.author?.name}
-                      </p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {timeAgo(comment?.publishedAt)}
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    className="relative items-center p-2 text-sm font-medium text-gray-500 "
-                    type="button"
-                    onClick={() => toggleCommentSettings(comment.id)}
-                  >
-                    <svg
-                      className="w-4 h-4"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 16 3"
-                    >
-                      <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                    </svg>
-                    <span className="sr-only">Comment settings</span>
-                    {activeSettings[comment.id] && (
-                      <div className="absolute top-8 right-0 z-10 w-36 bg-white rounded-xl border">
-                        <ul className="py-1 text-xs text-gray-700 ">
-                          {comment.authorEmail === session?.user?.email && (
-                            <>
-                              <li>
-                                <a
-                                  href="#"
-                                  className="block py-2 px-4  hover:text-orange-700"
-                                >
-                                  Edit
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="#"
-                                  className="block py-2 px-4  hover:text-orange-700"
-                                >
-                                  Delete
-                                </a>
-                              </li>
-                            </>
-                          )}
+                <BubbleComment
+                  comment={comment}
+                  session={session}
+                  toggleCommentSettings={toggleCommentSettings}
+                  activeSettings={activeSettings}
+                />
 
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4  hover:text-orange-600"
-                            >
-                              Hide
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block py-2 px-4  hover:text-orange-700"
-                            >
-                              Report
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </button>
-                </footer>
-                <div className="ml-10">
+                {/* <div className="ml-10">
                   <p className="text-gray-500 bg-slate-50 rounded-xl p-4 font-semibold dark:text-gray-700">
                     {comment.text || 'No comment content available.'}
                   </p>
@@ -223,11 +168,11 @@ const CommentSection = ({ post }) => {
                       Reply
                     </button>
                   </div>
-                </div>
+                </div> */}
                 {comment?.replies?.length > 0 &&
                   comment?.replies.map((reply, index) => (
                     <div key={index} className="flex ml-10 relative">
-                      <article className="p-4 my-2 text-base bg-slate-50 rounded-xl">
+                      <article className="px-3.5 py-2 bg-gray-100 rounded-3xl rounded-tl-none flex flex-col gap-2">
                         <footer className="flex justify-between items-center mb-2">
                           <div className="flex items-center">
                             <Image
@@ -270,7 +215,10 @@ const CommentSection = ({ post }) => {
                             <span className="sr-only">Reply settings</span>
                           </button>
                           {activeReplySettings[reply.id] && (
-                            <div className="absolute top-14 right-0 z-10 w-36 bg-white rounded-xl border">
+                            <div
+                              ref={popupRef}
+                              className="absolute top-14 right-0 z-10 w-36 bg-white rounded-xl border"
+                            >
                               <ul className="py-1 text-xs text-gray-700">
                                 {reply.authorEmail === session?.user?.email && (
                                   <>
@@ -312,7 +260,7 @@ const CommentSection = ({ post }) => {
                             </div>
                           )}
                         </footer>
-                        <p className="text-gray-500 dark:text-gray-400">
+                        <p className="">
                           {reply.text}
                         </p>
                         <div className="flex items-center mt-4 space-x-4">
@@ -351,77 +299,17 @@ const CommentSection = ({ post }) => {
           </div>
         )}
 
-        <div className="flex mb-7 mx-2 mx-auto items-center justify-between w-80 p-1 border border-gray-200 rounded-3xl gap-2">
-          <div className="flex items-center gap-2">
-            {session?.user?.image && (
-              <Image
-                src={session?.user?.image}
-                alt="user image"
-                width={40}
-                height={40}
-                className="w-10 h-10 rounded-full"
-              />
-            )}
-            <input
-              onChange={(e) => setCommentText(e.target.value)}
-              value={newCommentText}
-              className="flex-grow text-xs font-medium text-black leading-4 focus:outline-none"
-              placeholder="Type here..."
-            />
-          </div>
-          <div className="flex items-center gap-2">
-            <svg
-              className="cursor-pointer"
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              viewBox="0 0 22 22"
-              fill="none"
-            >
-              <path
-                d="M14.9332 7.79175L8.77551 14.323C8.23854 14.8925 7.36794 14.8926 6.83097 14.323C6.294 13.7535 6.294 12.83 6.83097 12.2605L12.9887 5.72925M12.3423 6.41676L13.6387 5.04176C14.7126 3.90267 16.4538 3.90267 17.5277 5.04176C18.6017 6.18085 18.6017 8.02767 17.5277 9.16676L16.2314 10.5418M16.8778 9.85425L10.72 16.3855C9.10912 18.0941 6.49732 18.0941 4.88641 16.3855C3.27549 14.6769 3.27549 11.9066 4.88641 10.198L11.0441 3.66675"
-                stroke="#9CA3AF"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M14.9332 7.79175L8.77551 14.323C8.23854 14.8925 7.36794 14.8926 6.83097 14.323C6.294 13.7535 6.294 12.83 6.83097 12.2605L12.9887 5.72925M12.3423 6.41676L13.6387 5.04176C14.7126 3.90267 16.4538 3.90267 17.5277 5.04176C18.6017 6.18085 18.6017 8.02767 17.5277 9.16676L16.2314 10.5418M16.8778 9.85425L10.72 16.3855C9.10912 18.0941 6.49732 18.0941 4.88641 16.3855C3.27549 14.6769 3.27549 11.9066 4.88641 10.198L11.0441 3.66675"
-                stroke="black"
-                strokeOpacity="0.2"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <button
-              type="submit"
-              onKeyDown={handleKeyDown}
-              onClick={handleCommentSubmit}
-              className="flex items-center px-3 py-2 bg-indigo-600 rounded-full shadow"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  d="M9.04071 6.959L6.54227 9.45744M6.89902 10.0724L7.03391 10.3054C8.31034 12.5102 8.94855 13.6125 9.80584 13.5252C10.6631 13.4379 11.0659 12.2295 11.8715 9.81261L13.0272 6.34566C13.7631 4.13794 14.1311 3.03408 13.5484 2.45139C12.9657 1.8687 11.8618 2.23666 9.65409 2.97257L6.18714 4.12822C3.77029 4.93383 2.56187 5.33664 2.47454 6.19392C2.38721 7.0512 3.48957 7.68941 5.69431 8.96584L5.92731 9.10074C6.23326 9.27786 6.38623 9.36643 6.50978 9.48998C6.63333 9.61352 6.72189 9.7665 6.89902 10.0724Z"
-                  stroke="white"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <h3 className="px-2 text-xs font-semibold text-white leading-4">
-                Send
-              </h3>
-            </button>
-          </div>
+        <div className="lg:hidden">
+          <AddCommentButton
+            session={session}
+            setCommentText={setCommentText}
+            newCommentText={newCommentText}
+            handleKeyDown={handleKeyDown}
+            handleCommentSubmit={handleCommentSubmit}
+          />
         </div>
 
-        {/* <div className="m-5">
+        <div className="hidden lg:flex flex-col m-5">
           <label
             htmlFor="message"
             className="block mx-5 text-sm font-medium text-gray-900"
@@ -450,11 +338,9 @@ const CommentSection = ({ post }) => {
               onClick={handleCommentSubmit}
               className="inline-flex items-center py-2 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg bg-gradient-to-r from-orange-500 to-purple-500 focus:ring-1 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 mb-2 sm:mb-0"
             >
-              {loading ? (
-                <div className="w-6 h-6 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-amber-500"></div>
-              ) : (
-                'Leave comment'
-              )}
+              {/* <div className="w-6 h-6 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-amber-500"> */}{' '}
+              Leave comment
+              {/* </div> */}
             </button>
             <div className="flex space-x-1 rtl:space-x-reverse sm:space-x-2">
               <button
@@ -509,7 +395,7 @@ const CommentSection = ({ post }) => {
               </button>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

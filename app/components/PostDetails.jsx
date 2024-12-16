@@ -93,7 +93,7 @@ const PostDetails = ({ post, comments }) => {
                         <li>
                           <button
                             type="submit"
-                            onClick={() => deletePost(post.id)}
+                            onClick={() => deletePost(post?.id)}
                             className="block py-2 px-4 hover:text-orange-700"
                           >
                             Delete
@@ -140,7 +140,7 @@ const PostDetails = ({ post, comments }) => {
                 className="text-blue-500 cursor-pointer"
               >
                 ...
-                <span className="inline-flex font-sans text-sm items-center justify-center font-semibold text-blue-500 duration-200 hover:text-blue-500 focus:outline-none focus-visible:outline-gray-600">
+                <span className="inline-flex font-sans text-sm items-center justify-center font-semibold text-orange-500 duration-200 hover:text-blue-500 focus:outline-none focus-visible:outline-gray-600">
                   {isExpanded ? 'Read Less' : 'Read More'} &nbsp; →
                 </span>
               </span>
