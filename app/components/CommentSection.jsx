@@ -16,7 +16,7 @@ const CommentSection = ({ post }) => {
 
   const { data: session } = useSession();
   const [newCommentText, setCommentText] = useState('');
-  const [comments, setComments] = useState(post.comments || []);
+  const [comments, setComments] = useState(post?.comments || []);
   const { socket } = useSocket();
   const router = useRouter();
   console.log(comments);
@@ -36,12 +36,9 @@ const CommentSection = ({ post }) => {
       text: newCommentText,
       postId: post.id,
       authorEmail: session?.user?.email || null,
-      publishedAt: new Date().toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      }),
+      publishedAt: new Date().toISOString(),
     };
+    console.log(timeAgo(new Date().toISOString()));
     // socket.emit('newComment', data);
 
     try {
@@ -56,6 +53,7 @@ const CommentSection = ({ post }) => {
       if (response.ok) {
         const newComment = await response.json();
         socket.emit('newComment', newComment);
+        console.log(newComment);
         setComments((prevComments) => [...prevComments, newComment]);
         setCommentText('');
       } else {
@@ -118,16 +116,10 @@ const CommentSection = ({ post }) => {
                     />
                     <div className="text ">
                       <p className="inline-flex items-center mr-3 text-base font-semibold text-gray-900 dark:text-gray-600">
-                        {comment?.author?.name || 'Anonymous'}
+                        {comment?.author?.name}
                       </p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {/* <time
-                          dateTime={comment?.publishedAt || '2022-02-08'}
-                          title={comment?.publishedAt || 'February 8th, 2022'}
-                        >
-                          {comment?.publishedAt || 'Feb. 8, 2022'}
-                        </time> */}
-                        {timeAgo(post?.createdAt)}
+                        {timeAgo(comment?.publishedAt)}
                       </p>
                     </div>
                   </div>
