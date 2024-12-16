@@ -2,7 +2,6 @@
 
 import { useSession, signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import PostList from '../../components/PostList';
 import { fetchPosts } from '../../utils/api';
 import Post from '../../components/Post';
 
@@ -48,7 +47,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className='mb-10'>
+    <div className="mb-10">
       {/* Buttons for filtering posts */}
       <div className="flex gap-2 mb-4">
         <button

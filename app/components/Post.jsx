@@ -1,15 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import styles from '@/app/globals.css';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
-import Comments from './Comments';
-import { useRouter } from 'next/navigation';
 import Error from './Error';
 import LoadingSpinner from './LoadingSpinner';
 import { deleteResource } from '../utils/api';
-import CommentSection from './CommentSection';
 import { useSocket } from '../context/SocketProvider';
 
 const Post = ({ post }) => {
