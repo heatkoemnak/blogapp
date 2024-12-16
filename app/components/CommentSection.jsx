@@ -35,7 +35,7 @@ const CommentSection = ({ post }) => {
     const data = {
       text: newCommentText,
       postId: post.id,
-      authorEmail: session?.user?.email || null,
+      authorEmail: session?.user?.email,
       publishedAt: new Date().toISOString(),
     };
     console.log(timeAgo(new Date().toISOString()));
