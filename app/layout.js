@@ -24,7 +24,9 @@ export default async function RootLayout({ children }) {
           <BlogProvider>
             <AuthProvider session={session}>
               <Navbar />
-              <BottomMenu />
+              <div className="lg:hidden">
+                <BottomMenu />
+              </div>
               <div className="max-w-6xl mx-auto px-2 py-5 ">{children}</div>
             </AuthProvider>
           </BlogProvider>

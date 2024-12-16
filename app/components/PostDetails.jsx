@@ -82,41 +82,76 @@ const PostDetails = ({ post, comments }) => {
                   <ul className="py-1 text-xs text-gray-700">
                     {post?.author?.authorEmail !== session?.user?.email && (
                       <>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2 px-4 hover:text-orange-700"
+                        <li className="flex items-center px-4 gap-2 cursor-pointer ">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            className="size-5"
                           >
+                            <path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" />
+                            <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" />
+                          </svg>
+
+                          <div className="block py-2 px-2  hover:text-orange-700">
                             Edit
-                          </a>
+                          </div>
                         </li>
-                        <li>
-                          <button
-                            type="submit"
+                        <li className="flex items-center  px-4 gap-2 cursor-pointer">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            className="size-4"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          <div
                             onClick={() => deletePost(post?.id)}
-                            className="block py-2 px-4 hover:text-orange-700"
+                            className="block py-2 px-2  hover:text-orange-700"
                           >
                             Delete
-                          </button>
+                          </div>
                         </li>
                       </>
                     )}
 
-                    <li>
-                      <a
-                        href="#"
-                        className="block py-2 px-4 hover:text-orange-600"
+                    <li className="flex items-center  px-4 gap-2 cursor-pointer">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        className="size-4"
                       >
+                        <path
+                          fillRule="evenodd"
+                          d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l14.5 14.5a.75.75 0 1 0 1.06-1.06l-1.745-1.745a10.029 10.029 0 0 0 3.3-4.38 1.651 1.651 0 0 0 0-1.185A10.004 10.004 0 0 0 9.999 3a9.956 9.956 0 0 0-4.744 1.194L3.28 2.22ZM7.752 6.69l1.092 1.092a2.5 2.5 0 0 1 3.374 3.373l1.091 1.092a4 4 0 0 0-5.557-5.557Z"
+                          clipRule="evenodd"
+                        />
+                        <path d="m10.748 13.93 2.523 2.523a9.987 9.987 0 0 1-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 0 1 0-1.186A10.007 10.007 0 0 1 2.839 6.02L6.07 9.252a4 4 0 0 0 4.678 4.678Z" />
+                      </svg>
+
+                      <span className="block py-2 px-2  hover:text-orange-600">
                         Hide
-                      </a>
+                      </span>
                     </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="block py-2 px-4 hover:text-orange-700"
+                    <li className="flex items-center  px-4 gap-2 cursor-pointer">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        className="size-4"
                       >
+                        <path d="M3.5 2.75a.75.75 0 0 0-1.5 0v14.5a.75.75 0 0 0 1.5 0v-4.392l1.657-.348a6.449 6.449 0 0 1 4.271.572 7.948 7.948 0 0 0 5.965.524l2.078-.64A.75.75 0 0 0 18 12.25v-8.5a.75.75 0 0 0-.904-.734l-2.38.501a7.25 7.25 0 0 1-4.186-.363l-.502-.2a8.75 8.75 0 0 0-5.053-.439l-1.475.31V2.75Z" />
+                      </svg>
+
+                      <span className="block py-2 px-2  hover:text-orange-600">
                         Report
-                      </a>
+                      </span>
                     </li>
                   </ul>
                 </div>
@@ -148,7 +183,7 @@ const PostDetails = ({ post, comments }) => {
           </p>
         </div>
       </div>
-      <div className="flex  p-4 border-t items-center justify-between text-gray-500">
+      {/* <div className="flex  p-4 border-t items-center justify-between text-gray-500">
         <button className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
           <svg
             className="w-5 h-5 fill-current"
@@ -164,7 +199,6 @@ const PostDetails = ({ post, comments }) => {
           className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"
           onClick={() => setShowComment(!showComment)}
         >
-          {/* comment icon */}
           <svg
             className="w-5 h-5 fill-current"
             xmlns="http://www.w3.org/2000/svg"
@@ -181,7 +215,7 @@ const PostDetails = ({ post, comments }) => {
             {comments?.length <= 1 ? 'Comment' : 'Comments'}
           </span>
         </Link>
-      </div>
+      </div> */}
     </section>
   );
 };

@@ -24,6 +24,16 @@ const CommentSection = ({ post }) => {
   const [activeSettings, setActiveSettings] = useState({});
   const [activeReplySettings, setReplySettings] = useState({});
   console.log(comments);
+  const [visibleComments, setVisibleComments] = useState(3); // Default 3 visible comments
+  const showAll = visibleComments < comments?.length;
+
+  const handleShowMore = () => {
+    setVisibleComments((prev) => prev + 3); // Show 3 more comments
+  };
+
+  const handleShowLess = () => {
+    setVisibleComments(3); // Reset to 3 comments
+  };
   useEffect(() => {
     socket.on('newComment', (message) => {
       console.log(message);
@@ -131,7 +141,7 @@ const CommentSection = ({ post }) => {
         <hr />
 
         {comments?.length > 0 ? (
-          comments.map((comment, index) => (
+          comments.slice(0, visibleComments).map((comment, index) => (
             <div key={index}>
               <article className="max-w-xl mx-auto px-4 my-2 text-base">
                 <BubbleComment
@@ -140,35 +150,6 @@ const CommentSection = ({ post }) => {
                   toggleCommentSettings={toggleCommentSettings}
                   activeSettings={activeSettings}
                 />
-
-                {/* <div className="ml-10">
-                  <p className="text-gray-500 bg-slate-50 rounded-xl p-4 font-semibold dark:text-gray-700">
-                    {comment.text || 'No comment content available.'}
-                  </p>
-                  <div class="flex items-center mt-1 mb-2 space-x-4">
-                    <button
-                      type="button"
-                      className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
-                    >
-                      <svg
-                        className="mr-1.5 w-3.5 h-3.5"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 20 18"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
-                        />
-                      </svg>
-                      Reply
-                    </button>
-                  </div>
-                </div> */}
                 {comment?.replies?.length > 0 &&
                   comment?.replies.map((reply, index) => (
                     <div key={index} className="flex ml-10 relative">
@@ -183,7 +164,7 @@ const CommentSection = ({ post }) => {
                               alt={reply.author.name || 'Anonymous'}
                             />
                             <div className="text">
-                              <p className="inline-flex items-center mr-3 text-base font-semibold text-gray-900 dark:text-gray-600">
+                              <p className="inline-flex items-center mr-3 text-sm font-semibold text-gray-900 dark:text-gray-600">
                                 {reply.author.name || 'Anonymous'}
                               </p>
                               <p className="text-xs text-gray-600 dark:text-gray-400">
@@ -260,9 +241,7 @@ const CommentSection = ({ post }) => {
                             </div>
                           )}
                         </footer>
-                        <p className="">
-                          {reply.text}
-                        </p>
+                        <p className="">{reply.text}</p>
                         <div className="flex items-center mt-4 space-x-4">
                           <button
                             type="button"
@@ -298,6 +277,25 @@ const CommentSection = ({ post }) => {
             <span>No comments yet.</span>
           </div>
         )}
+        {comments?.length > 3 && (
+          <div className="flex justify-center m-4">
+            {showAll ? (
+              <button
+                onClick={handleShowMore}
+                className="text-orange-500   hover:underline"
+              >
+                Show More Comments
+              </button>
+            ) : (
+              <button
+                onClick={handleShowLess}
+                className="text-blue-500 hover:underline"
+              >
+                Show Less
+              </button>
+            )}
+          </div>
+        )}
 
         <div className="lg:hidden">
           <AddCommentButton
@@ -309,7 +307,7 @@ const CommentSection = ({ post }) => {
           />
         </div>
 
-        <div className="hidden lg:flex flex-col m-5">
+        <div className="hidden lg:flex flex-col py-20 px-10">
           <label
             htmlFor="message"
             className="block mx-5 text-sm font-medium text-gray-900"
@@ -326,7 +324,7 @@ const CommentSection = ({ post }) => {
               rows="4"
               onChange={(e) => setCommentText(e.target.value)}
               value={newCommentText}
-              className="block p-2.5 w-full text-sm placeholder-gray-800 bg-slate-50 text-gray-900 rounded-lg"
+              className="block p-2.5 border-2 w-full text-sm placeholder-gray-800 bg-slate-50 text-gray-900 rounded-lg"
               placeholder="Write your thoughts here..."
             ></textarea>
           </div>

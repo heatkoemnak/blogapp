@@ -16,7 +16,7 @@ const Navbar = () => {
   const { status, data: session } = useSession();
   const [show, setShow] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+  const currentPath = usePathname();
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
 
   return (
@@ -28,7 +28,7 @@ const Navbar = () => {
         {/* Desktop Screen */}
         <Search />
         <div className="hidden lg:flex space-x-5 items-center">
-          {/* {links.map((link, index) => (
+          {links.map((link, index) => (
             <Link
               key={index}
               href={link.href}
@@ -43,7 +43,7 @@ const Navbar = () => {
               {link.icon && link.icon}
               {link.label}
             </Link>
-          ))} */}
+          ))}
 
           {status === 'authenticated' ? (
             <>
