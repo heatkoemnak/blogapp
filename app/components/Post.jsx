@@ -8,7 +8,7 @@ import { deleteResource } from '../utils/api';
 import { useSocket } from '../context/SocketProvider';
 import { useSession } from 'next-auth/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-
+import router from 'next/router';
 const Post = ({ post }) => {
   const { data: session } = useSession();
   const [error, setError] = useState('');
@@ -52,7 +52,7 @@ const Post = ({ post }) => {
     }
     try {
       await deleteResource(id);
-      window.location.reload();
+      router.refresh();
     } catch (error) {
       setError(error.message);
     }
@@ -218,7 +218,7 @@ const Post = ({ post }) => {
             {showDeleteMenu && (
               <div className="absolute top-8 right-0 z-10 w-36 bg-white rounded-xl border">
                 <ul className="py-1 text-xs text-gray-700 ">
-                  {post?.author?.email !== session?.user?.email && (
+                  {post?.author?.email === session?.user?.email && (
                     <>
                       <li className="flex items-center px-4 gap-2 cursor-pointer ">
                         <svg

@@ -35,7 +35,7 @@ const CommentSection = ({ post }) => {
     const data = {
       text: newCommentText,
       postId: post.id,
-      authorEmail: session?.user?.email,
+      authorEmail: session?.user.email,
       publishedAt: new Date().toISOString(),
     };
     console.log(timeAgo(new Date().toISOString()));
@@ -54,7 +54,16 @@ const CommentSection = ({ post }) => {
         const newComment = await response.json();
         socket.emit('newComment', newComment);
         console.log(newComment);
-        setComments((prevComments) => [...prevComments, newComment]);
+        setComments((prevComments) => [
+          ...prevComments,
+          {
+            ...newComment,
+            author: {
+              name: session?.user.name,
+              image: session?.user.image,
+            },
+          },
+        ]);
         setCommentText('');
       } else {
         console.error('Failed to post comment:', await response.json());
