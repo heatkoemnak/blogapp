@@ -75,7 +75,7 @@ const PostList = () => {
                   <input
                     type="search"
                     id="default-search"
-                    class="block w-full p-2 ps-10 text-sm text-gray-50 border border-gray-300 rounded-lg bg-orange-500 hover:bg-orange-800 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-white dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    class="block w-full p-2 ps-10 text-sm text-white border placeholder:text-white border-gray-300 rounded-lg bg-orange-500 hover:bg-orange-600 "
                     placeholder="Search Mockups, Logos..."
                     required
                   />
