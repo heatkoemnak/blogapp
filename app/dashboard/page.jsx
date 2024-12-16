@@ -2,8 +2,8 @@
 
 import { useSession, signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { fetchPosts } from '../../utils/api';
-import Post from '../../components/Post';
+import { fetchPosts } from '../utils/api';
+import Post from '../components/Post';
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
