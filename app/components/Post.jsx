@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '@/app/globals.css';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,14 +10,53 @@ import Error from './Error';
 import LoadingSpinner from './LoadingSpinner';
 import { deleteResource } from '../utils/api';
 import CommentSection from './CommentSection';
+import { useSocket } from '../context/SocketProvider';
 
 const Post = ({ post }) => {
-  console.log(post);
-  const router = useRouter();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showComment, setShowComment] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false); // State for toggling text display
+  const [likes, setLikes] = useState(post?.likes || 0);
+  const { socket } = useSocket();
+  console.log(likes);
+
+  useEffect(() => {
+    // Listen for "postLiked" events
+    socket.on('postLiked', (likes) => {
+      setLikes(likes);
+    });
+    if (socket) {
+      console.log('socket connected');
+    }
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+  const handleLike = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('/api/like', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ postId: post.id }),
+      });
+
+      if (response.ok) {
+        const { likes } = await response.json();
+        socket.emit('likes', likes);
+        console.log(likes);
+        setLikes(likes);
+      } else {
+        console.error('Failed to like post');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const deletePost = async (id) => {
     if (!window.confirm('Are you sure you want to delete this post?')) {
@@ -48,7 +87,7 @@ const Post = ({ post }) => {
       <div className="grid max-w-screen-xl p-3 mx-auto lg:gap-8 xl:gap-0 lg:grid-cols-12">
         <div className="mr-auto place-self-center lg:col-span-5">
           <div className="lg:hidden flex gap-2 items-center mb-2 ml-2">
-            <Link className="lg:flex" href={`/blogs/${post.id}`}>
+            <Link className="lg:flex" href={`/blogs/${post?.id}`}>
               <Image
                 src={
                   post?.author?.image ||
@@ -126,7 +165,10 @@ const Post = ({ post }) => {
         </div>
       </div>
       <div className="flex pb-5 px-5 items-center justify-between text-gray-500">
-        <button className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
+        <button
+          onClick={handleLike}
+          className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"
+        >
           <svg
             className="w-5 h-5 fill-current"
             xmlns="http://www.w3.org/2000/svg"
@@ -134,11 +176,12 @@ const Post = ({ post }) => {
           >
             <path d="M12 21.35l-1.45-1.32C6.11 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-4.11 6.86-8.55 11.54L12 21.35z" />
           </svg>
-          <span>{post?.likes} Likes</span>
+          <span>{post.likes} Likes</span>
         </button>
-        <button
+        <Link
+          href={`/blogs/${post?.id}`}
           className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"
-          onClick={() => setShowComment(!showComment)}
+          // onClick={() => setShowComment(!showComment)}
         >
           {/* comment icon */}
           <svg
@@ -156,9 +199,9 @@ const Post = ({ post }) => {
             {post?.comments?.length || 0}{' '}
             {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
           </span>
-        </button>
+        </Link>
       </div>
-      {showComment && <CommentSection post={post} showComment={showComment} setShowComment={setShowComment} />}
+      {/* {showComment && <CommentSection post={post} />} */}
     </section>
   );
 };

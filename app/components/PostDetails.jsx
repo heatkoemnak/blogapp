@@ -1,16 +1,12 @@
 'use client';
 import React, { useState } from 'react';
-import styles from '@/app/globals.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BsThreeDots } from 'react-icons/bs';
-import Error from './Error';
-import LoadingSpinner from './LoadingSpinner';
 import { deleteResource } from '../utils/api';
 import { useSession } from 'next-auth/react';
 
-const PostDetails = ({ post }) => {
-  console.log(post);
+const PostDetails = ({ post, comments }) => {
   const { data: session } = useSession();
   const [showComment, setShowComment] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false); // State for toggling text display
@@ -35,10 +31,10 @@ const PostDetails = ({ post }) => {
   };
 
   return (
-    <section className="max-w-2xl mx-auto lg:mt-5 relative bg-white">
+    <section className="max-w-2xl mx-auto lg:mt-5 relative ">
       <div className="lg:max-w-3xl">
         <div className="lg:col-span-7 lg:flex rounded-lg">
-          <Link href={`/blogs/${post.id}`}>
+          <Link href={`/blogs/${post?.id}`}>
             <Image
               src={post?.image || '/youtube-thumbnail.png'}
               className=" "
@@ -53,7 +49,7 @@ const PostDetails = ({ post }) => {
         <div className="mr-auto place-self-center p-3  lg:col-span-5">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <Link className="lg:flex" href={`/blogs/${post.id}`}>
+              <Link className="lg:flex" href={`/blogs/${post?.id}`}>
                 <Image
                   src={
                     post?.author?.image ||
@@ -129,16 +125,16 @@ const PostDetails = ({ post }) => {
           </div>
 
           <h1 className="max-w-90 my-2 text-2xl lg:font-extrabold  text-[#201515] md:text-2xl xl:text-4xl">
-            {post.title}
+            {post?.title}
           </h1>
           <p className="font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl">
-            {isExpanded ? post.body : post.body.substring(0, 300)}
+            {isExpanded ? post?.body : post?.body.substring(0, 300)}
             <br />
-            <Link className="text-blue-500 " href={post.links[0]}>
-              {post.links[0]}
+            <Link className="text-blue-500 " href={post?.links[0]}>
+              {post?.links[0]}
             </Link>
             <br />
-            {post.body?.length >= 250 && (
+            {post?.body?.length >= 250 && (
               <span
                 onClick={toggleText}
                 className="text-blue-500 cursor-pointer"
@@ -163,7 +159,8 @@ const PostDetails = ({ post }) => {
           </svg>
           <span>{post?.likes} Likes</span>
         </button>
-        <button
+        <Link
+          href={`/post/${post?.id}`}
           className="flex items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"
           onClick={() => setShowComment(!showComment)}
         >
@@ -180,10 +177,10 @@ const PostDetails = ({ post }) => {
             />
           </svg>
           <span>
-            {post?.comments?.length || 0}{' '}
-            {post?.comments?.length <= 1 ? 'Comment' : 'Comments'}
+            {comments?.length || 0}{' '}
+            {comments?.length <= 1 ? 'Comment' : 'Comments'}
           </span>
-        </button>
+        </Link>
       </div>
     </section>
   );

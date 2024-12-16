@@ -1,13 +1,14 @@
-import { connectMongoDB } from '@/libs/mongodb';
+import foo from 'module'
 import User from '@/models/user';
-import NextAuth from 'next-auth';
+import NextAuth from 'next-auth/next';
 import bcrypt from 'bcryptjs';
-import GithubProviders from 'next-auth/providers/github';
-import GoogleProviders from 'next-auth/providers/google';
-import CredentialsProviders from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import GitHubProvider from 'next-auth/providers/github';
+import CredentialsProvider from 'next-auth/providers/credentials';
+
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@/libs/prismadb';
-import { createUserWithAccount, getUserByEmail } from '@/app/utils/user';
+import { getUserByEmail } from '@/app/utils/user';
 
 // Validation schema for credentials (not provided in the code snippet)
 // Consider using a validation library like Joi or Yup
@@ -15,15 +16,15 @@ import { createUserWithAccount, getUserByEmail } from '@/app/utils/user';
 const authOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
-    GoogleProviders({
+    GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    GithubProviders({
+    GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
-    CredentialsProviders({
+    CredentialsProvider({
       id: 'credentials',
       name: 'Credentials',
       credentials: {
@@ -86,6 +87,10 @@ const authOptions = {
       }
       return true;
     },
+    async session({ session, token }) {
+      session.user.id = token.sub; // Add user ID to the session
+      return session;
+    },
   },
   session: {
     strategy: 'jwt',
@@ -94,7 +99,6 @@ const authOptions = {
     signIn: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
-  database: process.env.DATABASE_URL,
 };
 
 const handler = NextAuth(authOptions);

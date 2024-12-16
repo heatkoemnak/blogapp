@@ -9,8 +9,8 @@ import { RiAccountCircle2Fill } from 'react-icons/ri';
 const BottomMenu = () => {
   const currentPath = usePathname();
   return (
-    <div class="fixed z-50 w-full lg:w-80 shadow-lg p-2 lg:bottom-4 bottom-0 -translate-x-1/2 bg-neutral-900 border border-gray-200 lg:rounded-full left-1/2 bg-gray-40 dark:border-gray-600">
-      <div class="grid  max-w-lg grid-cols-5 mx-auto">
+    <div className="fixed z-50 w-full lg:w-80 shadow-lg p-2 lg:bottom-4 bottom-0 -translate-x-1/2 bg-neutral-900 border border-gray-200 lg:rounded-full left-1/2 bg-gray-40 dark:border-gray-600">
+      <div className="grid  max-w-lg grid-cols-5 mx-auto">
         {/* {BottomNavLists.map((link, index) => (
           <Link
             key={index}
@@ -26,7 +26,7 @@ const BottomMenu = () => {
         ))} */}
         <Link
           href={'/'}
-          class="inline-flex flex-col items-center justify-center lg:rounded-s-full"
+          className="inline-flex flex-col items-center justify-center lg:rounded-s-full"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -40,14 +40,14 @@ const BottomMenu = () => {
         </Link>
         <Link
           href={'/blogs'}
-          class="inline-flex flex-col items-center justify-center p-2 "
+          className="inline-flex flex-col items-center justify-center p-2 "
         >
           <BiLogoBlogger size={25} className="text-white hover:text-orange-500" />
         </Link>
-        <div class="flex items-center justify-center">
+        <div className="flex items-center justify-center">
           <Link
             href={'/create-post'}
-            class="inline-flex items-center justify-center w-8 h-8 font-medium bg-gradient-to-r from-orange-500 to-purple-500 rounded-full hover:bg-blue-700 "
+            className="inline-flex items-center justify-center w-8 h-8 font-medium bg-gradient-to-r from-orange-500 to-purple-500 rounded-full hover:bg-blue-700 "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -65,13 +65,13 @@ const BottomMenu = () => {
         </div>
         <Link
           href={'/dashboard'}
-          class="inline-flex flex-col items-center justify-center p-2 "
+          className="inline-flex flex-col items-center justify-center p-2 "
         >
           <MdSpaceDashboard size={25} className="text-white hover:text-orange-500" />
         </Link>
         <Link
           href={'/profile'}
-          class="relative inline-flex flex-col items-center justify-center lg:rounded-e-full  "
+          className="relative inline-flex flex-col items-center justify-center lg:rounded-e-full  "
         >
           <RiAccountCircle2Fill size={25} className="text-white hover:text-orange-500" />
         </Link>

@@ -1,17 +1,10 @@
 import prisma from '@/libs/prismadb';
-
 import { NextResponse } from 'next/server';
 
-export async function POST(request) {
-  try {
-    const { text, authorEmail, postId, publishedAt } = await request.json();
+export async function POST(request, res) {
+  const { text, authorEmail, postId, publishedAt } = await request.json();
 
-    if (!text && !authorEmail && !postId) {
-      return NextResponse.json(
-        { message: 'Text ,authorEmail and postId are required.' },
-        { status: 500 }
-      );
-    }
+  try {
     const newComment = await prisma.comment.create({
       data: {
         text,
@@ -20,18 +13,7 @@ export async function POST(request) {
         publishedAt,
       },
     });
-    if (newComment) {
-      await prisma.comment.findMany({
-        include: {
-          author: true,
-          replies: {
-            include: {
-              author: true,
-            },
-          },
-        },
-      });
-    }
+
     return NextResponse.json(newComment, { status: 201 });
   } catch (error) {
     console.log(error);

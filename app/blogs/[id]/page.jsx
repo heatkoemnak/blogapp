@@ -1,5 +1,6 @@
 'use client';
 
+import CommentSection from '@/app/components/CommentSection';
 import Error from '@/app/components/Error';
 import LoadingSpinner from '@/app/components/LoadingSpinner';
 import Post from '@/app/components/Post';
@@ -11,7 +12,7 @@ const BlogDetails = ({ params }) => {
   const [post, setPost] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -38,11 +39,7 @@ const BlogDetails = ({ params }) => {
   if (loading) {
     return <LoadingSpinner />;
   }
-  return (
-    <div>
-      {post && <Post post={post} />}
-    </div>
-  );
+  return <div>{post && <CommentSection post={post} />}</div>;
 };
 
 export default BlogDetails;

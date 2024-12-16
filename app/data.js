@@ -1,4 +1,4 @@
-const { FaRegEdit } = require('react-icons/fa');
+import { FaRegEdit } from 'react-icons/fa';
 import { BiLogoBlogger } from 'react-icons/bi';
 import { MdSpaceDashboard } from 'react-icons/md';
 import { RiAccountCircle2Fill } from 'react-icons/ri';

@@ -5,6 +5,7 @@ import { getServerSession } from 'next-auth';
 import Navbar from './components/Navbar';
 import { BlogProvider } from './context/BlogProvider';
 import BottomMenu from './components/ui/BottomMenu';
+import { SocketProvider } from './context/SocketProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,13 +20,15 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-gradient-to-r from-slate-50 to-slate-100">
-        <BlogProvider>
-          <AuthProvider session={session}>
-            <Navbar />
-            <BottomMenu />
-            <div className="max-w-6xl mx-auto px-2 py-5 ">{children}</div>
-          </AuthProvider>
-        </BlogProvider>
+        <SocketProvider>
+          <BlogProvider>
+            <AuthProvider session={session}>
+              <Navbar />
+              <BottomMenu />
+              <div className="max-w-6xl mx-auto px-2 py-5 ">{children}</div>
+            </AuthProvider>
+          </BlogProvider>
+        </SocketProvider>
       </body>
     </html>
   );

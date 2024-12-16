@@ -2,6 +2,8 @@ import React from 'react';
 import Logo from './Logo';
 import Link from 'next/link';
 import AuthButton from './ui/AuthButton';
+// import Chat from './Chat';
+import Image from 'next/image';
 
 const Hero = () => {
   return (
@@ -11,6 +13,7 @@ const Hero = () => {
           <Logo />
           <AuthButton />
         </div> */}
+        {/* <Chat /> */}
         <div className="max-w-lg px-4 sm:pt-24 pt-12  mx-auto text-left md:max-w-none md:text-center">
           <div className="text-center py-4 hidden sm:block">
             <button className="bg-white border border-[#E2E8F0] hover:bg-neutral-200 text-xs font-bold py-2.5 px-4 rounded-full inline-flex items-center">
@@ -26,7 +29,7 @@ const Hero = () => {
               &nbsp; &nbsp;<span> Follow us on Twitter </span>
             </button>
           </div>
-          <h1 className="font-extrabold leading-10 tracking-tight text-left text-[#201515] text-center sm:leading-none text-5xl sm:text-9xl">
+          <h1 className="font-extrabold leading-10 tracking-tight text-[#201515] text-center sm:leading-none text-5xl sm:text-9xl">
             <span className="inline md:block leading-[1]">
               Bring Your Ideas{' '}
             </span>
@@ -51,13 +54,15 @@ const Hero = () => {
         </div>
       </section>
       <div className="flex lg:flex-row flex-col p-10 rounded-3xl lg:my-20 my-5 justify-between items-center gap-10 bg-gradient-to-r from-red-200 to-orange-200 ">
-        <div className=" ">
-          <img
+        {/* <div className=" ">
+          <Image
             className="object-cover rounded-3xl object-center w-full mx-auto bg-gray-300 lg:ml-auto"
             alt="hero"
+            width={600}
+            height={600}
             src="https://i.pinimg.com/originals/2e/2b/21/2e2b21aeed393403d4620367f9e093f9.gif"
           />
-        </div>
+        </div> */}
         <div className=" items-center">
           <div className=" text-center lg:text-left">
             <div>

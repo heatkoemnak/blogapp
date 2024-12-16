@@ -3,52 +3,68 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import Error from './Error';
 import { LuReply } from 'react-icons/lu';
 import { CiMinimize1 } from 'react-icons/ci';
 import PostDetails from './PostDetails';
-const CommentSection = ({ post,  setShowComment }) => {
+import { useSocket } from '../context/SocketProvider';
+import { useRouter } from 'next/navigation';
+import { timeAgo } from '../utils/timeAgo';
+
+const CommentSection = ({ post }) => {
+  console.log(post);
   const [loading, setLoading] = useState(false);
-  const [activeSettings, setActiveSettings] = useState({});
-  const [activeReplySettings, setReplySettings] = useState({});
+
   const { data: session } = useSession();
   const [newCommentText, setCommentText] = useState('');
-  const [comments, setComments] = useState(post?.comments || []);
+  const [comments, setComments] = useState(post.comments || []);
+  const { socket } = useSocket();
+  const router = useRouter();
+  console.log(comments);
+  const [activeSettings, setActiveSettings] = useState({});
+  const [activeReplySettings, setReplySettings] = useState({});
+  useEffect(() => {
+    socket.on('newComment', (message) => {
+      console.log(message);
+    });
+  }, [socket]);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
     if (newCommentText.trim() === '') return;
-    setLoading(true);
+    const data = {
+      text: newCommentText,
+      postId: post.id,
+      authorEmail: session?.user?.email || null,
+      publishedAt: new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      }),
+    };
+    // socket.emit('newComment', data);
+
     try {
       const response = await fetch('/api/comments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          text: newCommentText,
-          postId: post.id,
-          authorEmail: session?.user?.email,
-          publishedAt: new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          }),
-        }),
+        body: JSON.stringify(data),
       });
+
       if (response.ok) {
         const newComment = await response.json();
-        setComments([...comments, newComment]);
-        setLoading(false);
+        socket.emit('newComment', newComment);
+        setComments((prevComments) => [...prevComments, newComment]);
+        setCommentText('');
       } else {
-        throw new Error('Failed to post comment');
+        console.error('Failed to post comment:', await response.json());
       }
     } catch (error) {
-      console.error('Error posting reply:', error);
+      console.error('Error posting comment:', error);
     }
   };
-
   const toggleCommentSettings = (commentId) => {
     setActiveSettings((prevSettings) => ({
       ...prevSettings,
@@ -64,36 +80,30 @@ const CommentSection = ({ post,  setShowComment }) => {
   };
 
   return (
-    <div
-      className="lg:flex h-screen overflow-y-scroll w-full fixed top-0 right-0 z-50 shadow-inner bg-white dark:bg-gray-100 antialiased "
-   
-    >
+    <div className="lg:flex h-screen overflow-y-scroll w-full fixed top-0 right-0 z-50 shadow-inner bg-white  antialiased ">
       <div className=" w-full ">
-        <PostDetails post={post}  />
+        <PostDetails post={post} comments={comments} />
       </div>
-      <div className="lg:w-6/12 shadow-inner ">
+      <div className="lg:w-2/3 shadow-inner ">
         <div className="flex justify-between items-center p-4">
           <h2 className="text-lg lg:text-2xl font-bold text-gray-900">
-            Discussion ({post.comments.length})
+            Discussion ({comments?.length})
           </h2>
           <div className="flex items-center">
             <span className="lg:hidden">Most Relevant</span>
             <CiMinimize1
               size={25}
-              onClick={() => setShowComment(prevState => !prevState)}
+              onClick={() => router.back()}
               className="absolute bg-slate-800 text-white top-5 right-5 cursor-pointer hover:text-orange-500"
             />
           </div>
         </div>
         <hr />
 
-        {post?.comments?.length > 0 ? (
-          post.comments.map((comment, index) => (
-            <>
-              <article
-                key={index}
-                className="max-w-2xl mx-auto px-4 my-2 text-base"
-              >
+        {comments?.length > 0 ? (
+          comments.map((comment, index) => (
+            <div key={index}>
+              <article className="max-w-xl mx-auto px-4 my-2 text-base">
                 <footer className="flex justify-between items-center mb-2">
                   <div className="flex items-center">
                     <Image
@@ -101,22 +111,23 @@ const CommentSection = ({ post,  setShowComment }) => {
                       width={35}
                       height={35}
                       src={
-                        comment.author.image ||
+                        comment?.author?.image ||
                         'https://flowbite.com/docs/images/people/profile-picture-2.jpg'
                       }
-                      alt={comment.author.name || 'User'}
+                      alt={'User'}
                     />
                     <div className="text ">
                       <p className="inline-flex items-center mr-3 text-base font-semibold text-gray-900 dark:text-gray-600">
-                        {comment.author.name || 'Anonymous'}
+                        {comment?.author?.name || 'Anonymous'}
                       </p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        <time
-                          dateTime={comment.publishedAt || '2022-02-08'}
-                          title={comment.publishedAt || 'February 8th, 2022'}
+                        {/* <time
+                          dateTime={comment?.publishedAt || '2022-02-08'}
+                          title={comment?.publishedAt || 'February 8th, 2022'}
                         >
-                          {comment.publishedAt || 'Feb. 8, 2022'}
-                        </time>
+                          {comment?.publishedAt || 'Feb. 8, 2022'}
+                        </time> */}
+                        {timeAgo(post?.createdAt)}
                       </p>
                     </div>
                   </div>
@@ -186,10 +197,10 @@ const CommentSection = ({ post,  setShowComment }) => {
                   <div class="flex items-center mt-1 mb-2 space-x-4">
                     <button
                       type="button"
-                      class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
+                      className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
                     >
                       <svg
-                        class="mr-1.5 w-3.5 h-3.5"
+                        className="mr-1.5 w-3.5 h-3.5"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -197,9 +208,9 @@ const CommentSection = ({ post,  setShowComment }) => {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                           d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
                         />
                       </svg>
@@ -207,12 +218,12 @@ const CommentSection = ({ post,  setShowComment }) => {
                     </button>
                   </div>
                 </div>
-                {comment.replies.length > 0 &&
-                  comment.replies.map((reply, index) => (
+                {comment?.replies?.length > 0 &&
+                  comment?.replies.map((reply, index) => (
                     <div key={index} className="flex ml-10 relative">
-                      <article class="p-4 my-2 text-base bg-slate-50 rounded-xl">
-                        <footer class="flex justify-between items-center mb-2">
-                          <div className="flex items-center ">
+                      <article className="p-4 my-2 text-base bg-slate-50 rounded-xl">
+                        <footer className="flex justify-between items-center mb-2">
+                          <div className="flex items-center">
                             <Image
                               className="mr-4 rounded-full"
                               width={25}
@@ -220,7 +231,7 @@ const CommentSection = ({ post,  setShowComment }) => {
                               src={reply.author.image}
                               alt={reply.author.name || 'Anonymous'}
                             />
-                            <div className="text ">
+                            <div className="text">
                               <p className="inline-flex items-center mr-3 text-base font-semibold text-gray-900 dark:text-gray-600">
                                 {reply.author.name || 'Anonymous'}
                               </p>
@@ -235,12 +246,14 @@ const CommentSection = ({ post,  setShowComment }) => {
                             </div>
                           </div>
                           <button
-                            onClick={() => toggleReplySettingsVisibility(reply.id)}
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40"
+                            onClick={() =>
+                              toggleReplySettingsVisibility(reply.id)
+                            }
+                            className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40"
                             type="button"
                           >
                             <svg
-                              class="w-4 h-4"
+                              className="w-4 h-4"
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="currentColor"
@@ -248,17 +261,17 @@ const CommentSection = ({ post,  setShowComment }) => {
                             >
                               <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
                             </svg>
-                            <span class="sr-only">Reply settings</span>
+                            <span className="sr-only">Reply settings</span>
                           </button>
                           {activeReplySettings[reply.id] && (
                             <div className="absolute top-14 right-0 z-10 w-36 bg-white rounded-xl border">
-                              <ul className="py-1 text-xs text-gray-700 ">
+                              <ul className="py-1 text-xs text-gray-700">
                                 {reply.authorEmail === session?.user?.email && (
                                   <>
                                     <li>
                                       <a
                                         href="#"
-                                        className="block py-2 px-4  hover:text-orange-700"
+                                        className="block py-2 px-4 hover:text-orange-700"
                                       >
                                         Edit
                                       </a>
@@ -266,7 +279,7 @@ const CommentSection = ({ post,  setShowComment }) => {
                                     <li>
                                       <a
                                         href="#"
-                                        className="block py-2 px-4  hover:text-orange-700"
+                                        className="block py-2 px-4 hover:text-orange-700"
                                       >
                                         Delete
                                       </a>
@@ -276,7 +289,7 @@ const CommentSection = ({ post,  setShowComment }) => {
                                 <li>
                                   <a
                                     href="#"
-                                    className="block py-2 px-4  hover:text-orange-700"
+                                    className="block py-2 px-4 hover:text-orange-700"
                                   >
                                     Hide
                                   </a>
@@ -284,7 +297,7 @@ const CommentSection = ({ post,  setShowComment }) => {
                                 <li>
                                   <a
                                     href="#"
-                                    className="block py-2 px-4  hover:text-orange-700"
+                                    className="block py-2 px-4 hover:text-orange-700"
                                   >
                                     Report
                                   </a>
@@ -293,16 +306,16 @@ const CommentSection = ({ post,  setShowComment }) => {
                             </div>
                           )}
                         </footer>
-                        <p class="text-gray-500 dark:text-gray-400 ">
+                        <p className="text-gray-500 dark:text-gray-400">
                           {reply.text}
                         </p>
-                        <div class="flex items-center mt-4 space-x-4">
+                        <div className="flex items-center mt-4 space-x-4">
                           <button
                             type="button"
-                            class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
+                            className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium"
                           >
                             <svg
-                              class="mr-1.5 w-3.5 h-3.5"
+                              className="mr-1.5 w-3.5 h-3.5"
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -310,9 +323,9 @@ const CommentSection = ({ post,  setShowComment }) => {
                             >
                               <path
                                 stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
                                 d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"
                               />
                             </svg>
@@ -324,16 +337,16 @@ const CommentSection = ({ post,  setShowComment }) => {
                     </div>
                   ))}
               </article>
-            </>
+            </div>
           ))
         ) : (
           <div className="flex justify-center m-5">
             <span>No comments yet.</span>
           </div>
         )}
-        <form className="m-5 " onSubmit={handleCommentSubmit}>
+        <div className="m-5 ">
           <label
-            for="message"
+            htmlFor="message"
             class="block mx-5 text-sm font-medium text-gray-900 "
           >
             Leave your comment
@@ -356,6 +369,7 @@ const CommentSection = ({ post,  setShowComment }) => {
           <div class="flex items-center justify-between px-3 ">
             <button
               type="submit"
+              onClick={handleCommentSubmit}
               className="inline-flex items-center py-2 px-4 text-xs font-medium text-center text-white bg-primary-700 rounded-lg bg-gradient-to-r from-orange-500 to-purple-500 focus:ring-1 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
             >
               {loading ? (
@@ -417,7 +431,7 @@ const CommentSection = ({ post,  setShowComment }) => {
               </button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

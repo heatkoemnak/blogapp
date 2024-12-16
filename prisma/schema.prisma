@@ -49,8 +49,8 @@ model Category {
 model Comment {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   text    String
-  author   User     @relation(fields: [authorEmail], references: [email])
-  authorEmail String  
+  author   User?     @relation(fields: [authorEmail], references: [email])
+  authorEmail String?  
   post     Post @relation(fields: [postId], references: [id],onDelete: Cascade)
   postId   String  @db.ObjectId
   replies  Reply[]

@@ -9,11 +9,4 @@ if (process.env.NODE_ENV === 'production') {
   prisma = global.prisma;
 }
 export default prisma;
-// const client = global.prismadb || new PrismaClient();
-// if (process.env.NODE_ENV === 'production') global.prismadb = client;
-// export default client;
-// import { PrismaClient } from '@prisma/client';
 
-// const prisma = new PrismaClient();
-
-// export default prisma;
