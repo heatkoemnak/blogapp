@@ -16,9 +16,9 @@ export async function createUserWithAccount({ name, email, password }) {
           },
         },
       },
-      include:{
-        accounts:true
-      }
+      include: {
+        accounts: true,
+      },
     });
   } catch (error) {
     console.log('Error creating user', error);

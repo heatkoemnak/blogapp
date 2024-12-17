@@ -1,11 +1,11 @@
-import foo from 'module'
+import foo from 'module';
 import User from '@/models/user';
 import NextAuth from 'next-auth/next';
 import bcrypt from 'bcryptjs';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
-
+import FacebookProvider from 'next-auth/providers/facebook';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from '@/libs/prismadb';
 import { getUserByEmail } from '@/app/utils/user';
@@ -23,6 +23,10 @@ const authOptions = {
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
     }),
     CredentialsProvider({
       id: 'credentials',
@@ -58,45 +62,61 @@ const authOptions = {
       console.log('User:', user);
       console.log('Account:', account);
 
+      // Allow credentials provider users to sign in
       if (account.provider === 'credentials') {
         return true;
       }
 
-      if (['google', 'github'].includes(account.provider)) {
+      // OAuth Providers (Google, GitHub, Facebook)
+      if (['google', 'github', 'facebook'].includes(account.provider)) {
         const { email, name, image } = user;
+
+        // Ensure email exists (OAuth edge case)
+        if (!email) {
+          console.error('Error: OAuth provider did not return an email.');
+          return false;
+        }
+
         try {
+          // Check if user already exists in DB
           const userExists = await getUserByEmail(email);
           if (!userExists) {
-            const res = await fetch('/api/register', {
+            // If user doesn't exist, register them
+            const response = await fetch('/api/register', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ name, email, image }),
             });
-            if (res.ok) {
-              return true;
-            } else {
-              throw new Error('Failed to register user via OAuth');
+
+            if (!response.ok) {
+              console.error('Error: Failed to register new OAuth user.');
+              return false;
             }
           }
         } catch (error) {
-          console.error('Error during OAuth sign-in:', error);
+          console.error('Error during OAuth sign-in:', error.message || error);
           return false;
         }
+        return true; // Allow sign-in
       }
-      return true;
+      return false; // Deny sign-in if other unknown providers
     },
+
+    // Add user ID to the session object
     async session({ session, token }) {
-      session.user.id = token.sub; // Add user ID to the session
+      if (token?.sub) {
+        session.user.id = token.sub;
+      }
       return session;
     },
   },
+
   session: {
     strategy: 'jwt',
   },
   pages: {
     signIn: '/login',
+    error: '/auth/error',
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
