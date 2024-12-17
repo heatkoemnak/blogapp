@@ -9,6 +9,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [visiblePassword, setVisiblePassword] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -32,11 +33,17 @@ const Register = () => {
       return;
     }
     if (!confirmPassword) {
-      setErrors((prev) => ({ ...prev, confirmPassword: 'This field is required.' }));
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: 'This field is required.',
+      }));
       return;
     }
     if (password !== confirmPassword) {
-      setErrors((prev) => ({ ...prev, confirmPassword: 'Passwords do not match' }));
+      setErrors((prev) => ({
+        ...prev,
+        confirmPassword: 'Passwords do not match',
+      }));
       return;
     }
 
@@ -74,7 +81,9 @@ const Register = () => {
     <div className="flex  min-h-screen items-center justify-center">
       <div className="w-full max-w-md rounded-2xl space-y-2 p-8 mb-12 bg-white">
         <div>
-          <h4 className="text-center text-2xl font-extrabold text-gray-900">Create your account</h4>
+          <h4 className="text-center text-2xl font-extrabold text-gray-900">
+            Create your account
+          </h4>
           <p className="mt-2 text-center text-sm text-gray-600">
             Enter your details to register an account.
           </p>
@@ -82,7 +91,9 @@ const Register = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex gap-2 flex-col  rounded-xl shadow-sm ">
             <div>
-              <label htmlFor="name" className="sr-only">Name</label>
+              <label htmlFor="name" className="sr-only">
+                Name
+              </label>
               <input
                 id="name"
                 name="name"
@@ -94,10 +105,14 @@ const Register = () => {
                 } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Name"
               />
-              {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+              {errors.name && (
+                <p className="text-red-500 text-xs mt-1">{errors.name}</p>
+              )}
             </div>
             <div>
-              <label htmlFor="email-address" className="sr-only">Email address</label>
+              <label htmlFor="email-address" className="sr-only">
+                Email address
+              </label>
               <input
                 id="email-address"
                 name="email"
@@ -109,10 +124,14 @@ const Register = () => {
                 } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Email address"
               />
-              {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
+              {errors.email && (
+                <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+              )}
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">Password</label>
+            <div className="relative">
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
               <input
                 id="password"
                 name="password"
@@ -124,14 +143,52 @@ const Register = () => {
                 } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Password"
               />
-              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
+              <button
+                className="absolute top-2 right-3 z-50"
+                onClick={() => setVisiblePassword(!visiblePassword)}
+              >
+                {visiblePassword ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="size-5 "
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3.28 2.22a.75.75 0 0 0-1.06 1.06l14.5 14.5a.75.75 0 1 0 1.06-1.06l-1.745-1.745a10.029 10.029 0 0 0 3.3-4.38 1.651 1.651 0 0 0 0-1.185A10.004 10.004 0 0 0 9.999 3a9.956 9.956 0 0 0-4.744 1.194L3.28 2.22ZM7.752 6.69l1.092 1.092a2.5 2.5 0 0 1 3.374 3.373l1.091 1.092a4 4 0 0 0-5.557-5.557Z"
+                      clipRule="evenodd"
+                    />
+                    <path d="m10.748 13.93 2.523 2.523a9.987 9.987 0 0 1-3.27.547c-4.258 0-7.894-2.66-9.337-6.41a1.651 1.651 0 0 1 0-1.186A10.007 10.007 0 0 1 2.839 6.02L6.07 9.252a4 4 0 0 0 4.678 4.678Z" />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="size-5  text-gray-800"
+                  >
+                    <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                    <path
+                      fillRule="evenodd"
+                      d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+              </button>
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">{errors.password}</p>
+              )}
             </div>
             <div>
-              <label htmlFor="confirm-password" className="sr-only">Confirm Password</label>
+              <label htmlFor="confirm-password" className="sr-only">
+                Confirm Password
+              </label>
               <input
                 id="confirm-password"
                 name="confirm-password"
-                type="password"
+                type={visiblePassword ? `text` : 'password'}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className={`relative block w-full px-3 py-2 border ${
@@ -139,8 +196,11 @@ const Register = () => {
                 } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Confirm Password"
               />
+
               {errors.confirmPassword && (
-                <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
+                <p className="text-red-500 text-xs mt-1">
+                  {errors.confirmPassword}
+                </p>
               )}
             </div>
           </div>
@@ -159,7 +219,10 @@ const Register = () => {
             />
             <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
               I agree to the{' '}
-              <Link href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link
+                href="#"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 Terms and Conditions
               </Link>
             </label>
@@ -177,7 +240,10 @@ const Register = () => {
           <div className="mt-4 text-center text-sm text-gray-600">
             <p>
               Already have an account?{' '}
-              <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <Link
+                href="/login"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 Sign in
               </Link>
             </p>
