@@ -98,8 +98,8 @@ const Navbar = () => {
                 {session?.user?.image ? (
                   <Image
                     src={session?.user?.image}
-                    width={25}
-                    height={25}
+                    width={32}
+                    height={32}
                     alt="Profile Image"
                     className="flex items-center justify-center bg-gray-500 text-white rounded-full"
                   />

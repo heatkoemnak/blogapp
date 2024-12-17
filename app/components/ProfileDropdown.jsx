@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 const ProfileDropdown = () => {
   const { status, data: session } = useSession();
   const currentPath = usePathname();
+  const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
   return (
     <>
       <div className="absolute z-10 top-16 right-0 flex items-center justify-center">
@@ -20,11 +21,20 @@ const ProfileDropdown = () => {
                 aria-label="avatar"
                 className="flex mr-auto items-center space-x-4"
               >
-                <img
-                  src={session?.user?.image}
-                  alt="avatar Evan You"
-                  className="w-12 h-12 shrink-0 rounded-full"
-                />
+                {session?.user?.image ? (
+                  <Image
+                    src={session?.user?.image}
+                    width={25}
+                    height={25}
+                    alt="Profile Image"
+                    className="flex items-center justify-center bg-gray-500 text-white rounded-full"
+                  />
+                ) : (
+                  <div className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full">
+                    {getInitial(session?.user?.name)}
+                    {/* K */}
+                  </div>
+                )}
                 <div className="space-y-2 flex flex-col flex-1 truncate">
                   <div className="font-medium relative text-xl leading-tight text-gray-900">
                     <span className="flex">
@@ -264,4 +274,3 @@ const ProfileDropdown = () => {
 };
 
 export default ProfileDropdown;
-
