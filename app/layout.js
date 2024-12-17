@@ -1,11 +1,14 @@
 import { Inter } from 'next/font/google';
 import './globals.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import AuthProvider from './components/AuthProvider/AuthProvider';
 import { getServerSession } from 'next-auth';
 import Navbar from './components/Navbar';
 import { BlogProvider } from './context/BlogProvider';
 import BottomMenu from './components/ui/BottomMenu';
 import { SocketProvider } from './context/SocketProvider';
+import Footer from './components/Footer';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,17 +23,23 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-gradient-to-r from-slate-50 to-slate-100">
-        <SocketProvider>
-          <BlogProvider>
-            <AuthProvider session={session}>
-              <Navbar />
-              <div className="lg:hidden">
-                <BottomMenu />
-              </div>
-              <div className="max-w-6xl mx-auto px-2 py-5 ">{children}</div>
-            </AuthProvider>
-          </BlogProvider>
-        </SocketProvider>
+        <SkeletonTheme baseColor="#202020" highlightColor="#444">
+          <SocketProvider>
+            <BlogProvider>
+              <AuthProvider session={session}>
+                <Navbar />
+           
+                <div className="lg:hidden">
+                  <BottomMenu />
+                </div>
+                <div className="max-w-6xl mx-auto px-2 py-5 ">{children}</div>
+                <div className="hidden lg:flex">
+                  <Footer />
+                </div>
+              </AuthProvider>
+            </BlogProvider>
+          </SocketProvider>
+        </SkeletonTheme>
       </body>
     </html>
   );

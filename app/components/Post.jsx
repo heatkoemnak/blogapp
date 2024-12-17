@@ -12,7 +12,7 @@ import router from 'next/router';
 const Post = ({ post }) => {
   const { data: session } = useSession();
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false); // State for toggling text display
   const [likes, setLikes] = useState(post?.likes || 0);
   const [showDeleteMenu, setShowDeleteMenu] = useState(false); // For dropdown menu toggle
@@ -69,9 +69,9 @@ const Post = ({ post }) => {
     return <Error error={error} />;
   }
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  // if (loading) {
+  //   return <LoadingSpinner />;
+  // }
 
   return (
     <section className="bg-white ">
@@ -207,6 +207,7 @@ const Post = ({ post }) => {
             />
           </Link>
         </div>
+
         <div className="mr-auto p-3 place-self-center lg:col-span-5">
           {/* Author Info */}
 
@@ -224,7 +225,7 @@ const Post = ({ post }) => {
               {post?.links.length > 0 &&
                 post?.links?.map((link, index) => (
                   <Link
-                    className="text-blue-500 "
+                    className=" flex flex-col text-blue-500 "
                     href={link}
                     target="_blank"
                     key={index}

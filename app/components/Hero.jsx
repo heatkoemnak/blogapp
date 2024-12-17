@@ -38,6 +38,10 @@ const Hero = () => {
             </span>
             <span className="relative mt-2 bg-clip-text text-[#FF4F01]">.</span>
           </h1>
+          <p className=" text-center mt-4 font-semibold lg:text-2xl max-w-4xl mx-auto -tracking-wide text-gray-600">
+            Whether {`you're`} a creator, innovator, or dreamer, our platform is
+            designed to help you share your ideas with the world.
+          </p>
         </div>
         <div className="max-w-lg px-4 mx-auto flex justify-center text-center md:text-center">
           <div className="flex text-center items-center lg:py-6 py-8 my-4 space-x-2  ">
@@ -54,7 +58,7 @@ const Hero = () => {
         </div>
       </section>
       <div className="flex lg:flex-row flex-col p-10 rounded-3xl lg:my-20 my-5 justify-between items-center gap-10 bg-gradient-to-r from-red-200 to-orange-200 ">
-        {/* <div className=" ">
+        <div className=" ">
           <Image
             className="object-cover rounded-3xl object-center w-full mx-auto bg-gray-300 lg:ml-auto"
             alt="hero"
@@ -62,7 +66,7 @@ const Hero = () => {
             height={600}
             src="https://i.pinimg.com/originals/2e/2b/21/2e2b21aeed393403d4620367f9e093f9.gif"
           />
-        </div> */}
+        </div>
         <div className=" items-center">
           <div className=" text-center lg:text-left">
             <div>
@@ -70,9 +74,7 @@ const Hero = () => {
                 A Platform to Empower Your Vision
               </p>
               <p className=" mt-4 text-base tracking-tight text-gray-600">
-                Whether {`you're`} a creator, innovator, or dreamer, our
-                platform is designed to help you share your ideas with the
-                world. Transform thoughts into action with intuitive tools and
+                Transform thoughts into action with intuitive tools and
                 resources.
               </p>
             </div>

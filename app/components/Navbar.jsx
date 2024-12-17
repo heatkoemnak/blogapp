@@ -20,13 +20,13 @@ const Navbar = () => {
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
 
   return (
-    <nav className="px-5 max-w-8xl mx-auto border-b">
+    <nav className="px-5 max-w-9xl mx-auto border-b bg-white ">
       <div className="max-w-6xl mx-auto py-4 flex justify-between items-center">
         <IoSearchCircle className="lg:hidden cursor-pointer" size={35} />
         <Logo />
 
         {/* Desktop Screen */}
-        <Search />
+        <Search placeholder="Search..." background={'bg-gray-50'} />
         <div className="hidden lg:flex space-x-5 items-center">
           {links.map((link, index) => (
             <Link
