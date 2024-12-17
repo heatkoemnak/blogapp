@@ -3,6 +3,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { FaRegEdit } from 'react-icons/fa';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 const ProfileDropdown = () => {
   const { status, data: session } = useSession();
