@@ -1,10 +1,10 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model User {
@@ -51,13 +51,15 @@ model Post {
 
 model Comment {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  text        String
+  text        String?
   author      User?    @relation(fields: [authorEmail], references: [email])
   authorEmail String?
   post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId      String   @db.ObjectId
   replies     Reply[]
   publishedAt String?
+  image       String?
+  file        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
