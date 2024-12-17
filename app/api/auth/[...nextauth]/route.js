@@ -62,61 +62,45 @@ const authOptions = {
       console.log('User:', user);
       console.log('Account:', account);
 
-      // Allow credentials provider users to sign in
       if (account.provider === 'credentials') {
         return true;
       }
 
-      // OAuth Providers (Google, GitHub, Facebook)
       if (['google', 'github', 'facebook'].includes(account.provider)) {
         const { email, name, image } = user;
-
-        // Ensure email exists (OAuth edge case)
-        if (!email) {
-          console.error('Error: OAuth provider did not return an email.');
-          return false;
-        }
-
         try {
-          // Check if user already exists in DB
           const userExists = await getUserByEmail(email);
           if (!userExists) {
-            // If user doesn't exist, register them
-            const response = await fetch('/api/register', {
+            const res = await fetch('/api/register', {
               method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
+              headers: {
+                'Content-Type': 'application/json',
+              },
               body: JSON.stringify({ name, email, image }),
             });
-
-            if (!response.ok) {
-              console.error('Error: Failed to register new OAuth user.');
-              return false;
+            if (res.ok) {
+              return true;
+            } else {
+              throw new Error('Failed to register user via OAuth');
             }
           }
         } catch (error) {
-          console.error('Error during OAuth sign-in:', error.message || error);
+          console.error('Error during OAuth sign-in:', error);
           return false;
         }
-        return true; // Allow sign-in
       }
-      return false; // Deny sign-in if other unknown providers
+      return true;
     },
-
-    // Add user ID to the session object
     async session({ session, token }) {
-      if (token?.sub) {
-        session.user.id = token.sub;
-      }
+      session.user.id = token.sub; // Add user ID to the session
       return session;
     },
   },
-
   session: {
     strategy: 'jwt',
   },
   pages: {
     signIn: '/login',
-    error: '/auth/error',
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
