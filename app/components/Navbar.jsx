@@ -15,6 +15,7 @@ const Navbar = () => {
   const { status, data: session } = useSession();
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
 
@@ -46,7 +47,7 @@ const Navbar = () => {
       <div className="max-w-6xl mx-auto py-4 flex justify-between items-center">
         {/* Mobile Search */}
         <div
-          onClick={() => setShowDropdown(true)}
+          onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
           className="lg:hidden cursor-pointer"
         >
           <svg
@@ -62,9 +63,6 @@ const Navbar = () => {
             />
           </svg>
         </div>
-        {showDropdown && (
-          <Search placeholder="Search..." background="bg-gray-50" />
-        )}
 
         {/* Logo */}
         <Logo />
@@ -140,6 +138,15 @@ const Navbar = () => {
           </button>
         </div>
       </div>
+      {mobileSearchOpen && (
+        <div ref={mobileMenuRef} className="lg:hidden">
+          <input
+            className={`outline-none w-full p-2 rounded-full  `}
+            type="text"
+            placeholder="Search..."
+          />
+        </div>
+      )}
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
@@ -154,21 +161,6 @@ const Navbar = () => {
               Login or Sign Up
             </Link>
           )}
-          {/* <div className="flex flex-col space-y-2 mt-2">
-            {links.map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                className={
-                  currentPath === link.href
-                    ? 'text-orange-500 font-semibold px-4'
-                    : 'text-gray-700 px-4'
-                }
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div> */}
         </div>
       )}
     </nav>
