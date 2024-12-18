@@ -3,7 +3,6 @@ import User from '@/models/user';
 import NextAuth from 'next-auth/next';
 import bcrypt from 'bcryptjs';
 import GoogleProvider from 'next-auth/providers/google';
-import GitHubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import FacebookProvider from 'next-auth/providers/facebook';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
@@ -19,10 +18,6 @@ const authOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-    GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
@@ -66,7 +61,7 @@ const authOptions = {
         return true;
       }
 
-      if (['google', 'github', 'facebook'].includes(account.provider)) {
+      if (['google', 'facebook'].includes(account.provider)) {
         const { email, name, image } = user;
         try {
           const userExists = await getUserByEmail(email);

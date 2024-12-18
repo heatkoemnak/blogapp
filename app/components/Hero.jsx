@@ -38,7 +38,7 @@ const Hero = () => {
             </span>
             <span className="relative mt-2 bg-clip-text text-[#FF4F01]">.</span>
           </h1>
-          <p className=" text-center mt-4 font-medium lg:text-xl max-w-4xl mx-auto  text-gray-600">
+          <p className=" text-center mt-4 font-base lg:text-xl max-w-4xl mx-auto  text-gray-600">
             Whether {`you're`} a creator, innovator, or dreamer, our platform is
             designed to help you share your ideas with the world.
           </p>
