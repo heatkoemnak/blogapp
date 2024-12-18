@@ -7,7 +7,8 @@ import { createUserWithAccount, getUserByEmail } from '@/app/utils/user';
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { name, email,image, password } = body;
+    const { name, email, image, password } = body;
+    console.log(body);
     await userValidate.validate(body, { abortEarly: false });
 
     const userExists = await getUserByEmail(email);
@@ -35,7 +36,6 @@ export async function POST(req) {
       { status: 201 }
     );
   } catch (error) {
-   
     console.log(error);
     return NextResponse.json({ message: 'Failed to create user' }, error, {
       status: 500,
