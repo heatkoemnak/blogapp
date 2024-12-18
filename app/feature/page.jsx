@@ -4,8 +4,8 @@ import React from 'react';
 const page = () => {
   return (
     <>
-      <div className="max-w-2xl text-center mx-auto mb-10 lg:mb-14">
-        <h2 className="text-6xl font-bold md:leading-tight dark:text-gray-800">
+      <div className="max-w-2xl text-center mx-auto mb-16 lg:mb-14">
+        <h2 className="lg:text-6xl text-xl font-semibold md:leading-tight dark:text-gray-800">
           Our Features
         </h2>
         <p className="mt-1 text-gray-600 dark:text-neutral-700">
@@ -13,13 +13,13 @@ const page = () => {
           tips and tricks
         </p>
       </div>
-      <div class="relative overflow-hidden bg-white pt-16 pb-32 space-y-24">
+      <div class="relative overflow-hidden bg-white lg:pt-16 lg:pb-32 mb-20 py-5 space-y-24">
         <div class="relative">
           <div class="lg:mx-auto lg:grid lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-2 lg:gap-24 lg:px-8 ">
             <div class="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0 ">
               <div>
                 <div>
-                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-500">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -49,7 +49,7 @@ const page = () => {
                   </p>
                   <div class="mt-6">
                     <a
-                      class="inline-flex rounded-lg bg-pink-600 px-4 py-1.5 text-base font-semibold leading-7 text-gray-800 shadow-sm ring-1 ring-pink-600 hover:bg-pink-700 hover:ring-pink-700"
+                      class="inline-flex rounded-lg bg-gray-100 px-4 py-1.5 text-base font-semibold leading-7 text-gray-800 shadow-sm ring-1 ring-orange-500 hover:bg-pink-700 hover:ring-pink-700"
                       href="/login"
                     >
                       Learn More
@@ -78,7 +78,7 @@ const page = () => {
             <div class="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0 lg:col-start-2">
               <div>
                 <div>
-                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-500">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -107,7 +107,7 @@ const page = () => {
                   </p>
                   <div class="mt-6">
                     <a
-                      class="inline-flex rounded-lg bg-pink-600 px-4 py-1.5 text-base font-semibold leading-7 text-gray-800 shadow-sm ring-1 ring-pink-600 hover:bg-pink-700 hover:ring-pink-700"
+                      class="inline-flex rounded-lg bg-gray-100 px-4 py-1.5 text-base font-semibold leading-7 text-gray-800 shadow-sm ring-1 ring-orange-500 hover:bg-pink-700 hover:ring-pink-700"
                       href="/login"
                     >
                       Learn More
@@ -136,7 +136,7 @@ const page = () => {
             <div class="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0 ">
               <div>
                 <div>
-                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-500">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -162,7 +162,7 @@ const page = () => {
                   </p>
                   <div class="mt-6">
                     <a
-                      class="inline-flex rounded-lg bg-pink-600 px-4 py-1.5 text-base font-semibold leading-7 text-gray-800 shadow-sm ring-1 ring-pink-600 hover:bg-pink-700 hover:ring-pink-700"
+                      class="inline-flex rounded-lg bg-gray-100  px-4 py-1.5 text-base font-semibold leading-7 text-gray-800 shadow-sm ring-1 ring-orange-500 hover:bg-pink-700 hover:ring-pink-700"
                       href="/login"
                     >
                       Learn More

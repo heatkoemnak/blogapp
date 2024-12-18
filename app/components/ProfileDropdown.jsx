@@ -36,9 +36,9 @@ const ProfileDropdown = () => {
                   </div>
                 )}
                 <div className="space-y-2 flex flex-col flex-1 truncate">
-                  <div className="font-medium relative text-base leading-tight text-gray-900">
+                  <div className="font-normal relative text-base leading-tight text-gray-900">
                     <span className="flex">
-                      <span className="truncate relative pr-8">
+                      <span className="truncate relative pr-6">
                         {session?.user.name}{' '}
                         <span
                           aria-label="verified"
@@ -92,7 +92,6 @@ const ProfileDropdown = () => {
               </svg>
             </div>
           )}
-
           {/* <div aria-label="navigation" className="py-2">
             <nav className="grid gap-1 text-md">
               <Link
@@ -256,22 +255,13 @@ const ProfileDropdown = () => {
               </button>
             </div>
           ) : (
-            ''
-            // <div className="flex items-center gap-2 py-2">
-            //   <Link href="/login">
-            //     <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-800 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-            //       <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
-            //         Sign in
-            //       </span>
-            //     </button>
-            //     {/* <button
-            //       type="submit"
-            //       className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
-            //     >
-            //       Login or Create account
-            //     </button> */}
-            //   </Link>
-            // </div>
+            <Link href="/login" className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none rounded-md">
+              <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2  text-sm font-medium text-gray-800 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+                  Sign in
+                </span>
+              </button>
+            </Link>
           )}
         </div>
       </div>
