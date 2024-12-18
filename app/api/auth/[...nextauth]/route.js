@@ -54,17 +54,28 @@ const authOptions = {
   callbacks: {
     async signIn({ user, account, profile }) {
       console.log(user, account, profile);
+      const existingUser = await prisma.user.findUnique({
+        where: { email: user.email },
+      });
 
       if (account.provider === 'credentials') {
         return true; // Allow credentials-based login
       }
       // Handle Google login
-      if (account.provider === 'google') {
-        // const { email, name, image } = user;
-        // Check if the user exists in the database
-        const existingUser = await prisma.user.findUnique({
-          where: { email: user.email },
+      const { email, name, image } = user;
+
+      if (!existingUser) {
+        // If the user doesn't exist, create a new user
+        const hashedPassword = await bcrypt.hash(new Date().toISOString(), 10);
+        await createUserWithAccount({
+          name,
+          email,
+          image,
+          password: hashedPassword,
         });
+      }
+
+      if (account.provider === 'google') {
         console.log(existingUser);
 
         if (existingUser) {
