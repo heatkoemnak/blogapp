@@ -7,7 +7,6 @@ import Image from 'next/image';
 
 const ProfileDropdown = () => {
   const { status, data: session } = useSession();
-  const currentPath = usePathname();
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
   return (
     <>
@@ -94,7 +93,7 @@ const ProfileDropdown = () => {
             </div>
           )}
 
-          <div aria-label="navigation" className="py-2">
+          {/* <div aria-label="navigation" className="py-2">
             <nav className="grid gap-1 text-md">
               <Link
                 href="/blogs"
@@ -227,7 +226,7 @@ const ProfileDropdown = () => {
                 <span>Helper Center</span>
               </Link>
             </nav>
-          </div>
+          </div> */}
           {session ? (
             <div aria-label="footer" className="pt-2">
               <button

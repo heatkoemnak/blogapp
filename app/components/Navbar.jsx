@@ -101,7 +101,7 @@ const Navbar = () => {
         {/* mobile screen */}
 
         <div className="lg:hidden flex items-center">
-          {status == 'authenticated' ? (
+          {session ? (
             <>
               <button
                 type="button"
@@ -125,29 +125,50 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            ''
-            // <button
-            //   className="text-gray-900 hover:text-gray-700 focus:outline-none"
-            //   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            // >
-            //   {!mobileMenuOpen ? (
-            //     <HiMenu size={25} />
-            //   ) : (
-            //     <CgClose
-            //       size={30}
-            //       className="bg-gradient-to-r from-orange-500 to-purple-500 p-1 text-white rounded-md"
-            //     />
-            //   )}
-            // </button>
+            <button
+              className="text-gray-900 hover:text-gray-700 focus:outline-none"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {!mobileMenuOpen ? (
+                // <button
+                //   type="button"
+                //   onClick={() => signOut()}
+                //   className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
+                // >
+                //   <svg
+                //     xmlns="http://www.w3.org/2000/svg"
+                //     aria-hidden="true"
+                //     className="w-5 h-5"
+                //     width={24}
+                //     height={24}
+                //     viewBox="0 0 24 24"
+                //     strokeWidth={2}
+                //     stroke="currentColor"
+                //     fill="none"
+                //     strokeLinecap="round"
+                //     strokeLinejoin="round"
+                //   >
+                //     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                //     <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                //     <path d="M9 12h12l-3 -3" />
+                //     <path d="M18 15l3 -3" />
+                //   </svg>
+                //   <span>Logout</span>
+                // </button>
+                <HiMenu size={25} />
+              ) : (
+                <CgClose size={30} className=" text-orange-600 rounded-md" />
+              )}
+            </button>
           )}
         </div>
         {/*end mobile screen */}
       </div>
-      {/* {mobileMenuOpen && (
+      {mobileMenuOpen && (
         <div className="lg:hidden">
           <ProfileDropdown />
         </div>
-      )} */}
+      )}
     </nav>
   );
 };
