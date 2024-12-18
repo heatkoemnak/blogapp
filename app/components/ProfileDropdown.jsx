@@ -24,8 +24,8 @@ const ProfileDropdown = () => {
                 {session?.user?.image ? (
                   <Image
                     src={session?.user?.image}
-                    width={25}
-                    height={25}
+                    width={32}
+                    height={32}
                     alt="Profile Image"
                     className="flex items-center justify-center bg-gray-500 text-white rounded-full"
                   />
@@ -36,7 +36,7 @@ const ProfileDropdown = () => {
                   </div>
                 )}
                 <div className="space-y-2 flex flex-col flex-1 truncate">
-                  <div className="font-medium relative text-xl leading-tight text-gray-900">
+                  <div className="font-medium relative text-base leading-tight text-gray-900">
                     <span className="flex">
                       <span className="truncate relative pr-8">
                         {session?.user.name}{' '}
