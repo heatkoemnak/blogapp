@@ -99,6 +99,29 @@ const authOptions = {
 
         return true; // Allow Google login
       }
+
+      if (account.provider === 'facebook') {
+        if (existingUser) {
+          // If the user doesn't exist, create a new user
+          await prisma.account.upsert({
+            where: {
+              provider_providerAccountId: {
+                provider: account.provider,
+                providerAccountId: account.providerAccountId,
+              },
+            },
+            update: {},
+            create: {
+              userId: existingUser.id,
+              type: account.type,
+              provider: account.provider,
+              providerAccountId: account.providerAccountId,
+            },
+          });
+        }
+
+        return true; // Allow Facebook login
+      }
     },
 
     async session({ session, token }) {
@@ -123,6 +146,7 @@ const authOptions = {
   },
 
   pages: {
+    signIn: '/auth/login',
     error: '/auth/error', // Optional custom error page
   },
 
