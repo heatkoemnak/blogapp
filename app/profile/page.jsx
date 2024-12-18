@@ -4,12 +4,12 @@ import { useSession, signIn } from 'next-auth/react';
 import Image from 'next/image';
 
 const ProfilePage = () => {
-  const { data: session, status } = useSession();
-  // useEffect(() => {
-  //   if (!session) {
-  //     signIn();
-  //   }
-  // }, [session]);
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (!session) {
+      signIn();
+    }
+  }, [session]);
   return (
     <section class="relative pt-36 pb-24">
       <Image

@@ -125,45 +125,39 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <button
-              className="text-gray-900 hover:text-gray-700 focus:outline-none"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {!mobileMenuOpen ? (
-                // <button
-                //   type="button"
-                //   onClick={() => signOut()}
-                //   className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
-                // >
-                //   <svg
-                //     xmlns="http://www.w3.org/2000/svg"
-                //     aria-hidden="true"
-                //     className="w-5 h-5"
-                //     width={24}
-                //     height={24}
-                //     viewBox="0 0 24 24"
-                //     strokeWidth={2}
-                //     stroke="currentColor"
-                //     fill="none"
-                //     strokeLinecap="round"
-                //     strokeLinejoin="round"
-                //   >
-                //     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                //     <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
-                //     <path d="M9 12h12l-3 -3" />
-                //     <path d="M18 15l3 -3" />
-                //   </svg>
-                //   <span>Logout</span>
-                // </button>
-                <HiMenu size={25} />
-              ) : (
-                <CgClose size={30} className=" text-orange-600 rounded-md" />
-              )}
-            </button>
+            <div>
+              <Link href="/login">
+                <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-700 rounded-lg bg-gradient-to-br  focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                  <span class="relative px-5 py-2.5 transition-all ease-in duration-75  hover:bg-orange-600 rounded-md group-hover:bg-opacity-0">
+                    Sign in
+                  </span>
+                </button>
+              </Link>
+            </div>
+            // <button
+            //   className="text-gray-900 hover:text-gray-700 focus:outline-none"
+            //   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            // >
+            //   {mobileMenuOpen ? (
+            //     <HiMenu size={25} />
+            //   ) : (
+            //     <CgClose size={30} className=" text-orange-600 rounded-md" />
+            //   )}
+            // </button>
           )}
         </div>
         {/*end mobile screen */}
       </div>
+      {/* {!mobileMenuOpen && (
+        <Link href="/login">
+          <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-800 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+              Sign in
+            </span>
+          </button>
+        
+        </Link>
+      )} */}
       {mobileMenuOpen && (
         <div className="lg:hidden">
           <ProfileDropdown />
