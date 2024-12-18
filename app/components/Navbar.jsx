@@ -71,10 +71,7 @@ const Navbar = () => {
         <Search placeholder="Search..." background="bg-gray-50" />
 
         {/* Desktop Menu */}
-        <div
-          ref={dropdownRef}
-          className="hidden lg:flex space-x-5 items-center"
-        >
+        <div className="hidden lg:flex space-x-5 items-center">
           {links.map(({ href, label, icon }, index) => (
             <Link
               key={index}

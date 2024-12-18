@@ -1,8 +1,7 @@
 'use client';
-import React, { useState } from 'react';
-import { PhotoIcon } from '@heroicons/react/24/solid';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useBlogContext } from '../context/BlogProvider';
@@ -24,6 +23,12 @@ const CreatePostForm = () => {
   const [imageSrc, setImageSrc] = useState('');
   const router = useRouter();
   const date = new Date();
+
+  useEffect(() => {
+    if (!session) {
+      signIn();
+    }
+  }, [session]);
 
   const options = {
     year: 'numeric',
