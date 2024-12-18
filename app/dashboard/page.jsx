@@ -27,26 +27,10 @@ export default function Dashboard() {
 
   // Show cookie consent for authenticated users
   useEffect(() => {
-    if (status === 'authenticated') {
-      const timer = setTimeout(() => setCookiesVisible(true), 1500);
-      return () => clearTimeout(timer);
+    if (!session) {
+      signIn();
     }
-  }, [status]);
-
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
-
-  // if (status !== 'authenticated') {
-  //   return (
-  //     <div>
-  //       <p>You need to sign in to access this dashboard.</p>
-  //       <button className="text-blue-500 underline" onClick={() => signIn()}>
-  //         Sign In
-  //       </button>
-  //     </div>
-  //   );
-  // }
+  }, [session]);
 
   return (
     <div class="">

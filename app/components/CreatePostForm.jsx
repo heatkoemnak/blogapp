@@ -11,7 +11,6 @@ import Error from './Error';
 import { submitPost, uploadImage } from '../utils/api';
 const CreatePostForm = () => {
   const { data: session } = useSession();
-  const router = useRouter();
   const { categoryList } = useBlogContext();
   const [links, setLinks] = useState([]);
   const [linkInput, setLinkInput] = useState('');
@@ -23,7 +22,7 @@ const CreatePostForm = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
-
+  const router = useRouter();
   const date = new Date();
 
   const options = {
@@ -297,6 +296,7 @@ const CreatePostForm = () => {
             <div className="mt-4 flex items-center justify-end gap-x-6">
               <Link href={'/blogs'}>
                 <button
+                  onClick={router.back()}
                   type="button"
                   className="text-sm font-semibold leading-6 text-gray-900"
                 >

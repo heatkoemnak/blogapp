@@ -1,19 +1,29 @@
 'use client';
 import React from 'react';
 import { useSession, signIn } from 'next-auth/react';
+import Image from 'next/image';
 
 const ProfilePage = () => {
   const { data: session, status } = useSession();
+  // useEffect(() => {
+  //   if (!session) {
+  //     signIn();
+  //   }
+  // }, [session]);
   return (
     <section class="relative pt-36 pb-24">
-      <img
+      <Image
+        width={100}
+        height={100}
         className="absolute top-0 left-0 z-0 w-full h-60 object-cover"
         src="https://pagedone.io/asset/uploads/1705471739.png"
         alt="cover image"
       />
       <div class="w-full max-w-7xl mx-auto px-6 md:px-8">
         <div class="flex items-center justify-center relative z-10 mb-2.5">
-          <img
+          <Image
+            width={100}
+            height={100}
             src={
               session?.user.image ||
               'https://pagedone.io/asset/uploads/1705471668.png'
@@ -45,7 +55,7 @@ const ProfilePage = () => {
                   />
                 </svg>
                 <span class="font-medium text-base leading-7 text-gray-900">
-                  Home
+                  My post
                 </span>
               </a>
             </li>
@@ -69,7 +79,7 @@ const ProfilePage = () => {
                     stroke-linecap="round"
                   />
                 </svg>
-                <span class="font-medium text-base leading-7 text-gray-400">
+                <span class="font-medium text-base leading-7 text-gray-900">
                   Saved
                 </span>
               </a>
@@ -93,7 +103,7 @@ const ProfilePage = () => {
                     stroke-linecap="round"
                   />
                 </svg>
-                <span class="font-medium text-base leading-7 text-gray-400">
+                <span class="font-medium text-base leading-7 text-gray-900">
                   Blogs
                 </span>
                 <span class="rounded-full py-1.5 px-2.5 bg-indigo-50 flex items-center justify-center font-medium text-xs text-indigo-600">
@@ -103,11 +113,8 @@ const ProfilePage = () => {
             </li>
           </ul>
           <div class="flex items-center gap-4">
-            <button class="rounded-full border border-solid border-gray-300 bg-gray-50 py-3 px-4 text-sm font-semibold text-gray-900 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-50 hover:bg-gray-100 hover:border-gray-300">
-              Message
-            </button>
-            <button class="rounded-full border border-solid border-indigo-600 bg-indigo-600 py-3 px-4 text-sm font-semibold text-white whitespace-nowrap shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:bg-indigo-700 hover:border-indigo-700">
-              Book a Session
+            <button class="rounded-full border border-solid border-orange-700 bg-orange-600 py-2 px-4 text-sm font-semibold text-white whitespace-nowrap shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:bg-indigo-700 hover:border-indigo-700">
+              Edit profile
             </button>
           </div>
         </div>

@@ -11,7 +11,7 @@ const ProfileDropdown = () => {
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
   return (
     <>
-      <div className="absolute z-10 top-16 right-0 flex items-center justify-center">
+      <div className="absolute z-50 top-16 right-0 flex items-center justify-center">
         <div className="w-full max-w-sm rounded-lg bg-white p-3 drop-shadow-xl divide-y divide-gray-200">
           {status === 'authenticated' && (
             <div
@@ -228,7 +228,7 @@ const ProfileDropdown = () => {
               </Link>
             </nav>
           </div>
-          {status === 'authenticated' ? (
+          {session ? (
             <div aria-label="footer" className="pt-2">
               <button
                 type="button"

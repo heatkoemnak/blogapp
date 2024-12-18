@@ -7,13 +7,12 @@ const CreatePost = () => {
   const [cookiesVisible, setCookiesVisible] = useState(false);
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
+    if (!session) {
       signIn();
     }
-
     const timer = setTimeout(() => setCookiesVisible(true), 1500);
     return () => clearTimeout(timer);
-  }, [status]);
+  }, [session]);
 
   if (status === 'loading') {
     return <div>Loading...</div>;

@@ -144,7 +144,7 @@ const Register = () => {
                 placeholder="Password"
               />
               <button
-                className="absolute top-2 right-3 z-50"
+                className="absolute top-2 right-3 z-10"
                 onClick={() => setVisiblePassword(!visiblePassword)}
               >
                 {visiblePassword ? (
