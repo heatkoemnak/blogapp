@@ -14,7 +14,7 @@ const Hero = () => {
           <AuthButton />
         </div> */}
         {/* <Chat /> */}
-        <div className="max-w-lg px-4 mx-auto text-left md:max-w-none md:text-center">
+        <div className=" mx-auto text-left md:max-w-none md:text-center">
           <div className="text-center py-4 hidden sm:block">
             <button className="bg-white border border-[#E2E8F0] hover:bg-neutral-200 text-xs font-bold py-2.5 px-4 rounded-full inline-flex items-center">
               <svg
@@ -33,7 +33,7 @@ const Hero = () => {
           <section class="bg-center lg:max-w-9xl mx-auto h-[70vh] bg-no-repeat  bg-[url('https://i.pinimg.com/originals/2e/2b/21/2e2b21aeed393403d4620367f9e093f9.gif')] bg-gray-700 bg-blend-multiply">
             <div class="px-4 mx-auto max-w-screen-xl text-center py-20">
               <h1 className="tracking-tight mb-5 leading-none font-extrabold text-[#FF4F01] text-center sm:leading-none text-4xl sm:text-5xl">
-                <span className="inline md:block ">Bring Your Ideas </span>
+                <span className="inline md:block ">Bring your ideas </span>
                 <span className="relative mt-2 bg-clip-text text-white md:inline-block">
                   to Life
                 </span>
