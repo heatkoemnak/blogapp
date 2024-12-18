@@ -3,8 +3,16 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   try {
-    const { title, body, image,public_id, authorEmail, categoryId, links, publishedAt } =
-      await request.json();
+    const {
+      title,
+      body,
+      image,
+      public_id,
+      authorEmail,
+      categoryId,
+      links,
+      publishedAt,
+    } = await request.json();
 
     const newPost = await prisma.post.create({
       data: {
@@ -32,23 +40,11 @@ export async function GET() {
   try {
     const posts = await prisma.post.findMany({
       include: {
-        author: {
-          select: {
-            id:true,
-            name: true,
-            image: true,
-            email:true
-          },
-        },
+        author: true,
         category: true,
         comments: {
           include: {
-            author: {
-              select: {
-                name: true,
-                image: true,
-              },
-            },
+            author: true,
             replies: {
               include: {
                 author: true,
