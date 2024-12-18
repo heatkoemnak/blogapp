@@ -110,11 +110,11 @@ const Hero = () => {
           <div className=" text-center lg:text-left">
             <div>
               <p className="text-3xl font-semibold tracking-tight text-[#201515] sm:text-5xl">
-                A Platform to Empower Your Vision
+                PowerME is a Platform to empower your vision
               </p>
               <p className=" mt-4 text-base tracking-tight text-gray-600">
                 Transform thoughts into action with intuitive tools and
-                resources.
+                resources through this blog.
               </p>
             </div>
             <div className="flex justify-center gap-3 mt-10 lg:justify-start">
