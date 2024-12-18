@@ -75,18 +75,20 @@ const Navbar = () => {
           ref={dropdownRef}
           className="hidden lg:flex space-x-5 items-center"
         >
-          {links.map((link, index) => (
+          {links.map(({ href, label, icon }, index) => (
             <Link
               key={index}
-              href={link.href}
+              href={href}
               className={
-                currentPath === link.href
+                currentPath === href
                   ? 'text-orange-500 font-semibold'
+                  : href === '/create-post'
+                  ? 'flex gap-2 items-center bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 text-white'
                   : 'text-gray-900'
               }
             >
-              {link.icon && link.icon}
-              {link.label}
+              {icon && icon}
+              {label}
             </Link>
           ))}
           {status === 'authenticated' ? (
