@@ -26,7 +26,7 @@ const CommentSection = ({ post }) => {
   console.log(comments);
   const [visibleComments, setVisibleComments] = useState(3); // Default 3 visible comments
   const showAll = visibleComments < comments?.length;
-
+  const chatContainerRef = useRef(null);
   const handleShowMore = () => {
     setVisibleComments((prev) => prev + 3); // Show 3 more comments
   };
@@ -47,6 +47,12 @@ const CommentSection = ({ post }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [socket, isOpen]);
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [comments]);
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
@@ -124,7 +130,16 @@ const CommentSection = ({ post }) => {
       <div className=" w-full ">
         <PostDetails post={post} comments={comments} />
       </div>
-      <div className="lg:w-2/3 shadow-inner ">
+      <div
+        ref={chatContainerRef}
+        style={{
+          height: '400px',
+          overflowY: 'scroll',
+          border: '1px solid #ddd',
+          padding: '10px',
+        }}
+        className="lg:w-2/3 shadow-inner "
+      >
         <div className="flex justify-between items-center p-4">
           <h2 className="text-lg lg:text-2xl font-bold text-gray-900">
             Discussion ({comments?.length})

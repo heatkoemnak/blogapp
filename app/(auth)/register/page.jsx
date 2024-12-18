@@ -91,7 +91,10 @@ const Register = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex gap-2 flex-col  rounded-xl shadow-sm ">
             <div>
-              <label htmlFor="name" className="sr-only">
+              <label
+                htmlFor="name"
+                className="block font-medium text-sm mb-2 text-gray-800"
+              >
                 Name
               </label>
               <input
@@ -102,7 +105,7 @@ const Register = () => {
                 onChange={(e) => setName(e.target.value)}
                 className={`relative block w-full px-3 py-2 border ${
                   errors.name ? 'border-red-500' : 'border-gray-300'
-                } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-neutral-500 text-gray-900 rounded-xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Name"
               />
               {errors.name && (
@@ -110,9 +113,7 @@ const Register = () => {
               )}
             </div>
             <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
+              <label htmlFor="email-address" className="block font-medium text-sm mb-2 text-gray-800">Your email</label>
               <input
                 id="email-address"
                 name="email"
@@ -121,7 +122,7 @@ const Register = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 className={`relative block w-full px-3 py-2 border ${
                   errors.email ? 'border-red-500' : 'border-gray-300'
-                } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-neutral-500 text-gray-900 rounded-xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Email address"
               />
               {errors.email && (
@@ -129,22 +130,20 @@ const Register = () => {
               )}
             </div>
             <div className="relative">
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
+              <label htmlFor="password" className="block font-medium text-sm mb-2 text-gray-800">Password</label>
               <input
                 id="password"
                 name="password"
-                type="password"
+                type={visiblePassword ? `text` : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={`relative block w-full px-3 py-2 border ${
                   errors.password ? 'border-red-500' : 'border-gray-300'
-                } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-neutral-500 text-gray-900 rounded-xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Password"
               />
               <button
-                className="absolute top-2 right-3 z-10"
+                className="absolute top-1 right-3 z-10"
                 onClick={() => setVisiblePassword(!visiblePassword)}
               >
                 {visiblePassword ? (
@@ -152,7 +151,7 @@ const Register = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
-                    className="size-5 "
+                    className="size-4 "
                   >
                     <path
                       fillRule="evenodd"
@@ -166,7 +165,7 @@ const Register = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
-                    className="size-5  text-gray-800"
+                    className="size-4  text-gray-800"
                   >
                     <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
                     <path
@@ -182,9 +181,7 @@ const Register = () => {
               )}
             </div>
             <div>
-              <label htmlFor="confirm-password" className="sr-only">
-                Confirm Password
-              </label>
+              <label htmlFor="confirm-password" className="block font-medium text-sm mb-2 text-gray-800">Confirm Password</label>
               <input
                 id="confirm-password"
                 name="confirm-password"
@@ -193,7 +190,7 @@ const Register = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className={`relative block w-full px-3 py-2 border ${
                   errors.confirmPassword ? 'border-red-500' : 'border-gray-300'
-                } placeholder-neutral-500 text-gray-900 rounded-full focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
+                } placeholder-neutral-500 text-gray-900 rounded-xl focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm`}
                 placeholder="Confirm Password"
               />
 
@@ -231,7 +228,7 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              className="bg-gradient-to-r from-orange-400 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="bg-orange-500 w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Register
             </button>

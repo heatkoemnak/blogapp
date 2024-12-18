@@ -29,8 +29,8 @@ const Hero = () => {
               &nbsp; &nbsp;<span> Follow us on Twitter </span>
             </button>
           </div>
-          <h1 className="font-extrabold leading-10 tracking-tight text-[#201515] text-center sm:leading-none text-5xl sm:text-9xl">
-            <span className="inline md:block leading-[1]">
+          <h1 className="font-extrabold  text-[#201515] text-center sm:leading-none text-5xl sm:text-9xl">
+            <span className="inline md:block ">
               Bring Your Ideas{' '}
             </span>
             <span className="relative mt-2 bg-clip-text text-[#201515] md:inline-block">
@@ -38,10 +38,10 @@ const Hero = () => {
             </span>
             <span className="relative mt-2 bg-clip-text text-[#FF4F01]">.</span>
           </h1>
-          <p className=" text-center mt-4 font-base lg:text-xl max-w-4xl mx-auto  text-gray-600">
+          {/* <p className=" text-center mt-4 font-base lg:text-md max-w-4xl mx-auto  text-gray-600">
             Whether {`you're`} a creator, innovator, or dreamer, our platform is
             designed to help you share your ideas with the world.
-          </p>
+          </p> */}
         </div>
         <div className="max-w-lg px-4 mx-auto flex justify-center text-center md:text-center">
           <div className="flex text-center items-center lg:py-6 py-8 my-4 space-x-2  ">

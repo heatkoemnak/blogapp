@@ -5,11 +5,11 @@ import { RiAccountCircle2Fill } from 'react-icons/ri';
 export const links = [
   {
     href: '/blogs',
-    label: 'Blogs',
+    label: 'Blog',
   },
   {
     href: '/dashboard',
-    label: 'My dashboard',
+    label: 'Dashboard',
   },
   {
     href: '/create-post',

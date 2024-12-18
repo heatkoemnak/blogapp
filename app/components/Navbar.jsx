@@ -4,7 +4,6 @@ import { signOut, useSession } from 'next-auth/react';
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { IoSearchCircle } from 'react-icons/io5';
 import { CgClose } from 'react-icons/cg';
 import Logo from './Logo';
 import ProfileDropdown from './ProfileDropdown';
@@ -22,7 +21,21 @@ const Navbar = () => {
   return (
     <nav className="px-5 max-w-9xl mx-auto border-b bg-white ">
       <div className="max-w-6xl mx-auto py-4 flex justify-between items-center">
-        <IoSearchCircle className="lg:hidden cursor-pointer" size={35} />
+        <div className="lg:hidden cursor-pointer">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="size-5"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
+        {/* <IoSearchCircle className="lg:hidden cursor-pointer" size={35} /> */}
         <Logo />
 
         {/* Desktop Screen */}
@@ -34,9 +47,9 @@ const Navbar = () => {
               href={link.href}
               className={
                 currentPath === link.href
-                  ? 'text-blue-500 font-semibold'
+                  ? 'text-orange-500 font-semibold'
                   : link.href === '/create-post'
-                  ? `flex gap-2 items-center bg-gradient-to-r from-orange-500 to-purple-500 hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 text-white`
+                  ? `flex gap-2 items-center bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 text-white`
                   : 'text-gray-900'
               }
             >
@@ -76,7 +89,7 @@ const Navbar = () => {
           ) : (
             <div className="flex items-center gap-2">
               <Link
-                className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-1 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 "
+                className="text-gray-900 bg-gray-150  border-gray-100 hover:text-orange-500 focus:ring-1 focus:outline-none focus:ring-gray-100 font-medium rounded-xl text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:border-gray-700 me-2 "
                 href="/login"
               >
                 Login or Create Account
@@ -112,28 +125,29 @@ const Navbar = () => {
               </button>
             </>
           ) : (
-            <button
-              className="text-gray-900 hover:text-gray-700 focus:outline-none"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {!mobileMenuOpen ? (
-                <HiMenu size={25} />
-              ) : (
-                <CgClose
-                  size={30}
-                  className="bg-gradient-to-r from-orange-500 to-purple-500 p-1 text-white rounded-md"
-                />
-              )}
-            </button>
+            ''
+            // <button
+            //   className="text-gray-900 hover:text-gray-700 focus:outline-none"
+            //   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            // >
+            //   {!mobileMenuOpen ? (
+            //     <HiMenu size={25} />
+            //   ) : (
+            //     <CgClose
+            //       size={30}
+            //       className="bg-gradient-to-r from-orange-500 to-purple-500 p-1 text-white rounded-md"
+            //     />
+            //   )}
+            // </button>
           )}
         </div>
         {/*end mobile screen */}
       </div>
-      {mobileMenuOpen && (
+      {/* {mobileMenuOpen && (
         <div className="lg:hidden">
           <ProfileDropdown />
         </div>
-      )}
+      )} */}
     </nav>
   );
 };
