@@ -1,4 +1,5 @@
 import { timeAgo } from '@/app/utils/timeAgo';
+import Image from 'next/image';
 import React from 'react';
 
 const BubbleComment = ({
@@ -10,12 +11,12 @@ const BubbleComment = ({
   return (
     <div className="flex gap-2.5 mb-4 mx-auto">
       <img
+        className="w-10 h-11"
         src={
           comment?.author?.image ||
-          'https://pagedone.io/asset/uploads/1710412177.png'
+          'https://www.creativefabrica.com/wp-content/uploads/2022/11/21/Beautiful-African-American-Brown-Skin-Woman-Avatar-47788434-1.png'
         }
-        alt="Shanay image"
-        className="w-10 h-11"
+        alt={comment?.author?.name || 'Anonymous'}
       />
       <div className="grid">
         <h5 className="text-gray-900 text-sm font-semibold leading-snug pb-1">

@@ -11,6 +11,7 @@ export async function POST(request, res) {
         authorEmail,
         postId,
         publishedAt,
+        
       },
     });
 

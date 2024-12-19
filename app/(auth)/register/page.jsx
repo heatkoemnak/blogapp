@@ -14,6 +14,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const randomImageUrl = `https://picsum.photos/200/200`;
     setErrors({});
 
     if (!name) {
@@ -53,7 +54,7 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password,randomImageUrl }),
       });
 
       const data = await res.json();

@@ -7,7 +7,7 @@ import { createUserWithAccount, getUserByEmail } from '@/app/utils/user';
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { name, email, image, password } = body;
+    const { name, email, password, randomImageUrl } = body;
     console.log(body);
     await userValidate.validate(body, { abortEarly: false });
 
@@ -22,7 +22,7 @@ export async function POST(req) {
     const newUser = await createUserWithAccount({
       name,
       email,
-      image,
+      image: randomImageUrl,
       password: hashedPassword,
     });
     // const newUser = new User({ name, email, password: hashedPassword });

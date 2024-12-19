@@ -17,6 +17,7 @@ const nextConfig = {
       'i.pinimg.com',
       'demos.creative-tim.com',
       'images.domains',
+      'creativefabrica.com',
     ],
     // remotePatterns: [
     //   {

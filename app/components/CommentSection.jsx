@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { LuReply } from 'react-icons/lu';
@@ -27,6 +27,9 @@ const CommentSection = ({ post }) => {
   const [visibleComments, setVisibleComments] = useState(3); // Default 3 visible comments
   const showAll = visibleComments < comments?.length;
   const chatContainerRef = useRef(null);
+  // Generate a random seed
+
+
   const handleShowMore = () => {
     setVisibleComments((prev) => prev + 3); // Show 3 more comments
   };
@@ -57,11 +60,14 @@ const CommentSection = ({ post }) => {
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
 
+    if (!session) {
+      signIn();
+    }
     if (newCommentText.trim() === '') return;
-    const data = {
+    let data = {
       text: newCommentText,
       postId: post.id,
-      authorEmail: session?.user.email,
+      authorEmail: session?.user?.email,
       publishedAt: new Date().toISOString(),
     };
     console.log(timeAgo(new Date().toISOString()));

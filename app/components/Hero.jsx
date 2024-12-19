@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
 import Link from 'next/link';
 import AuthButton from './ui/AuthButton';
@@ -6,6 +6,12 @@ import AuthButton from './ui/AuthButton';
 import Image from 'next/image';
 
 const Hero = () => {
+  const [imageUrl, setImageUrl] = useState('');
+  useEffect(() => {
+    // Generate a random seed
+    const randomImageUrl = `https://picsum.photos/200/200`;
+    setImageUrl(randomImageUrl);
+  }, []);
   return (
     <>
       <section className="sticky ">
@@ -14,6 +20,16 @@ const Hero = () => {
           <AuthButton />
         </div> */}
         {/* <Chat /> */}
+        <div style={{ textAlign: 'center' }}>
+          <h1>Random Profile Image</h1>
+          {imageUrl && (
+            <img
+              src={imageUrl}
+              alt="Random Profile"
+              style={{ borderRadius: '50%' }}
+            />
+          )}
+        </div>
         <div className=" mx-auto text-left md:max-w-none md:text-center">
           <div className="text-center py-4 hidden sm:block">
             <button className="bg-white border border-[#E2E8F0] hover:bg-neutral-200 text-xs font-bold py-2.5 px-4 rounded-full inline-flex items-center">
@@ -33,7 +49,9 @@ const Hero = () => {
           <section class="bg-center lg:max-w-9xl mx-auto h-[70vh] bg-no-repeat  bg-[url('https://i.pinimg.com/originals/2e/2b/21/2e2b21aeed393403d4620367f9e093f9.gif')] bg-gray-700 bg-blend-multiply">
             <div class="px-4 mx-auto max-w-screen-xl text-center py-20">
               <h1 className="tracking-tight leading-none font-extrabold text-[#FF4F01] text-center sm:leading-none text-4xl sm:text-5xl">
-                <span className="inline md:block p-5">Bring your ideas to  </span>
+                <span className="inline md:block p-5">
+                  Bring your ideas to{' '}
+                </span>
                 <span className="relative top-2 bg-clip-text text-white md:inline-block">
                   Life
                 </span>
@@ -105,7 +123,6 @@ const Hero = () => {
         </div> */}
       </section>
       <div className="flex border-b-2 lg:flex-row flex-col p-10 rounded-3xl lg:my-20 my-5 justify-between items-center gap-10">
-      
         <div className=" items-center">
           <div className=" text-center lg:text-left">
             <div>
