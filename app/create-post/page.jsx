@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import CreatePostForm from '../components/CreatePostForm';
 import { useSession, signIn } from 'next-auth/react';
+import CreatePostForm from '../components/CreatePostForm';
 const CreatePost = () => {
   const { data: session, status } = useSession();
   const [cookiesVisible, setCookiesVisible] = useState(false);
