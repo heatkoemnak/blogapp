@@ -133,7 +133,7 @@ const CommentSection = ({ post }) => {
       <div
         ref={chatContainerRef}
         style={{
-          height: '400px',
+          height: '100vh',
           overflowY: 'scroll',
           border: '1px solid #ddd',
           padding: '10px',

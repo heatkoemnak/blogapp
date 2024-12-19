@@ -19,7 +19,7 @@ export const fetchPosts = async () => {
     } else {
       console.error(`Unexpected Error: ${error.message}`);
     }
-    throw error;
+    throw error;  
   }
 };
 

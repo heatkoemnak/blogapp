@@ -8,19 +8,25 @@ import Error from './Error';
 import { useSession } from 'next-auth/react';
 import LatestPost from './LatestPost';
 import PostSkeleton from './ui/PostSkeleton';
+import { fetchMostLike } from '../utils/api/mostlike';
 
 const PostList = () => {
   const { data: session, status } = useSession();
   const [cookiesVisible, setCookiesVisible] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [mostliked, setMostliked] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getPosts = async () => {
       try {
         setLoading(true);
-        const data = await fetchPosts();
+        const [data, mostliked] = await Promise.all([
+          fetchPosts(),
+          fetchMostLike(),
+        ]);
         setPosts(data);
+        setMostliked(mostliked);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -52,8 +58,8 @@ const PostList = () => {
             ))}
           </div>
           <div className="lg:block hidden lg:w-8/12">
-            <h1 className="font-bold text-2xl py-6">Latest posts</h1>
-            {posts.map((post, index) => (
+            <h1 className="font-bold text-2xl py-6">Most liked post</h1>
+            {mostliked.map((post, index) => (
               <div className="flex border my-1  " key={index}>
                 <LatestPost post={post} />
               </div>

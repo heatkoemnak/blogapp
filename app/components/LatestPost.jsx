@@ -1,4 +1,6 @@
 import React from 'react';
+import { timeAgo } from '../utils/timeAgo';
+import Image from 'next/image';
 
 const LatestPost = ({ post }) => {
   return (
@@ -9,7 +11,10 @@ const LatestPost = ({ post }) => {
           //   style="background-image: url('/img/card-left.jpg')"
           title="Woman holding a mug"
         >
-          <img
+          <Image
+            width={500}
+            height={500}
+            className='w-full'
             src={
               post?.image ||
               'https://getillustrations.b-cdn.net//photos/pack/3d-avatar-male_lg.png'
@@ -20,16 +25,13 @@ const LatestPost = ({ post }) => {
         <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
           <div className="">
             <div className="text-gray-900 text-extrabold mb-2">
-              Can coffee make you a better developer?
+              {post?.title}
             </div>
-            {/* <p className="text-gray-700 text-base">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Voluptatibus quia, nulla! Maiores et perferendis eaque,
-              exercitationem praesentium nihil.
-            </p> */}
           </div>
           <div className="flex gap-1 items-center">
-            <img
+            <Image
+              width={40}
+              height={40}
               className="w-6 h-6 rounded-full"
               src={
                 post?.author?.image ||
@@ -39,9 +41,11 @@ const LatestPost = ({ post }) => {
             />
             <div className="flex items-center gap-1 text-sm">
               <span className="text-gray-900 text-sm leading-none">
-                Jonathan Reinink
+                {post?.author?.name}
               </span>
-              <small className="text-gray-600">Aug 18</small>
+              <small className="text-gray-600">
+                {timeAgo(post?.publishedAt)}
+              </small>
             </div>
           </div>
         </div>
