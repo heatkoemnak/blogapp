@@ -19,6 +19,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const searchRef = useRef(null);
+  console.log(session);
 
   const currentPath = usePathname();
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
@@ -114,12 +115,13 @@ const Navbar = () => {
               >
                 <span>{session?.user?.name}</span>
                 {session?.user?.image ? (
-                  <Image
-                    src={session?.user?.image}
-                    width={30}
-                    height={30}
-                    alt="Profile"
-                    className="rounded-full"
+                  <img
+                    className="w-10 h-10"
+                    src={
+                      session?.user?.image ||
+                      'https://www.creativefabrica.com/wp-content/uploads/2022/11/21/Beautiful-African-American-Brown-Skin-Woman-Avatar-47788434-1.png'
+                    }
+                    alt={comment?.author?.name || 'Anonymous'}
                   />
                 ) : (
                   <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">

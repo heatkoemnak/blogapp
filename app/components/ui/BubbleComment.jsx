@@ -11,7 +11,7 @@ const BubbleComment = ({
   return (
     <div className="flex gap-2.5 mb-4 mx-auto">
       <img
-        className="w-10 h-11"
+        className="w-10 h-10"
         src={
           comment?.author?.image ||
           'https://www.creativefabrica.com/wp-content/uploads/2022/11/21/Beautiful-African-American-Brown-Skin-Woman-Avatar-47788434-1.png'
