@@ -3,7 +3,6 @@
 import { useSession, signIn } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { fetchPosts } from '../utils/api';
-import Post from '../components/Post';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import Link from 'next/link';
 

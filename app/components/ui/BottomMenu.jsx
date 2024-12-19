@@ -50,7 +50,7 @@ const BottomMenu = () => {
           />
           <small>Blog</small>
         </Link>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center cursor-pointer justify-center">
           <Link
             href={'/create-post'}
             className="inline-flex items-center justify-center w-8 h-8 font-medium bg-gradient-to-r from-orange-500 to-orange-700 rounded-full hover:bg-blue-700 "
