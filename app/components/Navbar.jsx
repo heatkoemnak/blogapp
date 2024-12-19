@@ -89,7 +89,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-5 items-center">
-          {links.map(({ href, label, icon }, index) => (
+          {/* {links.map(({ href, label, icon }, index) => (
             <Link
               key={index}
               href={href}
@@ -104,7 +104,7 @@ const Navbar = () => {
               {icon && icon}
               {label}
             </Link>
-          ))}
+          ))} */}
           {status === 'authenticated' ? (
             <div className="relative">
               <button
