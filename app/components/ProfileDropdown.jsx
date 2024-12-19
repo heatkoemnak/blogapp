@@ -13,8 +13,8 @@ const ProfileDropdown = () => {
       <div className="absolute z-50 top-16 right-0 flex items-center justify-center">
         <div className="w-full max-w-sm rounded-lg bg-white p-3 drop-shadow-xl divide-y divide-gray-200">
           {status === 'authenticated' && (
-            <div
-              aria-label="header"
+            <Link
+            href={'/profile'}
               className="flex space-x-4 items-center p-4"
             >
               <div
@@ -22,12 +22,13 @@ const ProfileDropdown = () => {
                 className="flex mr-auto items-center space-x-4"
               >
                 {session?.user?.image ? (
-                  <Image
-                    src={session?.user?.image}
-                    width={32}
-                    height={32}
-                    alt="Profile Image"
-                    className="flex items-center justify-center bg-gray-500 text-white rounded-full"
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src={
+                      session?.user?.image ||
+                      'https://www.creativefabrica.com/wp-content/uploads/2022/11/21/Beautiful-African-American-Brown-Skin-Woman-Avatar-47788434-1.png'
+                    }
+                    alt={session?.user?.name || 'Anonymous'}
                   />
                 ) : (
                   <div className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full">
@@ -90,7 +91,7 @@ const ProfileDropdown = () => {
                 <path d="M8 9l4 -4l4 4" />
                 <path d="M16 15l-4 4l-4 -4" />
               </svg>
-            </div>
+            </Link>
           )}
           {/* <div aria-label="navigation" className="py-2">
             <nav className="grid gap-1 text-md">
@@ -255,7 +256,10 @@ const ProfileDropdown = () => {
               </button>
             </div>
           ) : (
-            <Link href="/login" className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none rounded-md">
+            <Link
+              href="/login"
+              className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none rounded-md"
+            >
               <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2  text-sm font-medium text-gray-800 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                 <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                   Sign in

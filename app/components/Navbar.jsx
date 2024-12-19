@@ -116,7 +116,7 @@ const Navbar = () => {
                 <span>{session?.user?.name}</span>
                 {session?.user?.image ? (
                   <img
-                    className="w-10 h-10"
+                    className="w-10 h-10 rounded-full"
                     src={
                       session?.user?.image ||
                       'https://www.creativefabrica.com/wp-content/uploads/2022/11/21/Beautiful-African-American-Brown-Skin-Woman-Avatar-47788434-1.png'
