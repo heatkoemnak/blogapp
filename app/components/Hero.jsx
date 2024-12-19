@@ -6,12 +6,12 @@ import AuthButton from './ui/AuthButton';
 import Image from 'next/image';
 
 const Hero = () => {
-  const [imageUrl, setImageUrl] = useState('');
-  useEffect(() => {
-    // Generate a random seed
-    const randomImageUrl = `https://picsum.photos/200/200`;
-    setImageUrl(randomImageUrl);
-  }, []);
+  // const [imageUrl, setImageUrl] = useState('');
+  // useEffect(() => {
+  //   // Generate a random seed
+  //   const randomImageUrl = `https://picsum.photos/200/200`;
+  //   setImageUrl(randomImageUrl);
+  // }, []);
   return (
     <>
       <section className="sticky ">
@@ -20,7 +20,7 @@ const Hero = () => {
           <AuthButton />
         </div> */}
         {/* <Chat /> */}
-        <div style={{ textAlign: 'center' }}>
+        {/* <div style={{ textAlign: 'center' }}>
           <h1>Random Profile Image</h1>
           {imageUrl && (
             <img
@@ -29,7 +29,7 @@ const Hero = () => {
               style={{ borderRadius: '50%' }}
             />
           )}
-        </div>
+        </div> */}
         <div className=" mx-auto text-left md:max-w-none md:text-center">
           <div className="text-center py-4 hidden sm:block">
             <button className="bg-white border border-[#E2E8F0] hover:bg-neutral-200 text-xs font-bold py-2.5 px-4 rounded-full inline-flex items-center">
