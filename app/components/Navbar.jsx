@@ -121,7 +121,7 @@ const Navbar = () => {
                       session?.user?.image ||
                       'https://www.creativefabrica.com/wp-content/uploads/2022/11/21/Beautiful-African-American-Brown-Skin-Woman-Avatar-47788434-1.png'
                     }
-                    alt={comment?.author?.name || 'Anonymous'}
+                    alt={session?.user?.name || 'Anonymous'}
                   />
                 ) : (
                   <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
