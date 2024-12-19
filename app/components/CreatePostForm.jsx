@@ -24,12 +24,6 @@ const CreatePostForm = () => {
   const router = useRouter();
   const date = new Date();
 
-  useEffect(() => {
-    if (!session) {
-      signIn();
-    }
-  }, [session]);
-
   const options = {
     year: 'numeric',
     month: 'short',

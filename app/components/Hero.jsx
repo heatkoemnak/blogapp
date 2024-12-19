@@ -32,10 +32,10 @@ const Hero = () => {
 
           <section class="bg-center lg:max-w-9xl mx-auto h-[70vh] bg-no-repeat  bg-[url('https://i.pinimg.com/originals/2e/2b/21/2e2b21aeed393403d4620367f9e093f9.gif')] bg-gray-700 bg-blend-multiply">
             <div class="px-4 mx-auto max-w-screen-xl text-center py-20">
-              <h1 className="tracking-tight mb-5 leading-none font-extrabold text-[#FF4F01] text-center sm:leading-none text-4xl sm:text-5xl">
-                <span className="inline md:block ">Bring your ideas </span>
-                <span className="relative mt-2 bg-clip-text text-white md:inline-block">
-                  to Life
+              <h1 className="tracking-tight leading-none font-extrabold text-[#FF4F01] text-center sm:leading-none text-4xl sm:text-5xl">
+                <span className="inline md:block p-5">Bring your ideas to  </span>
+                <span className="relative top-2 bg-clip-text text-white md:inline-block">
+                  Life
                 </span>
                 <span className="relative mt-2 bg-clip-text text-[#FF4F01]">
                   .
@@ -53,7 +53,7 @@ const Hero = () => {
                   .
                 </span>
               </h1> */}
-              <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
+              <p class="mb-8 mt-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
                 Whether {`you're`} a creator, innovator, or dreamer, our
                 platform is designed to help you share your ideas with the
                 world.

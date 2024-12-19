@@ -18,51 +18,68 @@ const Navbar = () => {
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
+  const searchRef = useRef(null);
 
   const currentPath = usePathname();
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
 
   // Handle clicks outside the dropdown menus
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setShowDropdown(false);
-      }
-      if (
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target)
-      ) {
-        setMobileMenuOpen(false);
-      }
-    };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowDropdown(false);
+    }
+
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setMobileSearchOpen(false);
+    }
+
+    if (
+      mobileMenuRef.current &&
+      !mobileMenuRef.current.contains(event.target)
+    ) {
+      setMobileMenuOpen(false);
+    }
+  };
+
   return (
     <nav className="px-5 max-w-9xl mx-auto border-b bg-white">
       <div className="max-w-6xl mx-auto py-4 flex justify-between items-center">
         {/* Mobile Search */}
-        <div
-          onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
-          className="lg:hidden cursor-pointer"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className="size-5"
+        {!mobileSearchOpen ? (
+          <div
+            onClick={() => setMobileSearchOpen((prev) => !prev)}
+            className="lg:hidden cursor-pointer"
           >
-            <path
-              fillRule="evenodd"
-              d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
-              clipRule="evenodd"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="size-5"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+        ) : (
+          <div className="flex items-center gap-1">
+            <CgClose
+              onClick={() => setMobileSearchOpen((prev) => !prev)}
+              size={25}
+              className="text-orange-600"
             />
-          </svg>
-        </div>
+            <span>Close search</span>
+          </div>
+        )}
 
         {/* Logo */}
         <Logo />
@@ -138,12 +155,24 @@ const Navbar = () => {
         </div>
       </div>
       {mobileSearchOpen && (
-        <div ref={mobileMenuRef} className="lg:hidden">
-          <input
-            className={`outline-none w-full p-2 rounded-full  `}
-            type="text"
-            placeholder="Search..."
-          />
+        <div ref={searchRef} className="lg:hidden">
+          <form class="w-full h-15 py-5 ">
+            <label
+              for="default-search"
+              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+            >
+              Search
+            </label>
+            <div class="relative">
+              <input
+                type="search"
+                id="default-search"
+                class="block w-full p-2 ps-10 text-sm text-gray-500 placeholder:text-gray-600 border border-gray-300 rounded-lg bg-white  "
+                placeholder="Search everything here..."
+                required
+              />
+            </div>
+          </form>
         </div>
       )}
 
