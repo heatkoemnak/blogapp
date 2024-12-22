@@ -27,8 +27,6 @@ const CommentSection = ({ post }) => {
   const [visibleComments, setVisibleComments] = useState(3); // Default 3 visible comments
   const showAll = visibleComments < comments?.length;
   const chatContainerRef = useRef(null);
-  // Generate a random seed
-
 
   const handleShowMore = () => {
     setVisibleComments((prev) => prev + 3); // Show 3 more comments
@@ -71,8 +69,6 @@ const CommentSection = ({ post }) => {
       publishedAt: new Date().toISOString(),
     };
     console.log(timeAgo(new Date().toISOString()));
-    // socket.emit('newComment', data);
-
     try {
       const response = await fetch('/api/comments', {
         method: 'POST',

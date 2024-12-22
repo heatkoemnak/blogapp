@@ -18,8 +18,6 @@ const Post = ({ post }) => {
   const [showDeleteMenu, setShowDeleteMenu] = useState(false); // For dropdown menu toggle
   const { socket } = useSocket();
 
-  console.log(likes);
-
   useEffect(() => {
     socket.on('postLiked', (likes) => {
       console.log(likes);

@@ -19,8 +19,6 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const searchRef = useRef(null);
-  console.log(session);
-
   const currentPath = usePathname();
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
 
@@ -40,7 +38,6 @@ const Navbar = () => {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
       setMobileSearchOpen(false);
     }
-
     if (
       mobileMenuRef.current &&
       !mobileMenuRef.current.contains(event.target)
@@ -115,7 +112,9 @@ const Navbar = () => {
               >
                 <span>{session?.user?.name}</span>
                 {session?.user?.image ? (
-                  <img
+                  <Image
+                    width={40}
+                    height={40}
                     className="w-10 h-10 rounded-full"
                     src={
                       session?.user?.image ||
@@ -158,18 +157,18 @@ const Navbar = () => {
       </div>
       {mobileSearchOpen && (
         <div ref={searchRef} className="lg:hidden">
-          <form class="w-full h-15 py-5 ">
+          <form className="w-full h-15 py-5 ">
             <label
-              for="default-search"
-              class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+              htmlFor="default-search"
+              className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
             >
               Search
             </label>
-            <div class="relative">
+            <div className="relative">
               <input
                 type="search"
                 id="default-search"
-                class="block w-full p-2 ps-10 text-sm text-gray-500 placeholder:text-gray-600 border border-gray-300 rounded-lg bg-white  "
+                className="block w-full p-2 ps-10 text-sm text-gray-500 placeholder:text-gray-600 border border-gray-300 rounded-lg bg-white  "
                 placeholder="Search everything here..."
                 required
               />

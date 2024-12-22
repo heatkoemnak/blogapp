@@ -98,15 +98,15 @@ const CreatePostForm = () => {
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-5 grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
               <div className="sm:col-span-full">
-                <div class="w-full md:w-full px-3 mb-6">
+                <div className="w-full md:w-full px-3 mb-6">
                   <label
-                    class="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
+                    className="block uppercase tracking-wide text-gray-700 text-sm font-bold mb-2"
                     htmlFor="category_name"
                   >
                     Create post
                   </label>
                   <input
-                    class="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-[#98c01d]"
+                    className="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-[#98c01d]"
                     type="text"
                     name="name"
                     placeholder="Title"
@@ -116,13 +116,13 @@ const CreatePostForm = () => {
                 </div>
               </div>
               <div className="col-span-full">
-                <div class="w-full px-3 mb-6">
+                <div className="w-full px-3 mb-6">
                   <textarea
                     textarea
                     rows="4"
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
-                    class="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-[#98c01d]"
+                    className="appearance-none block w-full bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-[#98c01d]"
                     type="text"
                     placeholder="Content"
                     name="description"
@@ -182,7 +182,7 @@ const CreatePostForm = () => {
               <div className="col-span-full mx-3">
                 <div className=" flex items-center gap-2">
                   <input
-                    class="appearance-none block w-full  bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-[#98c01d]"
+                    className="appearance-none block w-full  bg-white text-gray-900 font-medium border border-gray-400 rounded-lg py-3 px-3 leading-tight focus:outline-none focus:border-[#98c01d]"
                     type="text"
                     name="name"
                     value={linkInput}
@@ -246,14 +246,14 @@ const CreatePostForm = () => {
                       </button>
                     </div>
                   ) : (
-                    <div class="w-full px-3 mb-8">
+                    <div className="w-full px-3 mb-8">
                       <label
-                        class="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center justify-center rounded-xl border-2 border-dashed border-orange-400 bg-white p-6 text-center"
+                        className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center justify-center rounded-xl border-2 border-dashed border-orange-400 bg-white p-6 text-center"
                         htmlFor="file-upload"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          class="h-10 w-10 text-orange-800"
+                          className="h-10 w-10 text-orange-800"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -266,11 +266,11 @@ const CreatePostForm = () => {
                           />
                         </svg>
 
-                        <h2 class="mt-4 text-xl font-medium text-gray-700 tracking-wide">
+                        <h2 className="mt-4 text-xl font-medium text-gray-700 tracking-wide">
                           Upload file image
                         </h2>
 
-                        <p class="mt-2 text-gray-500 tracking-wide">
+                        <p className="mt-2 text-gray-500 tracking-wide">
                           Upload or drag & drop your file SVG, PNG, JPG or GIF
                           up to 10MB
                         </p>

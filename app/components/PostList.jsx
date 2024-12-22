@@ -9,61 +9,72 @@ import { useSession } from 'next-auth/react';
 import LatestPost from './LatestPost';
 import PostSkeleton from './ui/PostSkeleton';
 import { fetchMostLike } from '../utils/api/mostlike';
+import { useSearchParams } from 'next/navigation';
+import MostLikePost from './Post/MostLikePost';
 
 const PostList = () => {
   const { data: session, status } = useSession();
-  const [cookiesVisible, setCookiesVisible] = useState(false);
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('search') || '';
+  const categoryQuery = searchParams.get('search') || '';
+  console.log(searchQuery);
   const [posts, setPosts] = useState([]);
-  const [mostliked, setMostliked] = useState([]);
+
+  console.log(posts);
+
+  // const [mostliked, setMostliked] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    const getPosts = async () => {
-      try {
-        setLoading(true);
-        const [data, mostliked] = await Promise.all([
-          fetchPosts(),
-          fetchMostLike(),
-        ]);
-        setPosts(data);
-        setMostliked(mostliked);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    getPosts();
-  }, []);
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      const timer = setTimeout(() => setCookiesVisible(true), 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [status]);
-  if (error) {
-    return <Error error={error} />;
-  }
+    const fetchPosts = async () => {
+      const response = await fetch(`/api/blog?q=${searchQuery}`);
+      const data = await response.json();
+      if (response.ok) {
+        setPosts(data);
+      } else {
+        setPosts([]);
+        console.error(data.message);
+      }
+    };
+
+    fetchPosts();
+    // Fetch most liked posts when searchQuery changes
+  }, [searchQuery]);
+
+  // useEffect(() => {
+  //   const getPosts = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const [data, mostliked] = await Promise.all([
+  //         fetchPosts(),
+  //         fetchMostLike(),
+  //       ]);
+  //       setPosts(data);
+  //       setMostliked(mostliked);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   getPosts();
+  // }, []);
 
   return (
     <div className="mb-10">
       {!loading ? (
         <div className="flex gap-10">
           <div className="w-full">
-            {posts.map((post, index) => (
+            {posts?.map((post, index) => (
               <div className="flex flex-col border my-1  " key={index}>
                 <Post post={post} />
               </div>
             ))}
           </div>
           <div className="lg:block hidden lg:w-8/12">
-            <h1 className="font-bold text-2xl py-6">Most liked post</h1>
-            {mostliked.map((post, index) => (
-              <div className="flex border my-1  " key={index}>
-                <LatestPost post={post} />
-              </div>
-            ))}
+            <h1 className="font-bold text-2xl py-6">Popular posts</h1>
+            <MostLikePost />
           </div>
         </div>
       ) : (
