@@ -22,7 +22,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className="bg-gradient-to-r from-slate-50 to-slate-100">
+      <body className="bg-gradient-to-r from-slate-100 to-slate-200">
         <SkeletonTheme baseColor="#202020" highlightColor="#444">
           <SocketProvider>
             <BlogProvider>
@@ -32,7 +32,7 @@ export default async function RootLayout({ children }) {
                 <div className="lg:hidden">
                   <BottomMenu />
                 </div>
-                <div className="max-w-6xl mx-auto px-2 py-5 ">{children}</div>
+                <div className="max-w-7xl mx-auto px-2 py-5 ">{children}</div>
                 <div className="hidden lg:flex">
                   <Footer />
                 </div>
