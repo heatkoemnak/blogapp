@@ -25,11 +25,11 @@ export default function Dashboard() {
   }, []);
 
   // Show cookie consent for authenticated users
-  // useEffect(() => {
-  //   if (!session) {
-  //     signIn();
-  //   }
-  // }, [session]);
+  useEffect(() => {
+    if (!session) {
+      signIn();
+    }
+  }, [session]);
 
   return (
     <>

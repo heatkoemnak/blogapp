@@ -22,14 +22,14 @@ const Categories = () => {
       {isLoading ? (
         <CategorySkeleton />
       ) : categoryList ? (
-        categoryList.map((category) => {
+        categoryList.slice(0, 4).map((category) => {
           const bgColor = generateRandomColor();
           return (
             <Link key={category.id} href={`/blogs/category/${category.id}`}>
               <button
                 type="button"
                 style={{ color: bgColor }}
-                className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
+                className="text-white border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
               >
                 {category.name}
               </button>

@@ -46,7 +46,7 @@ const PostHeader = () => {
                   <li key={category.id}>
                     <Link
                       href={`/blogs/category/${category.id}`}
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      class="block px-4 py-2 hover:bg-gray-100 font-medium dark:hover:bg-gray-600 text-white"
                     >
                       {category.name}
                     </Link>
