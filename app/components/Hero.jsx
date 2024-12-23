@@ -122,7 +122,7 @@ const Hero = () => {
           </div>
         </div> */}
       </section>
-      <div className="flex border-b-2 lg:flex-row flex-col p-10 rounded-3xl lg:my-20 my-5 justify-between items-center gap-10">
+      <div className="flex bg-white border-b-2 lg:flex-row flex-col p-10 rounded-3xl lg:my-20 my-5 justify-between items-center gap-10">
         <div className=" items-center">
           <div className=" text-center lg:text-left">
             <div>

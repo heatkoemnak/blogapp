@@ -27,7 +27,7 @@ const Search = ({ placeholder, background }) => {
         type="search"
         id="default-search"
         onChange={(e) => setText(e.target.value)}
-        className={`outline-none w-full p-2 rounded-full ${background}`}
+        className={`outline-none ps-2 w-full p-2 rounded-full ${background}`}
         placeholder={placeholder}
       />
     </div>

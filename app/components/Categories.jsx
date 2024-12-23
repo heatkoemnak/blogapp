@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useBlogContext } from '../context/BlogProvider';
 import CategorySkeleton from './ui/CategorySkeleton';
 
+// Function to generate random colors
 const generateRandomColor = () => {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -17,24 +18,20 @@ const Categories = () => {
   const { categoryList, isLoading } = useBlogContext();
 
   return (
-    <div className="flex items-center py-3 flex-wrap">
+    <div className="py-3">
       {isLoading ? (
         <CategorySkeleton />
       ) : categoryList ? (
         categoryList.map((category) => {
           const bgColor = generateRandomColor();
           return (
-            <Link
-              href={`/blogs/category/${category.id}`}
-              key={category.id}
-              className=" my-1"
-            >
+            <Link key={category.id} href={`/blogs/category/${category.id}`}>
               <button
                 type="button"
                 style={{ color: bgColor }}
-                className="border text-white hover:scale-105  hover:bg-gray-100 bg-slate-50 border-gray-50 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-sm px-5 py-2.5 text-center mx-1 font-medium dark:focus:ring-gray-800"
+                className="text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
               >
-                # {category.name}
+                {category.name}
               </button>
             </Link>
           );
