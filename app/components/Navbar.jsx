@@ -3,16 +3,18 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { CgClose } from 'react-icons/cg';
 import Logo from './Logo';
 import ProfileDropdown from './ProfileDropdown';
 import { HiMenu } from 'react-icons/hi';
 import { links } from '../data';
 import Search from './ui/Search';
+import { useDebounce } from 'use-debounce';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
+  const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
@@ -21,6 +23,22 @@ const Navbar = () => {
   const searchRef = useRef(null);
   const currentPath = usePathname();
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
+
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [query] = useDebounce(searchQuery, 500);
+  const initialRender = useRef(true);
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    if (!query) {
+      router.push(`/blogs`);
+    } else {
+      router.push(`/blogs?search=${query}`);
+    }
+  }, [query, router]);
 
   // Handle clicks outside the dropdown menus
   useEffect(() => {
@@ -87,7 +105,7 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-5 items-center">
-          {/* {links.map(({ href, label, icon }, index) => (
+          {links.map(({ href, label, icon }, index) => (
             <Link
               key={index}
               href={href}
@@ -102,7 +120,7 @@ const Navbar = () => {
               {icon && icon}
               {label}
             </Link>
-          ))} */}
+          ))}
           {status === 'authenticated' ? (
             <div className="relative">
               <button
@@ -166,9 +184,11 @@ const Navbar = () => {
             </label>
             <div className="relative">
               <input
+                value={searchQuery}
                 type="search"
                 id="default-search"
-                className="block w-full p-2 ps-10 text-sm text-gray-500 placeholder:text-gray-600 border border-gray-300 rounded-lg bg-white  "
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="block w-full p-2 ps-4 text-sm text-gray-500 placeholder:text-gray-600 border border-gray-200 rounded-full bg-white  "
                 placeholder="Search everything here..."
                 required
               />

@@ -4,7 +4,6 @@ import LatestPost from '../LatestPost';
 
 const MostLikePost = () => {
   const [mostLikePosts, setMostLikePosts] = useState([]);
-  console.log(mostLikePosts);
 
   useEffect(() => {
     const fetchPostByMostLike = async () => {

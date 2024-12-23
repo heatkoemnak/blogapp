@@ -24,9 +24,10 @@ const Search = ({ placeholder, background }) => {
       <IoSearchOutline />
       <input
         value={text}
+        type="search"
+        id="default-search"
         onChange={(e) => setText(e.target.value)}
         className={`outline-none w-full p-2 rounded-full ${background}`}
-        type="text"
         placeholder={placeholder}
       />
     </div>
