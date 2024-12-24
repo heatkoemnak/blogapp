@@ -67,7 +67,7 @@ const PostList = () => {
         <div className="flex gap-10">
           <div className="w-full">
             {posts?.map((post, index) => (
-              <div className="flex flex-col border my-1  " key={index}>
+              <div className="flex flex-col  " key={index}>
                 <Post post={post} />
               </div>
             ))}

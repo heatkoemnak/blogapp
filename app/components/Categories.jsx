@@ -29,7 +29,7 @@ const Categories = () => {
               <button
                 type="button"
                 style={{ color: bgColor }}
-                className="text-white border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
+                className="text-white border-cyan-600  hover:border-gray-200 dark:border-gray-900 bg-white  dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3"
               >
                 {category.name}
               </button>
