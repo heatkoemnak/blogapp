@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@material-tailwind/react';
 import { motion } from 'framer-motion';
@@ -24,7 +24,7 @@ import { uploadImage } from '../utils/api';
 import Image from 'next/image';
 import ClosingDate from '../components/ui/Selection/ClosingDate';
 import { useBlogContext } from '../context/BlogProvider';
-const FormPostJob = () => {
+const PostJobForm = () => {
   const { data: session } = useSession();
   const date = new Date();
   const { jobCategories, countries, provinceCities } = useBlogContext();
@@ -184,8 +184,6 @@ const FormPostJob = () => {
       router.push('/blogs');
     }
   };
-
-
 
   return (
     <form onSubmit={submitHandler}>
@@ -569,4 +567,4 @@ const FormPostJob = () => {
   );
 };
 
-export default FormPostJob;
+export default PostJobForm;

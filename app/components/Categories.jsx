@@ -19,7 +19,6 @@ const Categories = () => {
             <Carousel
               className="rounded-lg bg-cyan-900 "
               autoplay={false}
-              indicators={false}
               loop={true}
             >
               {categoryList.map((category) => (

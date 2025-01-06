@@ -1,6 +1,6 @@
 // components/PostList.js
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Post from './Post';
 import PostSkeleton from './ui/PostSkeleton';
 import MostLikePost from './Post/MostLikePost';

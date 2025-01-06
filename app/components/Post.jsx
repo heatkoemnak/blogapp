@@ -1,31 +1,19 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Error from './Error';
-import LoadingSpinner from './LoadingSpinner';
 import { deleteResource } from '../utils/api';
-import { useSocket } from '../context/SocketProvider';
-import { useSession } from 'next-auth/react';
-import { BsThreeDotsVertical } from 'react-icons/bs';
 import router from 'next/router';
-import { Button, Carousel } from '@material-tailwind/react';
+import { Carousel } from '@material-tailwind/react';
 import { timeAgo } from '../utils/timeAgo';
 const Post = ({ post }) => {
-  const { data: session } = useSession();
   console.log(post);
   const [error, setError] = useState('');
   // const [loading, setLoading] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false); // State for toggling text display
   const [likes, setLikes] = useState(post?.likes || 0);
   const [showDeleteMenu, setShowDeleteMenu] = useState(false); // For dropdown menu toggle
-  const { socket } = useSocket();
-
-  useEffect(() => {
-    socket.on('postLiked', (likes) => {
-      console.log(likes);
-    });
-  }, [socket]);
 
   const handleLike = async (e) => {
     e.preventDefault();
@@ -38,7 +26,6 @@ const Post = ({ post }) => {
         body: JSON.stringify({ postId: post.id }),
       });
       const { likes } = await response.json();
-      socket.emit('likes', likes);
       console.log(likes);
       setLikes((prevLikes) => prevLikes + 1);
     } catch (error) {
@@ -103,21 +90,21 @@ const Post = ({ post }) => {
               ))}
           </Carousel>
         </div>
-        <div class="p-4">
-          <div class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
+        <div className="p-4">
+          <div className="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center">
             {post?.categories?.map((category, index) => (
               <span
                 key={index}
-                className="inline-flex font-sans text-sm items-center justify-center font-semibold duration-200  focus:outline-none focus-visible:outline-gray-600"
+                classNameName="inline-flex font-sans text-sm items-center justify-center font-semibold duration-200  focus:outline-none focus-visible:outline-gray-600"
               >
                 {category.name}
               </span>
             ))}
           </div>
-          <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+          <h6 className="mb-2 text-slate-800 text-xl font-semibold">
             {post?.title}
           </h6>
-          <p class="text-slate-600 leading-normal font-light">
+          <p className="text-slate-600 leading-normal font-light">
             {' '}
             {isExpanded ? post.content : post.content.substring(0, 200)}
             <span>
@@ -134,7 +121,7 @@ const Post = ({ post }) => {
                 ))}
             </span>
           </p>
-          <p class="text-slate-600 leading-normal font-light">
+          <p className="text-slate-600 leading-normal font-light">
             {' '}
             {post.content?.length >= 250 && (
               <span
@@ -150,8 +137,8 @@ const Post = ({ post }) => {
           </p>
         </div>
 
-        <div class="flex items-center justify-between p-4">
-          <div class="flex items-center">
+        <div className="flex items-center justify-between p-4">
+          <div className="flex items-center">
             <Image
               src={
                 post?.author?.image ||
@@ -162,12 +149,12 @@ const Post = ({ post }) => {
               width={35}
               height={35}
             />
-            <div class="flex flex-col ml-3 text-sm">
-              <span class="text-slate-800 font-semibold">
+            <div className="flex flex-col ml-3 text-sm">
+              <span className="text-slate-800 font-semibold">
                 {' '}
                 {post?.author?.name}
               </span>
-              <span class="text-slate-600"> {timeAgo(post?.createdAt)}</span>
+              <span className="text-slate-600"> {timeAgo(post?.createdAt)}</span>
             </div>
           </div>
           <div className="flex items-center justify-center">

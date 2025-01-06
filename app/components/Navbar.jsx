@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -8,10 +8,9 @@ import { CgClose } from 'react-icons/cg';
 import Logo from './Logo';
 import ProfileDropdown from './ProfileDropdown';
 import { HiMenu } from 'react-icons/hi';
-import { links } from '../data';
 import Search from './ui/Search';
 import { useDebounce } from 'use-debounce';
-import { IconButton, Typography } from '@material-tailwind/react';
+import { IconButton } from '@material-tailwind/react';
 import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 
 const Navbar = () => {
@@ -119,7 +118,7 @@ const Navbar = () => {
           <Link href={'/dashboard'} className="flex items-center gap-2">
             Dashboard
           </Link>
-          <Link href={'/create-post'} className="flex items-center gap-2">
+          <Link href={'/post-job'} className="flex items-center gap-2">
             Post a job
           </Link>
 

@@ -4,14 +4,14 @@ const Features = () => {
   return (
     <>
       <div>Features</div>
-      <div class="grid grid-cols-1 lg:grid-cols-3 items-center border border-neutral-700 divide-y lg:divide-y-0 lg:divide-x divide-neutral-700 rounded-xl">
+      <div className="grid grid-cols-1 lg:grid-cols-3 items-center border border-neutral-700 divide-y lg:divide-y-0 lg:divide-x divide-neutral-700 rounded-xl">
         <a
-          class="group relative z-10 p-4 md:p-6 h-full flex flex-col bg-neutral-900 focus:outline-none first:rounded-t-xl last:rounded-b-xl lg:first:rounded-l-xl lg:first:rounded-tr-none lg:last:rounded-r-xl lg:last:rounded-bl-none before:absolute before:inset-0 before:bg-gradient-to-b before:hover:from-transparent before:hover:via-transparent before:hover:to-[#ff0]/10 before:via-80% before:focus:from-transparent before:focus:via-transparent before:focus:to-[#ff0]/10 before:-z-[1] before:last:rounded-b-xl lg:before:first:rounded-s-xl lg:before:last:rounded-e-xl lg:before:last:rounded-bl-none before:opacity-0 before:hover:opacity-100 before:focus:opacity-100"
+          className="group relative z-10 p-4 md:p-6 h-full flex flex-col bg-neutral-900 focus:outline-none first:rounded-t-xl last:rounded-b-xl lg:first:rounded-l-xl lg:first:rounded-tr-none lg:last:rounded-r-xl lg:last:rounded-bl-none before:absolute before:inset-0 before:bg-gradient-to-b before:hover:from-transparent before:hover:via-transparent before:hover:to-[#ff0]/10 before:via-80% before:focus:from-transparent before:focus:via-transparent before:focus:to-[#ff0]/10 before:-z-[1] before:last:rounded-b-xl lg:before:first:rounded-s-xl lg:before:last:rounded-e-xl lg:before:last:rounded-bl-none before:opacity-0 before:hover:opacity-100 before:focus:opacity-100"
           href="#"
         >
-          <div class="mb-5">
+          <div className="mb-5">
             <svg
-              class="shrink-0 w-8 h-8"
+              className="shrink-0 w-8 h-8"
               width="32"
               height="32"
               viewBox="0 0 32 32"
@@ -39,9 +39,9 @@ const Features = () => {
               </defs>
             </svg>
 
-            <div class="mt-5">
-              <p class="font-semibold text-5xl text-white">Job seeker</p>
-              <h3 class="mt-5 font-medium text-lg text-white">
+            <div className="mt-5">
+              <p className="font-semibold text-5xl text-white">Job seeker</p>
+              <h3 className="mt-5 font-medium text-lg text-white">
                 Feature provided
               </h3>
               <ul className="mt-6 space-y-4 text-lg text-gray-600">
@@ -155,20 +155,20 @@ const Features = () => {
               </ul>
             </div>
           </div>
-          <p class="mt-auto">
-            <span class="font-medium text-sm text-[#ff0] pb-1 border-b-2 border-neutral-700 group-hover:border-[#ff0] group-focus:border-[#ff0] transition focus:outline-none">
+          <p className="mt-auto">
+            <span className="font-medium text-sm text-[#ff0] pb-1 border-b-2 border-neutral-700 group-hover:border-[#ff0] group-focus:border-[#ff0] transition focus:outline-none">
               Case study
             </span>
           </p>
         </a>
 
         <a
-          class="group relative z-10 p-4 md:p-6 h-full flex flex-col bg-neutral-900 focus:outline-none first:rounded-t-xl last:rounded-b-xl lg:first:rounded-l-xl lg:first:rounded-tr-none lg:last:rounded-r-xl lg:last:rounded-bl-none before:absolute before:inset-0 before:bg-gradient-to-b before:hover:from-transparent before:hover:via-transparent before:hover:to-[#ff0]/10 before:via-80% before:focus:from-transparent before:focus:via-transparent before:focus:to-[#ff0]/10 before:-z-[1] before:last:rounded-b-xl lg:before:first:rounded-s-xl lg:before:last:rounded-e-xl lg:before:last:rounded-bl-none before:opacity-0 before:hover:opacity-100 before:focus:opacity-100"
+          className="group relative z-10 p-4 md:p-6 h-full flex flex-col bg-neutral-900 focus:outline-none first:rounded-t-xl last:rounded-b-xl lg:first:rounded-l-xl lg:first:rounded-tr-none lg:last:rounded-r-xl lg:last:rounded-bl-none before:absolute before:inset-0 before:bg-gradient-to-b before:hover:from-transparent before:hover:via-transparent before:hover:to-[#ff0]/10 before:via-80% before:focus:from-transparent before:focus:via-transparent before:focus:to-[#ff0]/10 before:-z-[1] before:last:rounded-b-xl lg:before:first:rounded-s-xl lg:before:last:rounded-e-xl lg:before:last:rounded-bl-none before:opacity-0 before:hover:opacity-100 before:focus:opacity-100"
           href="#"
         >
-          <div class="mb-5">
+          <div className="mb-5">
             <svg
-              class="shrink-0 w-8 h-8"
+              className="shrink-0 w-8 h-8"
               width="33"
               height="32"
               viewBox="0 0 33 32"
@@ -189,9 +189,9 @@ const Features = () => {
               />
             </svg>
 
-            <div class="mt-5">
-              <p class="font-semibold text-5xl text-white">Recruiter</p>
-              <h3 class="mt-5 font-medium text-lg text-white">
+            <div className="mt-5">
+              <p className="font-semibold text-5xl text-white">Recruiter</p>
+              <h3 className="mt-5 font-medium text-lg text-white">
                 Feature provided
               </h3>
               <ul className="mt-6 space-y-4 text-lg text-gray-600">
@@ -305,20 +305,20 @@ const Features = () => {
               </ul>
             </div>
           </div>
-          <p class="mt-auto">
-            <span class="font-medium text-sm text-[#ff0] pb-1 border-b-2 border-neutral-700 group-hover:border-[#ff0] group-focus:border-[#ff0] transition focus:outline-none">
+          <p className="mt-auto">
+            <span className="font-medium text-sm text-[#ff0] pb-1 border-b-2 border-neutral-700 group-hover:border-[#ff0] group-focus:border-[#ff0] transition focus:outline-none">
               Case study
             </span>
           </p>
         </a>
 
         <a
-          class="group relative z-10 p-4 md:p-6 h-full flex flex-col bg-neutral-900 focus:outline-none first:rounded-t-xl last:rounded-b-xl lg:first:rounded-l-xl lg:first:rounded-tr-none lg:last:rounded-r-xl lg:last:rounded-bl-none before:absolute before:inset-0 before:bg-gradient-to-b before:hover:from-transparent before:hover:via-transparent before:hover:to-[#ff0]/10 before:via-80% before:focus:from-transparent before:focus:via-transparent before:focus:to-[#ff0]/10 before:-z-[1] before:last:rounded-b-xl lg:before:first:rounded-s-xl lg:before:last:rounded-e-xl lg:before:last:rounded-bl-none before:opacity-0 before:hover:opacity-100 before:focus:opacity-100"
+          className="group relative z-10 p-4 md:p-6 h-full flex flex-col bg-neutral-900 focus:outline-none first:rounded-t-xl last:rounded-b-xl lg:first:rounded-l-xl lg:first:rounded-tr-none lg:last:rounded-r-xl lg:last:rounded-bl-none before:absolute before:inset-0 before:bg-gradient-to-b before:hover:from-transparent before:hover:via-transparent before:hover:to-[#ff0]/10 before:via-80% before:focus:from-transparent before:focus:via-transparent before:focus:to-[#ff0]/10 before:-z-[1] before:last:rounded-b-xl lg:before:first:rounded-s-xl lg:before:last:rounded-e-xl lg:before:last:rounded-bl-none before:opacity-0 before:hover:opacity-100 before:focus:opacity-100"
           href="#"
         >
-          <div class="mb-5">
+          <div className="mb-5">
             <svg
-              class="shrink-0 w-8 h-8"
+              className="shrink-0 w-8 h-8"
               width="33"
               height="32"
               viewBox="0 0 33 32"
@@ -343,12 +343,12 @@ const Features = () => {
               />
             </svg>
 
-            <div class="mt-5">
-              <p class="font-semibold text-5xl text-white">12%</p>
-              <h3 class="mt-5 font-medium text-lg text-white">
+            <div className="mt-5">
+              <p className="font-semibold text-5xl text-white">12%</p>
+              <h3 className="mt-5 font-medium text-lg text-white">
                 Streamlining Development
               </h3>
-              <p class="mt-1 text-neutral-400">
+              <p className="mt-1 text-neutral-400">
                 {' '}
                 With the goal of accelerating project delivery and enhancing
                 collaboration among development teams, Preline leveraged GitLab
@@ -357,8 +357,8 @@ const Features = () => {
               </p>
             </div>
           </div>
-          <p class="mt-auto">
-            <span class="font-medium text-sm text-[#ff0] pb-1 border-b-2 border-neutral-700 group-hover:border-[#ff0] group-focus:border-[#ff0] transition focus:outline-none">
+          <p className="mt-auto">
+            <span className="font-medium text-sm text-[#ff0] pb-1 border-b-2 border-neutral-700 group-hover:border-[#ff0] group-focus:border-[#ff0] transition focus:outline-none">
               Case study
             </span>
           </p>

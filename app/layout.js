@@ -6,7 +6,6 @@ import { getServerSession } from 'next-auth';
 import Navbar from './components/Navbar';
 import { BlogProvider } from './context/BlogProvider';
 import BottomMenu from './components/ui/BottomMenu';
-import { SocketProvider } from './context/SocketProvider';
 import Footer from './components/Footer';
 import { SkeletonTheme } from 'react-loading-skeleton';
 
@@ -24,20 +23,18 @@ export default async function RootLayout({ children }) {
     <html lang="en" className={inter.className}>
       <body className="bg-[#004953]">
         <SkeletonTheme baseColor="#202020" highlightColor="#444">
-          <SocketProvider>
-            <BlogProvider>
-              <AuthProvider session={session}>
-                <Navbar />
-                <div className="lg:hidden">
-                  <BottomMenu />
-                </div>
-                <div className="max-w-7xl mx-auto px-2 py-5 ">{children}</div>
-                <div className="hidden lg:flex">
-                  <Footer />
-                </div>
-              </AuthProvider>
-            </BlogProvider>
-          </SocketProvider>
+          <BlogProvider>
+            <AuthProvider session={session}>
+              <Navbar />
+              <div className="lg:hidden">
+                <BottomMenu />
+              </div>
+              <div className="max-w-7xl mx-auto px-2 py-5 ">{children}</div>
+              <div className="hidden lg:flex">
+                <Footer />
+              </div>
+            </AuthProvider>
+          </BlogProvider>
         </SkeletonTheme>
       </body>
     </html>
