@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from '@material-tailwind/react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import parse from 'html-react-parser';
 
 // Quill toolbar configuration
