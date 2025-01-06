@@ -3,11 +3,10 @@ import prisma from '@/libs/prismadb';
 import { NextResponse } from 'next/server';
 export async function POST(request) {
   try {
-    const { name, } = await request.json();
+    const { name } = await request.json();
     const category = await prisma.category.create({
       data: {
         name,
-        postIDs: [],
       },
     });
     return NextResponse.json(category, { status: 201 });
@@ -21,11 +20,7 @@ export async function POST(request) {
 }
 export async function GET() {
   try {
-    const categories = await prisma.category.findMany({
-      include:{
-        posts:true
-      }
-    });
+    const categories = await prisma.category.findMany({});
     if (categories.length <= 0) {
       return NextResponse.json(
         { message: 'No categories created.' },

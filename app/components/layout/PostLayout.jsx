@@ -1,12 +1,12 @@
 'use client';
-import Categories from '../Categories';
-import JobList from '../JobList';
+// import Categories from '../Categories';
+// import JobList from '../JobList';
 import JobFilters from '../ui/jobs/JobFilters';
 
 export default function PostLayout({ children }) {
   return (
     <>
-      <Categories />
+      {/* <Categories /> */}
 
       <div className="col-span-full lg:p-10 border-b-3 border-r-4 rounded-2xl bg-cyan-50">
         <div class="container bg-light-blue-50 shadow-md mx-auto rounded-lg p-4">

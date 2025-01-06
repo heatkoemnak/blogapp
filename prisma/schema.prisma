@@ -13,7 +13,7 @@ model User {
   email         String    @unique
   password      String?
   image         String?
-  posts         Post[]
+  announcement         Announcement[]
   replies       Reply[]
   comments      Comment[]
   accounts      Account[]
@@ -123,7 +123,6 @@ model Job {
   authorEmail      String
   contact          String[]
   published        Boolean       @default(true)
-  comments         Comment[]
   likes            Int           @default(0)
   views            Int           @default(0)
   publishedAt      String?
@@ -153,12 +152,12 @@ model Job {
 }
 
 model PostCategory {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  postId     String @db.ObjectId
-  categoryId String @db.ObjectId
+  id             String @id @default(auto()) @map("_id") @db.ObjectId
+  AnnouncementId String @db.ObjectId
+  categoryId     String @db.ObjectId
 
-  post     Post     @relation(fields: [postId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
+  announcement Announcement @relation(fields: [AnnouncementId], references: [id])
+  category     Category     @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
@@ -169,14 +168,14 @@ model Category {
   updatedAt  DateTime       @updatedAt
 }
 
-model Post {
+model Announcement {
   id          String         @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   content     String
   images      String[]
   author      User           @relation(fields: [authorEmail], references: [email])
   authorEmail String
-  posts       PostCategory[]
+  categories  PostCategory[]
   links       String[]
   published   Boolean        @default(true)
   comments    Comment[]
@@ -188,20 +187,19 @@ model Post {
 }
 
 model Comment {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  text        String?
-  author      User?    @relation(fields: [authorEmail], references: [email])
-  authorEmail String?
-  post        Post     @relation(fields: [postId], references: [id])
-  postId      String   @db.ObjectId
-  replies     Reply[]
-  publishedAt String?
-  image       String?
-  file        String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  Job         Job?     @relation(fields: [jobId], references: [id])
-  jobId       String?  @db.ObjectId
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  text         String?
+  author       User?        @relation(fields: [authorEmail], references: [email])
+  authorEmail  String?
+  announcement Announcement @relation(fields: [postId], references: [id])
+  postId       String       @db.ObjectId
+  replies      Reply[]
+  publishedAt  String?
+  image        String?
+  file         String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
 }
 
 model Reply {
