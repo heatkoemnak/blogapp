@@ -24,7 +24,7 @@ import { uploadImage } from '../utils/api';
 import Image from 'next/image';
 import ClosingDate from '../components/ui/Selection/ClosingDate';
 import { useBlogContext } from '../context/BlogProvider';
-const FormPostJob = () => {
+export default function FormPostJob() {
   const { data: session } = useSession();
   const date = new Date();
   const { jobCategories, countries, provinceCities } = useBlogContext();
@@ -184,8 +184,6 @@ const FormPostJob = () => {
       router.push('/blogs');
     }
   };
-
-
 
   return (
     <form onSubmit={submitHandler}>
@@ -567,6 +565,4 @@ const FormPostJob = () => {
       </div>
     </form>
   );
-};
-
-export default FormPostJob;
+}
