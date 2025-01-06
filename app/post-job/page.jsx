@@ -125,11 +125,9 @@ const PostJobForm = () => {
         'upload_preset',
         process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
       );
-      console.log(formData);
 
       try {
         const imageUpload = await uploadImage(formData);
-        console.log(imageUpload);
         uploadedImageUrl = imageUpload.secure_url;
       } catch (error) {
         console.log(error);
@@ -156,28 +154,26 @@ const PostJobForm = () => {
           contact: links,
           publishedAt: formattedDate,
           closeDate: deadline,
-          gender: selectedGender.name,
-          qualification: selectQualification.name,
-          jobCategoryId: selectedCategory.id,
-          jobTypeId: selectedJobType.id,
-          jobIndustryId: selectedJobIndustry.id,
-          jobLevelId: selectedJobLevel.id,
-          jobLocationId: selectedCountry.id,
-          jobSalaryId: selectedSalaryRange.id,
-          communesId: selectCommune.id,
-          districtsId: selectDistrict.id,
-          provinceCityId: selectProvinceCity.id,
+          gender: selectedGender?.name,
+          qualification: selectQualification?.name,
+          jobCategoryId: selectedCategory?.id,
+          jobTypeId: selectedJobType?.id,
+          jobIndustryId: selectedJobIndustry?.id,
+          jobLevelId: selectedJobLevel?.id,
+          jobLocationId: selectedCountry?.id,
+          jobSalaryId: selectedSalaryRange?.id,
+          communesId: selectCommune?.id,
+          districtsId: selectDistrict?.id,
+          provinceCityId: selectProvinceCity?.id,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
       } else {
         setError('Failed to post job');
       }
     } catch (error) {
-      console.log(error);
       setError(error.message);
     } finally {
       setLoading(false);
