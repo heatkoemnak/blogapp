@@ -114,14 +114,6 @@ const PostJobForm = () => {
     };
   };
 
-/*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Handles the submission of the job posting form by uploading an image to
-   * Cloudinary and posting the job to the API.
-   *
-   * @param {Event} event - The form submission event.
-   */
-/******  a9b926e5-270f-4da9-8293-fb339e615d61  *******/
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
