@@ -1,7 +1,7 @@
 import prisma from '@/libs/prismadb';
 import { NextResponse } from 'next/server';
 
-export async function GET(req, { params }) {
+export async function GET({ params }) {
   // const id = req.query;
   const { id } = params;
   console.log(id);
@@ -70,7 +70,10 @@ export async function DELETE(req, { params }) {
     await prisma.post.delete({
       where: { id: id },
     });
-    return NextResponse.json({ message: 'Post deleted successfully' }, { status: 200 });
+    return NextResponse.json(
+      { message: 'Post deleted successfully' },
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error);
     return NextResponse.json(
