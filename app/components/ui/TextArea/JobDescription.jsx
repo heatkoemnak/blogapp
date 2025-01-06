@@ -59,10 +59,6 @@ export function JobDescription({ description, setDescription }) {
     setIsSaved(true);
   };
 
-  const handleShowEditor = () => {
-    setShowEditor(!showEditor);
-  };
-
   // Start editing
   const handleEditDescription = () => {
     setCurrentInput(description);

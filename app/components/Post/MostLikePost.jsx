@@ -7,7 +7,7 @@ const MostLikePost = () => {
 
   useEffect(() => {
     const fetchPostByMostLike = async () => {
-      const response = await fetch(`/api/blog/most.like`);
+      const response = await fetch(`/api/announcement`);
       const data = await response.json();
       if (response.ok) {
         setMostLikePosts(data);
@@ -21,7 +21,6 @@ const MostLikePost = () => {
 
   return (
     <>
-    
       {mostLikePosts.map((post, index) => (
         <div className="flex border my-1  " key={index}>
           <LatestPost post={post} />
