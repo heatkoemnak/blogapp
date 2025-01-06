@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { LuReply } from 'react-icons/lu';
 import { CiMinimize1 } from 'react-icons/ci';
 import PostDetails from './PostDetails';
-import { useSocket } from '../context/SocketProvider';
 import { useRouter } from 'next/navigation';
 import { timeAgo } from '../utils/timeAgo';
 import AddCommentButton from './ui/AddCommentButton';
@@ -18,7 +17,6 @@ const CommentSection = ({ post }) => {
   const { data: session } = useSession();
   const [newCommentText, setCommentText] = useState('');
   const [comments, setComments] = useState(post?.comments || []);
-  const { socket } = useSocket();
   const router = useRouter();
   const popupRef = useRef(null);
   const [activeSettings, setActiveSettings] = useState({});
@@ -36,9 +34,6 @@ const CommentSection = ({ post }) => {
     setVisibleComments(3); // Reset to 3 comments
   };
   useEffect(() => {
-    socket.on('newComment', (message) => {
-      console.log(message);
-    });
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside);
     } else {
@@ -47,7 +42,7 @@ const CommentSection = ({ post }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [socket, isOpen]);
+  }, [isOpen]);
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
