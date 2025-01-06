@@ -2,36 +2,16 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import Post from './Post';
-import { useSession } from 'next-auth/react';
 import PostSkeleton from './ui/PostSkeleton';
-import { useSearchParams } from 'next/navigation';
 import MostLikePost from './Post/MostLikePost';
 import { CountByCategories } from './ui/CountByCategories';
 import { BiGridHorizontal } from 'react-icons/bi';
 import { JobLevelList } from './ui/JobLevelList';
+import { useBlogContext } from '../context/BlogProvider';
 
 const PostList = () => {
-  const { data: session, status } = useSession();
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get('search') || '';
-  const [posts, setPosts] = useState([]);
-
+  const { announcement } = useBlogContext();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch(`/api/blog?q=${searchQuery}`);
-      const data = await response.json();
-      if (response.ok) {
-        setPosts(data);
-      } else {
-        setPosts([]);
-        console.error(data.message);
-      }
-    };
-
-    fetchPosts();
-  }, [searchQuery]);
 
   return (
     <div className=" ">
@@ -47,12 +27,15 @@ const PostList = () => {
               <h1 className="font-bold text-xl">Job Announcements</h1>
               <BiGridHorizontal size={30} className="cursor-pointer" />
             </div>
-            {posts?.map((post, index) => (
-              // <div key={index}>HHH</div>
-              <div key={index} className="flex flex-col p-2 ">
-                <Post post={post} />
-              </div>
-            ))}
+            {announcement?.length > 0 ? (
+              announcement?.map((announcement, index) => (
+                <div key={index} className="flex flex-col p-2 ">
+                  <Post post={announcement} />
+                </div>
+              ))
+            ) : (
+              <div className="flex flex-col p-2">No Announcements</div>
+            )}
           </div>
           <div className="lg:w-4/12">
             <h1 className="font-bold text-lg px-5 mb-4 text-white">

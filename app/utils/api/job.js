@@ -9,6 +9,17 @@ export const fetchJobs = async () => {
     console.error(error);
   }
 };
+export const fetchAnnouncement = async () => {
+  try {
+    const response = await fetch('/api/announcement', { cache: 'no-store' });
+    if (!response.ok) {
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 export const fetchIndustry = async () => {
   try {
     const response = await fetch('/api/job/industry', { cache: 'no-store' });

@@ -12,13 +12,14 @@ import {
   fetchDistrict,
   fetchCommune,
   fetchJobs,
+  fetchAnnouncement,
 } from '../utils/api/job';
 
 const BlogContext = createContext();
 
 export function BlogProvider({ children }) {
   const [categoryList, setCategoryList] = useState([]);
-  const [postList, setPostList] = useState([]);
+  const [announcement, setAnnouncement] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [industriesList, setIndustriesList] = useState([]);
   const [jobTypes, steJobTypes] = useState([]);
@@ -33,7 +34,7 @@ export function BlogProvider({ children }) {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(industriesList);
+  console.log(announcement);
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -41,7 +42,6 @@ export function BlogProvider({ children }) {
         const [
           jobs,
           categories,
-          posts,
           industry,
           jobType,
           jobLevel,
@@ -51,11 +51,10 @@ export function BlogProvider({ children }) {
           provinceCity,
           districts,
           communes,
+          announcement,
         ] = await Promise.all([
           fetchJobs(),
-
           fetchCategories(),
-          fetchPosts(),
           fetchIndustry(),
           fetchJobType(),
           fetchJobLevel(),
@@ -65,10 +64,10 @@ export function BlogProvider({ children }) {
           fetchProvinceCity(),
           fetchDistrict(),
           fetchCommune(),
+          fetchAnnouncement(),
         ]);
         setJobs(jobs);
         setCategoryList(categories);
-        setPostList(posts);
         setIndustriesList(industry);
         steJobTypes(jobType);
         setJobLevels(jobLevel);
@@ -78,6 +77,7 @@ export function BlogProvider({ children }) {
         setProvinceCities(provinceCity);
         setDistricts(districts);
         setCommunes(communes);
+        setAnnouncement(announcement);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
@@ -92,9 +92,10 @@ export function BlogProvider({ children }) {
       value={{
         isLoading,
         errorMessage,
-        postList,
+        announcement,
         categoryList,
         setCategoryList,
+        announcement,
         jobs,
         industriesList,
         jobTypes,
