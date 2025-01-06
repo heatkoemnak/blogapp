@@ -1,3 +1,5 @@
+'use client';
+
 import Categories from '../components/Categories';
 import JobList from '../components/JobList';
 import PostList from '../components/PostList';

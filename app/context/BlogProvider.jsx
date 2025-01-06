@@ -1,6 +1,6 @@
 'use client';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { fetchCategories, fetchPosts } from '../utils/api';
+import { fetchCategories } from '../utils/api';
 import {
   fetchJobCategory,
   fetchIndustry,

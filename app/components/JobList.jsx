@@ -10,77 +10,10 @@ import {
   Squares2X2Icon,
 } from '@heroicons/react/24/solid';
 import { BiGridHorizontal } from 'react-icons/bi';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
-import axios from 'axios';
 import { useBlogContext } from '../context/BlogProvider';
 
-const jobList = [
-  {
-    id: 1,
-    title: 'Back End Developer',
-    type: 'Full-time',
-    location: 'Remote',
-    salary: '$120k – $140k',
-    closingDate: 'Closing on January 9, 2025',
-  },
-  {
-    id: 2,
-    title: 'Front End Developer',
-    type: 'Part-time',
-    location: 'On-site',
-    salary: '$70k – $90k',
-    closingDate: 'Closing on February 15, 2025',
-  },
-  {
-    id: 3,
-    title: 'Project Manager',
-    type: 'Contract',
-    location: 'Remote',
-    salary: '$90k – $110k',
-    closingDate: 'Closing on March 20, 2025',
-  },
-  {
-    id: 4,
-    title: 'DevOps Engineer',
-    type: 'Full-time',
-    location: 'Hybrid',
-    salary: '$400 – $600',
-    closingDate: 'Closing on April 30, 2025',
-  },
-  {
-    id: 5,
-    title: 'UI/UX Designer',
-    type: 'Freelance',
-    location: 'Remote',
-    salary: '$60k – $80k',
-    closingDate: 'Closing on May 15, 2025',
-  },
-  {
-    id: 6,
-    title: 'Software Developer',
-    type: 'Freelance',
-    location: 'Remote',
-    salary: '$60k – $80k',
-    closingDate: 'Closing on June 1, 2025',
-  },
-  {
-    id: 6,
-    title: 'Software Developer',
-    type: 'Freelance',
-    location: 'Remote',
-    salary: '$60k – $80k',
-    closingDate: 'Closing on June 1, 2025',
-  },
-  {
-    id: 6,
-    title: 'Software Developer',
-    type: 'Freelance',
-    location: 'Remote',
-    salary: '$60k – $80k',
-    closingDate: 'Closing on June 1, 2025',
-  },
-];
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
   { name: 'Best Rating', href: '#', current: false },
