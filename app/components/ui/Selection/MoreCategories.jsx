@@ -1,3 +1,5 @@
+'use client';
+
 import { useBlogContext } from '@/app/context/BlogProvider';
 import {
   Menu,

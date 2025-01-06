@@ -20,6 +20,13 @@ import { JobDescription } from '../components/ui/TextArea/JobDescription';
 import { JobRequirement } from '../components/ui/TextArea/JobRequirement';
 import { JobResponsibility } from '../components/ui/TextArea/JobResponsibility';
 import { SelectCategoriesDialog } from '../components/ui/modals/SelectCategoriesDialog';
+
+export const getServerSideProps = () => {
+  return {
+    props: {},
+  };
+};
+
 import { uploadImage } from '../utils/api';
 import Image from 'next/image';
 import ClosingDate from '../components/ui/Selection/ClosingDate';
