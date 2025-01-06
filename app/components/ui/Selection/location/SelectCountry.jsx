@@ -8,7 +8,7 @@ export function SelectCountry({
   showMoreThreshold = 5, // Default number of items before "Show More"
 }) {
   const { countries } = useBlogContext();
-  console.log(countries)
+  console.log(countries);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -41,10 +41,13 @@ export function SelectCountry({
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
+    if (typeof document !== 'undefined') {
+      // Add event listener if running client-side
+      document.addEventListener('mousedown', handleOutsideClick);
+      return () => {
+        document.removeEventListener('mousedown', handleOutsideClick);
+      };
+    }
   }, []);
 
   return (

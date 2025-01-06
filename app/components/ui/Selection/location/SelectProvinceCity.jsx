@@ -36,10 +36,13 @@ export function SelectProvinceCity({
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
+    if (typeof document !== 'undefined') {
+      // Add event listener if running client-side
+      document.addEventListener('mousedown', handleOutsideClick);
+      return () => {
+        document.removeEventListener('mousedown', handleOutsideClick);
+      };
+    }
   }, []);
 
   return (

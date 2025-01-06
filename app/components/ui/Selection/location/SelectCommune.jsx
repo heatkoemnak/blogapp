@@ -9,7 +9,7 @@ export function SelectCommune({
   showMoreThreshold = 5, // Default number of items to show
 }) {
   const { communes } = useBlogContext();
-  
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
   const [showAll, setShowAll] = useState(false);
@@ -46,10 +46,13 @@ export function SelectCommune({
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
+    if (typeof document !== 'undefined') {
+      // Add event listener if running client-side
+      document.addEventListener('mousedown', handleOutsideClick);
+      return () => {
+        document.removeEventListener('mousedown', handleOutsideClick);
+      };
+    }
   }, []);
 
   if (!communeList?.length) {

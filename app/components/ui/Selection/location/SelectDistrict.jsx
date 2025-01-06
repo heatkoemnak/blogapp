@@ -3,7 +3,11 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBlogContext } from '@/app/context/BlogProvider';
 
-export function SelectDistrict({ selectProvinceCity, setSelectDistrict, showMoreThreshold = 5 }) {
+export function SelectDistrict({
+  selectProvinceCity,
+  setSelectDistrict,
+  showMoreThreshold = 5,
+}) {
   const { districts } = useBlogContext();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -40,12 +44,14 @@ export function SelectDistrict({ selectProvinceCity, setSelectDistrict, showMore
       setIsOpen(false);
     }
   };
-
   useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
+    if (typeof document !== 'undefined') {
+      // Add event listener if running client-side
+      document.addEventListener('mousedown', handleOutsideClick);
+      return () => {
+        document.removeEventListener('mousedown', handleOutsideClick);
+      };
+    }
   }, []);
 
   if (!districtList?.length) {
