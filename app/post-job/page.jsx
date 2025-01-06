@@ -28,6 +28,7 @@ import { useBlogContext } from '../context/BlogProvider';
 const PostJobForm = () => {
   const { data: session } = useSession();
   const date = new Date();
+  const router = useRouter();
   const { jobCategories, countries, provinceCities } = useBlogContext();
 
   console.log(jobCategories);
@@ -101,7 +102,6 @@ const PostJobForm = () => {
   console.log(formattedDate);
   console.log(deadline);
 
-  const router = useRouter();
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
