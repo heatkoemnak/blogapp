@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
 import Image from 'next/image';
-import { uploadImage, submitPost, removeImage } from '../utils/api';
+import { uploadImage,  removeImage } from '../utils/api';
 import { useBlogContext } from '../context/BlogProvider';
 const UpdatePostForm = ({ post }) => {
   console.log(post);
@@ -54,18 +54,18 @@ const UpdatePostForm = ({ post }) => {
       uploadedImageData = await uploadImage(formData);
     }
 
-    await submitPost({
-      method: 'PUT',
-      postId: post.id,
-      title,
-      body,
-      image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
-      authorEmail: email,
-      categoryId,
-      links,
-      publishedAt: formattedDate,
-    });
-    router.push('/blogs');
+    // await submitPost({
+    //   method: 'PUT',
+    //   postId: post.id,
+    //   title,
+    //   body,
+    //   image: uploadedImageData ? uploadedImageData.secure_url : imageSrc,
+    //   authorEmail: email,
+    //   categoryId,
+    //   links,
+    //   publishedAt: formattedDate,
+    // });
+    // router.push('/blogs');
   };
   
   const addLink = (e) => {

@@ -219,7 +219,7 @@ const Hero = () => {
               ></path>
             </svg>
             <span className="ml-3">
-              We'll showcase your tool in our{' '}
+              {`We'll`} showcase your tool in our{' '}
               <a
                 className="text-indigo-600 hover:text-indigo-500"
                 href="http://127.0.0.1:8000/blog"

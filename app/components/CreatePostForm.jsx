@@ -22,7 +22,7 @@ import { JobLevel } from './ui/DropdownFilters/JobLevel';
 import { SalaryRange } from './ui/DropdownFilters/SalaryRange';
 import { SelectCategoriesDialog } from './ui/modals/SelectCategoriesDialog';
 // import { TextDescription } from './ui/TextArea/TextDescription';
-import { JobDetails } from './ui/TextArea/JobResponsibility';
+import { JobDetails, JobResponsibility } from './ui/TextArea/JobResponsibility';
 import { TextPosition } from './ui/TextArea/TextPosition';
 import { VscOpenPreview } from 'react-icons/vsc';
 const CreatePostForm = () => {
@@ -260,7 +260,7 @@ const CreatePostForm = () => {
                 Job Details:
               </h2>
               <div>
-                <JobDetails
+                <JobResponsibility
                   jobResponsibilities={jobResponsibilities}
                   setJobResponsibilities={setJobResponsibilities}
                 />
