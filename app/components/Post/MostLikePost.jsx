@@ -21,6 +21,7 @@ const MostLikePost = () => {
 
   return (
     <>
+    
       {mostLikePosts.map((post, index) => (
         <div className="flex border my-1  " key={index}>
           <LatestPost post={post} />

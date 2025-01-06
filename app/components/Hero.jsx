@@ -4,6 +4,8 @@ import Link from 'next/link';
 import AuthButton from './ui/AuthButton';
 // import Chat from './Chat';
 import Image from 'next/image';
+import JobList from './JobList';
+import Features from './Features';
 
 const Hero = () => {
   // const [imageUrl, setImageUrl] = useState('');
@@ -15,21 +17,6 @@ const Hero = () => {
   return (
     <>
       <section className="sticky ">
-        {/* <div className="flex justify-between">
-          <Logo />
-          <AuthButton />
-        </div> */}
-        {/* <Chat /> */}
-        {/* <div style={{ textAlign: 'center' }}>
-          <h1>Random Profile Image</h1>
-          {imageUrl && (
-            <img
-              src={imageUrl}
-              alt="Random Profile"
-              style={{ borderRadius: '50%' }}
-            />
-          )}
-        </div> */}
         <div className=" mx-auto text-left md:max-w-none md:text-center">
           <div className="text-center py-4 hidden sm:block">
             <button className="bg-white border border-[#E2E8F0] hover:bg-neutral-200 text-xs font-bold py-2.5 px-4 rounded-full inline-flex items-center">
@@ -49,28 +36,13 @@ const Hero = () => {
           <section className="bg-center lg:max-w-9xl mx-auto h-[70vh] bg-no-repeat  bg-[url('https://i.pinimg.com/originals/2e/2b/21/2e2b21aeed393403d4620367f9e093f9.gif')] bg-gray-700 bg-blend-multiply">
             <div className="px-4 mx-auto max-w-screen-xl text-center py-20">
               <h1 className="tracking-tight leading-none font-extrabold text-[#FF4F01] text-center sm:leading-none text-4xl sm:text-5xl">
-                <span className="inline md:block p-5">
-                  Bring your ideas to{' '}
-                </span>
                 <span className="relative top-2 bg-clip-text text-white md:inline-block">
-                  Life
+                  Find your dream job and unlock your potential.
                 </span>
                 <span className="relative mt-2 bg-clip-text text-[#FF4F01]">
                   .
                 </span>
               </h1>
-              {/* <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">
-                We invest in the world’s potential
-              </h1> */}
-              {/* <h1 className="hidden lg:block font-extrabold text-[#FF4F01] text-center sm:leading-none text-5xl sm:text-9xl">
-                <span className="inline md:block ">Bring Your Ideas </span>
-                <span className="relative mt-2 bg-clip-text text-white md:inline-block">
-                  to Life
-                </span>
-                <span className="relative mt-2 bg-clip-text text-[#FF4F01]">
-                  .
-                </span>
-              </h1> */}
               <p className="mb-8 mt-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
                 Whether {`you're`} a creator, innovator, or dreamer, our
                 platform is designed to help you share your ideas with the
@@ -79,9 +51,9 @@ const Hero = () => {
               <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
                 <Link
                   href="/blogs"
-                  className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
+                  className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-cyan-800 hover:bg-cyan-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-cyan-400"
                 >
-                  Get started
+                  Home job
                   <svg
                     className="w-3.5 h-3.5 ms-2 rtl:rotate-180"
                     aria-hidden="true"
@@ -127,11 +99,12 @@ const Hero = () => {
           <div className=" text-center lg:text-left">
             <div>
               <p className="text-3xl font-semibold tracking-tight text-[#201515] sm:text-5xl">
-                PowerME is a Platform to empower your vision
+                JobSpace is a platform for job seekers and employers to find
+                opportunities.
               </p>
               <p className=" mt-4 text-base tracking-tight text-gray-600">
-                Transform thoughts into action with intuitive tools and
-                resources through this blog.
+                Transform your career with JobSpace. Find your dream job and
+                unlock your potential.
               </p>
             </div>
             <div className="flex justify-center gap-3 mt-10 lg:justify-start">
@@ -145,6 +118,120 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      <section className="mt-16 max-w-xl mx-auto px-2">
+        <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+          Why Choose Our Platform?
+        </h2>
+        <ul className="mt-6 space-y-4 text-lg text-gray-600">
+          <li className="flex items-start">
+            <svg
+              className="flex-shrink-0 w-6 h-6 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+            <span className="ml-3">
+              Join a curated selection of tools designed to enhance productivity
+              and collaboration.
+            </span>
+          </li>
+          <li className="flex items-start">
+            <svg
+              className="flex-shrink-0 w-6 h-6 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+            <span className="ml-3">
+              Our community relies on us to deliver the best project management
+              solutions, as shown by our loyal user base.
+            </span>
+          </li>
+          <li className="flex items-start">
+            <svg
+              className="flex-shrink-0 w-6 h-6 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+            <span className="ml-3">
+              Enjoy a robust audience with{' '}
+              <strong>50K+ monthly visitors</strong> actively seeking tools.
+            </span>
+          </li>
+          <li className="flex items-start">
+            <svg
+              className="flex-shrink-0 w-6 h-6 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+            <span className="ml-3">
+              Gain lifetime visibility for your tool, ensuring continuous
+              exposure to potential users.
+            </span>
+          </li>
+          <li className="flex items-start">
+            <svg
+              className="flex-shrink-0 w-6 h-6 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+            <span className="ml-3">
+              We'll showcase your tool in our{' '}
+              <a
+                className="text-indigo-600 hover:text-indigo-500"
+                href="http://127.0.0.1:8000/blog"
+              >
+                feature articles
+              </a>{' '}
+              and user guides.
+            </span>
+          </li>
+        </ul>
+      </section>
+      <Features />
     </>
   );
 };

@@ -35,15 +35,35 @@ const PostDetails = ({ post, comments }) => {
       <div className="lg:max-w-3xl">
         <div className="lg:col-span-7 lg:flex rounded-lg">
           <Link href={`/blogs/${post?.id}`}>
-            <Image
-              src={post?.image || '/youtube-thumbnail.png'}
-              className=" "
-              alt="Post Image"
-              width={1200}
-              height={550}
-              quality={100}
-              loading="lazy"
-            />
+            <div class="grid ">
+              {post?.images.length > 0 && (
+                <div className="grid grid-cols-2 gap-2">
+                  {post?.images.map((src, index) => (
+                    <div key={index}>
+                      <img src={src} alt="Image preview" />
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* {post?.images.length > 0 && post?.images.length < 3 && (
+              <div className="grid grid-cols-2 gap-2">
+                {post?.images.map((src, index) => (
+                  <div key={index}>
+                    <img src={src} alt="Image preview" />
+                  </div>
+                ))}
+              </div>
+            )}
+            {post?.images.length > 2 && (
+              <div class="grid bg-white p-2 rounded-xl grid-cols-3">
+                {post?.images.map((src, index) => (
+                  <div key={index}>
+                    <img src={src} alt="Image preview" />
+                  </div>
+                ))}
+              </div>
+            )} */}
+            </div>
           </Link>
         </div>
         <div className="mr-auto place-self-center p-3  lg:col-span-5">
@@ -163,13 +183,13 @@ const PostDetails = ({ post, comments }) => {
             {post?.title}
           </h1>
           <p className="font-light text-gray-700 lg:mb-8 md:text-lg lg:text-xl">
-            {isExpanded ? post?.body : post?.body.substring(0, 300)}
+            {isExpanded ? post?.content : post?.content.substring(0, 300)}
             <br />
             <Link className="text-blue-500 " href={post?.links[0]}>
               {post?.links[0]}
             </Link>
             <br />
-            {post?.body?.length >= 250 && (
+            {post?.content?.length >= 250 && (
               <span
                 onClick={toggleText}
                 className="text-blue-500 cursor-pointer"

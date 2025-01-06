@@ -1,25 +1,10 @@
-import CustomError from './CustomError';
-import handleErrorResponse from './handleErrorResponse';
-import CryptoJS from 'crypto-js';
-
 export const fetchPosts = async () => {
   try {
     const response = await fetch('/api/blog', { cache: 'no-store' });
-    if (!response.ok) {
-      const errorMessage = handleErrorResponse(response);
-      throw new CustomError(errorMessage, response.status);
-    }
     const data = await response.json();
     return data;
   } catch (error) {
-    if (error instanceof CustomError) {
-      console.error(
-        `Custom Error: ${error.message} (Status: ${error.statusCode})`
-      );
-    } else {
-      console.error(`Unexpected Error: ${error.message}`);
-    }
-    throw error;  
+    console.error(error);
   }
 };
 
@@ -27,24 +12,16 @@ export const fetchCategories = async () => {
   try {
     const response = await fetch('/api/categories', { cache: 'no-store' });
     if (!response.ok) {
-      const errorMessage = handleErrorResponse(response);
-      throw new CustomError(errorMessage, response.status);
     }
     const data = await response.json();
     return data;
   } catch (error) {
-    if (error instanceof CustomError) {
-      console.error(
-        `Custom Error: ${error.message} (Status: ${error.statusCode})`
-      );
-    } else {
-      console.error(`Unexpected Error: ${error.message}`);
-    }
-    throw error;
+    console.error(error);
   }
 };
 
 export const uploadImage = async (formData) => {
+  console.log(formData);
   try {
     const response = await fetch(
       'https://api.cloudinary.com/v1_1/dakqa3htw/image/upload',
@@ -55,19 +32,13 @@ export const uploadImage = async (formData) => {
     );
 
     if (!response.ok) {
-      throw new CustomError(handleErrorResponse(response), response.status);
+      throw new Error('Failed to upload image');
     }
     const uploadedImageData = await response.json();
+    console.log(uploadedImageData);
     return uploadedImageData;
   } catch (error) {
-    if (error instanceof CustomError) {
-      console.error(
-        `Custom Error: ${error.message} (Status: ${error.statusCode})`
-      );
-    } else {
-      console.error(`Unexpected Error: ${error.message}`);
-    }
-    throw error;
+    console.log(error);
   }
 };
 
@@ -103,53 +74,61 @@ export const removeImage = async (publicId) => {
     throw error;
   }
 };
-export const submitPost = async ({
-  method,
-  postId,
-  title,
-  public_id,
-  body,
-  image,
-  authorEmail,
-  categoryId,
-  links,
-  publishedAt,
-}) => {
-  try {
-    const url = method === 'POST' ? '/api/blog' : `/api/blog/${postId}`;
-    const response = await fetch(url, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title,
-        body,
-        public_id,
-        image,
-        authorEmail,
-        categoryId,
-        links,
-        publishedAt,
-      }),
-    });
+// };
+// export const submitPost = async ({
+//   postId,
+//   title,
+//   content,
+//   images,
+//   authorEmail,
+//   categoryNames,
+//   links,
+//   publishedAt,
+// }) => {
+//   console.log(
+//     postId,
+//     title,
+//     content,
+//     images,
+//     authorEmail,
+//     categoryNames,
+//     links,
+//     publishedAt
+//   );
+//   try {
+//     const url = method === 'POST' ? '/api/blog' : `/api/blog/${postId}`;
+//     const response = await fetch(url, {
+//       method,
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({
+//         title,
+//         content,
+//         images,
+//         authorEmail,
+//         categoryNames,
+//         links,
+//         publishedAt,
+//       }),
+//     });
 
-    if (!response.ok) {
-      throw new CustomError(handleErrorResponse(response), response.status);
-    }
-    const updatedData = await response.json();
-    return updatedData;
-  } catch (error) {
-    if (error instanceof CustomError) {
-      console.error(
-        `Custom Error: ${error.message} (Status: ${error.statusCode})`
-      );
-    } else {
-      console.error(`Unexpected Error: ${error.message}`);
-    }
-    throw error;
-  }
-};
+//     if (!response.ok) {
+//       throw new CustomError(handleErrorResponse(response), response.status);
+//     }
+//     const updatedData = await response.json();
+//     return updatedData;
+//   } catch (error) {
+//     if (error instanceof CustomError) {
+//       console.error(
+//         `Custom Error: ${error.message} (Status: ${error.statusCode})`
+//       );
+//     } else {
+//       console.error(`Unexpected Error: ${error.message}`);
+//     }
+//     throw error;
+//   }
+// };
 export const deleteResource = async (id) => {
   console.log(id);
   try {

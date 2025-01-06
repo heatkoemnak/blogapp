@@ -6,7 +6,7 @@ export async function GET() {
     const posts = await prisma.post.findMany({
       include: {
         author: true,
-        category: true,
+        categories: true,
         comments: {
           include: {
             author: true,

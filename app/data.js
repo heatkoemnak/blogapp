@@ -13,8 +13,45 @@ export const links = [
   },
   {
     href: '/create-post',
-    label: 'Write',
+    label: 'Post job',
     icon: <FaRegEdit />,
+  },
+];
+export const jobLevelLists = [
+  {
+    value: 'No experience',
+    count: 0,
+    label: 'No Experience',
+  },
+  {
+    value: 'Low skill',
+    count: 0,
+    label: 'Low Skill',
+  },
+  {
+    value: 'Junior',
+    count: 15,
+    label: 'Junior Level',
+  },
+  {
+    value: 'Mid-level',
+    count: 5,
+    label: 'Mid Level',
+  },
+  {
+    value: 'Senior',
+    count: 18,
+    label: 'Senior Level',
+  },
+  {
+    value: 'Manager',
+    count: 1,
+    label: 'Manager',
+  },
+  {
+    value: 'Top Executive',
+    count: 2,
+    label: 'Top Executive',
   },
 ];
 

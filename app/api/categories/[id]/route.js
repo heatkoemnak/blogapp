@@ -6,7 +6,6 @@ export async function GET(req, { params }) {
   // const { searchParams } = new URL(req.url);
   // const name = searchParams.get('name'); // Extract the 'name' query parameter
   // console.log(name)
-  console.log(id);
   try {
     // Fetch the category from the database using Prisma
     const category = await prisma.category.findUnique({
@@ -15,7 +14,7 @@ export async function GET(req, { params }) {
         posts: {
           include: {
             author: true,
-            category: true,
+            categories: true,
             comments: {
               include: {
                 author: true,

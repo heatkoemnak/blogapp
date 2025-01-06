@@ -40,15 +40,119 @@ const Features = () => {
             </svg>
 
             <div class="mt-5">
-              <p class="font-semibold text-5xl text-white">43%</p>
+              <p class="font-semibold text-5xl text-white">Job seeker</p>
               <h3 class="mt-5 font-medium text-lg text-white">
-                Enhancement in Customer Engagement
+                Feature provided
               </h3>
-              <p class="mt-1 text-neutral-400">
-                With the aim of optimizing customer interactions and boosting
-                brand loyalty, the team at Preline leveraged Mailchimp
-                powerful tools and expertise to deliver exceptional results.
-              </p>
+              <ul className="mt-6 space-y-4 text-lg text-gray-600">
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    Join a curated selection of tools designed to enhance
+                    productivity and collaboration.
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    Our community relies on us to deliver the best project
+                    management solutions, as shown by our loyal user base.
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    Enjoy a robust audience with{' '}
+                    <strong>50K+ monthly visitors</strong> actively seeking
+                    tools.
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    Gain lifetime visibility for your tool, ensuring continuous
+                    exposure to potential users.
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    We'll showcase your tool in our{' '}
+                    <a
+                      className="text-indigo-600 hover:text-indigo-500"
+                      href="http://127.0.0.1:8000/blog"
+                    >
+                      feature articles
+                    </a>{' '}
+                    and user guides.
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
           <p class="mt-auto">
@@ -86,15 +190,119 @@ const Features = () => {
             </svg>
 
             <div class="mt-5">
-              <p class="font-semibold text-5xl text-white">20%</p>
+              <p class="font-semibold text-5xl text-white">Recruiter</p>
               <h3 class="mt-5 font-medium text-lg text-white">
-                Rise in E-commerce
+                Feature provided
               </h3>
-              <p class="mt-1 text-neutral-400">
-                In collaboration with Shopify, Preline embarked on a mission to
-                revolutionize the e-commerce experience for a fictitious fashion
-                brand
-              </p>
+              <ul className="mt-6 space-y-4 text-lg text-gray-600">
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    Join a curated selection of tools designed to enhance
+                    productivity and collaboration.
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    Our community relies on us to deliver the best project
+                    management solutions, as shown by our loyal user base.
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    Enjoy a robust audience with{' '}
+                    <strong>50K+ monthly visitors</strong> actively seeking
+                    tools.
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    Gain lifetime visibility for your tool, ensuring continuous
+                    exposure to potential users.
+                  </span>
+                </li>
+                <li className="flex items-start">
+                  <svg
+                    className="flex-shrink-0 w-6 h-6 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    ></path>
+                  </svg>
+                  <span className="ml-3">
+                    We'll showcase your tool in our{' '}
+                    <a
+                      className="text-indigo-600 hover:text-indigo-500"
+                      href="http://127.0.0.1:8000/blog"
+                    >
+                      feature articles
+                    </a>{' '}
+                    and user guides.
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
           <p class="mt-auto">
@@ -143,9 +351,9 @@ const Features = () => {
               <p class="mt-1 text-neutral-400">
                 {' '}
                 With the goal of accelerating project delivery and enhancing
-                collaboration among development teams, Preline leveraged
-                GitLab comprehensive suite of tools and expertise in
-                digital product development.
+                collaboration among development teams, Preline leveraged GitLab
+                comprehensive suite of tools and expertise in digital product
+                development.
               </p>
             </div>
           </div>

@@ -11,6 +11,8 @@ import { HiMenu } from 'react-icons/hi';
 import { links } from '../data';
 import Search from './ui/Search';
 import { useDebounce } from 'use-debounce';
+import { IconButton, Typography } from '@material-tailwind/react';
+import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -23,7 +25,6 @@ const Navbar = () => {
   const searchRef = useRef(null);
   const currentPath = usePathname();
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : '');
-
 
   const [searchQuery, setSearchQuery] = useState('');
   const [query] = useDebounce(searchQuery, 500);
@@ -66,7 +67,7 @@ const Navbar = () => {
 
   return (
     <nav className="px-5 max-w-9xl mx-auto border-b bg-white">
-      <div className="max-w-6xl mx-auto py-4 flex justify-between items-center">
+      <div className="max-w-6xl mx-auto py-2 flex justify-between items-center">
         {/* Mobile Search */}
         {!mobileSearchOpen ? (
           <div
@@ -105,49 +106,60 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-5 items-center">
-          {links.map(({ href, label, icon }, index) => (
-            <Link
-              key={index}
-              href={href}
-              className={
-                currentPath === href
-                  ? 'text-orange-500 font-semibold'
-                  : href === '/create-post'
-                  ? 'flex gap-2 items-center bg-gradient-to-r from-orange-500 to-orange-600 shadow-lg hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 text-white'
-                  : 'text-gray-900'
-              }
-            >
-              {icon && icon}
-              {label}
-            </Link>
-          ))}
+          <Link
+            href={'/blogs'}
+            className={`${
+              currentPath === '/blogs'
+                ? 'text-orange-600 font-bold'
+                : 'flex items-center gap-2'
+            }`}
+          >
+            Jobs
+          </Link>
+          <Link href={'/dashboard'} className="flex items-center gap-2">
+            Dashboard
+          </Link>
+          <Link href={'/create-post'} className="flex items-center gap-2">
+            Post a job
+          </Link>
+
           {status === 'authenticated' ? (
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setShowDropdown((prev) => !prev)}
-                className="flex items-center gap-2 rounded-full bg-white px-2 py-2 border"
-              >
-                <span>{session?.user?.name}</span>
-                {session?.user?.image ? (
-                  <Image
-                    width={40}
-                    height={40}
-                    className="w-10 h-10 rounded-full"
-                    src={
-                      session?.user?.image ||
-                      'https://www.creativefabrica.com/wp-content/uploads/2022/11/21/Beautiful-African-American-Brown-Skin-Woman-Avatar-47788434-1.png'
-                    }
-                    alt={session?.user?.name || 'Anonymous'}
-                  />
-                ) : (
-                  <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
-                    {getInitial(session?.user?.name)}
-                  </div>
-                )}
-              </button>
-              {showDropdown && <ProfileDropdown />}
-            </div>
+            <>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setShowDropdown((prev) => !prev)}
+                  className="flex items-center gap-2 rounded-full bg-white px-2 py-2 border"
+                >
+                  {/* <span>{session?.user?.name}</span> */}
+                  {session?.user?.image ? (
+                    <Image
+                      width={45}
+                      height={45}
+                      className="w-10 h-10 rounded-full"
+                      src={
+                        session?.user?.image ||
+                        'https://www.creativefabrica.com/wp-content/uploads/2022/11/21/Beautiful-African-American-Brown-Skin-Woman-Avatar-47788434-1.png'
+                      }
+                      alt={session?.user?.name || 'Anonymous'}
+                    />
+                  ) : (
+                    <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
+                      {getInitial(session?.user?.name)}
+                    </div>
+                  )}
+                </button>
+                {showDropdown && <ProfileDropdown />}
+              </div>
+              <div className="ml-auto flex gap-1 md:mr-4">
+                <IconButton variant="text" color="black">
+                  <Cog6ToothIcon className="h-4 w-4" />
+                </IconButton>
+                <IconButton variant="text" color="black">
+                  <BellIcon className="h-4 w-4" />
+                </IconButton>
+              </div>
+            </>
           ) : (
             <Link
               href="/login"

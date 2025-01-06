@@ -5,10 +5,10 @@ const page = () => {
   return (
     <>
       <div className="max-w-2xl text-center mx-auto mb-16 lg:mb-14">
-        <h2 className="lg:text-6xl text-xl font-semibold md:leading-tight dark:text-gray-800">
+        <h2 className="lg:text-6xl text-xl font-semibold md:leading-tight text-white">
           Our Features
         </h2>
-        <p className="mt-1 text-gray-600 dark:text-neutral-700">
+        <p className="mt-1 text-gray-50 ">
           Our latest feature:How to boost your online presence with our expert
           tips and tricks
         </p>
@@ -19,7 +19,7 @@ const page = () => {
             <div class="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0 ">
               <div>
                 <div>
-                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#ff0]">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -27,7 +27,7 @@ const page = () => {
                       stroke-width="1.5"
                       stroke="currentColor"
                       aria-hidden="true"
-                      class="h-8 w-8 text-white"
+                      class="h-8 w-8 text-cyan-700"
                     >
                       <path
                         stroke-linecap="round"
@@ -78,7 +78,7 @@ const page = () => {
             <div class="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0 lg:col-start-2">
               <div>
                 <div>
-                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#ff0]">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -86,7 +86,7 @@ const page = () => {
                       stroke-width="1.5"
                       stroke="currentColor"
                       aria-hidden="true"
-                      class="h-8 w-8 text-white"
+                      class="h-8 w-8 text-cyan-700"
                     >
                       <path
                         stroke-linecap="round"
@@ -136,12 +136,12 @@ const page = () => {
             <div class="mx-auto max-w-xl px-6 lg:mx-0 lg:max-w-none lg:py-16 lg:px-0 ">
               <div>
                 <div>
-                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-500">
+                  <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#ff0]">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className="size-6 text-white"
+                      className="size-6 text-cyan-700"
                     >
                       <path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
                       <path

@@ -11,7 +11,7 @@ export async function GET(req, { params }) {
       where: { id: id },
       include: {
         author: true,
-        category: true,
+        categories: true,
         comments: {
           include: {
             author: true,

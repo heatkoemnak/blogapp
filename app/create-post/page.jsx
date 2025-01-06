@@ -2,30 +2,26 @@
 import { useEffect, useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import CreatePostForm from '../components/CreatePostForm';
+import Post from '../components/Post';
+import { PreviewModal } from '../components/ui/modals/PreviewModal';
+import FormPostJob from '../components/FormPostJob';
 const CreatePost = () => {
-  const { data: session, status } = useSession();
-  console.log(session, status);
-  const [cookiesVisible, setCookiesVisible] = useState(false);
+  // const { data: session, status } = useSession();
+  // console.log(session, status);
+  // const [cookiesVisible, setCookiesVisible] = useState(false);
 
-  useEffect(() => {
-    if (!session) {
-      signIn();
-    }
-    const timer = setTimeout(() => setCookiesVisible(true), 1500);
-    return () => clearTimeout(timer);
-  }, [session]);
+  // useEffect(() => {
+  //   if (!session) {
+  //     signIn();
+  //   }
+  //   const timer = setTimeout(() => setCookiesVisible(true), 1500);
+  //   return () => clearTimeout(timer);
+  // }, [session]);
 
   return (
-    <div className="max-w-3xl mx-auto">
-      {cookiesVisible ? (
-        <>
-          <CreatePostForm />
-        </>
-      ) : (
-        <div className="flex min-h-screen items-center justify-center">
-          <div className="w-6 h-6 border-4 border-t-4 border-gray-200 rounded-full animate-spin border-t-amber-500"></div>
-        </div>
-      )}
+    <div className="max-full h-auto mx-auto ">
+      <FormPostJob />
+      {/* <CreatePostForm /> */}
     </div>
   );
 };

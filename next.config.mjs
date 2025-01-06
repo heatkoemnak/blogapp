@@ -18,6 +18,7 @@ const nextConfig = {
       'demos.creative-tim.com',
       'images.domains',
       'creativefabrica.com',
+      'picsum.photos'
     ],
     // remotePatterns: [
     //   {

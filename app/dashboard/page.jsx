@@ -8,6 +8,7 @@ import Link from 'next/link';
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
+
   const [cookiesVisible, setCookiesVisible] = useState(false);
   const [posts, setPosts] = useState([]);
   console.log(posts);

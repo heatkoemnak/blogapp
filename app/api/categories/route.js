@@ -3,10 +3,11 @@ import prisma from '@/libs/prismadb';
 import { NextResponse } from 'next/server';
 export async function POST(request) {
   try {
-    const { name } = await request.json();
+    const { name, } = await request.json();
     const category = await prisma.category.create({
       data: {
         name,
+        postIDs: [],
       },
     });
     return NextResponse.json(category, { status: 201 });

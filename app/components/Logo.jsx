@@ -1,21 +1,26 @@
 import Link from 'next/link';
 import React from 'react';
+import { Comfortaa } from 'next/font/google';
+
+const inter = Comfortaa({ subsets: ['latin'], weight: ['500'] });
 
 const Logo = () => {
   return (
-    <Link href={'/'}>
-      {/* <h1 className="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl bg-gradient-to-r from-orange-400 font-black to-purple-500 bg-clip-text text-transparent">
-        Power.ME
-      </h1> */}
-      <h1 className="font-extrabold  text-[#201515] text-center sm:leading-none text-2xl ">
-        <span className="relative  bg-clip-text text-[#201515] md:inline-block">
-          PME
-        </span>
-        <span className="relative mt-2 bg-clip-text text-[#FF4F01]">.</span>
-      </h1>
-      {/* <h1 className="text-3xl xs:text-2xl sm:text-2xl lg:text-3xl xl:text-3xl bg-orange-500 font-extrabold bg-clip-text text-transparent">
-        Power.ME
-      </h1> */}
+    <Link href={'/'} passHref>
+      <div className={`relative text-center ${inter.className}`}>
+        <h1 className="font-extrabold text-2xl text-center sm:text-4xl md:text-5xl lg:text-4xl tracking-tight leading-none">
+          <span className="relative bg-clip-text text-transparent bg-gradient-to-r from-cyan-400  to-[#004953]">
+            Job
+          </span>
+          <span className="relative text-cyan-800">Space</span>
+          <span className="text-3xl text-blue-600 tracking-tight absolute -top-2 -right-2">
+            .
+          </span>
+        </h1>
+        <p className="absolute rounded-s-lg pt-[2px] px-[5px] top-[34px] bg-cyan-500 right-1 text-xs text-white">
+          Cambodia
+        </p>
+      </div>
     </Link>
   );
 };

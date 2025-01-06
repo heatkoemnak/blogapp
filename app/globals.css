@@ -4,22 +4,96 @@
 
 /* width */
 ::-webkit-scrollbar {
-  width: 0;
+  width: 5px;
 }
-
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #ff9100;
+  background: #2100c8;
+  width: 5px;
 }
+::-webkit-scrollbar-thumb {
+  background: #ff9100;
+  width: 5px;
+  border-radius: 10px;
+}
+p > a {
+  color: #2100c8;
+  text-decoration: underline;
+}
+ul > li {
+  list-style-type: disc;
+}
+ol > li {
+  list-style-type: decimal;
+}
+.ql-align-center {
+  text-align: center;
+}
+.ql-align-justify {
+  text-align: justify;
+}
+.ql-align-right {
+  text-align: right;
+}
+.ql-editor {
+  min-height: 200px; /* Set the minimum height */
+}
+.ql-indent-2 {
+  padding-left: 40px;
+}
+
+@layer components {
+  h1 {
+    @apply text-4xl font-bold my-4;
+  }
+  h2 {
+    @apply text-3xl font-bold my-4;
+  }
+  h3 {
+    @apply text-2xl font-semibold my-3;
+  }
+  h4 {
+    @apply text-xl font-semibold my-3;
+  }
+  h5 {
+    @apply text-lg font-medium my-2;
+  }
+  h6 {
+    @apply text-base font-medium my-2;
+  }
+  strong {
+    @apply font-bold;
+  }
+  .ql-indent-1 {
+    @apply ml-5;
+  }
+
+  .ql-indent-2 {
+    @apply ml-10;
+  }
+
+  .ql-indent-3 {
+    @apply ml-15;
+  }
+
+  .ql-indent-4 {
+    @apply ml-20;
+  }
+
+  .ql-indent-5 {
+    @apply ml-25;
+  }
+
+  .ql-indent-6 {
+    @apply ml-30;
+  }
+}
+/* Tailwind-like utilities for ql-indent */
 
 /* Handle */
 
-
 /* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #ff9100;
-  
-}
+
 .post-list {
   display: flex;
   flex-direction: column;
@@ -81,5 +155,47 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+#container {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #290029;
+  position: relative;
+}
+
+.star {
+  background-color: #f0f0f0;
+  width: 1.5px;
+  height: 1.5px;
+  position: absolute;
+  border: #f0f0f0 0px solid;
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: 0px 0px 3px 2px rgba(255, 255, 255, 0.5);
+  animation-name: glow;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0;
+    transform: scale(1, 1);
+  }
+  20% {
+    opacity: 0.5;
+  }
+  35% {
+    opacity: 1;
+  }
+  50% {
+    transform: scale(2, 2);
+  }
+  100% {
+    transform: scale(1, 1);
   }
 }
