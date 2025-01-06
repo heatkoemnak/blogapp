@@ -182,7 +182,7 @@ const PostJobForm = () => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
+    <form>
       <div className="">
         <div className="border-b border-gray-900/10 pb-12">
           <div className="mt-5 grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
@@ -553,7 +553,12 @@ const PostJobForm = () => {
               Loading
             </Button>
           ) : (
-            <Button size="sm" type="submit" className="bg-cyan-700 text-white">
+            <Button
+              size="sm"
+              type="button"
+              onClick={submitHandler}
+              className="bg-cyan-700 text-white"
+            >
               Publish
             </Button>
           )}
