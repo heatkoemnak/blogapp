@@ -4,11 +4,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const users = await prisma.user.findMany({
-      include:{
-        posts:true
-      }
-    });
+    const users = await prisma.user.findMany({});
     if (!users) {
       return NextResponse.json(
         { message: 'No user created.' },
