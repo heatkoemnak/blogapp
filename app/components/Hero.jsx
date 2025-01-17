@@ -1,19 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import Logo from './Logo';
+'use client';
+
 import Link from 'next/link';
-import AuthButton from './ui/AuthButton';
-// import Chat from './Chat';
-import Image from 'next/image';
-import JobList from './JobList';
-import Features from './Features';
 
 const Hero = () => {
-  // const [imageUrl, setImageUrl] = useState('');
-  // useEffect(() => {
-  //   // Generate a random seed
-  //   const randomImageUrl = `https://picsum.photos/200/200`;
-  //   setImageUrl(randomImageUrl);
-  // }, []);
   return (
     <>
       <section className="sticky ">
@@ -118,7 +107,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      <section className="mt-16 max-w-xl mx-auto px-2">
+      {/* <section className="mt-16 max-w-xl mx-auto px-2">
         <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
           Why Choose Our Platform?
         </h2>
@@ -230,8 +219,8 @@ const Hero = () => {
             </span>
           </li>
         </ul>
-      </section>
-      <Features />
+      </section> */}
+      {/* <Features /> */}
     </>
   );
 };

@@ -2,41 +2,10 @@
 
 import React, { useState } from 'react';
 import { Button } from '@material-tailwind/react';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import parse from 'html-react-parser';
-
-const modules = {
-  toolbar: [
-    [{ header: [1, 2, 3, 4, 5, 6, false] }],
-    ['bold', 'italic', 'underline', 'blockquote', 'code-block'],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    [{ script: 'sub' }, { script: 'super' }],
-    [{ color: [] }, { background: [] }],
-    [{ align: [] }],
-    ['clean'],
-    ['link'],
-  ],
-};
-
-const formats = [
-  'header',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'blockquote',
-  'code-block',
-  'list',
-  'bullet',
-  'indent',
-  'outdent',
-  'align',
-  'color',
-  'background',
-  'script',
-  'link',
-];
+import dynamic from 'next/dynamic';
+const QuillEditor = dynamic(() => import('react-quill'), { ssr: false });
 
 export function JobDescription({ description, setDescription }) {
   const [currentInput, setCurrentInput] = useState('');
@@ -80,6 +49,38 @@ export function JobDescription({ description, setDescription }) {
     setIsSaved(false);
   };
 
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ['bold', 'italic', 'underline', 'blockquote', 'code-block'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ script: 'sub' }, { script: 'super' }],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }],
+      ['clean'],
+      ['link'],
+    ],
+  };
+
+  const formats = [
+    'header',
+    'size',
+    'bold',
+    'italic',
+    'underline',
+    'blockquote',
+    'code-block',
+    'list',
+    'bullet',
+    'indent',
+    'outdent',
+    'align',
+    'color',
+    'background',
+    'script',
+    'link',
+  ];
+
   return (
     <div className="bg-white p-4 rounded-md">
       {/* Display Section */}
@@ -113,7 +114,7 @@ export function JobDescription({ description, setDescription }) {
 
       {/* Input Section */}
       <div className="mt-4">
-        <ReactQuill
+        <QuillEditor
           value={currentInput}
           onChange={handleQuillChange}
           theme="snow"
