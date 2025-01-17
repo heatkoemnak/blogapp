@@ -171,6 +171,7 @@ const PostJobForm = () => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
       } else {
         setError('Failed to post job');
       }
