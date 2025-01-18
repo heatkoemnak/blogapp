@@ -65,7 +65,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="px-5 max-w-9xl mx-auto border-b bg-white">
+    <nav className="max-w-8xl bg-teal-200 mx-auto ">
       <div className="max-w-6xl mx-auto py-2 flex justify-between items-center">
         {/* Mobile Search */}
         {!mobileSearchOpen ? (
@@ -101,7 +101,7 @@ const Navbar = () => {
         <Logo />
 
         {/* Desktop Search */}
-        <Search placeholder="Search..." background="bg-gray-50" />
+        {/* <Search placeholder="Search..." background="bg-gray-50" /> */}
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-5 items-center">
@@ -110,16 +110,14 @@ const Navbar = () => {
             className={`${
               currentPath === '/blogs'
                 ? 'text-orange-600 font-bold'
-                : 'flex items-center gap-2'
+                : 'flex items-center text-white gap-2'
             }`}
           >
             Jobs
           </Link>
-          <Link href={'/dashboard'} className="flex items-center gap-2">
-            Dashboard
-          </Link>
-          <Link href={'/post-job'} className="flex items-center gap-2">
-            Post a job
+
+          <Link href="/login" className="flex text-blue-gray-900 items-center gap-2">
+            Sign in
           </Link>
 
           {status === 'authenticated' ? (
@@ -161,10 +159,11 @@ const Navbar = () => {
             </>
           ) : (
             <Link
-              href="/login"
-              className="text-gray-900 border px-5 py-2 rounded-xl hover:text-orange-500"
+              href="/post-job"
+              className="text-white text-md font-extrabold bg-gradient-to-r from-teal-500 to-teal-900 border px-5 py-2 rounded-full hover:text-cyan-500"
             >
-              Login or Create Account
+              Post a job - Free
+              
             </Link>
           )}
         </div>

@@ -21,7 +21,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en" className={inter.className}>
-      <body className="bg-[#004953]">
+      <body className="bg-gradient-to-r from-cyan-900 to-teal-400   ">
         <SkeletonTheme baseColor="#202020" highlightColor="#444">
           <BlogProvider>
             <AuthProvider session={session}>

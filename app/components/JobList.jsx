@@ -63,7 +63,7 @@ export default function JobList() {
   };
   return (
     <>
-      <div className="flex mt-5 items-center justify-between">
+      <div className="flex border-t-2 border-green-200 mt-5 items-center justify-between">
         <h2 className="text-white">Job Lists</h2>
 
         <div className="flex items-center">
@@ -135,7 +135,7 @@ export default function JobList() {
         <GridDisplay />
       ) : (
         <Carousel
-          className="rounded-xl   lg:pb-5 flex items-center "
+          className="rounded-xl border-b-2 border-green-100  lg:pb-16 flex items-center "
           navigation={({ setActiveIndex, activeIndex, length }) => (
             <div className="absolute bottom-5 left-2/4 z-50 flex -translate-x-2/4 gap-2">
               {new Array(length).fill('').map((_, i) => (
@@ -143,7 +143,7 @@ export default function JobList() {
                   key={i}
                   className={`block h-1 cursor-pointer rounded-xl transition-all ${
                     activeIndex === i
-                      ? 'w-8 bg-deep-orange-500'
+                      ? 'w-8 bg-cyan-200'
                       : 'w-4 lg:bg-black bg-gray-400'
                   }`}
                   onClick={() => setActiveIndex(i)}

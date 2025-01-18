@@ -8,11 +8,11 @@
 }
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #2100c8;
+  background: #818181;
   width: 5px;
 }
 ::-webkit-scrollbar-thumb {
-  background: #ff9100;
+  background: #ffffff;
   width: 5px;
   border-radius: 10px;
 }

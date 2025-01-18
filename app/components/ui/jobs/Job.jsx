@@ -9,15 +9,21 @@ import {
   MapPinIcon,
 } from '@heroicons/react/20/solid';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import Image from 'next/image';
 
 export function Job({ job }) {
-  console.log(job);
   return (
     <div className=" p-5 border border-b-2 mb-2 rounded-lg mt-2 bg-white cursor-pointer">
       <div className="lg:flex lg:items-center lg:justify-between">
         <div class="text-lg font-semibold text-bookmark-blue flex space-x-1 items-center mb-2">
           {job?.image ? (
-            <img src={job?.image} alt={''} className="w-10 h-10 rounded-full" />
+            <Image
+              src={job?.image}
+              alt={''}
+              width={40}
+              height={40}
+              className="w-10 h-10 rounded-full"
+            />
           ) : (
             <div className="h-10 w-10 flex items-center justify-center rounded-full bg-cyan-100">
               <svg
@@ -35,8 +41,12 @@ export function Job({ job }) {
               </svg>
             </div>
           )}
-
-          <span className="text-cyan-700 font-bold px-2">{job.position}</span>
+          <div className="job-text flex flex-col">
+            <span className="text-cyan-700 font-light text-sm px-2">
+              Amazon
+            </span>
+            <span className="text-cyan-700 font-bold px-2">{job.position}</span>
+          </div>
         </div>
       </div>
 

@@ -56,7 +56,7 @@ export function JobLevel({ setSelectedJobLevel }) {
         <div className="relative" ref={dropdownRef}>
           {/* Selected Box */}
           <div
-            className="bg-white rounded-lg shadow-xl flex items-center px-4 py-4 cursor-pointer"
+            className="bg-white rounded-lg shadow-lg flex items-center px-4 py-4 cursor-pointer"
             onClick={() => setIsOpen((prev) => !prev)}
           >
             <input

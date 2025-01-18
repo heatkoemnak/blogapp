@@ -17,11 +17,6 @@ const PostList = () => {
     <div className=" ">
       {!loading ? (
         <div className="flex gap-2">
-          <div className="hidden lg:block text-white">
-            <h1 className="font-bold text-lg px-2 mb-4">Job types</h1>
-            <CountByCategories />
-          </div>
-
           <div className="lg:w-7/12 ">
             <div className="flex items-center justify-between px-5  text-white">
               <h1 className="font-bold text-xl">Job Announcements</h1>
@@ -38,6 +33,10 @@ const PostList = () => {
             )}
           </div>
           <div className="lg:w-4/12">
+            <div className="hidden lg:block text-white">
+              <h1 className="font-bold text-lg px-2 mb-4">Job types</h1>
+              <CountByCategories />
+            </div>
             <h1 className="font-bold text-lg px-5 mb-4 text-white">
               Job Level
             </h1>
