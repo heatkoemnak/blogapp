@@ -73,7 +73,7 @@ export function JobResponsibility({ jobResponsibility, setJobResponsibility }) {
     'link',
   ];
   return (
-    <div className="bg-white p-4 rounded-md">
+    <div className="bg-gray-100 rounded-md">
       {/* Display Section */}
       <div>
         {jobResponsibility ? (
@@ -97,11 +97,9 @@ export function JobResponsibility({ jobResponsibility, setJobResponsibility }) {
             </div>
           </>
         ) : (
-          <>
-            <h3 className="text-sm text-gray-500 font-semibold text-center">
-              No job jobResponsibility added yet.
-            </h3>
-          </>
+          <div className="mx-2 p-4 bg-gray-100 rounded-md">
+            No job jobResponsibility added yet.
+          </div>
         )}
       </div>
 

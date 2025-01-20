@@ -25,15 +25,13 @@ export async function GET() {
 }
 export async function POST(request) {
   const {
-    position,
+    title,
     pax,
     description,
-    requirements,
-    responsibilities,
-    image,
+    icon,
     authorEmail,
-    contact,
     published,
+    contact,
     publishedAt,
     closeDate,
     gender,
@@ -50,15 +48,13 @@ export async function POST(request) {
   try {
     const newJob = await prisma.job.create({
       data: {
-        position,
+        title,
         pax,
         description,
-        requirements,
-        responsibilities,
-        image,
+        icon,
         authorEmail,
-        contact,
         published,
+        contact,
         publishedAt,
         closeDate,
         gender,

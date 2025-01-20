@@ -8,20 +8,23 @@ generator client {
 }
 
 model User {
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String    @unique
+  email         String         @unique
   password      String?
   image         String?
-  announcement         Announcement[]
+  role          String
+  onPlan        Boolean?       @default(false)
+  announcement  Announcement[]
   replies       Reply[]
   comments      Comment[]
   accounts      Account[]
   sessions      Session[]
   emailVerified DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
   Job           Job[]
+  Application   Application[]
 }
 
 model JobType {
@@ -111,53 +114,85 @@ model JobCategory {
   Job           Job[]
 }
 
+model Company {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  business      String
+  industry      String
+  establishedAt DateTime
+  headquarters  String
+  contactNumber String
+  email         String   @unique
+  website       String?
+  logoUrl       String?
+  employees     Int
+  description   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  Job           Job[]
+}
+
 model Job {
-  id               String        @id @default(auto()) @map("_id") @db.ObjectId
-  position         String
-  pax              Int           @default(1)
-  description      String
-  requirements     String?
-  responsibilities String?
-  image            String?
-  author           User          @relation(fields: [authorEmail], references: [email], onDelete: Cascade)
-  authorEmail      String
-  contact          String[]
-  published        Boolean       @default(true)
-  likes            Int           @default(0)
-  views            Int           @default(0)
-  publishedAt      String?
-  closeDate        String?
-  gender           String?
-  qualification    String?
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
-  jobCategoryId    String?       @db.ObjectId
-  JobCategory      JobCategory?  @relation(fields: [jobCategoryId], references: [id])
-  jobTypeId        String        @db.ObjectId
-  JobType          JobType       @relation(fields: [jobTypeId], references: [id])
-  JobIndustry      JobIndustry?  @relation(fields: [jobIndustryId], references: [id])
-  jobIndustryId    String?       @db.ObjectId
-  JobLevel         JobLevel?     @relation(fields: [jobLevelId], references: [id])
-  jobLevelId       String?       @db.ObjectId
-  JobLocation      JobLocation?  @relation(fields: [jobLocationId], references: [id])
-  jobLocationId    String?       @db.ObjectId
-  JobSalary        JobSalary?    @relation(fields: [jobSalaryId], references: [id])
-  jobSalaryId      String?       @db.ObjectId
-  Communes         Communes?     @relation(fields: [communesId], references: [id])
-  communesId       String?       @db.ObjectId
-  Districts        Districts?    @relation(fields: [districtsId], references: [id])
-  districtsId      String?       @db.ObjectId
-  ProvinceCity     ProvinceCity? @relation(fields: [provinceCityId], references: [id])
-  provinceCityId   String?       @db.ObjectId
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  pax            Int           @default(1)
+  description    String
+  icon           String?
+  author         User          @relation(fields: [authorEmail], references: [email], onDelete: Cascade)
+  authorEmail    String
+  contact        String[]
+  published      Boolean       @default(true)
+  likes          Int           @default(0)
+  views          Int           @default(0)
+  publishedAt    String?
+  closeDate      String?
+  gender         String?
+  qualification  String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  Applications   Application[]
+  jobCategoryId  String?       @db.ObjectId
+  JobCategory    JobCategory?  @relation(fields: [jobCategoryId], references: [id])
+  companyId      String?       @db.ObjectId
+  Company        Company?      @relation(fields: [companyId], references: [id])
+  jobTypeId      String        @db.ObjectId
+  JobType        JobType       @relation(fields: [jobTypeId], references: [id])
+  JobIndustry    JobIndustry?  @relation(fields: [jobIndustryId], references: [id])
+  jobIndustryId  String?       @db.ObjectId
+  JobLevel       JobLevel?     @relation(fields: [jobLevelId], references: [id])
+  jobLevelId     String?       @db.ObjectId
+  JobLocation    JobLocation?  @relation(fields: [jobLocationId], references: [id])
+  jobLocationId  String?       @db.ObjectId
+  JobSalary      JobSalary?    @relation(fields: [jobSalaryId], references: [id])
+  jobSalaryId    String?       @db.ObjectId
+  Communes       Communes?     @relation(fields: [communesId], references: [id])
+  communesId     String?       @db.ObjectId
+  Districts      Districts?    @relation(fields: [districtsId], references: [id])
+  districtsId    String?       @db.ObjectId
+  ProvinceCity   ProvinceCity? @relation(fields: [provinceCityId], references: [id])
+  provinceCityId String?       @db.ObjectId
+}
+
+model Application {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  Fullname       String
+  applicationFor String
+  email          String
+  about          String?
+  attachments    String[]
+  supportLink    String
+  userID         String   @unique @db.ObjectId
+  User           User     @relation(fields: [userID], references: [id], onDelete: Cascade)
+  jobID          String   @unique @db.ObjectId
+  Job            Job?     @relation(fields: [jobID], references: [id])
 }
 
 model PostCategory {
-  id             String @id @default(auto()) @map("_id") @db.ObjectId
-  AnnouncementId String @db.ObjectId
-  categoryId     String @db.ObjectId
-
-  announcement Announcement @relation(fields: [AnnouncementId], references: [id])
-  category     Category     @relation(fields: [categoryId], references: [id])
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  AnnouncementId String       @db.ObjectId
+  categoryId     String       @db.ObjectId
+  announcement   Announcement @relation(fields: [AnnouncementId], references: [id])
+  category       Category     @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
@@ -199,7 +234,6 @@ model Comment {
   file         String?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
-
 }
 
 model Reply {

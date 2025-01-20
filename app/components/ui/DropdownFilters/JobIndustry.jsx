@@ -1,15 +1,21 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import { useBlogContext } from '@/app/context/BlogProvider';
 
-const JobIndustry = ({ setShowJobIndustry }) => {
+const JobIndustry = ({ setShowJobIndustry, showMoreThreshold = 5 }) => {
   const { industriesList } = useBlogContext();
   const [isOpen, setIsOpen] = useState(false);
+    const [showAll, setShowAll] = useState(false);
+  
   const [selectedOption, setSelectedOption] = useState('');
   console.log(industriesList);
   const dropdownRef = useRef(null);
+  const displayedIndustriesList = useMemo(() => {
+    if (showAll || !industriesList) return industriesList;
+    return industriesList.slice(0, showMoreThreshold);
+  }, [showAll, industriesList, showMoreThreshold]);
 
   const handleSelect = (industry) => {
     console.log(industry);
@@ -23,7 +29,9 @@ const JobIndustry = ({ setShowJobIndustry }) => {
       setIsOpen(false);
     }
   };
-
+  const handleShowAllToggle = () => {
+    setShowAll((prev) => !prev);
+  };
   useEffect(() => {
     document.addEventListener('mousedown', handleOutsideClick);
     return () => {
@@ -37,12 +45,12 @@ const JobIndustry = ({ setShowJobIndustry }) => {
         <div className="relative" ref={dropdownRef}>
           {/* Selected Box */}
           <div
-            className="bg-white rounded-lg shadow-lg flex items-center px-4 py-4 cursor-pointer"
+            className=" bg-white border border-blue-gray-300 flex items-center px-4 py-2 cursor-pointer"
             onClick={() => setIsOpen((prev) => !prev)}
           >
             <input
               type="text"
-              placeholder={selectedOption || 'Select Job Industry'}
+              placeholder={selectedOption || 'Filter by industry'}
               readOnly
               className="pointer-events-none text-base placeholder-gray-700 outline-none w-full h-full flex-1"
             />
@@ -50,7 +58,7 @@ const JobIndustry = ({ setShowJobIndustry }) => {
               className={`transform transition-transform duration-200 ${
                 isOpen ? 'rotate-180' : 'rotate-0'
               }`}
-              width="20"
+              width="15"
               height="10"
               viewBox="0 0 20 10"
               xmlns="http://www.w3.org/2000/svg"
@@ -68,33 +76,56 @@ const JobIndustry = ({ setShowJobIndustry }) => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="absolute top-full right-0 bg-white rounded-lg shadow-xl px-4 mt-2 z-10 w-full"
+                className="absolute top-full left-0 right-0 bg-white border border-gray-300 shadow-sm mt-2 z-10"
               >
-                <svg
-                  className="absolute bottom-full right-4"
-                  width="30"
-                  height="20"
-                  viewBox="0 0 30 20"
-                  xmlns="http://www.w3.org/2000/svg"
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <polygon points="15, 0 30, 20 0, 20" fill="#FFFFFF" />
-                </svg>
-
-                {industriesList?.map((industry, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2, delay: index * 0.05 }}
-                    className="py-4 flex items-center w-full hover:bg-gray-50 cursor-pointer border-t border-gray-200 first:border-0"
-                    onClick={() => handleSelect(industry)}
-                  >
-                    <span className="flex-1 text-gray-900 text-base">
-                      {industry.name}
-                    </span>
-                  </motion.div>
-                ))}
+                  <div className="space-y-2 p-4 max-h-80 overflow-y-auto">
+                    {displayedIndustriesList?.map((industry, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center cursor-pointer"
+                        onClick={() => handleSelect(industry)}
+                      >
+                        <input
+                          type="checkbox"
+                          name="industry"
+                          value={industry.name}
+                          checked={selectedOption === industry.name}
+                          onChange={() => handleSelect(industry)}
+                          className="cursor-pointer w-4 h-4 accent-cyan-700"
+                        />
+                        <label
+                          htmlFor={industry.name}
+                          className="ml-3 text-base text-gray-800 cursor-pointer"
+                        >
+                          {industry.name}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                  {industriesList.length > showMoreThreshold && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-sm text-blue-700 cursor-pointer px-4 pb-2"
+                      onClick={handleShowAllToggle}
+                    >
+                      <div className="text-sm text-cyan-800 cursor-pointer px-4 pb-2">
+                        {showAll
+                          ? 'Show Less'
+                          : `Show More (${
+                            industriesList.length - showMoreThreshold
+                            })`}
+                      </div>
+                    </motion.div>
+                  )}
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>

@@ -38,7 +38,7 @@ export function QualificationSelection({
     : qualificationList.slice(0, showMoreThreshold);
 
   return (
-    <Card className="px-1 flex flex-wrap py-1">
+    <div className="px-1 flex flex-wrap ">
       <div className="space-y-2 p-4">
         {displayedQualificationList.map((qualification, index) => (
           <div key={index} className="flex items-center cursor-pointer">
@@ -52,7 +52,7 @@ export function QualificationSelection({
             />
             <label
               htmlFor={qualification.name}
-              className="ml-2 text-base text-gray-800 cursor-pointer"
+              className="ml-1 text-sm text-gray-800 cursor-pointer"
             >
               {qualification.name}
             </label>
@@ -73,6 +73,6 @@ export function QualificationSelection({
           </button>
         </ListItem>
       )}
-    </Card>
+    </div>
   );
 }

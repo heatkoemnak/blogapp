@@ -13,6 +13,8 @@ import { BiGridHorizontal } from 'react-icons/bi';
 import { useState } from 'react';
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { useBlogContext } from '../context/BlogProvider';
+import { ExampleJob } from './ui/jobs/ExampleJob';
+import { generateJobRecords } from './fakeData/generateJobRecords';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -24,11 +26,11 @@ const sortOptions = [
 export default function JobList() {
   const { jobs } = useBlogContext();
   const [showGrid, setShowGrid] = useState(false);
-  console.log(jobs);
-
+  const jobLists = generateJobRecords();
+  console.log(jobLists);
   const groupedJobs = [];
-  for (let i = 0; i < jobs.length; i += 4) {
-    groupedJobs.push(jobs.slice(i, i + 4));
+  for (let i = 0; i < jobLists.length; i += 1) {
+    groupedJobs.push(jobLists.slice(i, i + 1));
   }
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -37,7 +39,15 @@ export default function JobList() {
   const GridDisplay = () => {
     return (
       <>
-        {groupedJobs.map((group, index) => (
+        <div className="max-w-7xl mx-auto py-2 border-b-2 border-gray-300 grid grid-cols-3 gap-x-2 gap-y-2">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <div key={index} className="col-span-3">
+              <ExampleJob />
+            </div>
+          ))}
+        </div>
+
+        {/* {groupedJobs.map((group, index) => (
           <motion.div key={index} className="flex w-full gap-4">
             {group.map((job, jobIndex) => (
               <motion.div
@@ -57,21 +67,20 @@ export default function JobList() {
               </motion.div>
             ))}
           </motion.div>
-        ))}
+        ))} */}
       </>
     );
   };
   return (
     <>
-      <div className="flex border-t-2 border-green-200 mt-5 items-center justify-between">
-        <h2 className="text-white">Job Lists</h2>
-
+      <div className="max-w-7xl mx-auto mt-4  flex px-4 bg-white border border-b border-gray-300 items-center justify-between">
+        <div className="text-blue-gray-600 text-md font-semibold py-3 px-1 ">Job Lists</div>
         <div className="flex items-center">
           {showGrid ? (
             <button
               type="button"
               onClick={() => setShowGrid(!showGrid)}
-              className="-m-2 ml-5 p-2 text-gray-50 hover:text-gray-500 sm:ml-7"
+              className="-m-2 ml-5 p-2 text-blue-gray-900 hover:text-gray-500 sm:ml-7"
             >
               <span className="sr-only">View grid</span>
               <Squares2X2Icon className="size-4" />
@@ -85,24 +94,23 @@ export default function JobList() {
               <span className="sr-only ">View grid</span>
               <BiGridHorizontal
                 size={30}
-                color="#fff"
-                className="cursor-pointer text-gray-50 hover:text-gray-500 "
+                className="cursor-pointer text-blue-gray-900 hover:text-gray-500 "
               />
             </button>
           )}
           <button
             type="button"
             // onClick={() => setMobileFiltersOpen(true)}
-            className="  p-2 text-white hover:text-gray-500 "
+            className="  p-2 text-blue-gray-900 hover:text-gray-500 "
           >
             <span className="sr-only">Filters</span>
             <FunnelIcon className="size-4" />
           </button>
           <Menu as="div" className="relative inline-block text-left">
             <div>
-              <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-50 hover:text-gray-900">
+              <MenuButton className="group inline-flex justify-center text-sm font-medium text-blue-gray-900 hover:text-gray-900">
                 Sort
-                <ChevronDownIcon className="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500" />
+                <ChevronDownIcon className="-mr-1 ml-1 size-5 shrink-0 text-blue-gray-900 group-hover:text-gray-500" />
               </MenuButton>
             </div>
 
@@ -135,7 +143,7 @@ export default function JobList() {
         <GridDisplay />
       ) : (
         <Carousel
-          className="rounded-xl border-b-2 border-green-100  lg:pb-16 flex items-center "
+          className=" max-w-7xl mx-auto   lg:pb-10 flex items-center "
           navigation={({ setActiveIndex, activeIndex, length }) => (
             <div className="absolute bottom-5 left-2/4 z-50 flex -translate-x-2/4 gap-2">
               {new Array(length).fill('').map((_, i) => (
@@ -154,7 +162,7 @@ export default function JobList() {
           prevArrow={({ handlePrev }) => (
             <button
               onClick={handlePrev}
-              className="absolute left-4 lg:bottom-0 -bottom-10 z-50  flex items-center lg:bg-transparent bg-blue-700  text-white px-3 py-1 rounded-full  hover:bg-blue-700 transition"
+              className="absolute left-4 lg:bottom-0 -bottom-10 z-50  flex items-center bg-cyan-800  text-white px-3 py-1 rounded-full  hover:bg-cyan-800 transition"
             >
               <ChevronLeftIcon className="h-5 w-5" />
               Prev
@@ -163,7 +171,7 @@ export default function JobList() {
           nextArrow={({ handleNext }) => (
             <button
               onClick={handleNext}
-              className="absolute flex items-center right-4 lg:bottom-0 -bottom-10 z-50 lg:bg-transparent bg-blue-700  text-white px-3 py-1 rounded-full  hover:bg-blue-700 transition"
+              className="absolute flex items-center right-4 lg:bottom-0 -bottom-10 z-50 bg-cyan-800  text-white px-3 py-1 rounded-full  hover:bg-cyan-800 transition"
             >
               Next
               <ChevronRightIcon className="h-5 w-5" />
@@ -171,16 +179,23 @@ export default function JobList() {
           )}
         >
           {groupedJobs.map((group, index) => (
-            <div key={index} className="lg:flex w-full gap-4 ">
+            <div key={index} className="flex gap-2 py-2 border-gray-300 ">
               {group.map((job) => (
-                <div key={job.id} className=" lg:mb-4">
-                  <div className="rounded-lg shadow-md ">
-                    <Job job={job} />
-                  </div>
+                <div key={job.id} className="grow">
+                  <Job job={job} key={job.id} />
                 </div>
               ))}
             </div>
           ))}
+          {/* {Array.from({ length: 10 }).map((_, index) => (
+            <div key={index} className="flex gap-2 py-2 border-gray-300 ">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div className="grow">
+                  <ExampleJob key={index} />
+                </div>
+              ))}
+            </div>
+          ))} */}
         </Carousel>
       )}
     </>

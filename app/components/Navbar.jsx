@@ -12,6 +12,7 @@ import Search from './ui/Search';
 import { useDebounce } from 'use-debounce';
 import { IconButton } from '@material-tailwind/react';
 import { BellIcon, Cog6ToothIcon } from '@heroicons/react/24/solid';
+import { ChoosePostOption } from './ui/modals/ChoosePostOption';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -34,9 +35,9 @@ const Navbar = () => {
       return;
     }
     if (!query) {
-      router.push(`/blogs`);
+      router.push(`/jobs`);
     } else {
-      router.push(`/blogs?search=${query}`);
+      router.push(`/jobs?search=${query}`);
     }
   }, [query, router]);
 
@@ -65,7 +66,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="max-w-8xl bg-teal-200 mx-auto ">
+    <nav className="max-w-8xl bg-white mx-auto ">
       <div className="max-w-6xl mx-auto py-2 flex justify-between items-center">
         {/* Mobile Search */}
         {!mobileSearchOpen ? (
@@ -106,17 +107,30 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-5 items-center">
           <Link
-            href={'/blogs'}
+            href={'/'}
             className={`${
-              currentPath === '/blogs'
+              currentPath === '/'
                 ? 'text-orange-600 font-bold'
-                : 'flex items-center text-white gap-2'
+                : 'flex items-center gap-2'
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            href={'/jobs'}
+            className={`${
+              currentPath === '/jobs'
+                ? 'text-orange-600 font-bold'
+                : 'flex items-center text-blue-gray-900 gap-2'
             }`}
           >
             Jobs
           </Link>
 
-          <Link href="/login" className="flex text-blue-gray-900 items-center gap-2">
+          <Link
+            href="/login"
+            className="flex text-blue-gray-900 items-center gap-2"
+          >
             Sign in
           </Link>
 
@@ -158,13 +172,14 @@ const Navbar = () => {
               </div>
             </>
           ) : (
-            <Link
-              href="/post-job"
-              className="text-white text-md font-extrabold bg-gradient-to-r from-teal-500 to-teal-900 border px-5 py-2 rounded-full hover:text-cyan-500"
-            >
-              Post a job - Free
-              
-            </Link>
+            // <button
+            //   onClick={}
+            //   className="text-white text-md font-extrabold bg-gradient-to-r from-teal-500 to-teal-900 border px-5 py-2 rounded-full hover:text-cyan-500"
+            // >
+            //   Post a job - Free
+
+            // </button>
+            <ChoosePostOption />
           )}
         </div>
 

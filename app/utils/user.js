@@ -1,14 +1,14 @@
 import prisma from '@/libs/prismadb';
 import { v4 as uuidv4 } from 'uuid';
 
-export async function createUserWithAccount({ name, email, image, password }) {
+export async function createUserWithAccount({ name, email,role, password }) {
   try {
     await prisma.user.create({
       data: {
         name,
         email,
+        role,
         password,
-        image,
       },
     });
   } catch (error) {

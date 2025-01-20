@@ -6,7 +6,7 @@ import { useBlogContext } from '@/app/context/BlogProvider';
 export function TypeSelection({ setSelectedJobType }) {
   const { jobTypes } = useBlogContext();
 
-  const showMoreThreshold = 4; // Number of options shown initially
+  const showMoreThreshold = 6; // Number of options shown initially
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false); // Show More/Less toggle
   const [selectedOption, setSelectedOption] = useState('');
@@ -38,11 +38,11 @@ export function TypeSelection({ setSelectedJobType }) {
   }, []);
 
   return (
-    <div className="w-full max-w-lg py-2 mx-auto">
+    <div className="w-full max-w-lg mx-auto">
       <div className="relative" ref={dropdownRef}>
         {/* Trigger Button */}
         <div
-          className="bg-white rounded-lg shadow-xl px-4 py-2 flex items-center justify-between cursor-pointer"
+          className="bg-white border border-gray-300 shadow-sm px-4 py-2 flex items-center justify-between cursor-pointer"
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <span className="text-base font-medium text-gray-700">
@@ -52,7 +52,7 @@ export function TypeSelection({ setSelectedJobType }) {
             className={`transform transition-transform duration-200 ${
               isOpen ? 'rotate-180' : 'rotate-0'
             }`}
-            width="20"
+            width="10"
             height="10"
             viewBox="0 0 20 10"
             xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ export function TypeSelection({ setSelectedJobType }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
-              className="absolute top-full left-0 right-0 bg-white rounded-lg shadow-xl mt-2 z-10"
+              className="absolute top-full left-0 right-0 bg-white border border-gray-300 shadow-sm mt-2 z-10"
             >
               <motion.div
                 initial={{ opacity: 0, y: -10 }}

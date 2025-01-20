@@ -35,7 +35,7 @@ export function GenderSelection({ setSelectedGender, showMoreThreshold = 3 }) {
     : genderList.slice(0, showMoreThreshold);
 
   return (
-    <Card className="px-1 flex flex-wrap py-1">
+    <div className="px-1 flex flex-wrap ">
       <div className="space-y-2 p-4">
         {displayedGenderList.map((gender, index) => (
           <div key={index} className="flex items-center cursor-pointer">
@@ -49,7 +49,7 @@ export function GenderSelection({ setSelectedGender, showMoreThreshold = 3 }) {
             />
             <label
               htmlFor={gender.name}
-              className="ml-2 text-base text-gray-800 cursor-pointer"
+              className="ml-1 text-sm text-gray-800 cursor-pointer"
             >
               {gender.name}
             </label>
@@ -70,6 +70,6 @@ export function GenderSelection({ setSelectedGender, showMoreThreshold = 3 }) {
           </button>
         </ListItem>
       )}
-    </Card>
+    </div>
   );
 }

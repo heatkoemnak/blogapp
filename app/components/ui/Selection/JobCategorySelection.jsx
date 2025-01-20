@@ -7,7 +7,7 @@ export function JobCategorySelection({
   jobCategories,
   selectedJobIndustry,
   setSelectedCategory,
-  showMoreThreshold = 4,
+  showMoreThreshold = 10,
 }) {
   const [selectedOption, setCategorySelect] = useState(null);
   const [showAll, setShowAll] = useState(false);
@@ -40,7 +40,7 @@ export function JobCategorySelection({
   }
 
   return (
-    <Card className="px-1 flex flex-wrap py-1">
+    <div className="px-1 flex flex-wrap py-1">
       <AnimatePresence>
         {displayedCategoryList.map((category, index) => (
           <motion.div
@@ -61,7 +61,7 @@ export function JobCategorySelection({
             />
             <label
               htmlFor={category.name}
-              className="ml-2 text-base text-gray-800 cursor-pointer"
+              className="ml-1 text-sm text-gray-800 cursor-pointer"
             >
               {category.name}
             </label>
@@ -86,6 +86,6 @@ export function JobCategorySelection({
           </motion.div>
         )}
       </AnimatePresence>
-    </Card>
+    </div>
   );
 }

@@ -64,6 +64,8 @@ const authOptions = {
       // Handle Google login
       const { email, name, image } = user;
 
+      console.log(existingUser);
+
       if (!existingUser) {
         // If the user doesn't exist, create a new user
         const hashedPassword = await bcrypt.hash(new Date().toISOString(), 10);
@@ -98,29 +100,6 @@ const authOptions = {
         }
 
         return true; // Allow Google login
-      }
-
-      if (account.provider === 'facebook') {
-        if (existingUser) {
-          // If the user doesn't exist, create a new user
-          await prisma.account.upsert({
-            where: {
-              provider_providerAccountId: {
-                provider: account.provider,
-                providerAccountId: account.providerAccountId,
-              },
-            },
-            update: {},
-            create: {
-              userId: existingUser.id,
-              type: account.type,
-              provider: account.provider,
-              providerAccountId: account.providerAccountId,
-            },
-          });
-        }
-
-        return true; // Allow Facebook login
       }
     },
 

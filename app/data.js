@@ -2,6 +2,7 @@ import { FaRegEdit } from 'react-icons/fa';
 import { BiLogoBlogger } from 'react-icons/bi';
 import { MdSpaceDashboard } from 'react-icons/md';
 import { RiAccountCircle2Fill } from 'react-icons/ri';
+import { id } from 'date-fns/locale';
 export const links = [
   {
     href: '/blogs',
@@ -53,6 +54,66 @@ export const jobLevelLists = [
     count: 2,
     label: 'Top Executive',
   },
+];
+export const JOBTypes = [
+  {
+    id: 1,
+    value: 'Full Time',
+    count: 0,
+    label: 'Full Time',
+  },
+  {
+    id: 2,
+    value: 'Part Time',
+    count: 2,
+    label: 'Part Time',
+  },
+  {
+    id: 3,
+    value: 'Internship',
+    count: 2,
+    label: 'Internship',
+  },
+  {
+    id: 4,
+    value: 'Contract',
+    count: 0,
+    label: 'Contract',
+  },
+  {
+    id: 5,
+    value: 'Temporary',
+    count: 0,
+    label: 'Temporary',
+  },
+];
+export const salaryRange = [
+  {
+    id: 1,
+    value: '100 - 250',
+    label: '100 - 250',
+  },
+  {
+    id: 2,
+    value: '250 - 500',
+    label: '250 - 500',
+  },
+  {
+    id: 3,
+    value: '500 - 1000',
+    label: '500 - 1000',
+  },
+  {
+    id: 4,
+    value: 'More than 1000',
+    label: 'More than 1000',
+  },
+  {
+    id: 5,
+    value: 'Negotiate',
+    label: 'Negotiate',
+  }
+ 
 ];
 
 export const BottomNavLists = [

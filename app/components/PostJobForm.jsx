@@ -25,6 +25,7 @@ import Image from 'next/image';
 import ClosingDate from './ui/Selection/ClosingDate';
 import { useBlogContext } from '../context/BlogProvider';
 import { SelectCategoriesDialog } from './ui/modals/SelectCategoriesDialog';
+import Label from './ui/Reusable/Label';
 const PostJobForm = () => {
   const { data: session } = useSession();
   const date = new Date();
@@ -39,18 +40,31 @@ const PostJobForm = () => {
   const [image, setImage] = useState(null);
   const [description, setDescription] = useState(null);
   const [error, setError] = useState(null);
+  const [errors, setErrors] = useState({
+    jobTitle: null,
+    pax: null,
+    jobType: null,
+    jobIndustry: null,
+    jobLevel: null,
+    salaryRange: null,
+    closingDate: null,
+    jobCategory: null,
+    gender: null,
+    country: null,
+    provinceCity: null,
+    district: null,
+    commune: null,
+    qualification: null,
+    image: null,
+    description: null,
+  });
+
   const [loading, setLoading] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
   const [closingDate, setClosingDate] = useState(date);
-  const [position, setPosition] = useState(null);
+  const [jobTitle, setJobTitle] = useState(null);
   const [pax, setPax] = useState(null);
-  const [jobRequirement, setJobRequirement] = useState(null);
-  const [jobResponsibility, setJobResponsibility] = useState(null);
-
-  const [showEditor, setShowEditor] = useState({
-    jobRequirement: false,
-    jobResponsibility: false,
-  });
+  const [isPuplish, setIsPublish] = useState(false);
   // selected
   const [selectedJobType, setSelectedJobType] = useState(null);
   const [selectedJobIndustry, setSelectedJobIndustry] = useState(null);
@@ -66,7 +80,7 @@ const PostJobForm = () => {
 
   // log
 
-  console.log(position);
+  console.log(jobTitle);
   console.log(pax);
 
   //log
@@ -86,8 +100,6 @@ const PostJobForm = () => {
   console.log(selectCommune);
 
   console.log(description);
-  console.log(jobRequirement);
-  console.log(jobResponsibility);
 
   console.log(links);
 
@@ -100,7 +112,7 @@ const PostJobForm = () => {
   const formattedDate = date.toLocaleDateString('en-US', options);
   const deadline = closingDate.toLocaleDateString('en-US', options);
   console.log(formattedDate);
-  console.log(deadline);
+  console.log(errors);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -117,6 +129,47 @@ const PostJobForm = () => {
   const submitHandler = async (event) => {
     event.preventDefault();
     setLoading(true);
+
+    if (
+      !selectedCategory ||
+      !jobTitle ||
+      !pax ||
+      !selectedJobType ||
+      !selectedJobIndustry ||
+      !selectedJobLevel ||
+      !selectedSalaryRange ||
+      !selectedGender ||
+      !selectQualification ||
+      !image ||
+      !description ||
+      !closingDate ||
+      !selectedCountry ||
+      !selectProvinceCity ||
+      !selectDistrict ||
+      !selectCommune
+    ) {
+      setErrors({
+        jobTitle: !jobTitle ? 'This field is required.' : null,
+        pax: !pax ? 'This field is required.' : null,
+        jobCategory: !selectedCategory ? 'This field is required.' : null,
+        gender: !selectedGender ? 'This field is required.' : null,
+        country: !selectedCountry ? 'This field is required.' : null,
+        provinceCity: !selectProvinceCity ? 'This field is required.' : null,
+        district: !selectDistrict ? 'This field is required.' : null,
+        commune: !selectCommune ? 'This field is required.' : null,
+        image: !image ? 'This field is required.' : null,
+        description: !description ? 'This field is required.' : null,
+        closingDate: !closingDate ? 'This field is required.' : null,
+        links: !links ? 'This field is required.' : null,
+        qualification: !selectQualification ? 'This field is required.' : null,
+        jobType: !selectedJobType ? 'This field is required.' : null,
+        jobIndustry: !selectedJobIndustry ? 'This field is required.' : null,
+        jobLevel: !selectedJobLevel ? 'This field is required.' : null,
+        salaryRange: !selectedSalaryRange ? 'This field is required.' : null,
+      });
+      setLoading(false);
+      return;
+    }
 
     let uploadedImageUrl = '';
     if (image) {
@@ -145,13 +198,12 @@ const PostJobForm = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          position,
+          title: jobTitle,
           pax,
           description,
-          requirements: jobRequirement,
-          responsibilities: jobResponsibility,
-          image: uploadedImageUrl,
+          icon: uploadedImageUrl,
           authorEmail: session?.user?.email || 'keomnak@gmail.com',
+          published: isPuplish,
           contact: links,
           publishedAt: formattedDate,
           closeDate: deadline,
@@ -184,42 +236,39 @@ const PostJobForm = () => {
   };
 
   return (
-    <form>
-      <div className="">
-        <div className="border-b border-gray-900/10 pb-12">
+    <form className="bg-white border-t">
+      <div className=" max-w-7xl mx-auto">
+        <div className="border-b p-5 border-gray-900/10 pb-12">
           <div className="mt-5 grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
             <div className="col-span-full  ">
-              {/* add position */}
-              <div className="col-span-full pb-5">
-                <h2 className="text-lg font-semibold text-white">
-                  Add a Position
+              {/* add jobTitle */}
+              <div className=" p-2 mb-5 ">
+                <h2 className="text-2xl font-semibold text-blue-gray-900">
+                  Post new job
                 </h2>
-                <div className="flex flex-col lg:flex-row gap-4 items-center lg:justify-between">
+              </div>
+              <div className="col-span-full flex flex-col md:flex-row items-center justify-between ">
+                <div className="flex w-full py-4 flex-col lg:flex-row gap-4 items-center lg:justify-between">
                   <div className="w-full">
-                    <label
-                      htmlFor="positionInput"
-                      className="block text-sm pb-2 font-medium text-white"
-                    >
-                      Position name
-                    </label>
-                    <div className="flex gap-2 items-center bg-white rounded-md pl-3 outline outline-1 outline-gray-300 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-600">
+                    <Label labelName="Job title" />
+                    <div className="flex gap-2 items-center bg-white  pl-3 outline outline-1 outline-gray-300 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-600">
                       <input
-                        value={position}
+                        value={jobTitle}
                         type="text"
                         placeholder="e.g., Web Developer"
-                        onChange={(e) => setPosition(e.target.value)}
-                        className="w-full py-2 text-base text-gray-900 rounded-md placeholder-gray-400 focus:outline-none"
+                        onChange={(e) => setJobTitle(e.target.value)}
+                        className="w-full py-2 text-base text-gray-900  placeholder-gray-400 focus:outline-none"
                       />
                     </div>
+                    {errors.jobTitle && (
+                      <p className="text-sm text-red-500 mt-1">
+                        {errors.jobTitle}
+                      </p>
+                    )}
                   </div>
                   <div className="w-full">
-                    <label
-                      htmlFor="paxInput"
-                      className="block text-sm pb-2 font-medium text-white"
-                    >
-                      Pax
-                    </label>
-                    <div className="flex gap-2 items-center bg-white rounded-md pl-3 outline outline-1 outline-gray-300 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-600">
+                    <Label labelName=" How many pax?" />
+                    <div className="flex gap-2 items-center outline outline-1 outline-gray-300 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-indigo-600">
                       <input
                         value={pax}
                         type="number"
@@ -227,69 +276,67 @@ const PostJobForm = () => {
                         onChange={(e) =>
                           setPax(parseInt(e.target.value, 10) || 0)
                         }
-                        className="w-full py-2 text-base text-gray-900 rounded-md placeholder-gray-400 focus:outline-none"
-                        disabled={!position}
+                        className="w-full ps-2 py-2 text-base text-gray-900 placeholder-gray-400 focus:outline-none"
+                        disabled={!jobTitle}
                       />
                     </div>
-                    {error && (
-                      <p className="text-sm text-red-500 mt-1">{error}</p>
+                    {errors?.pax && (
+                      <p className="text-sm text-red-500 mt-1">{errors.pax}</p>
                     )}
                   </div>
                 </div>
               </div>
-              {/* close add position */}
-              <div className="col-span-full flex flex-col md:flex-row items-center justify-between gap-1 md:gap-4">
+              {/* close add jobTitle */}
+              <div className="col-span-full flex flex-col md:flex-row items-center justify-between py-4 gap-1 md:gap-4">
                 <div className="w-full ">
-                  <label
-                    htmlFor="type"
-                    className="block text-sm/6 font-medium text-white"
-                  >
-                    Industry
-                  </label>
+                  <Label labelName="Industry" />
                   <IndustrySelection
                     setSelectedJobIndustry={setSelectedJobIndustry}
                   />
+                  {errors.jobIndustry && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.jobIndustry}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full ">
-                  <label
-                    htmlFor="type"
-                    className="block text-sm/6 font-medium text-white"
-                  >
-                    Job type
-                  </label>
+                  <Label labelName="Job Type" />
                   <TypeSelection setSelectedJobType={setSelectedJobType} />
+                  {errors.jobType && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.jobType}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full ">
-                  <label
-                    htmlFor="type"
-                    className="block text-sm/6 font-medium text-white"
-                  >
-                    Job level
-                  </label>
+                  <Label labelName="Level" />
                   <LevelSelection setSelectedJobLevel={setSelectedJobLevel} />
+                  {errors.jobLevel && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.jobLevel}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full ">
-                  <label
-                    htmlFor="type"
-                    className="block text-sm/6 font-medium text-white"
-                  >
-                    Salary
-                  </label>
+                  <Label labelName="Salary" />
                   <SalarySelection
                     setSelectedSalaryRange={setSelectedSalaryRange}
                   />
+                  {errors.salaryRange && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.salaryRange}
+                    </p>
+                  )}
                 </div>
               </div>
-              <div className="col-span-full flex lg:py-2 flex-col md:flex-row justify-between gap-1 md:gap-4">
+              <div className="col-span-full flex lg:py-4 flex-col md:flex-row justify-between gap-1 md:gap-4">
                 <div className="w-full ">
-                  <label
-                    htmlFor="jobIcon"
-                    className="block text-sm/6 pb-2 font-medium text-white"
-                  >
-                    Job icon
-                  </label>
+                  <Label labelName="Job icon" />
+                  {errors.image && (
+                    <p className="text-sm text-red-500 mt-1">{errors.image}</p>
+                  )}
                   <div className="col-span-full">
-                    <div class="w-full py-9 bg-gray-50 rounded-2xl border border-gray-300 gap-3 grid border-dashed">
+                    <div class="w-full py-9 bg-gray-50 border border-gray-300 gap-3 grid border-dashed">
                       <div className="flex w-full items-center justify-center">
                         {imageSrc ? (
                           <div className="flex justify-center animate-pulse place-items-center rounded-lg ">
@@ -302,23 +349,27 @@ const PostJobForm = () => {
                             />
                           </div>
                         ) : (
-                          <div class="grid gap-1">
-                            <svg
-                              class="mx-auto"
-                              width="40"
-                              height="40"
-                              viewBox="0 0 40 40"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <g id="File">
-                                <path
-                                  id="icon"
-                                  d="M31.6497 10.6056L32.2476 10.0741L31.6497 10.6056ZM28.6559 7.23757L28.058 7.76907L28.058 7.76907L28.6559 7.23757ZM26.5356 5.29253L26.2079 6.02233L26.2079 6.02233L26.5356 5.29253ZM33.1161 12.5827L32.3683 12.867V12.867L33.1161 12.5827ZM31.8692 33.5355L32.4349 34.1012L31.8692 33.5355ZM24.231 11.4836L25.0157 11.3276L24.231 11.4836ZM26.85 14.1026L26.694 14.8872L26.85 14.1026ZM11.667 20.8667C11.2252 20.8667 10.867 21.2248 10.867 21.6667C10.867 22.1085 11.2252 22.4667 11.667 22.4667V20.8667ZM25.0003 22.4667C25.4422 22.4667 25.8003 22.1085 25.8003 21.6667C25.8003 21.2248 25.4422 20.8667 25.0003 20.8667V22.4667ZM11.667 25.8667C11.2252 25.8667 10.867 26.2248 10.867 26.6667C10.867 27.1085 11.2252 27.4667 11.667 27.4667V25.8667ZM20.0003 27.4667C20.4422 27.4667 20.8003 27.1085 20.8003 26.6667C20.8003 26.2248 20.4422 25.8667 20.0003 25.8667V27.4667ZM23.3337 34.2H16.667V35.8H23.3337V34.2ZM7.46699 25V15H5.86699V25H7.46699ZM32.5337 15.0347V25H34.1337V15.0347H32.5337ZM16.667 5.8H23.6732V4.2H16.667V5.8ZM23.6732 5.8C25.2185 5.8 25.7493 5.81639 26.2079 6.02233L26.8633 4.56274C26.0191 4.18361 25.0759 4.2 23.6732 4.2V5.8ZM29.2539 6.70608C28.322 5.65771 27.7076 4.94187 26.8633 4.56274L26.2079 6.02233C26.6665 6.22826 27.0314 6.6141 28.058 7.76907L29.2539 6.70608ZM34.1337 15.0347C34.1337 13.8411 34.1458 13.0399 33.8638 12.2984L32.3683 12.867C32.5216 13.2702 32.5337 13.7221 32.5337 15.0347H34.1337ZM31.0518 11.1371C31.9238 12.1181 32.215 12.4639 32.3683 12.867L33.8638 12.2984C33.5819 11.5569 33.0406 10.9662 32.2476 10.0741L31.0518 11.1371ZM16.667 34.2C14.2874 34.2 12.5831 34.1983 11.2872 34.0241C10.0144 33.8529 9.25596 33.5287 8.69714 32.9698L7.56577 34.1012C8.47142 35.0069 9.62375 35.4148 11.074 35.6098C12.5013 35.8017 14.3326 35.8 16.667 35.8V34.2ZM5.86699 25C5.86699 27.3344 5.86529 29.1657 6.05718 30.593C6.25217 32.0432 6.66012 33.1956 7.56577 34.1012L8.69714 32.9698C8.13833 32.411 7.81405 31.6526 7.64292 30.3798C7.46869 29.0839 7.46699 27.3796 7.46699 25H5.86699ZM23.3337 35.8C25.6681 35.8 27.4993 35.8017 28.9266 35.6098C30.3769 35.4148 31.5292 35.0069 32.4349 34.1012L31.3035 32.9698C30.7447 33.5287 29.9863 33.8529 28.7134 34.0241C27.4175 34.1983 25.7133 34.2 23.3337 34.2V35.8ZM32.5337 25C32.5337 27.3796 32.532 29.0839 32.3577 30.3798C32.1866 31.6526 31.8623 32.411 31.3035 32.9698L32.4349 34.1012C33.3405 33.1956 33.7485 32.0432 33.9435 30.593C34.1354 29.1657 34.1337 27.3344 34.1337 25H32.5337ZM7.46699 15C7.46699 12.6204 7.46869 10.9161 7.64292 9.62024C7.81405 8.34738 8.13833 7.58897 8.69714 7.03015L7.56577 5.89878C6.66012 6.80443 6.25217 7.95676 6.05718 9.40704C5.86529 10.8343 5.86699 12.6656 5.86699 15H7.46699ZM16.667 4.2C14.3326 4.2 12.5013 4.1983 11.074 4.39019C9.62375 4.58518 8.47142 4.99313 7.56577 5.89878L8.69714 7.03015C9.25596 6.47133 10.0144 6.14706 11.2872 5.97592C12.5831 5.8017 14.2874 5.8 16.667 5.8V4.2ZM23.367 5V10H24.967V5H23.367ZM28.3337 14.9667H33.3337V13.3667H28.3337V14.9667ZM23.367 10C23.367 10.7361 23.3631 11.221 23.4464 11.6397L25.0157 11.3276C24.9709 11.1023 24.967 10.8128 24.967 10H23.367ZM28.3337 13.3667C27.5209 13.3667 27.2313 13.3628 27.0061 13.318L26.694 14.8872C27.1127 14.9705 27.5976 14.9667 28.3337 14.9667V13.3667ZM23.4464 11.6397C23.7726 13.2794 25.0543 14.5611 26.694 14.8872L27.0061 13.318C26.0011 13.1181 25.2156 12.3325 25.0157 11.3276L23.4464 11.6397ZM11.667 22.4667H25.0003V20.8667H11.667V22.4667ZM11.667 27.4667H20.0003V25.8667H11.667V27.4667ZM32.2476 10.0741L29.2539 6.70608L28.058 7.76907L31.0518 11.1371L32.2476 10.0741Z"
-                                  fill="#4F46E5"
-                                />
-                              </g>
-                            </svg>
+                          <div class="flex flex-col items-center justify-center ">
+                            <div className="flex bg-blue-gray-100 border border-gray-400 rounded-full w-40 h-40 justify-center items-center">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="40"
+                                height="40"
+                                viewBox="0 0 40 40"
+                                fill="none"
+                              >
+                                <g id="Upload 02">
+                                  <path
+                                    id="icon"
+                                    d="M16.296 25.3935L19.9997 21.6667L23.7034 25.3935M19.9997 35V21.759M10.7404 27.3611H9.855C6.253 27.3611 3.33301 24.4411 3.33301 20.8391C3.33301 17.2371 6.253 14.3171 9.855 14.3171V14.3171C10.344 14.3171 10.736 13.9195 10.7816 13.4326C11.2243 8.70174 15.1824 5 19.9997 5C25.1134 5 29.2589 9.1714 29.2589 14.3171H30.1444C33.7463 14.3171 36.6663 17.2371 36.6663 20.8391C36.6663 24.4411 33.7463 27.3611 30.1444 27.3611H29.2589"
+                                    stroke="#4F46E5"
+                                    stroke-width="1.6"
+                                    stroke-linecap="round"
+                                  />
+                                </g>
+                              </svg>
+                            </div>
+
                             <h2 class="text-center text-gray-400   text-xs leading-4">
                               PNG, JPG or PDF, smaller than 15MB
                             </h2>
@@ -335,7 +386,7 @@ const PostJobForm = () => {
                               onChange={handleFileChange}
                               hidden
                             />
-                            <div class="flex w-28 h-9 px-2 flex-col bg-indigo-600 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">
+                            <div class="flex w-28 h-9 px-2 flex-col bg-cyan-800 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">
                               {imageSrc ? 'Change icon' : 'Upload job icon'}
                             </div>
                           </label>
@@ -346,201 +397,114 @@ const PostJobForm = () => {
                   {/* <JobIconUpload /> */}
                 </div>
                 <div className="w-full">
-                  <label
-                    htmlFor="industry"
-                    className="block text-sm/6 pb-2 font-medium text-white"
-                  >
-                    Job category
-                  </label>
+                  <Label labelName="Choose category" />
+
+                  {errors?.jobCategory && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.jobCategory}
+                    </p>
+                  )}
                   <JobCategorySelection
                     selectedJobIndustry={selectedJobIndustry}
                     jobCategories={jobCategories}
                     setSelectedCategory={setSelectedCategory}
                   />
                 </div>
-
                 <div className="w-full ">
-                  <label
-                    htmlFor="type"
-                    className="block text-sm/6 pb-2 font-medium text-white"
-                  >
-                    Gender
-                  </label>
+                  <Label labelName="Gender" />
+
                   <GenderSelection setSelectedGender={setSelectedGender} />
+                  {errors.gender && (
+                    <p className="text-sm text-red-500 mt-1">{errors.gender}</p>
+                  )}
                 </div>
                 <div className="w-full ">
-                  <label
-                    htmlFor="qualification"
-                    className="block text-sm/6 pb-2 font-medium text-white"
-                  >
-                    Qualification
-                  </label>
+                  <Label labelName="Qualification" />
                   <QualificationSelection
                     setSelectionQualification={setSelectionQualification}
                   />
+                  {errors.qualification && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.qualification}
+                    </p>
+                  )}
                 </div>
               </div>
-              <h2 class=" text-lg font-semibold text-white ">Location</h2>
-              <div className="col-span-full flex flex-col md:flex-row items-center justify-between gap-1 md:gap-4">
+              <div className="col-span-full flex flex-col py-4 md:flex-row items-center justify-between gap-1 md:gap-4">
                 <div className="w-full ">
-                  <label
-                    htmlFor="type"
-                    className="block text-sm/6 pb-2 font-medium text-white"
-                  >
-                    Country
-                  </label>
+                  <Label labelName="Country" />
+
                   <SelectCountry setSelectedCountry={setSelectedCountry} />
+                  {errors.country && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.country}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full ">
-                  <label
-                    htmlFor="type"
-                    className="block text-sm/6 pb-2 font-medium text-white"
-                  >
-                    State/City
-                  </label>
+                  <Label labelName="State/City" />
+
                   <SelectProvinceCity
                     setSelectProvinceCity={setSelectProvinceCity}
                   />
+                  {errors.provinceCity && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.provinceCity}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full ">
-                  <label
-                    htmlFor="type"
-                    className="block text-sm/6 pb-2 font-medium text-white"
-                  >
-                    District/Khan
-                  </label>
+                  <Label labelName=" District/Khan" />
                   <SelectDistrict
                     selectProvinceCity={selectProvinceCity}
                     setSelectDistrict={setSelectDistrict}
                   />
+                  {errors.district && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.district}
+                    </p>
+                  )}
                 </div>
                 <div className="w-full ">
-                  <label
-                    htmlFor="type"
-                    className="block text-sm/6 pb-2 font-medium text-white"
-                  >
-                    Commune/Sangkat
-                  </label>
+                  <Label labelName=" District/KCommune/Sangkat" />
                   <SelectCommune
                     selectDistrict={selectDistrict}
                     setSelectCommune={setSelectCommune}
                   />
+                  {errors.commune && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.commune}
+                    </p>
+                  )}
                 </div>
               </div>
-              <h2 class=" text-lg font-semibold text-white ">
+              <h2 class=" text-lg font-semibold text-blue-gray-900 ">
                 Job description
               </h2>
               <div>
                 <JobDescription
                   description={description}
+                  errors={errors}
                   setDescription={setDescription}
                 />
               </div>
-
-              <div className="col-span-full py-5 relative flex items-center justify-between">
-                <label
-                  htmlFor="categories"
-                  className="text-lg font-semibold text-gray-50"
-                >
-                  Add job requirement
-                </label>
-                <Button
-                  onClick={() =>
-                    setShowEditor({
-                      ...showEditor,
-                      jobRequirement: !showEditor.jobRequirement,
-                    })
-                  }
-                  size="sm"
-                  className="capitalize bg-cyan-700 font-normal text-sm"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="size-6 text-white"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </Button>
-              </div>
-              {showEditor.jobRequirement === true && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                >
-                  <JobRequirement
-                    jobRequirement={jobRequirement}
-                    setJobRequirement={setJobRequirement}
-                  />
-                </motion.div>
-              )}
-
-              <div className="col-span-full py-5 relative flex items-center justify-between">
-                <label
-                  htmlFor="categories"
-                  className="text-lg font-semibold text-gray-50"
-                >
-                  Add job responsibilities
-                </label>
-                <Button
-                  onClick={() =>
-                    setShowEditor({
-                      ...showEditor,
-                      jobResponsibility: !showEditor.jobResponsibility,
-                    })
-                  }
-                  size="sm"
-                  className="capitalize bg-cyan-700 font-normal text-sm"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="size-6 text-white"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </Button>
-              </div>
-              {showEditor.jobResponsibility === true && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, ease: 'easeInOut' }}
-                >
-                  <JobResponsibility
-                    jobResponsibility={jobResponsibility}
-                    setJobResponsibility={setJobResponsibility}
-                  />
-                </motion.div>
-              )}
             </div>
 
             <div className="col-span-full relative flex items-center justify-between">
               <label
                 htmlFor="categories"
-                className="text-lg font-semibold text-gray-50"
+                className="text-lg font-semibold text-blue-gray-900"
               >
-                Add contact information
+                How to apply?
               </label>
               <SelectCategoriesDialog links={links} setLinks={setLinks} />
             </div>
             <div className="col-span-full relative flex items-center justify-between">
               <label
                 htmlFor="categories"
-                className="text-lg font-semibold text-gray-50"
+                className="text-lg font-semibold text-blue-gray-900"
               >
-                Add closing date
+                Choose job deadline
               </label>
               <ClosingDate
                 closingDate={closingDate}
@@ -548,22 +512,46 @@ const PostJobForm = () => {
               />
             </div>
           </div>
-        </div>
-        <div className="flex gap-2 mt-8 text-right sm:mt-0">
-          {loading ? (
-            <Button size="sm" className="bg-cyan-700 text-white" loading={true}>
-              Loading
-            </Button>
-          ) : (
-            <Button
-              size="sm"
-              type="button"
-              onClick={submitHandler}
-              className="bg-cyan-700 text-white"
-            >
-              Publish
-            </Button>
-          )}
+          <div className="flex gap-2 mt-20 text-right ">
+            {loading ? (
+              <button
+                size="sm"
+                className="bg-cyan-700 text-blue-gray-900"
+                loading={true}
+              >
+                Loading
+              </button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={submitHandler}
+                  disabled={!jobTitle || !description}
+                  className={`py-2 px-4 text-white rounded ${
+                    !jobTitle || !description
+                      ? 'bg-gray-500 px-2 p-2 cursor-not-allowed'
+                      : 'bg-gray-700 hover:bg-cyan-800'
+                  }`}
+                  aria-disabled={!jobTitle || !description}
+                >
+                  Save Draft
+                </button>
+                <button
+                  type="button"
+                  onClick={submitHandler}
+                  disabled={!jobTitle || !description}
+                  className={`py-2 px-4 text-white rounded ${
+                    !jobTitle || !description
+                      ? 'bg-cyan-400 cursor-not-allowed'
+                      : 'bg-cyan-700 hover:bg-cyan-800'
+                  }`}
+                  aria-disabled={!jobTitle || !description}
+                >
+                  Publish
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </form>

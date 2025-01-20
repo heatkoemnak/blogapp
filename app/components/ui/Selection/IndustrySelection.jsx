@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useBlogContext } from '@/app/context/BlogProvider';
 
 export function IndustrySelection({
-  showMoreThreshold = 4,
+  showMoreThreshold = 6,
   setSelectedJobIndustry,
 }) {
   const { industriesList } = useBlogContext();
@@ -45,10 +45,10 @@ export function IndustrySelection({
   }, []);
 
   return (
-    <div className="w-full max-w-lg py-2 mx-auto">
+    <div className="w-full max-w-lg mx-auto">
       <div className="max-w-md mx-auto space-y-6">
         <div
-          className="relative bg-white rounded-lg shadow-xl px-4 py-2"
+          className="relative border border-gray-300 bg-white shadow-sm px-4 py-2"
           ref={dropdownRef}
         >
           {/* Dropdown Trigger */}
@@ -63,7 +63,7 @@ export function IndustrySelection({
               className={`transform transition-transform duration-200 ${
                 isOpen ? 'rotate-180' : 'rotate-0'
               }`}
-              width="20"
+              width="10"
               height="10"
               viewBox="0 0 20 10"
               xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +81,7 @@ export function IndustrySelection({
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="absolute top-full left-0 right-0 bg-white rounded-lg shadow-xl mt-2 z-10"
+                className="absolute top-full left-0 right-0 bg-white border border-gray-300 shadow-sm mt-2 z-10"
               >
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
