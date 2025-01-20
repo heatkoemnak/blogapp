@@ -50,7 +50,7 @@ export function ChoosePostOption() {
         onClick={handleOpen}
         variant="gradient"
         size="md"
-        className="text-white bg-gradient-to-r from-teal-500 to-teal-900 border px-5 py-2 rounded-full hover:text-cyan-500"
+        className="text-white bg-gradient-to-r from-teal-500 to-teal-900 border px-5 py-2 rounded-full hover:text-blue-gray-50"
       >
         Post a job - Free
       </button>
@@ -89,7 +89,7 @@ export function ChoosePostOption() {
               >
                 <div className="block">
                   <Typography className="font-semibold text-2xl">
-                    Post new job
+                    Post a job
                   </Typography>
                   <Typography className="font-normal font-sans text-gray-600">
                     <strong className="text-green-600">Free</strong>

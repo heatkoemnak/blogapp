@@ -127,13 +127,6 @@ const Navbar = () => {
             Jobs
           </Link>
 
-          <Link
-            href="/login"
-            className="flex text-blue-gray-900 items-center gap-2"
-          >
-            Sign in
-          </Link>
-
           {status === 'authenticated' ? (
             <>
               <div className="relative">
@@ -163,6 +156,7 @@ const Navbar = () => {
                 {showDropdown && <ProfileDropdown />}
               </div>
               <div className="ml-auto flex gap-1 md:mr-4">
+                <ChoosePostOption />
                 <IconButton variant="text" color="black">
                   <Cog6ToothIcon className="h-4 w-4" />
                 </IconButton>
@@ -172,14 +166,15 @@ const Navbar = () => {
               </div>
             </>
           ) : (
-            // <button
-            //   onClick={}
-            //   className="text-white text-md font-extrabold bg-gradient-to-r from-teal-500 to-teal-900 border px-5 py-2 rounded-full hover:text-cyan-500"
-            // >
-            //   Post a job - Free
-
-            // </button>
-            <ChoosePostOption />
+            <div className="flex gap-4 items-center">
+              <Link
+                href="/login"
+                className="flex text-blue-gray-900 items-center gap-2"
+              >
+                Sign in
+              </Link>
+              <ChoosePostOption />
+            </div>
           )}
         </div>
 
