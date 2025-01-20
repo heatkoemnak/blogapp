@@ -41,6 +41,27 @@ export const uploadImage = async (formData) => {
     console.log(error);
   }
 };
+export const uploadIcon = async (formData) => {
+  console.log(formData);
+  try {
+    const response = await fetch(
+      'https://api.cloudinary.com/v1_1/dakqa3htw/image/upload',
+      {
+        method: 'POST',
+        body: formData,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to upload image');
+    }
+    const uploadedImageData = await response.json();
+    console.log(uploadedImageData);
+    return uploadedImageData;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const removeImage = async (publicId) => {
   try {

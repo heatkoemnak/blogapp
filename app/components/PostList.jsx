@@ -24,6 +24,7 @@ import {
 } from '@heroicons/react/20/solid';
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { MenuItem } from '@material-tailwind/react';
+import CategoriesLists from './ui/Selection/CategoriesLists';
 
 const PostList = () => {
   const { announcement } = useBlogContext();
@@ -123,6 +124,10 @@ const PostList = () => {
           </div>
           <div className="lg:w-full h-fit col-span-2 bg-white px-5 ">
             <div className="lg:w-full h-fit col-span-1 bg-white px-5 ">
+              <div className="font-semibold text-blue-gray-900 text-md pt-5 px-2">
+                Categories
+              </div>
+              <CategoriesLists />
               <div className="font-semibold text-blue-gray-900 text-md pt-5 px-2">
                 Job types
               </div>

@@ -23,7 +23,7 @@ export function ChoosePostOption() {
     if (selectedOption) {
       switch (selectedOption) {
         case 'standard':
-          router.push('/post-job'); // Navigate to post-job route
+          router.push('/company'); // Navigate to post-job route
           setOpen(false);
           break;
         case 'announcement':

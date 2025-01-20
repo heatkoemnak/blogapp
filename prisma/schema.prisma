@@ -25,6 +25,7 @@ model User {
   updatedAt     DateTime       @updatedAt
   Job           Job[]
   Application   Application[]
+  Company       Company[]
 }
 
 model JobType {
@@ -117,7 +118,6 @@ model JobCategory {
 model Company {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   name          String
-  business      String
   industry      String
   establishedAt DateTime
   headquarters  String
@@ -125,11 +125,13 @@ model Company {
   email         String   @unique
   website       String?
   logoUrl       String?
-  employees     Int
+  employees     Int?
   description   String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   Job           Job[]
+  User          User?    @relation(fields: [userID], references: [id])
+  userID        String?  @db.ObjectId
 }
 
 model Job {

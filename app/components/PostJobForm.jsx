@@ -64,7 +64,7 @@ const PostJobForm = () => {
   const [closingDate, setClosingDate] = useState(date);
   const [jobTitle, setJobTitle] = useState(null);
   const [pax, setPax] = useState(null);
-  const [isPuplish, setIsPublish] = useState(false);
+  const [isPuplish, setIsPublish] = useState(true);
   // selected
   const [selectedJobType, setSelectedJobType] = useState(null);
   const [selectedJobIndustry, setSelectedJobIndustry] = useState(null);
@@ -231,7 +231,7 @@ const PostJobForm = () => {
       setError(error.message);
     } finally {
       setLoading(false);
-      router.push('/blogs');
+      router.push('/jobs');
     }
   };
 
