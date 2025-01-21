@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { uploadIcon } from '@/app/utils/api';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const CompanyRegisterForm = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const [imageSrc, setImageSrc] = useState(null);
   const [image, setImage] = useState(null);
   const [companyName, setCompanyName] = useState('');
@@ -16,6 +18,12 @@ const CompanyRegisterForm = () => {
   const [website, setWebsite] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!session) {
+      return;
+    }
+  }, []);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -67,7 +75,7 @@ const CompanyRegisterForm = () => {
           email,
           website,
           logoUrl: uploadedImageUrl,
-          userID: session.user.id,
+          userID: session?.user.id || '',
         }),
       });
 
@@ -94,6 +102,7 @@ const CompanyRegisterForm = () => {
       setError(error.message || 'Something went wrong');
     } finally {
       setLoading(false);
+      router.push('/company');
     }
   };
 
@@ -249,25 +258,6 @@ const CompanyRegisterForm = () => {
               </div>
             </div>
           </div>
-          <aside className="bg-gray-100 p-8 rounded-lg shadow-inner">
-            <h2 className="font-bold text-2xl text-teal-700">Instructions</h2>
-            <ul className="list-disc mt-4 list-inside text-gray-600">
-              <li>Ensure that the company name is accurate and up-to-date.</li>
-              <li>
-                Use a valid email address that will be used for official
-                communication.
-              </li>
-              <li>Provide a secure password for your account.</li>
-              <li>
-                Include your company website and contact information for
-                verification.
-              </li>
-              <li>
-                Make sure your company complies with terms and conditions of the
-                platform.
-              </li>
-            </ul>
-          </aside>
 
           {/* Register Button */}
           <div className="mt-8">
@@ -285,6 +275,25 @@ const CompanyRegisterForm = () => {
             {error && <p className="mt-4 text-center text-red-600">{error}</p>}
           </div>
         </form>
+        <aside className="bg-gray-100 h-fit p-8 rounded-lg shadow-inner">
+          <h2 className="font-bold text-2xl text-teal-700">Instructions</h2>
+          <ul className="list-disc mt-4 list-inside text-gray-600">
+            <li>Ensure that the company name is accurate and up-to-date.</li>
+            <li>
+              Use a valid email address that will be used for official
+              communication.
+            </li>
+            <li>Provide a secure password for your account.</li>
+            <li>
+              Include your company website and contact information for
+              verification.
+            </li>
+            <li>
+              Make sure your company complies with terms and conditions of the
+              platform.
+            </li>
+          </ul>
+        </aside>
       </div>
     </div>
   );

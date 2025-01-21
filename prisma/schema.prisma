@@ -119,8 +119,8 @@ model Company {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   name          String
   industry      String
-  establishedAt DateTime
-  headquarters  String
+  establishedAt DateTime?
+  headquarters  String?
   contactNumber String
   email         String   @unique
   website       String?
