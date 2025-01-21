@@ -107,17 +107,24 @@ const authOptions = {
       if (token) {
         console.log(token);
         session.user.id = token.sub; // Attach user ID to the session
+        try {
+          // Fetch additional data from the database
+          const user = await prisma.user.findUnique({
+            where: {
+              id: token.sub, // Use the user ID from the token
+            },
+          });
+          // Attach the additional data to the session object
+          if (user) {
+            session.user.role = user.role; // Example: Add role
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
       }
       console.log(session);
       return session;
     },
-
-    // async jwt({ token, user }) {
-    //   if (user) {
-    //     token.sub = user.id; // Attach user ID to the JWT token
-    //   }
-    //   return token;
-    // },
   },
 
   session: {

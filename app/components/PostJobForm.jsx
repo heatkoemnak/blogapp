@@ -1,8 +1,6 @@
 'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@material-tailwind/react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import { IndustrySelection } from './ui/Selection/IndustrySelection';
@@ -26,14 +24,20 @@ import ClosingDate from './ui/Selection/ClosingDate';
 import { useBlogContext } from '../context/BlogProvider';
 import { SelectCategoriesDialog } from './ui/modals/SelectCategoriesDialog';
 import Label from './ui/Reusable/Label';
+import Link from 'next/link';
+import { ArrowLeftIcon } from '@heroicons/react/20/solid';
 const PostJobForm = () => {
   const { data: session } = useSession();
   const date = new Date();
   const router = useRouter();
-  const { jobCategories, countries, provinceCities } = useBlogContext();
-
+  const params = useParams();
+  const companyId = params.id;
+  console.log(companyId);
+  const [company, setCompany] = useState(null);
+  console.log(company);
+  const { jobCategories, companies, provinceCities } = useBlogContext();
   console.log(jobCategories);
-  console.log(countries);
+  console.log(companies);
   console.log(provinceCities);
 
   const [links, setLinks] = useState([]);
@@ -49,6 +53,8 @@ const PostJobForm = () => {
     salaryRange: null,
     closingDate: null,
     jobCategory: null,
+    companyId: null,
+    links: null,
     gender: null,
     country: null,
     provinceCity: null,
@@ -210,6 +216,7 @@ const PostJobForm = () => {
           gender: selectedGender?.name,
           qualification: selectQualification?.name,
           jobCategoryId: selectedCategory?.id,
+          companyId: companyId,
           jobTypeId: selectedJobType?.id,
           jobIndustryId: selectedJobIndustry?.id,
           jobLevelId: selectedJobLevel?.id,
@@ -234,18 +241,44 @@ const PostJobForm = () => {
       router.push('/jobs');
     }
   };
+  useEffect(() => {
+    if (companies.length && companyId) {
+      companyName();
+    }
+  }, [companies, companyId]); // Will re-run when companies or companyId changes
 
+  const companyName = () => {
+    // Safely find the company matching the ID
+    const foundCompany = companies.find((company) => company.id === companyId);
+    setCompany(foundCompany);
+  };
   return (
     <form className="bg-white border-t">
       <div className=" max-w-7xl mx-auto">
         <div className="border-b p-5 border-gray-900/10 pb-12">
-          <div className="mt-5 grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
+          <div className="grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
             <div className="col-span-full  ">
               {/* add jobTitle */}
-              <div className=" p-2 mb-5 ">
-                <h2 className="text-2xl font-semibold text-blue-gray-900">
-                  Post new job
-                </h2>
+              <div className="flex w-full justify-between items-center">
+                <div className=" p-2 ">
+                  <button type="button" onClick={() => router.back()}>
+                    <div className="flex items-center text-blue-gray-900 hover:text-blue-600 transition-colors">
+                      <ArrowLeftIcon className="h-5 w-5 mr-2" />
+                      Back
+                    </div>
+                  </button>
+                  <div className=" p-2 ">
+                    <h2 className="text-2xl font-semibold text-blue-gray-900">
+                      Post new job
+                    </h2>
+                  </div>
+                </div>
+                <div className=" p-2 mb-5 ">
+                  <span>company</span>
+                  <h2 className="text-2xl font-semibold text-blue-gray-900">
+                    {company?.name}
+                  </h2>
+                </div>
               </div>
               <div className="col-span-full flex flex-col md:flex-row items-center justify-between ">
                 <div className="flex w-full py-4 flex-col lg:flex-row gap-4 items-center lg:justify-between">

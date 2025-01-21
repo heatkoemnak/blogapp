@@ -1,10 +1,7 @@
 'use client';
 
 import { Stars } from '@react-three/drei';
-import Categories from '../components/Categories';
-import JobList from '../components/JobList';
 import PostList from '../components/PostList';
-import JobFilters from '../components/ui/jobs/JobFilters';
 import { Canvas } from '@react-three/fiber';
 import {
   useMotionTemplate,
@@ -13,7 +10,7 @@ import {
   animate,
 } from 'framer-motion';
 import { useEffect } from 'react';
-import Announcement from '../components/Announcement';
+import { useSession } from 'next-auth/react';
 const COLORS_TOP = ['#13FFAA', '#1E67C6', '#CE84CF', '#DD335C'];
 
 const Blog = () => {
@@ -31,7 +28,7 @@ const Blog = () => {
   return (
     <>
       {/* <Categories /> */}
-      <section className='bg-gray-100'>
+      <section className="bg-gray-100">
         <motion.section
           style={{
             backgroundImage,

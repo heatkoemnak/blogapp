@@ -17,26 +17,25 @@ export function ChoosePostOption() {
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const router = useRouter();
+
   const handleOpen = () => setOpen(!open);
 
   const handleNext = () => {
     if (selectedOption) {
       switch (selectedOption) {
         case 'standard':
-          router.push('/company'); // Navigate to post-job route
-          setOpen(false);
+          router.push('/company');
           break;
         case 'announcement':
-          router.push('/announcement'); // Navigate to announcement route
-          setOpen(false);
+          router.push('/announcement');
           break;
         case 'advertise':
-          router.push('/advertisement'); // Navigate to advertisement route
-          setOpen(false);
+          router.push('/advertisement');
           break;
         default:
           break;
       }
+      setOpen(false);
     }
   };
 
@@ -48,109 +47,85 @@ export function ChoosePostOption() {
     <>
       <button
         onClick={handleOpen}
-        variant="gradient"
-        size="md"
-        className="text-white bg-gradient-to-r from-teal-500 to-teal-900 border px-5 py-2 rounded-full hover:text-blue-gray-50"
+        className="text-white bg-gradient-to-r from-teal-400 to-teal-700 px-5 py-2 rounded-full hover:shadow-lg hover:from-teal-500 hover:to-teal-800"
       >
-        Post a job - Free
+        Post a Job - Free
       </button>
-      <Dialog size="sm" open={open} handler={handleOpen} className="p-4">
-        <DialogHeader className="relative m-0 block">
-          <Typography variant="h4" color="blue-gray">
-            Post options
-          </Typography>
-          <Typography className="mt-1 font-normal text-gray-600">
-            Please select your preferred option to post.
-          </Typography>
-          <IconButton
-            size="sm"
-            variant="text"
-            className="!absolute right-3.5 top-3.5"
-            onClick={handleOpen}
-          >
-            <XMarkIcon className="h-4 w-4 stroke-2" />
+
+      <Dialog size="sm" open={open} handler={handleOpen} className="p-6">
+        <DialogHeader className="relative flex justify-between items-center">
+          <div>
+            <Typography variant="h5" color="blue-gray">
+              Select Post Option
+            </Typography>
+            <Typography variant="small" className="mt-1 text-gray-500">
+              Choose the type of post you’d like to create.
+            </Typography>
+          </div>
+          <IconButton variant="text" color="blue-gray" onClick={handleOpen}>
+            <XMarkIcon className="h-5 w-5" />
           </IconButton>
         </DialogHeader>
-        <DialogBody>
-          <div className="space-y-4">
-            <div>
-              <input
-                type="radio"
-                id="standard"
-                name="postOption"
-                value="standard"
-                className="peer hidden"
-                required
-                onChange={handleOptionChange}
-              />
-              <label
-                htmlFor="standard"
-                className="block w-full cursor-pointer rounded-lg border border-gray-300 p-4 text-gray-900 ring-1 ring-transparent peer-checked:border-gray-900 peer-checked:ring-gray-900"
-              >
-                <div className="block">
-                  <Typography className="font-semibold text-2xl">
-                    Post a job
-                  </Typography>
-                  <Typography className="font-normal font-sans text-gray-600">
-                    <strong className="text-green-600">Free</strong>
-                  </Typography>
-                </div>
-              </label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="announcement"
-                name="postOption"
-                value="announcement"
-                className="peer hidden"
-                required
-                onChange={handleOptionChange}
-              />
-              <label
-                htmlFor="announcement"
-                className="block w-full cursor-pointer rounded-lg border border-gray-300 p-4 text-gray-900 ring-1 ring-transparent peer-checked:border-gray-900 peer-checked:ring-gray-900"
-              >
-                <div className="block">
-                  <Typography className="font-semibold text-2xl">
-                    Announcement
-                  </Typography>
-                  <Typography className="font-normal text-gray-600">
-                    <strong className="text-green-600">Free</strong>
-                  </Typography>
-                </div>
-              </label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="advertise"
-                name="postOption"
-                value="advertise"
-                className="peer hidden"
-                required
-                onChange={handleOptionChange}
-              />
-              <label
-                htmlFor="advertise"
-                className="block w-full cursor-pointer rounded-lg border border-gray-300 p-4 text-gray-900 ring-1 ring-transparent peer-checked:border-gray-900 peer-checked:ring-gray-900"
-              >
-                <div className="block">
-                  <Typography className="font-semibold">Advertising</Typography>
-                  <Typography className="font-normal text-gray-600">
-                    Available within 24 hours.{' '}
-                    <strong className="text-green-600 text-xl">$5.00</strong>
-                  </Typography>
-                </div>
-              </label>
-            </div>
+
+        <DialogBody className="pt-4">
+          <div className="space-y-2">
+            {[
+              {
+                id: 'standard',
+                title: 'Post a job',
+                description: 'Free',
+              },
+              {
+                id: 'announcement',
+                title: 'Announcement',
+                description: 'Free',
+              },
+              {
+                id: 'advertise',
+                title: 'Advertising',
+                description: 'Available within 24 hours. $5.00',
+              },
+            ].map((option) => (
+              <div key={option.id}>
+                <input
+                  type="radio"
+                  id={option.id}
+                  name="postOption"
+                  value={option.id}
+                  className="peer hidden"
+                  required
+                  onChange={handleOptionChange}
+                />
+                <label
+                  htmlFor={option.id}
+                  className="block cursor-pointer rounded-lg border bg-white p-5 hover:bg-gray-100 peer-checked:border-green-500 peer-checked:bg-green-50 peer-checked:shadow-md transition duration-150 ease-in-out"
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-900 text-lg font-semibold">
+                      {option.title}
+                    </span>
+                    <span className="text-green-400">{option.description}</span>
+                  </div>
+                </label>
+              </div>
+            ))}
           </div>
         </DialogBody>
-        <DialogFooter>
+
+        <DialogFooter className="flex justify-end space-x-3">
           <Button
-            className="ml-auto"
-            onClick={handleNext}
+            variant="outlined"
+            color="red"
+            onClick={handleOpen}
+            className="hover:bg-red-100"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="gradient"
             disabled={!selectedOption}
+            className="from-teal-500 to-green-700"
+            onClick={handleNext}
           >
             Next
           </Button>

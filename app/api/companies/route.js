@@ -3,7 +3,11 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const companies = await prisma.company.findMany({});
+    const companies = await prisma.company.findMany({
+      include: {
+        Job: true,
+      },
+    });
 
     return NextResponse.json(companies, { status: 200 });
   } catch (error) {

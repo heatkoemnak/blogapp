@@ -16,6 +16,7 @@ import { ChoosePostOption } from './ui/modals/ChoosePostOption';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
+  console.log(session);
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -129,7 +130,7 @@ const Navbar = () => {
 
           {status === 'authenticated' ? (
             <>
-              <div className="relative">
+              <div ref={dropdownRef} className="relative">
                 <button
                   type="button"
                   onClick={() => setShowDropdown((prev) => !prev)}
@@ -157,10 +158,7 @@ const Navbar = () => {
               </div>
               <div className="ml-auto flex gap-1 md:mr-4">
                 {session?.user?.role === 'employer' && <ChoosePostOption />}
-                <IconButton variant="text" color="black">
-                  <Cog6ToothIcon className="h-4 w-4" />
-                </IconButton>
-                <IconButton variant="text" color="black">
+                <IconButton variant="text" color="blue-gray">
                   <BellIcon className="h-4 w-4" />
                 </IconButton>
               </div>

@@ -5,6 +5,7 @@ export async function GET() {
     const jobs = await prisma.job.findMany({
       include: {
         author: true, // Include the author details if needed
+        Company: true, // Include the company details if needed
         JobType: true, // Include the job type
         JobIndustry: true, // Include job industry details
         JobLevel: true, // Include job level
@@ -37,6 +38,7 @@ export async function POST(request) {
     gender,
     qualification,
     jobCategoryId,
+    companyId,
     jobTypeId,
     jobIndustryId,
     jobLevelId,
@@ -60,6 +62,7 @@ export async function POST(request) {
         gender,
         qualification,
         jobCategoryId,
+        companyId,
         jobTypeId,
         jobIndustryId,
         jobLevelId,

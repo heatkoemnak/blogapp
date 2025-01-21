@@ -25,9 +25,10 @@ import {
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { MenuItem } from '@material-tailwind/react';
 import CategoriesLists from './ui/Selection/CategoriesLists';
+import LatestJobs from './ui/jobs/LatestJobs';
 
 const PostList = () => {
-  const { announcement } = useBlogContext();
+  const { companies, jobs } = useBlogContext();
   const [loading, setLoading] = useState(false);
   const [showGrid, setShowGrid] = useState(false);
   const sortOptions = [
@@ -41,14 +42,14 @@ const PostList = () => {
     return classes.filter(Boolean).join(' ');
   }
   return (
-    <div className="max-w-7xl mx-auto py-6">
+    <div className="max-w-7xl mx-auto py-6 ">
       {!loading ? (
         <div className="grid grid-cols-5 gap-x-2 gap-y-2">
           <div className="lg:w-full h-auto col-span-3 ">
             <JobRows />
-            <div className="flex justify-between items-center py-4 px-4 bg-white">
-              <div className="font-semibold text-blue-gray-900 text-md ">
-                Job List
+            <div className="flex border-t-2 mt-4 justify-between items-center py-4 px-4 bg-white">
+              <div class="bg-white  text-blue-gray-600 font-semibold text-lg  px-5 py-3 border-gray-300">
+                Job list
               </div>
               <div className="flex items-center">
                 {showGrid ? (
@@ -114,12 +115,16 @@ const PostList = () => {
                 </Menu>
               </div>
             </div>
-            <div className="py-2 border-b-2 border-gray-300 grid grid-cols-4 gap-x-2 gap-y-2">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <div key={index} className={`${showGrid ? 'col-span-2' : 'col-span-4' }`}>
-                  <ExampleJob />
-                </div>
-              ))}
+            <div className=" border-gray-300 grid grid-cols-4 gap-x-2 gap-y-2">
+              {jobs &&
+                jobs.map((job, index) => (
+                  <div
+                    key={index}
+                    className={`${showGrid ? 'col-span-2' : 'col-span-4'}`}
+                  >
+                    <LatestJobs job={job} />
+                  </div>
+                ))}
             </div>
           </div>
           <div className="lg:w-full h-fit col-span-2 bg-white px-5 ">
@@ -153,10 +158,10 @@ const PostList = () => {
               <div className="font-semibold text-blue-gray-900 text-md pt-5 pb-2 px-2">
                 Companies
               </div>
-              <CompanyLists />
-              <CompanyLists />
-              <CompanyLists />
-              <CompanyLists />
+              {companies &&
+                companies.map((company, index) => (
+                  <CompanyLists company={company} key={index} />
+                ))}
               <div className="font-semibold text-blue-gray-900 text-md pt-5 pb-2 px-2">
                 Announcements
               </div>
