@@ -156,7 +156,7 @@ const Navbar = () => {
                 {showDropdown && <ProfileDropdown />}
               </div>
               <div className="ml-auto flex gap-1 md:mr-4">
-                <ChoosePostOption />
+                {session?.user?.role === 'employer' && <ChoosePostOption />}
                 <IconButton variant="text" color="black">
                   <Cog6ToothIcon className="h-4 w-4" />
                 </IconButton>
@@ -173,7 +173,7 @@ const Navbar = () => {
               >
                 Sign in
               </Link>
-              <ChoosePostOption />
+              {/* <ChoosePostOption /> */}
             </div>
           )}
         </div>

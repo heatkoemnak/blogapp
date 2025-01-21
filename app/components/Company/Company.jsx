@@ -1,21 +1,19 @@
 'use client';
 
+import { useBlogContext } from '@/app/context/BlogProvider';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 const Company = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
+  const [selectedCompanyId, setSelectedCompanyId] = useState(null);
   const router = useRouter();
-  const companies = [
-    'AngkorTech Solutions',
-    'Mekong Horizon Logistics',
-    'Lotus Growth Enterprises',
-    'Khmer Global Innovations',
-    'Cambodia NextGen Development',
-  ];
+  const { companies } = useBlogContext();
+  console.log(companies);
 
   const handleCompanySelection = (company) => {
-    setSelectedCompany(company);
+    setSelectedCompany(company.name);
+    setSelectedCompanyId(company.id);
   };
 
   return (
@@ -54,7 +52,9 @@ const Company = () => {
             <div
               onClick={() => handleCompanySelection(company)}
               className={`bg-gray-100 rounded flex p-4 h-full items-center cursor-pointer ${
-                selectedCompany === company ? 'border-2 border-cyan-700' : ''
+                selectedCompany === company?.name
+                  ? 'border-2 border-cyan-700'
+                  : ''
               }`}
             >
               <svg
@@ -69,7 +69,7 @@ const Company = () => {
                 <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                 <path d="M22 4L12 14.01l-3-3"></path>
               </svg>
-              <span className="font-medium">{company}</span>
+              <span className="font-medium">{company?.name}</span>
             </div>
           </div>
         ))}
@@ -84,7 +84,7 @@ const Company = () => {
         <button
           className="text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2 flex items-center"
           onClick={() => {
-            router.push(`/company/${selectedCompany}`);
+            router.push(`/company/${selectedCompanyId}`);
           }}
         >
           Create Job for Selected Company

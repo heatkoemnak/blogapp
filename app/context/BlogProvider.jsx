@@ -13,6 +13,7 @@ import {
   fetchCommune,
   fetchJobs,
   fetchAnnouncement,
+  fetchCompanies
 } from '../utils/api/job';
 
 const BlogContext = createContext();
@@ -32,9 +33,11 @@ export function BlogProvider({ children }) {
   //set communes
   const [communes, setCommunes] = useState([]);
 
+  const [companies, setCompanies] = useState([]);
+
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(announcement);
+  console.log(companies);
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -52,6 +55,7 @@ export function BlogProvider({ children }) {
           districts,
           communes,
           announcement,
+          companies
         ] = await Promise.all([
           fetchJobs(),
           fetchCategories(),
@@ -65,6 +69,7 @@ export function BlogProvider({ children }) {
           fetchDistrict(),
           fetchCommune(),
           fetchAnnouncement(),
+          fetchCompanies()
         ]);
         setJobs(jobs);
         setCategoryList(categories);
@@ -78,6 +83,7 @@ export function BlogProvider({ children }) {
         setDistricts(districts);
         setCommunes(communes);
         setAnnouncement(announcement);
+        setCompanies(companies);
       } catch (error) {
         setErrorMessage(error.message);
       } finally {
@@ -106,6 +112,7 @@ export function BlogProvider({ children }) {
         provinceCities,
         districts,
         communes,
+        companies
       }}
     >
       {children}

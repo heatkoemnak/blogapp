@@ -128,3 +128,16 @@ export const fetchCommune = async () => {
     console.error(error);
   }
 };
+export const fetchCompanies = async () => {
+  try {
+    const response = await fetch('/api/companies', {
+      cache: 'no-store',
+    });
+    if (!response.ok) {
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
