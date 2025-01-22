@@ -1,12 +1,10 @@
-
 'use client';
 
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
-import { IoSearchOutline } from 'react-icons/io5';
 import { useDebounce } from 'use-debounce';
 
-const Search = ({ placeholder, background }) => {
+const Search = () => {
   const router = useRouter();
   const [text, setText] = useState('');
   const [query] = useDebounce(text, 500);
@@ -17,23 +15,20 @@ const Search = ({ placeholder, background }) => {
       return;
     }
     if (!query) {
-      router.push(`/blogs`);
+      router.push(`/jobs`);
     } else {
-      router.push(`/blogs?search=${query}`);
+      router.push(`/jobs?search=${query}`);
     }
   }, [query, router]);
   return (
-    <div className="hidden lg:flex items-center space-x-2 bg-white py-1 px-2 rounded-full">
-      <IoSearchOutline />
-      <input
-        value={text}
-        type="search"
-        id="default-search"
-        onChange={(e) => setText(e.target.value)}
-        className={`outline-none ps-2 w-full p-2 rounded-full ${background}`}
-        placeholder={placeholder}
-      />
-    </div>
+    <input
+      value={text}
+      type="search"
+      name="search"
+      onChange={(e) => setText(e.target.value)}
+      placeholder="job title, keywords..."
+      className="p-4 pl-10 text-gray-600 rounded w-full border-gray-100"
+    />
   );
 };
 

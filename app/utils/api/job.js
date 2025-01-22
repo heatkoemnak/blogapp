@@ -1,6 +1,6 @@
 export const fetchJobs = async () => {
   try {
-    const response = await fetch('/api/job', { cache: 'no-store' });
+    const response = await fetch('/api/jobs', { cache: 'no-store' });
     if (!response.ok) {
     }
     const data = await response.json();
@@ -22,7 +22,7 @@ export const fetchAnnouncement = async () => {
 };
 export const fetchIndustry = async () => {
   try {
-    const response = await fetch('/api/job/industry', { cache: 'no-store' });
+    const response = await fetch('/api/jobs/industry', { cache: 'no-store' });
     if (!response.ok) {
     }
     const data = await response.json();
@@ -33,7 +33,7 @@ export const fetchIndustry = async () => {
 };
 export const fetchJobType = async () => {
   try {
-    const response = await fetch('/api/job/type', { cache: 'no-store' });
+    const response = await fetch('/api/jobs/type', { cache: 'no-store' });
     if (!response.ok) {
     }
     const data = await response.json();
@@ -44,7 +44,7 @@ export const fetchJobType = async () => {
 };
 export const fetchJobLevel = async () => {
   try {
-    const response = await fetch('/api/job/level', { cache: 'no-store' });
+    const response = await fetch('/api/jobs/level', { cache: 'no-store' });
     if (!response.ok) {
     }
     const data = await response.json();
@@ -55,7 +55,7 @@ export const fetchJobLevel = async () => {
 };
 export const fetchJobSalary = async () => {
   try {
-    const response = await fetch('/api/job/salary', { cache: 'no-store' });
+    const response = await fetch('/api/jobs/salary', { cache: 'no-store' });
     if (!response.ok) {
     }
     const data = await response.json();
@@ -66,7 +66,7 @@ export const fetchJobSalary = async () => {
 };
 export const fetchJobCategory = async () => {
   try {
-    const response = await fetch('/api/job/category', { cache: 'no-store' });
+    const response = await fetch('/api/jobs/category', { cache: 'no-store' });
     if (!response.ok) {
     }
     const data = await response.json();
@@ -77,7 +77,7 @@ export const fetchJobCategory = async () => {
 };
 export const fetchCountry = async () => {
   try {
-    const response = await fetch('/api/job/location/country', {
+    const response = await fetch('/api/jobs/location/country', {
       cache: 'no-store',
     });
     if (!response.ok) {
@@ -91,7 +91,7 @@ export const fetchCountry = async () => {
 
 export const fetchProvinceCity = async () => {
   try {
-    const response = await fetch('/api/job/location/province.city', {
+    const response = await fetch('/api/jobs/location/province.city', {
       cache: 'no-store',
     });
     if (!response.ok) {
@@ -104,7 +104,7 @@ export const fetchProvinceCity = async () => {
 };
 export const fetchDistrict = async () => {
   try {
-    const response = await fetch('/api/job/location/district.khan', {
+    const response = await fetch('/api/jobs/location/district.khan', {
       cache: 'no-store',
     });
     if (!response.ok) {
@@ -117,7 +117,7 @@ export const fetchDistrict = async () => {
 };
 export const fetchCommune = async () => {
   try {
-    const response = await fetch('/api/job/location/commune.sangkat', {
+    const response = await fetch('/api/jobs/location/commune.sangkat', {
       cache: 'no-store',
     });
     if (!response.ok) {

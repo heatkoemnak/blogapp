@@ -9,11 +9,30 @@ import {
   motion,
   animate,
 } from 'framer-motion';
-import { useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import { useEffect, useRef, useState } from 'react';
+import JobList from '../components/JobList';
 const COLORS_TOP = ['#13FFAA', '#1E67C6', '#CE84CF', '#DD335C'];
+import { useDebounce } from 'use-debounce';
+import { useRouter, useSearchParams } from 'next/navigation';
+import Search from '../components/ui/Search';
 
-const Blog = () => {
+const Jobs = () => {
+ 
+  // const [text, setText] = useState('');
+  // const [query] = useDebounce(text, 500);
+  // const initialRender = useRef(true);
+  // useEffect(() => {
+  //   if (initialRender.current) {
+  //     initialRender.current = false;
+  //     return;
+  //   }
+  //   if (!query) {
+  //     router.push(`/jobs`);
+  //   } else {
+  //     router.push(`/jobs?q=${query}`);
+  //   }
+  // }, [query, router]);
+
   const color = useMotionValue(COLORS_TOP[0]);
   useEffect(() => {
     animate(color, COLORS_TOP, {
@@ -84,12 +103,7 @@ const Blog = () => {
                     </div>
 
                     <form>
-                      <input
-                        type="search"
-                        name="search"
-                        placeholder="job title, keywords..."
-                        className="p-4 pl-10 text-gray-600 rounded w-full border-gray-100"
-                      />
+                      <Search />
                     </form>
                   </div>
                 </div>
@@ -114,10 +128,10 @@ const Blog = () => {
 
         {/* <JobFilters /> */}
       </section>
-      {/* <JobList /> */}
+      <JobList />
       <PostList />
     </>
   );
 };
 
-export default Blog;
+export default Jobs;

@@ -1,24 +1,62 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
 import LatestJobs from './LatestJobs';
-import { useBlogContext } from '@/app/context/BlogProvider';
+import axios from 'axios';
+import { useSearchParams } from 'next/navigation';
 
-const JobRows = () => {
-  const { jobs, isLoading } = useBlogContext();
-  console.log(jobs);
+const JobRows = ({ jobs }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  // const [jobs, setJobs] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [filterList, setFilterList] = useState([]);
+  // const searchParams = useSearchParams();
+  // const search = searchParams.get('search');
+  // console.log(search);
+  // const SearchHandler = useCallback(() => {
+  //   const filterData = jobs?.filter((job) => {
+  //     return job?.title.toLowerCase().includes(search?.toLowerCase());
+  //   });
+  //   setFilterList(filterData);
+  // }, [jobs, search]);
+
+  // console.log(filterList);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     SearchHandler();
+  //   }, 1000);
+
+  //   return () => clearTimeout(timer);
+  // }, [SearchHandler]);
+
+  // useEffect(() => {
+  //   const fetchJobs = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const response = await axios.get('/api/jobs');
+  //       setJobs(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching jobs:', error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   fetchJobs();
+  // }, []);
 
   return (
-    <div class="w-full flex justify-center h-screen">
-      <div class="w-full h-full flex flex-col">
+    <div class="w-full flex justify-center ">
+      <div class="w-full h-auto flex flex-col">
         <div class="bg-white  text-blue-gray-600 font-semibold text-lg  px-5 py-3 border-b border-gray-300">
-          Latest jobs
+          Job Urgency
         </div>
-        <div class="w-full h-full overflow-auto bg-white" id="journal-scroll">
+        <div class="w-full h-auto bg-white" id="journal-scroll">
           {isLoading ? (
             <div className="flex justify-center">
               <button
                 type="button"
-                className="py-2 px-4 flex justify-center items-center text-gray-800 bg-transparent focus:ring-blue-500 focus:ring-offset-blue-200 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg max-w-md"
+                className="py-2 px-4 flex justify-center items-center text-gray-800 bg-transparent focus:ring-blue-500 focus:ring-offset-blue-200 w-full transition ease-in duration-200 text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg max-w-md"
               >
                 <svg
                   width="20"
@@ -38,6 +76,19 @@ const JobRows = () => {
               {jobs?.map((job, index) => (
                 <LatestJobs job={job} key={index} />
               ))}
+              {/* {search?.length && filterList ? (
+                <div>
+                  {filterList?.map((job, index) => (
+                    <LatestJobs job={job} key={index} />
+                  ))}
+                </div>
+              ) : (
+                <div>
+                  {jobs?.map((job, index) => (
+                    <LatestJobs job={job} key={index} />
+                  ))}
+                </div>
+              )} */}
             </div>
           )}
         </div>

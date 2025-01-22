@@ -14,7 +14,6 @@ import { useState } from 'react';
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { useBlogContext } from '../context/BlogProvider';
 import { ExampleJob } from './ui/jobs/ExampleJob';
-import { generateJobRecords } from './fakeData/generateJobRecords';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -26,11 +25,10 @@ const sortOptions = [
 export default function JobList() {
   const { jobs } = useBlogContext();
   const [showGrid, setShowGrid] = useState(false);
-  const jobLists = generateJobRecords();
-  console.log(jobLists);
+  console.log(jobs);
   const groupedJobs = [];
-  for (let i = 0; i < jobLists.length; i += 1) {
-    groupedJobs.push(jobLists.slice(i, i + 1));
+  for (let i = 0; i < jobs?.length; i += 2) {
+    groupedJobs.push(jobs?.slice(i, i + 2));
   }
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -39,42 +37,45 @@ export default function JobList() {
   const GridDisplay = () => {
     return (
       <>
-        <div className="max-w-7xl mx-auto py-2 border-b-2 border-gray-300 grid grid-cols-3 gap-x-2 gap-y-2">
+        <div className="max-w-7xl mx-auto py-2 border-b-2 border-gray-300 grid grid-cols-4 gap-x-2 gap-y-2">
           {Array.from({ length: 10 }).map((_, index) => (
-            <div key={index} className="col-span-3">
+            <div key={index} className="col-span-1">
               <ExampleJob />
             </div>
           ))}
         </div>
-
-        {/* {groupedJobs.map((group, index) => (
-          <motion.div key={index} className="flex w-full gap-4">
-            {group.map((job, jobIndex) => (
-              <motion.div
-                key={job.id}
-                className="mb-4"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{
-                  delay: jobIndex * 0.1, // Adjust delay for desired stagger
-                  duration: 1.2, // Adjust duration for animation speed
-                  ease: [0.4, 0.1, 0.4, 1], // Apply easing for smoother animation
-                }}
-              >
-                <div className="rounded-lg shadow-md">
-                  <Job job={job} />
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        ))} */}
+        {/* <div className="max-w-7xl mx-auto py-2 border-b-2 border-gray-300 grid grid-cols-3 gap-x-2 gap-y-2">
+          {groupedJobs.map((group, index) => (
+            <motion.div key={index} className="flex items-center w-full gap-4">
+              {group.map((job, jobIndex) => (
+                <motion.div
+                  key={job.id}
+                  className="mb-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    delay: jobIndex * 0.1, // Adjust delay for desired stagger
+                    duration: 1.2, // Adjust duration for animation speed
+                    ease: [0.4, 0.1, 0.4, 1], // Apply easing for smoother animation
+                  }}
+                >
+                  <div className="rounded-lg shadow-md">
+                    <Job job={job} />
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ))}
+        </div> */}
       </>
     );
   };
   return (
     <>
       <div className="max-w-7xl mx-auto mt-4  flex px-4 bg-white border border-b border-gray-300 items-center justify-between">
-        <div className="text-blue-gray-600 text-md font-semibold py-3 px-1 ">Job Lists</div>
+        <div className="text-blue-gray-600 text-md font-semibold py-3 px-1 ">
+          Latest jobs
+        </div>
         <div className="flex items-center">
           {showGrid ? (
             <button

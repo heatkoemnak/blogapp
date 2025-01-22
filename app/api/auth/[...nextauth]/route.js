@@ -105,7 +105,6 @@ const authOptions = {
 
     async session({ session, token }) {
       if (token) {
-        console.log(token);
         session.user.id = token.sub; // Attach user ID to the session
         try {
           // Fetch additional data from the database
@@ -122,7 +121,6 @@ const authOptions = {
           console.error('Error fetching user data:', error);
         }
       }
-      console.log(session);
       return session;
     },
   },

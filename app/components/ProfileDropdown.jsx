@@ -3,9 +3,6 @@
 import React from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { FaRegEdit } from 'react-icons/fa';
-import { usePathname } from 'next/navigation';
-import Image from 'next/image';
 
 const ProfileDropdown = () => {
   const { status, data: session } = useSession();
@@ -16,7 +13,7 @@ const ProfileDropdown = () => {
       <div className="absolute z-50 top-16 left-0 flex items-center justify-center">
         <div className="w-full max-w-sm rounded-lg bg-white p-3 drop-shadow-xl divide-y divide-gray-200">
           {status === 'authenticated' && (
-            <Link href={'/profile'} className="flex space-x-4 items-center p-4">
+            <Link href={`/profile/${session?.user?.id}`} className="flex space-x-4 items-center p-4">
               <div
                 aria-label="avatar"
                 className="flex mr-auto items-center space-x-4"
@@ -31,7 +28,7 @@ const ProfileDropdown = () => {
                     alt={session?.user?.name || 'Anonymous'}
                   />
                 ) : (
-                  <div className="w-10 h-10 flex items-center justify-center bg-gray-500 text-white rounded-full">
+                  <div className="w-10 h-10 flex items-center justify-center bg-teal-500 text-white rounded-full">
                     {getInitial(session?.user?.name)}
                     {/* K */}
                   </div>

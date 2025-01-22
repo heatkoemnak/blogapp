@@ -149,7 +149,7 @@ const Navbar = () => {
                       alt={session?.user?.name || 'Anonymous'}
                     />
                   ) : (
-                    <div className="w-7 h-7 flex items-center justify-center bg-gray-500 text-white rounded-full">
+                    <div className="w-7 h-7 flex items-center justify-center bg-teal-500 text-white rounded-full">
                       {getInitial(session?.user?.name)}
                     </div>
                   )}
