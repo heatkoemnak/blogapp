@@ -12,11 +12,12 @@ import Link from 'next/link';
 import { timeAgo } from '@/app/utils/timeAgo';
 import { BsBookmarkPlus, BsFillBookmarkPlusFill } from 'react-icons/bs';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const LatestJobs = ({ job }) => {
   console.log(job);
   const [isBookmarked, setIsBookmarked] = useState(false);
-
+  const router = useRouter();
   const toggleBookmark = () => {
     setIsBookmarked((prev) => !prev);
   };
@@ -92,7 +93,7 @@ const LatestJobs = ({ job }) => {
               </div>
               <div className="flex gap-2">
                 <button
-                  onClick={() => routeros.push(`/jobs/apply/${job?.id}`)}
+                  onClick={() => router.push(`/jobs/apply/${job?.id}`)}
                   class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
                 >
                   Apply
