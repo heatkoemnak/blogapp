@@ -12,6 +12,8 @@ import { useBlogContext } from '@/app/context/BlogProvider';
 import parse from 'html-react-parser';
 import Image from 'next/image';
 import { RiCalendarCloseFill } from 'react-icons/ri';
+import { BiLinkExternal } from 'react-icons/bi';
+import Link from 'next/link';
 
 const JobDetails = () => {
   const { jobs } = useBlogContext();
@@ -100,9 +102,7 @@ const JobDetails = () => {
                 <div className="flex gap-2 items-center">
                   <div className="flex gap-1 items-center bg-teal-400 text-white text-sm px-2 py-1 rounded">
                     <BriefcaseIcon className="h-4 w-4 shrink-0" />
-                    <span className=" text-sm">
-                      {job?.JobType.name}
-                    </span>
+                    <span className=" text-sm">{job?.JobType.name}</span>
                   </div>
                   <div className="flex gap-1 items-center">
                     <MapPinIcon className="h-4 w-4 shrink-0 text-gray-500" />
@@ -123,7 +123,7 @@ const JobDetails = () => {
                     </span>
                   </div>
                   <div className="flex gap-1 items-center">
-                    <RiCalendarCloseFill  className="h-4 w-4 shrink-0 text-red-800" />
+                    <RiCalendarCloseFill className="h-4 w-4 shrink-0 text-red-800" />
                     <span className="text-gray-700 text-sm">
                       {job?.closeDate}
                     </span>
@@ -138,15 +138,18 @@ const JobDetails = () => {
           <div className="font-semibold text-blue-gray-900 text-lg pt-5 pb-1 px-2">
             How to Apply
           </div>
-          <p className="text-lg leading-8 mb-20">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            ultricies dui ac suscipit vestibulum. Pellentesque euismod turpis
-            vel sapien bibendum, non faucibus justo placerat. In hac habitasse
-            platea dictumst. Morbi id tincidunt elit. Praesent consectetur
-            eleifend mi, vitae gravida ante fringilla quis. Duis maximus, erat
-            metus interdum eros, in rhoncus leo augue quis quam. Sed rhoncus
-            consequat ipsum, vel egestas leo congue eu.
-          </p>
+          <div className="text-lg leading-8 mb-20">
+            {job?.contact && job?.contact.length > 0 ? (
+              job?.contact.map((contact, index) => (
+                <Link href={contact} key={index} className="flex items-center text-blue-600">
+                  <span className="text-blue-600">{contact}</span>
+                  <BiLinkExternal />
+                </Link>
+              ))
+            ) : (
+              <p>No contact information</p>
+            )}
+          </div>
         </div>
       </div>
     </>

@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { useBlogContext } from '../context/BlogProvider';
 import { ExampleJob } from './ui/jobs/ExampleJob';
+import LatestJobs from './ui/jobs/LatestJobs';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -37,20 +38,12 @@ export default function JobList() {
   const GridDisplay = () => {
     return (
       <>
-        <div className="max-w-7xl mx-auto py-2 border-b-2 border-gray-300 grid grid-cols-4 gap-x-2 gap-y-2">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <div key={index} className="col-span-1">
-              <ExampleJob />
-            </div>
-          ))}
-        </div>
-        {/* <div className="max-w-7xl mx-auto py-2 border-b-2 border-gray-300 grid grid-cols-3 gap-x-2 gap-y-2">
-          {groupedJobs.map((group, index) => (
-            <motion.div key={index} className="flex items-center w-full gap-4">
+        <div className="max-w-7xl mx-auto border-b-2 py-4 border-gray-300 grid grid-cols-4 gap-x-2 gap-y-2 ">
+          {groupedJobs?.map((group, index) => (
+            <motion.div key={index} className="col-span-2 w-full">
               {group.map((job, jobIndex) => (
                 <motion.div
                   key={job.id}
-                  className="mb-4"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{
@@ -58,15 +51,14 @@ export default function JobList() {
                     duration: 1.2, // Adjust duration for animation speed
                     ease: [0.4, 0.1, 0.4, 1], // Apply easing for smoother animation
                   }}
+                  className="col-span-2 w-full "
                 >
-                  <div className="rounded-lg shadow-md">
-                    <Job job={job} />
-                  </div>
+                  <LatestJobs job={job} />
                 </motion.div>
               ))}
             </motion.div>
           ))}
-        </div> */}
+        </div>
       </>
     );
   };
@@ -180,7 +172,7 @@ export default function JobList() {
           )}
         >
           {groupedJobs.map((group, index) => (
-            <div key={index} className="flex gap-2 py-2 border-gray-300 ">
+            <div key={index} className="flex gap-2 py-4 border-gray-300 ">
               {group.map((job) => (
                 <div key={job.id} className="grow">
                   <Job job={job} key={job.id} />
@@ -188,15 +180,6 @@ export default function JobList() {
               ))}
             </div>
           ))}
-          {/* {Array.from({ length: 10 }).map((_, index) => (
-            <div key={index} className="flex gap-2 py-2 border-gray-300 ">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <div className="grow">
-                  <ExampleJob key={index} />
-                </div>
-              ))}
-            </div>
-          ))} */}
         </Carousel>
       )}
     </>

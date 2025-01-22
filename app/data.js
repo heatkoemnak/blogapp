@@ -60,13 +60,13 @@ export const JOBTypes = [
     id: 1,
     value: 'Full Time',
     count: 0,
-    label: 'Full Time',
+    label: 'Full-Time',
   },
   {
     id: 2,
     value: 'Part Time',
     count: 2,
-    label: 'Part Time',
+    label: 'Part-Time',
   },
   {
     id: 3,

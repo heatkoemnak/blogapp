@@ -21,7 +21,7 @@ const LatestJobs = ({ job }) => {
     setIsBookmarked((prev) => !prev);
   };
   return (
-    <div className="px-5  py-4 grow border-b border-gray-200 bg-white hover:bg-gray-100/95 cursor-pointer">
+    <div className="px-5  py-6 grow border-b border-gray-200 bg-white hover:bg-gray-100/95 cursor-pointer">
       <div className="lg:flex  lg:items-center lg:justify-between">
         <div className="text-lg grow font-semibold text-bookmark-blue flex space-x-1 items-center">
           <Link href={`jobs/${job?.id}`}>
@@ -91,7 +91,10 @@ const LatestJobs = ({ job }) => {
                 </div>
               </div>
               <div className="flex gap-2">
-                <button class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer">
+                <button
+                  onClick={() => routeros.push(`/jobs/apply/${job?.id}`)}
+                  class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
+                >
                   Apply
                 </button>
                 <div className="flex items-center gap-2 cursor-pointer">

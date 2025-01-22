@@ -2,34 +2,45 @@
 
 import {
   BriefcaseIcon,
-  CalendarIcon,
   ChevronDownIcon,
   CurrencyDollarIcon,
-  LinkIcon,
   MapPinIcon,
 } from '@heroicons/react/20/solid';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import Image from 'next/image';
 import { timeAgo } from '@/app/utils/timeAgo';
+import { RiCalendarCloseFill } from 'react-icons/ri';
+import { BsBookmarkPlus, BsFillBookmarkPlusFill } from 'react-icons/bs';
+import { useState } from 'react';
 
 export function Job({ job }) {
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const toggleBookmark = () => {
+    setIsBookmarked((prev) => !prev);
+  };
   console.log(job);
   return (
-    <div className="relative  p-5 border border-gray-300 rounded-lg bg-white cursor-pointer">
+    <div className="relative  p-5 border border-gray-300 bg-white cursor-pointer">
       <div class=" absolute top-1 right-0 z-10 pl-5 pr-3 whitespace-no-wrap">
-        <span class="text-gray-400 text-xs">2 weeks ago</span>
+        <span class="text-gray-400 text-xs">{timeAgo(job?.createdAt)}</span>
       </div>
       <div className="lg:flex lg:items-center lg:justify-between">
         <div className="text-lg font-semibold text-bookmark-blue flex space-x-1 items-center">
           <Image
-            src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
+            src={
+              job?.icon ||
+              'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80'
+            }
             alt=""
             width={40}
             height={40}
             className="w-10 h-10 rounded-full"
           />
           <div className="flex flex-col px-2">
-            <span className="text-blue-gray-600 font-light text-sm">Amazon</span>
+            <span className="text-blue-gray-600 font-light text-sm">
+              {job?.Company?.name}
+            </span>
             <span className="text-cyan-700 font-bold">{job?.title}</span>
           </div>
         </div>
@@ -46,7 +57,7 @@ export function Job({ job }) {
                 aria-hidden="true"
                 className="mr-1.5 h-4 w-4 shrink-0"
               />
-              Full time
+              {job?.JobType?.name}
             </div>
             <div className="flex items-center text-sm text-gray-600">
               <MapPinIcon
@@ -54,31 +65,46 @@ export function Job({ job }) {
                 color="gray"
                 className="mr-1.5 h-4 w-4  shrink-0"
               />
-              Phnom Penh
+              {job?.ProvineCity?.name}
             </div>
             <div className="flex items-center text-cyan-700 text-sm ">
               <CurrencyDollarIcon
                 aria-hidden="true"
                 className="mr-1.5 h-4 w-4 shrink-0 text-orange-300"
               />
-              <span className="text-xs">$350 - $500</span>
+              <span className="text-xs">{job?.JobSalary?.label}</span>
             </div>
           </div>
           <div className="flex items-center justify-between text-sm text-gray-700 ">
-            <div className="flex items-center  ">
-              <CalendarIcon
-                aria-hidden="true"
-                className="mr-1.5 h-4 w-4 shrink-0 text-blue-gray-800"
-              />
-              <span className="text-xs">
-                Closing on - 31 Jan 2023
-              </span>
+            <div className="flex items-center gap-2 ">
+              <RiCalendarCloseFill className="h-4 w-4 shrink-0 text-red-800" />
+              <span className="text-xs">Closing on - {job?.closeDate}</span>
             </div>
-            <div>
+            <div className="flex gap-2">
+              <button onClick={() => routeros.push(`/jobs/apply/${job?.id}`)} class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer">
+                Apply
+              </button>
+              <div className="flex items-center gap-2 cursor-pointer">
+                {isBookmarked ? (
+                  <BsFillBookmarkPlusFill
+                    className="text-cyan-700"
+                    size={20}
+                    onClick={toggleBookmark}
+                  />
+                ) : (
+                  <BsBookmarkPlus
+                    className="text-teal-700"
+                    size={20}
+                    onClick={toggleBookmark}
+                  />
+                )}
+              </div>
+            </div>
+            {/* <div>
               <button class="mr-2 my-1 uppercase tracking-wider px-2 text-cyan-800 border-cyan-800 hover:bg-cyan-800 hover:text-white border text-sm font-semibold rounded py-1 transition transform duration-500 cursor-pointer">
                 Apply
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import LatestJobs from './LatestJobs';
 import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 
-const JobRows = ({ jobs }) => {
+const JobRows = ({ jobs, search, filterList }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -15,6 +15,21 @@ const JobRows = ({ jobs }) => {
           Job Urgency
         </div>
         <div class="w-full h-auto bg-white" id="journal-scroll">
+          {search?.length > 0 && (
+            <div className="py-2 px-4 bg-gray-100 text-gray-700 rounded-md mb-4">
+              {filterList?.length > 0 ? (
+                <p>
+                  Found {filterList.length} result(s) for "
+                  <strong>{search}</strong>"
+                </p>
+              ) : (
+                <p>
+                  No results found for "<strong>{search}</strong>". Please try a
+                  different keyword.
+                </p>
+              )}
+            </div>
+          )}
           {isLoading ? (
             <div className="flex justify-center">
               <button
