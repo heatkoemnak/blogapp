@@ -24,17 +24,19 @@ const LatestJobs = ({ job }) => {
     <div className="px-5  py-4 grow border-b border-gray-200 bg-white hover:bg-gray-100/95 cursor-pointer">
       <div className="lg:flex  lg:items-center lg:justify-between">
         <div className="text-lg grow font-semibold text-bookmark-blue flex space-x-1 items-center">
-          <Image
-            src={
-              job?.icon ||
-              'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=500&q=80'
-            }
-            alt=""
-            width={500} // Larger width for better quality
-            height={500}
-            className="w-24 h-auto cover border border-blue-gray-100"
-            layout="intrinsic" // Helps maintain aspect ratio with appropriate sizing
-          />
+          <Link href={`jobs/${job?.id}`}>
+            <Image
+              src={
+                job?.icon ||
+                'https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?auto=format&fit=crop&w=500&q=80'
+              }
+              alt=""
+              width={500} // Larger width for better quality
+              height={500}
+              className="w-24 h-auto cover border border-blue-gray-100"
+              layout="intrinsic" // Helps maintain aspect ratio with appropriate sizing
+            />
+          </Link>
 
           <div className="flex grow flex-col px-4">
             <div className="flex justify-between">
@@ -44,11 +46,19 @@ const LatestJobs = ({ job }) => {
               >
                 {job?.Company.name}
               </Link>
-              <span className="text-teal-700 font-medium text-sm">view</span>
+              <Link
+                href={`jobs/${job?.id}`}
+                className="text-teal-700 font-medium text-sm"
+              >
+                view
+              </Link>
             </div>
-            <span className="text-cyan-700 text-md font-semibold">
+            <Link
+              href={`jobs/${job?.id}`}
+              className="text-cyan-700 text-md font-semibold"
+            >
               {job?.title}
-            </span>
+            </Link>
             <div className="mt-1 flex  justify-between ">
               <div className="flex gap-2 ">
                 <div className="flex gap-1 rounded items-center text-xs font-medium text-teal-500 ">

@@ -7,43 +7,6 @@ import { useSearchParams } from 'next/navigation';
 
 const JobRows = ({ jobs }) => {
   const [isLoading, setIsLoading] = useState(false);
-  // const [jobs, setJobs] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [filterList, setFilterList] = useState([]);
-  // const searchParams = useSearchParams();
-  // const search = searchParams.get('search');
-  // console.log(search);
-  // const SearchHandler = useCallback(() => {
-  //   const filterData = jobs?.filter((job) => {
-  //     return job?.title.toLowerCase().includes(search?.toLowerCase());
-  //   });
-  //   setFilterList(filterData);
-  // }, [jobs, search]);
-
-  // console.log(filterList);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     SearchHandler();
-  //   }, 1000);
-
-  //   return () => clearTimeout(timer);
-  // }, [SearchHandler]);
-
-  // useEffect(() => {
-  //   const fetchJobs = async () => {
-  //     setIsLoading(true);
-  //     try {
-  //       const response = await axios.get('/api/jobs');
-  //       setJobs(response.data);
-  //     } catch (error) {
-  //       console.error('Error fetching jobs:', error);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
-  //   fetchJobs();
-  // }, []);
 
   return (
     <div class="w-full flex justify-center ">
@@ -76,19 +39,6 @@ const JobRows = ({ jobs }) => {
               {jobs?.map((job, index) => (
                 <LatestJobs job={job} key={index} />
               ))}
-              {/* {search?.length && filterList ? (
-                <div>
-                  {filterList?.map((job, index) => (
-                    <LatestJobs job={job} key={index} />
-                  ))}
-                </div>
-              ) : (
-                <div>
-                  {jobs?.map((job, index) => (
-                    <LatestJobs job={job} key={index} />
-                  ))}
-                </div>
-              )} */}
             </div>
           )}
         </div>
