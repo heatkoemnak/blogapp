@@ -35,7 +35,7 @@ const Hero = () => {
                     href="#"
                     class="bg-white text-teal-800 font-semibold px-8 py-3 rounded-full hover:bg-blue-100 transition duration-300 text-center"
                   >
-                    Go for it
+                    Explore Careers
                   </a>
                   <a
                     href="#"
@@ -65,7 +65,7 @@ const Hero = () => {
                           d="M13 10V3L4 14h7v7l9-11h-7z"
                         ></path>
                       </svg>
-                      <span> Streamlined Application Process</span>
+                      <span> Fast and Easy to Use</span>
                     </li>
                     <li class="flex items-center">
                       <svg
@@ -100,7 +100,7 @@ const Hero = () => {
                           d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
                         ></path>
                       </svg>
-                      <span>AI-powered Insights</span>
+                      <span>Find Your Dream Job</span>
                     </li>
                   </ul>
                 </div>
