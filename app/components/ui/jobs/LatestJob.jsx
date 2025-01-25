@@ -1,7 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import { Carousel, MenuItem } from '@material-tailwind/react';
-import { Job } from './ui/jobs/Job';
+import { Job } from './Job';
 import {
   ChevronDownIcon,
   ChevronLeftIcon,
@@ -12,9 +12,8 @@ import {
 import { BiGridHorizontal } from 'react-icons/bi';
 import { useState } from 'react';
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
-import { useBlogContext } from '../context/BlogProvider';
-import { ExampleJob } from './ui/jobs/ExampleJob';
-import LatestJobs from './ui/jobs/LatestJobs';
+import { useBlogContext } from '../../../context/BlogProvider';
+import LatestJobs from './JobRow';
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -28,8 +27,8 @@ export default function JobList() {
   const [showGrid, setShowGrid] = useState(false);
   console.log(jobs);
   const groupedJobs = [];
-  for (let i = 0; i < jobs?.length; i += 2) {
-    groupedJobs.push(jobs?.slice(i, i + 2));
+  for (let i = 0; i < jobs?.length; i += 3) {
+    groupedJobs.push(jobs?.slice(i, i + 3));
   }
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -38,7 +37,7 @@ export default function JobList() {
   const GridDisplay = () => {
     return (
       <>
-        <div className="max-w-7xl mx-auto border-b-2 py-4 border-gray-300 grid grid-cols-4 gap-x-2 gap-y-2 ">
+        <div className="max-w-7xl mx-auto border-b-2 border-gray-300 grid grid-cols-4 gap-x-2 gap-y-2 ">
           {groupedJobs?.map((group, index) => (
             <motion.div key={index} className="col-span-2 w-full">
               {group.map((job, jobIndex) => (
@@ -63,9 +62,9 @@ export default function JobList() {
     );
   };
   return (
-    <>
-      <div className="max-w-7xl mx-auto mt-4  flex px-4 bg-white border border-b border-gray-300 items-center justify-between">
-        <div className="text-blue-gray-600 text-md font-semibold py-3 px-1 ">
+    <div className="bg-blue-gray-50 py-5">
+      <div className="max-w-7xl mx-auto mt-4 bg-white flex px-4 border border-b border-gray-300 items-center justify-between">
+        <div className=" text-blue-gray-600 text-md font-semibold py-3 px-1 ">
           Latest jobs
         </div>
         <div className="flex items-center">
@@ -182,6 +181,6 @@ export default function JobList() {
           ))}
         </Carousel>
       )}
-    </>
+    </div>
   );
 }

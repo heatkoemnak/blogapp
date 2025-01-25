@@ -1,17 +1,15 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import LatestJobs from './LatestJobs';
-import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import JobRow from './JobRow';
 
-const JobRows = ({ jobs, search, filterList }) => {
+const Urgency = ({ jobs, search, filterList }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div class="w-full flex justify-center ">
       <div class="w-full h-auto flex flex-col">
-        <div class="bg-white  text-blue-gray-600 font-semibold text-lg  px-5 py-3 border-b border-gray-300">
+        <div class="bg-blue-gray-50 text-blue-gray-600 font-semibold text-lg  px-5 py-3 border-b border-gray-300">
           Job Urgency
         </div>
         <div class="w-full h-auto bg-white" id="journal-scroll">
@@ -19,12 +17,12 @@ const JobRows = ({ jobs, search, filterList }) => {
             <div className="py-2 px-4 bg-gray-100 text-gray-700 rounded-md mb-4">
               {filterList?.length > 0 ? (
                 <p>
-                  Found {filterList.length} result(s) for "
-                  <strong>{search}</strong>"
+                  Found {filterList.length} result(s) for `
+                  <strong>{search}</strong>`
                 </p>
               ) : (
                 <p>
-                  No results found for "<strong>{search}</strong>". Please try a
+                  No results found for `<strong>{search}</strong>`. Please try a
                   different keyword.
                 </p>
               )}
@@ -52,7 +50,7 @@ const JobRows = ({ jobs, search, filterList }) => {
           ) : (
             <div>
               {jobs?.map((job, index) => (
-                <LatestJobs job={job} key={index} />
+                <JobRow job={job} key={index} />
               ))}
             </div>
           )}
@@ -62,4 +60,4 @@ const JobRows = ({ jobs, search, filterList }) => {
   );
 };
 
-export default JobRows;
+export default Urgency;

@@ -3,6 +3,12 @@ import { salaryRange } from '@/app/data';
 const SalaryCheckbox = () => {
   return (
     <div className="w-full bg-white">
+      <div className="flex py-4 justify-between items-center">
+        <div className="font-semibold text-blue-gray-900 text-md px-2">
+          Salary
+        </div>
+        <div className="font-semibold text-gray-600 text-sm px-2">Clear</div>
+      </div>
       {salaryRange.map((jobLevel) => (
         <label
           key={jobLevel.label}

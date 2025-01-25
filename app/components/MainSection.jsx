@@ -1,31 +1,31 @@
 // components/PostList.js
 'use client';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PostSkeleton from './ui/PostSkeleton';
-import { CountByCategories } from './ui/CheckBoxs/CountByCategories';
+import { JobTypeCheckbox } from './ui/CheckBoxs/JobTypeCheckbox';
 import { BiGridHorizontal } from 'react-icons/bi';
 import { JobLevelList } from './ui/CheckBoxs/JobLevelList';
 import { useBlogContext } from '../context/BlogProvider';
-import JobRows from './ui/jobs/JobRows';
-import SalaryCheckbox from './ui/CheckBoxs/SalaryCheckbox';
 import { JobLocation } from './ui/DropdownFilters/JobLocation';
-import CompanyLists from './CompanyLists';
-import Advertisment from './Advertisment';
-import Announcement from './Announcement';
-import JobIndustry from './ui/DropdownFilters/JobIndustry';
 import {
   ChevronDownIcon,
   FunnelIcon,
   Squares2X2Icon,
 } from '@heroicons/react/20/solid';
+import Urgency from './ui/jobs/Urgency';
+import SalaryCheckbox from './ui/CheckBoxs/SalaryCheckbox';
+import CompanyLists from './CompanyLists';
+import Advertisment from './Advertisment';
+import Announcement from './Announcement';
+import JobIndustry from './ui/DropdownFilters/JobIndustry';
+import CategoriesLists from './ui/Selection/CategoriesLists';
+import JobRow from './ui/jobs/JobRow';
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { MenuItem } from '@material-tailwind/react';
-import CategoriesLists from './ui/Selection/CategoriesLists';
-import LatestJobs from './ui/jobs/LatestJobs';
 import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 
-const PostList = () => {
+const MainSection = () => {
   const { companies } = useBlogContext();
   const [jobs, setJobs] = useState([]);
   console.log(jobs);
@@ -97,14 +97,15 @@ const PostList = () => {
     <div className="max-w-7xl mx-auto py-6 ">
       {!loading ? (
         <div className="grid grid-cols-5 gap-x-2 gap-y-2">
+          {/* lext side section */}
           <div className="lg:w-full h-auto col-span-3 ">
-            <JobRows
+            <Urgency
               jobs={search?.length > 0 ? filterList : jobs}
               search={search}
               filterList={filterList}
             />
-            <div className="flex border-t-2 mt-4 justify-between items-center py-4 px-4 bg-white">
-              <div class="bg-white  text-blue-gray-600 font-semibold text-lg  px-2 py-1 border-gray-300">
+            <div className="flex border-t-2 mt-4 justify-between items-center py-4 px-4 bg-blue-gray-50">
+              <div class=" text-blue-gray-600 font-semibold text-lg  px-2 border-gray-300">
                 All jobs
               </div>
               <div className="flex items-center">
@@ -191,17 +192,17 @@ const PostList = () => {
                 </button>
               </div>
             )}
-            <div className=" border-gray-300">
+            <div className=" border-gray-300 bg-blue-gray-50">
               {search?.length > 0 && (
-                <div className="py-2 px-4 bg-gray-100 text-gray-700 rounded-md mb-4">
+                <div className="py-2 px-4 bg-gray-100 text-gray-700 ">
                   {filterList?.length > 0 ? (
                     <p>
-                      Found {filterList.length} result(s) for "
-                      <strong>{search}</strong>"
+                      Found {filterList.length} result(s) for `
+                      <strong>{search}</strong>`
                     </p>
                   ) : (
                     <p>
-                      No results found for "<strong>{search}</strong>". Please
+                      No results found for `<strong>{search}</strong>`. Please
                       try a different keyword.
                     </p>
                   )}
@@ -214,7 +215,7 @@ const PostList = () => {
                       key={index}
                       className={`${showGrid ? 'col-span-2' : 'col-span-4'}`}
                     >
-                      <LatestJobs job={job} />
+                      <JobRow job={job} />
                     </div>
                   ))}
                 </div>
@@ -225,14 +226,14 @@ const PostList = () => {
                       key={index}
                       className={`${showGrid ? 'col-span-2' : 'col-span-4'}`}
                     >
-                      <LatestJobs job={job} />
+                      <JobRow job={job} />
                     </div>
                   ))}
                 </div>
               )}
             </div>
 
-            <div className="lg:w-full h-fit col-span-4 bg-white px-5 ">
+            <div className="lg:w-full h-fit col-span-4 bg-blue-gray-50 px-5 ">
               <div className="font-semibold text-blue-gray-900 text-md pt-5 pb-2 px-2">
                 Companies
               </div>
@@ -250,27 +251,24 @@ const PostList = () => {
               <Advertisment />
             </div>
           </div>
+          {/* right side section */}
           <div className="lg:w-full h-fit col-span-2 bg-white px-5 ">
             <div className="lg:w-full h-fit col-span-1 bg-white px-5 ">
-              <div className="font-semibold text-blue-gray-900 text-md pt-5 px-2">
-                Categories
+              <div className="flex justify-between items-center">
+                <div className="font-semibold text-blue-gray-900 text-md pt-5 px-2">
+                  Categories
+                </div>
+                <div className="font-semibold text-gray-600 text-sm pt-5 px-2">
+                  Clear
+                </div>
               </div>
               <CategoriesLists />
-              <div className="font-semibold text-blue-gray-900 text-md pt-5 px-2">
-                Job types
-              </div>
-              <CountByCategories />
-              <div className="font-semibold  text-blue-gray-900 text-md pt-5 px-2">
-                Job level
-              </div>
+              <JobTypeCheckbox />
               <JobLevelList />
               <div className="font-semibold  text-blue-gray-900 text-md pt-5 px-2">
                 Industry
               </div>
               <JobIndustry />
-              <div className="font-semibold  text-blue-gray-900 text-md pt-5 px-2">
-                Salary range
-              </div>
               <SalaryCheckbox />
               <div className="font-semibold  text-blue-gray-900 text-md pt-5 px-2">
                 Location
@@ -299,4 +297,4 @@ const PostList = () => {
   );
 };
 
-export default PostList;
+export default MainSection;

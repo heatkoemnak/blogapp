@@ -13,9 +13,11 @@ import { timeAgo } from '@/app/utils/timeAgo';
 import { BsBookmarkPlus, BsFillBookmarkPlusFill } from 'react-icons/bs';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
-const LatestJobs = ({ job }) => {
+const JobRow = ({ job }) => {
   console.log(job);
+  const { data: session } = useSession();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const router = useRouter();
   const toggleBookmark = () => {
@@ -51,7 +53,7 @@ const LatestJobs = ({ job }) => {
                 href={`jobs/${job?.id}`}
                 className="text-teal-700 font-medium text-sm"
               >
-                view
+                View
               </Link>
             </div>
             <Link
@@ -92,27 +94,46 @@ const LatestJobs = ({ job }) => {
                 </div>
               </div>
               <div className="flex gap-2">
-                <button
-                  onClick={() => router.push(`/jobs/apply/${job?.id}`)}
-                  class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
-                >
-                  Apply
-                </button>
-                <div className="flex items-center gap-2 cursor-pointer">
-                  {isBookmarked ? (
-                    <BsFillBookmarkPlusFill
-                      className="text-cyan-700"
-                      size={20}
-                      onClick={toggleBookmark}
-                    />
-                  ) : (
-                    <BsBookmarkPlus
-                      className="text-teal-700"
-                      size={20}
-                      onClick={toggleBookmark}
-                    />
-                  )}
-                </div>
+                {session && session?.user?.id === job?.author?.id ? (
+                  <div className='flex'>
+                    <button
+                      onClick={() => router.push(`/jobs/apply/${job?.id}`)}
+                      class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => router.push(`/jobs/apply/${job?.id}`)}
+                      class="mr-2 my-1 tracking-wider px-2 text-red-700 border-red-100 hover:bg-red-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => router.push(`/jobs/apply/${job?.id}`)}
+                      class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
+                    >
+                      Apply
+                    </button>
+                    <div className="flex items-center gap-2 cursor-pointer">
+                      {isBookmarked ? (
+                        <BsFillBookmarkPlusFill
+                          className="text-cyan-700"
+                          size={20}
+                          onClick={toggleBookmark}
+                        />
+                      ) : (
+                        <BsBookmarkPlus
+                          className="text-teal-700"
+                          size={20}
+                          onClick={toggleBookmark}
+                        />
+                      )}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -148,4 +169,4 @@ const LatestJobs = ({ job }) => {
   );
 };
 
-export default LatestJobs;
+export default JobRow;

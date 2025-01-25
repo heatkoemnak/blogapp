@@ -21,7 +21,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en" className={inter.className}>
-      <body className="bg-gray-300  ">
+      <body className="bg-gray-400  ">
         <SkeletonTheme baseColor="#202020" highlightColor="#444">
           <BlogProvider>
             <AuthProvider session={session}>
