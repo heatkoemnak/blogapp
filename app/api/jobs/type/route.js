@@ -23,7 +23,11 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const jobType = await prisma.jobType.findMany({});
+    const jobType = await prisma.jobType.findMany({
+      include: {
+        jobs: true,
+      },
+    });
 
     return NextResponse.json(jobType, { status: 200 });
   } catch (error) {

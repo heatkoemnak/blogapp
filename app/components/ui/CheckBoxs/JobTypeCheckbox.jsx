@@ -4,9 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { Chip } from '@material-tailwind/react';
 import { JOBTypes } from '@/app/data';
 import { useRouter } from 'next/navigation';
+import { useBlogContext } from '@/app/context/BlogProvider';
 
 export function JobTypeCheckbox() {
   const [selectedCategories, setSelectedCategories] = useState([]); // State for selected job types
+  const { jobTypes } = useBlogContext();
   const router = useRouter();
 
   const handleCheckboxChange = (event) => {
@@ -19,31 +21,27 @@ export function JobTypeCheckbox() {
       }
     });
 
-    // Scroll smoothly depending on selected items
     window.scrollTo({
-      top: 900, // Adjust this based on the height you need to scroll
+      top: 900,
       behavior: 'smooth',
     });
   };
 
-  // Clear selected categories and control scrolling
   const handleClear = () => {
     if (selectedCategories.length > 0) {
-      // If there were selected categories, scroll down
       window.scrollTo({
-        top: 0, // Adjust this based on your UI structure
+        top: 0,
         behavior: 'smooth',
       });
     } else {
-      // If no categories were selected, scroll up
       window.scrollTo({
         top: 900, // Scroll to the top of the page
         behavior: 'smooth',
       });
     }
 
-    setSelectedCategories([]); // Reset the categories
-    router.push(`/jobs?search=`); // Redirect with an empty query
+    setSelectedCategories([]);
+    router.push(`/jobs?search=`);
   };
 
   useEffect(() => {
@@ -60,27 +58,27 @@ export function JobTypeCheckbox() {
         </div>
         <button
           type="button"
-          onClick={handleClear} // Attach the Clear function
+          onClick={handleClear}
           className="font-semibold text-gray-600 text-sm pt-5 px-2"
         >
           Clear
         </button>
       </div>
-      {JOBTypes.map((type) => (
+      {jobTypes.map((type) => (
         <label
           key={type.id}
           className="py-1 px-3 flex items-center w-full hover:bg-gray-200 cursor-pointer"
         >
           <input
             type="checkbox"
-            value={type.label}
-            checked={selectedCategories.includes(type.label)}
+            value={type.name}
+            checked={selectedCategories.includes(type.name)}
             onChange={handleCheckboxChange}
             className="mr-4 w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <span className="flex-1 text-gray-900 text-sm">{type.label}</span>
+          <span className="flex-1 text-gray-900 text-sm">{type.name}</span>
           <Chip
-            value={type.count}
+            value={type?.jobs.length}
             variant="ghost"
             size="sm"
             className="rounded-full"

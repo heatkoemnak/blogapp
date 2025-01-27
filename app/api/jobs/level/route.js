@@ -24,7 +24,11 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const jobLevel = await prisma.jobLevel.findMany({});
+    const jobLevel = await prisma.jobLevel.findMany({
+      include: {
+        jobs: true,
+      },
+    });
 
     return NextResponse.json(jobLevel, { status: 200 });
   } catch (error) {
