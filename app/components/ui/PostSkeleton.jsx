@@ -9,23 +9,10 @@ const PostSkeleton = ({ postLength, latestPost }) => {
           {Array.from({ length: postLength }).map((_, index) => (
             <div className="w-full my-1 border-2" key={index}>
               <div className="mr-auto p-3 place-self-center lg:col-span-5">
-                <Skeleton className="w-full" height={250} />
-                <Skeleton borderRadius={18} width={350} height={20} />
-                <Skeleton
-                  borderRadius={18}
-                  className="my-2"
-                  width={50}
-                  height={12}
-                />
-                <Skeleton borderRadius={18} count={4} height={15} />
-                <Skeleton
-                  borderRadius={18}
-                  className="my-5"
-                  width={50}
-                  height={12}
-                />
+                {/* <div className='w-full h-64 bg-gray-200 animate-pulse'></div> */}
+                
                 <div className="flex my-2 items-center gap-2">
-                  <Skeleton circle width={50} height={50} />
+                  <Skeleton circle width={50} height={50} baseColor='#202020' />
                   <Skeleton borderRadius={18} width={200} height={12} />
                   <Skeleton borderRadius={18} width={100} height={12} />
                 </div>

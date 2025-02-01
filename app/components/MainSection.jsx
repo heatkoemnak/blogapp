@@ -100,6 +100,7 @@ const MainSection = () => {
           {/* lext side section */}
           <div className="lg:w-full h-auto col-span-3 ">
             <Urgency
+              loading={loading}
               jobs={search?.length > 0 ? filterList : jobs}
               search={search}
               filterList={filterList}
@@ -245,10 +246,10 @@ const MainSection = () => {
                 Announcements
               </div>
               <Announcement />
-              <div className="font-semibold text-blue-gray-900 text-md pt-5 pb-2 px-2">
+              {/* <div className="font-semibold text-blue-gray-900 text-md pt-5 pb-2 px-2">
                 Advertisments
               </div>
-              <Advertisment />
+              <Advertisment /> */}
             </div>
           </div>
           {/* right side section */}
@@ -280,11 +281,11 @@ const MainSection = () => {
                 </h1>
 
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d252230.02028974562!2d38.613328040215286!3d8.963479542403238!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85cef5ab402d%3A0x8467b6b037a24d49!2sAddis%20Ababa!5e0!3m2!1sen!2set!4v1710567234587!5m2!1sen!2set"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8074242.981711193!2d102.0173132926473!3d12.565679006985642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3109573f79d47b07%3A0xe22cd58e23f63ad6!2sCambodia!5e0!3m2!1sen!2skh!4v1710567234587!5m2!1sen!2skh"
                   className="rounded-lg w-full h-full"
-                  allowfullscreen=""
+                  allowFullScreen=""
                   loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade"
+                  referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
             </div>

@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import Sponsorship from './Sponsorship';
 
 const Hero = () => {
@@ -9,7 +8,7 @@ const Hero = () => {
       <main class=" bg-blue-gray-400">
         <section class="relative bg-gradient-to-br from-blue-900 to-indigo-800 text-white overflow-hidden">
           <div class="absolute inset-0 bg-black opacity-50"></div>
-          <div
+          {/* <div
             class="absolute top-0 inset-0 bg-cover bg-center"
             style={{
               backgroundImage:
@@ -19,7 +18,7 @@ const Hero = () => {
               width: '100%',
             }}
             // style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');"
-          ></div>
+          ></div> */}
 
           <div class="container mx-auto px-4 py-24 md:py-32 relative z-10">
             <div class="flex flex-col md:flex-row items-center justify-between">
@@ -46,7 +45,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div class="w-full md:w-1/2 md:pl-12">
+              {/* <div class="w-full md:w-1/2 md:pl-12">
                 <div class="bg-teal-900 bg-opacity-10 backdrop-filter backdrop-blur-lg rounded-xl p-8 shadow-2xl">
                   <h2 class="text-2xl font-semibold mb-6">Why jobSpace?</h2>
                   <ul class="space-y-4">
@@ -104,7 +103,7 @@ const Hero = () => {
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 

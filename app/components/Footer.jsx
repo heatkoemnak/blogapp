@@ -1,8 +1,15 @@
-import React from 'react';
+'use client';
 import Logo from './Logo';
-import { FaFacebook, FaInstagramSquare, FaTiktok, FaWhatsappSquare } from 'react-icons/fa';
+import {
+  FaFacebook,
+  FaInstagramSquare,
+  FaTiktok,
+  FaWhatsappSquare,
+} from 'react-icons/fa';
+import { useBlogContext } from '../context/BlogProvider';
 
 const Footer = () => {
+  const { jobs,isLoading } = useBlogContext();
   return (
     <div className="w-full h-full -z-1">
       {/* Footer  */}
@@ -15,81 +22,63 @@ const Footer = () => {
                 <Logo />
               </div>
               <p className="mt-4">
-                This website build by Heat Koemnak, A passionate developer, contributed 36 Tailwind
-                components to this site, earning second-best contributor
-                status over three months.
+                This website build by Heat Koemnak, A passionate developer,
+                contributed 36 Tailwind components to this site, earning
+                second-best contributor status over three months.
               </p>
               {/* Socials */}
               <div className="flex gap-2 items-center text-2xl text-white mt-6">
                 <div className="flex items-center justify-center p-3 border rounded-full hover:bg-blue-500">
-                <FaFacebook />
+                  <FaFacebook />
                 </div>
                 <div className="flex items-center justify-center p-3 border rounded-full hover:bg-pink-500">
-                <FaInstagramSquare />
+                  <FaInstagramSquare />
                 </div>
                 <div className="flex items-center justify-center p-3 border rounded-full hover:bg-green-500">
-                <FaWhatsappSquare />
+                  <FaWhatsappSquare />
                 </div>
                 <div className="flex items-center justify-center p-3 border rounded-full hover:bg-gray-900">
-                <FaTiktok />
+                  <FaTiktok />
                 </div>
               </div>
             </div>
             {/* col - 2 */}
             <div className="mt-4">
               <h2 className="text-white text-3xl font-semibold mb-8">
-                Latest News and Blogs
+                Latest Jobs
               </h2>
               {/* 1 */}
-              <div className="w-full flex flex-col mt-6">
-                <div className="w-full flex gap-4">
-                  <img
-                    className="lg:w-[8rem] lg:h-[5rem] md:w-[6rem] md:h-[4rem] xs:w-[8rem] xs:h-[5rem] w-[6rem] h-[3rem] rounded-sm xs:outline xs:outline-[4px]"
-                    src="https://images.unsplash.com/photo-1568209865332-a15790aed756?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8bWljcm9jaGlwfGVufDB8MHx8fDE3MzE4Mjg5MDl8MA&ixlib=rb-4.0.3&q=80&w=1080"
-                    alt="Gallery Image"
-                  />
-                  <div className="flex flex-col items-start">
-                    <h3 className="xs:text-lg text-sm font-semibold">
-                      AI-Powered Chips Revolutionize Cloud Computing
-                    </h3>
-                    <p className="text-sm text-gray-500">Nov 17, 2024</p>
+              {!isLoading ? (
+                jobs.map((job, index) => {
+                  return (
+                    <div key={index} className="w-full flex flex-col mt-6">
+                      <div className="w-full flex gap-4">
+                        <img
+                          className="lg:w-[8rem] lg:h-[5rem] md:w-[6rem] md:h-[4rem] xs:w-[8rem] xs:h-[5rem] w-[6rem] h-[3rem] rounded-sm xs:outline xs:outline-[4px]"
+                          src={job?.icon}
+                          alt="Gallery Image"
+                        />
+                        <div className="flex flex-col items-start">
+                          <h3 className="xs:text-lg text-sm font-semibold">
+                            {job?.title}
+                          </h3>
+                          <p className="text-sm text-gray-500">{job?.Company?.name}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="w-full flex flex-col mt-6 animate-pulse">
+                  <div className="w-full flex gap-4">
+                    <div className="bg-gray-200 rounded-sm xs:outline xs:outline-[4px] lg:w-[8rem] lg:h-[5rem] md:w-[6rem] md:h-[4rem] xs:w-[8rem] xs:h-[5rem] w-[6rem] h-[3rem]" />
+                    <div className="flex flex-col items-start">
+                      <h3 className="xs:text-lg text-sm font-semibold bg-gray-200 rounded-full w-[10rem] h-[1.5rem]" />
+                      <p className="text-sm text-gray-500 bg-gray-200 rounded-full w-[10rem] h-[1.5rem]" />
+                    </div>
                   </div>
                 </div>
-              </div>
-              {/* 2 */}
-              <div className="w-full flex flex-col mt-6">
-                <div className="w-full flex justify-start gap-4">
-                  <img
-                    className="lg:w-[8rem] lg:h-[5rem] md:w-[6rem] md:h-[4rem] xs:w-[8rem] xs:h-[5rem] w-[6rem] h-[3rem] rounded-sm xs:outline xs:outline-[4px]"
-                    src="https://images.unsplash.com/photo-1568209865332-a15790aed756?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8bWljcm9jaGlwfGVufDB8MHx8fDE3MzE4Mjg5MDl8MA&ixlib=rb-4.0.3&q=80&w=1080"
-                    alt="Gallery Image"
-                  />
-                  {/* <img class="lg:w-[8rem] lg:h-[5rem] md:w-[6rem] md:h-[4rem] xs:w-[8rem] xs:h-[5rem] w-[6rem] h-[3rem] rounded-sm xs:outline xs:outline-[4px]" src="https://images.unsplash.com/photo-1536408745983-0f03be6e8a00?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw2fHx0ZXNsYSUyMHNvbGFyJTIwcm9vZnxlbnwwfDB8fHwxNzMxODI5MDA0fDA&ixlib=rb-4.0.3&q=80&w=1080" alt="Gallery Image" /> */}
-                  <div className="flex flex-col items-start">
-                    <h3 className="xs:text-lg text-sm font-semibold">
-                      Tesla Unveils Solar Roofs 3.0: Efficiency Boost of 20%
-                    </h3>
-                    <p className="text-sm text-gray-500">Nov 17, 2024</p>
-                  </div>
-                </div>
-              </div>
-              {/* 3 */}
-              <div className="w-full flex flex-col mt-6">
-                <div className="flex justify-start gap-4">
-                  <img
-                    className="lg:w-[8rem] lg:h-[5rem] md:w-[6rem] md:h-[4rem] xs:w-[8rem] xs:h-[5rem] w-[6rem] h-[3rem] rounded-sm xs:outline xs:outline-[4px]"
-                    src="https://images.unsplash.com/photo-1568209865332-a15790aed756?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMXx8bWljcm9jaGlwfGVufDB8MHx8fDE3MzE4Mjg5MDl8MA&ixlib=rb-4.0.3&q=80&w=1080"
-                    alt="Gallery Image"
-                  />
-                  {/* <img class="lg:w-[8rem] lg:h-[5rem] md:w-[6rem] md:h-[4rem] xs:w-[8rem] xs:h-[5rem] w-[6rem] h-[3rem] rounded-sm xs:outline xs:outline-[4px]" src="https://images.unsplash.com/photo-1684487747720-1ba29cda82f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw3fHxvcGVuJTIwYWl8ZW58MHwwfHx8MTczMTgyOTA4M3ww&ixlib=rb-4.0.3&q=80&w=1080" alt="Gallery Image" /> */}
-                  <div className="flex flex-col gap-2 items-start">
-                    <h3 className="xs:text-lg text-sm font-semibold">
-                      OpenAI Releases GPT-5 with Enhanced Creativity Features
-                    </h3>
-                    <p className="text-sm text-gray-500">Nov 17, 2024</p>
-                  </div>
-                </div>
-              </div>
+              )}
             </div>
             {/* col - 4 */}
             <div className="w-full mt-4 lg:pl-6">
