@@ -21,7 +21,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en" className={inter.className}>
-      <body className="bg-gray-400  ">
+      <body classNam="">
         <SkeletonTheme baseColor="#202020" highlightColor="#444">
           <BlogProvider>
             <AuthProvider session={session}>
@@ -29,7 +29,7 @@ export default async function RootLayout({ children }) {
               <div className="lg:hidden">
                 <BottomMenu />
               </div>
-              <div className="">{children}</div>
+              <div className="bg-blue-gray-500">{children}</div>
               <div className="hidden lg:flex">
                 <Footer />
               </div>

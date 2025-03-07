@@ -9,8 +9,8 @@ const Urgency = ({ jobs, search, filterList }) => {
   return (
     <div class="w-full flex justify-center ">
       <div class="w-full h-auto flex flex-col">
-        <div class="bg-blue-gray-50 text-blue-gray-600 font-semibold text-lg  px-5 py-3 border-b border-gray-300">
-          Job Urgency
+        <div class=" bg-blue-gray-300/40 text-white font-semibold text-lg  px-5 py-3 border-b border-gray-300">
+          Job Urgent
         </div>
         <div class="w-full h-auto bg-white" id="journal-scroll">
           {search?.length > 0 && (

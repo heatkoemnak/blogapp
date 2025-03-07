@@ -13,7 +13,7 @@ const Footer = () => {
   return (
     <div className="w-full h-full -z-1">
       {/* Footer  */}
-      <footer className="w-full h-fit bg-black text-white relative bottom-0">
+      <footer className="w-full h-fit bg-black/75 text-white relative bottom-0">
         <div className="w-full mx-auto sm:px-10 px-4 pb-10">
           <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 justify-items-start pt-12">
             {/* col 1 */}

@@ -94,7 +94,7 @@ const MainSection = () => {
     return classes.filter(Boolean).join(' ');
   }
   return (
-    <div className="max-w-7xl mx-auto py-6 ">
+    <div className="max-w-8xl px-20 mx-auto py-6 ">
       {!loading ? (
         <div className="grid grid-cols-5 gap-x-2 gap-y-2">
           {/* lext side section */}
@@ -105,8 +105,8 @@ const MainSection = () => {
               search={search}
               filterList={filterList}
             />
-            <div className="flex border-t-2 mt-4 justify-between items-center py-4 px-4 bg-blue-gray-50">
-              <div class=" text-blue-gray-600 font-semibold text-lg  px-2 border-gray-300">
+            <div className="bg-blue-gray-300/40 flex border-t-2 mt-4 justify-between items-center py-4 px-4 ">
+              <div class=" text-white font-semibold text-lg  px-2 border-gray-300">
                 All jobs
               </div>
               <div className="flex items-center">
@@ -114,10 +114,9 @@ const MainSection = () => {
                   <button
                     type="button"
                     onClick={() => setShowGrid(!showGrid)}
-                    className="-m-2 ml-5 p-2 text-blue-gray-900 hover:text-gray-500 sm:ml-7"
+                    className="-m-2 ml-5 p-2 text-gray-100 hover:text-gray-500 sm:ml-7"
                   >
-                    <span className="sr-only">View grid</span>
-                    <Squares2X2Icon className="size-4" />
+                    <Squares2X2Icon className="size-4 text-gray-100" />
                   </button>
                 ) : (
                   <button
@@ -125,26 +124,24 @@ const MainSection = () => {
                     onClick={() => setShowGrid(!showGrid)}
                     className="-m-2 ml-5 p-2 sm:ml-7"
                   >
-                    <span className="sr-only ">View grid</span>
                     <BiGridHorizontal
                       size={30}
-                      className="cursor-pointer text-blue-gray-900 hover:text-gray-500 "
+                      className="cursor-pointer text-gray-100 hover:text-gray-500 "
                     />
                   </button>
                 )}
                 <button
                   type="button"
                   // onClick={() => setMobileFiltersOpen(true)}
-                  className="  p-2 text-blue-gray-900 hover:text-gray-500 "
+                  className="  p-2 hover:text-gray-500 "
                 >
-                  <span className="sr-only">Filters</span>
-                  <FunnelIcon className="size-4" />
+                  <FunnelIcon className="size-4 text-gray-100" />
                 </button>
                 <Menu as="div" className="relative inline-block text-left">
                   <div>
-                    <MenuButton className="group inline-flex justify-center text-sm font-medium text-blue-gray-900 hover:text-gray-900">
+                    <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-100 hover:text-teal-900">
                       Sort
-                      <ChevronDownIcon className="-mr-1 ml-1 size-5 shrink-0 text-blue-gray-900 group-hover:text-gray-500" />
+                      <ChevronDownIcon className="-mr-1 ml-1 size-5 shrink-0 text-gray-100 group-hover:text-teal-500" />
                     </MenuButton>
                   </div>
 
@@ -193,7 +190,7 @@ const MainSection = () => {
                 </button>
               </div>
             )}
-            <div className=" border-gray-300 bg-blue-gray-50">
+            <div className=" border-gray-300 ">
               {search?.length > 0 && (
                 <div className="py-2 px-4 bg-gray-100 text-gray-700 ">
                   {filterList?.length > 0 ? (

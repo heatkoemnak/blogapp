@@ -24,7 +24,7 @@ const JobRow = ({ job }) => {
     setIsBookmarked((prev) => !prev);
   };
   return (
-    <div className="px-5  py-6 grow border-b border-gray-200 bg-white hover:bg-gray-100/95 cursor-pointer">
+    <div className="px-5  py-6 grow border-b border-gray-200 bg-white hover:bg-slate-500 cursor-pointer">
       <div className="lg:flex  lg:items-center lg:justify-between">
         <div className="text-lg grow font-semibold text-bookmark-blue flex space-x-1 items-center">
           <Link href={`jobs/${job?.id}`}>

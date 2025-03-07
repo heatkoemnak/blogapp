@@ -3,7 +3,12 @@
 import { useBlogContext } from '@/app/context/BlogProvider';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
+import {
+  BiBuilding,
+  BiSolidMinusCircle,
+  BiSolidPlusCircle,
+  BiX,
+} from 'react-icons/bi';
 const Company = () => {
   const [selectedCompany, setSelectedCompany] = useState(null);
   const [selectedCompanyId, setSelectedCompanyId] = useState(null);
@@ -20,7 +25,6 @@ const Company = () => {
       setSelectedCompanyId(savedCompanyId);
     }
   }, []);
-
   const handleCompanySelection = (company) => {
     setSelectedCompany(company.name);
     setSelectedCompanyId(company.id);
@@ -30,35 +34,64 @@ const Company = () => {
     localStorage.setItem('selectedCompanyId', company.id);
   };
 
+  const clearSelectedCompany = () => {
+    setSelectedCompany(null);
+    setSelectedCompanyId(null);
+
+    // Remove selected company from local storage
+    localStorage.removeItem('selectedCompany');
+    localStorage.removeItem('selectedCompanyId');
+  };
+
   return (
-    <div className="max-w-7xl h-screen p-5 my-5 bg-blue-gray-50 mx-auto">
+    <div className="max-w-7xl h-screen p-5 my-5 rounded-xl bg-blue-gray-50 mx-auto">
       <div className="flex justify-between px-6 items-center">
-        <div>
+        <button
+          onClick={() => router.back()}
+          className="flex gap-1 items-center cursor-pointer hover:text-cyan-900"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-5"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
+            />
+          </svg>
+          <span>Back</span>
+        </button>
+        <div className="text-center">
           <h3 className="text-2xl font-semibold">Your Company</h3>
           <p className="text-sm text-gray-600">
             Select a company to create a job
           </p>
         </div>
-        <div>
+        <div className="flex gap-1 items-center">
           <button
-            className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2 flex items-center"
-            onClick={() => router.push('/company/new')}
+            onClick={clearSelectedCompany}
+            className="bg-blue-gray-500/20 flex items-center gap-2 py-1 px-2  rounded-full"
           >
-            Create New Company
-            <svg
-              className="w-4 h-4 ml-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
+            <BiBuilding className="w-5 h-5 rounded-full" />
+            <span>
+              {selectedCompany ? selectedCompany : 'Select a company'}
+            </span>
+            <BiX
+              size={20}
+              className="text-red-700 bg-blue-gray-500/20 rounded-full"
+            />
+          </button>
+          <button
+            onClick={() => router.push('/company/new')}
+            className="bg-blue-gray-500/20 hover:bg-teal-800/20 flex items-center gap-2 py-1 px-2 rounded-full"
+          >
+            <span className="ml-1">New Company</span>
+            <BiSolidPlusCircle size={20} className="text-teal-500" />
           </button>
         </div>
       </div>
@@ -85,12 +118,12 @@ const Company = () => {
         <div className="flex flex-wrap sm:mx-auto sm:mb-2 -mx-2 p-4">
           {companies.length > 0 ? (
             companies.map((company, index) => (
-              <div key={index} className="p-2 sm:w-1/2 w-full">
+              <div key={index} className="p-2 sm:w-1/2 w-full ">
                 <div
                   onClick={() => handleCompanySelection(company)}
-                  className={`bg-gray-100 border border-blue-gray-300 rounded flex p-4 h-full items-center cursor-pointer ${
+                  className={`bg-gray-50 border border-blue-gray-300 rounded flex p-4 h-full items-center cursor-pointer ${
                     selectedCompany === company?.name
-                      ? 'border-2 border-cyan-700'
+                      ? 'border-2 border-cyan-700 bg-white'
                       : ''
                   }`}
                 >
@@ -100,33 +133,58 @@ const Company = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="3"
-                    className="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4"
+                    className={`${
+                      selectedCompany === company?.name
+                        ? 'text-cyan-900'
+                        : 'text-gray-500'
+                    } w-6 h-6 flex-shrink-0 mr-`}
                     viewBox="0 0 24 24"
                   >
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
                     <path d="M22 4L12 14.01l-3-3"></path>
                   </svg>
-                  <span className="font-medium">{company?.name}</span>
+                  <div className="w-full flex justify-between ml-2">
+                    <span className="font-medium">{company?.name}</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+                      />
+                    </svg>
+                  </div>
                 </div>
               </div>
             ))
           ) : (
-            <p className="text-gray-500">No companies found. Create a new one!</p>
+            <p className="text-gray-500">
+              No companies found. Create a new one!
+            </p>
           )}
         </div>
       )}
       {!isLoading && selectedCompany && (
         <div className="px-6">
           <p className="text-sm font-medium mb-4">
-            Selected Company: <span className="text-cyan-700">{selectedCompany}</span>
+            Selected company:
+            <span className="text-cyan-700"> {selectedCompany}</span>
           </p>
           <button
-            className="text-white bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2 flex items-center"
+            className={`${
+              selectedCompany && 'bg-teal-700 hover:bg-cyan-800'
+            } text-white bg-blue-gray-500 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2 flex items-center`}
             onClick={() => {
               router.push(`/company/${selectedCompanyId}`);
             }}
           >
-            Create Job for Selected Company
+            Create a job for {selectedCompany}
             <svg
               className="w-4 h-4 ml-2"
               fill="none"

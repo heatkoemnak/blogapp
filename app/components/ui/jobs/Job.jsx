@@ -23,7 +23,7 @@ export function Job({ job }) {
   };
   console.log(job);
   return (
-    <div className="relative rounded-lg shadow-md  p-5 border-2 border-teal-200 bg-white cursor-pointer">
+    <div className="relative rounded-lg shadow-md  p-5 border-2 border-teal-100/30 bg-white cursor-pointer">
       <div class=" absolute top-1 right-0 z-10 pl-5 pr-3 whitespace-no-wrap">
         <span class="text-gray-400 text-xs">{timeAgo(job?.createdAt)}</span>
       </div>
