@@ -132,7 +132,6 @@ const MainSection = () => {
                 )}
                 <button
                   type="button"
-                  // onClick={() => setMobileFiltersOpen(true)}
                   className="  p-2 hover:text-gray-500 "
                 >
                   <FunnelIcon className="size-4 text-gray-100" />

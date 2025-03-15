@@ -1,39 +1,56 @@
+import Label from '@/app/components/ui/Reusable/Label';
 import React from 'react';
 
 const Application = () => {
   return (
-    <div class="min-h-screen flex items-center justify-center px-4">
-      <div class="max-w-4xl  bg-white w-full rounded-lg shadow-xl">
+    <div class="min-h-screen flex items-center justify-center px-4 py-10">
+      <div class="max-w-5xl  bg-white w-full rounded-lg shadow-xl px-5">
         <div class="p-4 border-b">
           <h2 class="text-2xl ">Applicant Information</h2>
           <p class="text-sm text-gray-500">Personal details and application.</p>
         </div>
+
         <div>
-          <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-            <p class="text-gray-600">Full name</p>
-            <p>Jane Doe</p>
+          <div class="md:grid md:grid-cols-2 bg-transparent hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+            <Label labelName="Full name" />
+            <input
+              required
+              type="text"
+              className={` relative  px-4 py-3 block w-full  border-gray-300  text-gray-600 text-md  focus:border-teal-500 placeholder-gray-400`}
+              placeholder="e.g., Heat Koemnak"
+            />
+            {/* <p>Jane Doe</p> */}
           </div>
-          <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-            <p class="text-gray-600">Application for</p>
-            <p>Product Manager</p>
+          <div class="md:grid md:grid-cols-2 bg-transparent hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+            <Label labelName="Application for" />
+            <input
+              required
+              type="text"
+              className={` relative text-md px-4 py-3 block w-full  border-gray-300  text-gray-600 focus:border-teal-500 placeholder-gray-400`}
+              placeholder="e.g., Product Manager"
+            />
+            {/* <p>Product Manager</p> */}
           </div>
-          <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-            <p class="text-gray-600">Email Address</p>
-            <p>Janedoe@gmail.com</p>
+          <div class="md:grid md:grid-cols-2 bg-transparent hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+            <Label labelName="Email Address" />
+            <input
+              required
+              type="email"
+              className={` relative text-md px-4 py-3 block w-full  border-gray-300  text-gray-600 focus:border-teal-500 placeholder-gray-400`}
+              placeholder="e.g., Janedoe@gmail.com"
+            />
           </div>
+
           <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-            <p class="text-gray-600">Salary</p>
-            <p>$ 12000</p>
-          </div>
-          <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
-            <p class="text-gray-600">About</p>
-            <p>
-              Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
-              incididunt cillum culpa consequat. Excepteur qui ipsum aliquip
-              consequat sint. Sit id mollit nulla mollit nostrud in ea officia
-              proident. Irure nostrud pariatur mollit ad adipisicing
-              reprehenderit deserunt qui eu.
-            </p>
+            <p class="text-gray-600">Message</p>
+            <div className="relative ">
+              {/* <Textarea variant="static" placeholder="Your Comment" rows={8} /> */}
+              <textarea
+                rows="5"
+                placeholder="Write your cover letter here"
+                className="relative text-md px-4 py-3 mr-2 block w-full  border-gray-300  text-gray-600 focus:border-teal-500 placeholder-gray-400"
+              ></textarea>
+            </div>
           </div>
           <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4">
             <p class="text-gray-600">Attachments</p>
