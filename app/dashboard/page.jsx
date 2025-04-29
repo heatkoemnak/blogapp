@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 export default function Dashboard() {
   const { data: session } = useSession();
 
-  console.log(posts);
+  // console.log(posts);
 
   // Fetch posts on component mount
 

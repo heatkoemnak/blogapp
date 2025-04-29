@@ -24,7 +24,7 @@ const JobRow = ({ job }) => {
     setIsBookmarked((prev) => !prev);
   };
   return (
-    <div className="px-5  py-6 grow border-b border-gray-200 bg-white hover:bg-slate-500 cursor-pointer">
+    <div className="px-5  my-1 py-6 grow border-b border-gray-200 bg-gray-100 hover:bg-slate-500 cursor-pointer">
       <div className="lg:flex  lg:items-center lg:justify-between">
         <div className="text-lg grow font-semibold text-bookmark-blue flex space-x-1 items-center">
           <Link href={`jobs/${job?.id}`}>
@@ -95,7 +95,7 @@ const JobRow = ({ job }) => {
               </div>
               <div className="flex gap-2">
                 {session && session?.user?.id === job?.author?.id ? (
-                  <div className='flex'>
+                  <div className="flex">
                     <button
                       onClick={() => router.push(`/jobs/apply/${job?.id}`)}
                       class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
@@ -113,7 +113,7 @@ const JobRow = ({ job }) => {
                   <>
                     <button
                       onClick={() => router.push(`/jobs/apply/${job?.id}`)}
-                      class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
+                      class="mr-2 my-1 tracking-wider px-2  text-white border-teal-100 bg-teal-700 hover:bg-teal-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
                     >
                       Apply
                     </button>

@@ -11,7 +11,7 @@ const CategoriesLists = () => {
       <ul className="flex items-start flex-wrap mt-4">
         <li className="flex mx-1">
           <Link
-            className="p-2 px-3 mb-4 rounded font-medium hover:bg-transparent hover:border bg-teal-400/25 text-teal-500"
+            className="p-2 px-3 mb-4 rounded-full font-medium hover:bg-transparent hover:border bg-teal-400/50 text-teal-500"
             href={{
               pathname: '/jobs/',
               query: { search: '' },
@@ -21,10 +21,10 @@ const CategoriesLists = () => {
           </Link>
         </li>
         {jobCategories &&
-          jobCategories.map((cate, index) => (
+          jobCategories.slice(0, 5).map((cate, index) => (
             <li key={index} className="flex mx-1">
               <Link
-                className="p-2 px-3 mb-4 rounded font-medium hover:bg-transparent hover:border bg-teal-400/25 text-teal-500"
+                className="p-1 px-3 mb-4 rounded-full font-medium hover:bg-transparent hover:border bg-teal-400/15 text-teal-500"
                 href={{
                   pathname: '/jobs/',
                   query: { search: cate?.name },
@@ -34,6 +34,20 @@ const CategoriesLists = () => {
               </Link>
             </li>
           ))}
+
+        {jobCategories && jobCategories.length > 5 && (
+          <li className="flex mx-1">
+            <Link
+              className="p-1 px-3 mb-4 rounded-full font-medium hover:bg-transparent hover:border bg-teal-400/15 text-teal-500"
+              href={{
+                pathname: '/jobs/',
+                query: { search: '' },
+              }}
+            >
+              Show More ({jobCategories.length - 5})
+            </Link>
+          </li>
+        )}
       </ul>
     </aside>
   );

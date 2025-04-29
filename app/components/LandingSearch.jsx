@@ -78,6 +78,9 @@ function LandingSearch() {
           <div className="flex flex-col items-center py-10 text-center lg:py-20">
             <div className="w-full px-4 lg:w-1/2 lg:px-0">
               <div className="mb-8">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                  Welcome to jobSpace
+                </h1>
                 <h2 className="text-3xl lg:text-4xl font-bold mb-3">
                   Looking for a job?
                 </h2>
@@ -105,26 +108,32 @@ function LandingSearch() {
                       ></path>
                     </svg>
                   </div>
-
+                  {/* 
                   <form>
                     <Search />
-                  </form>
+                  </form> */}
                 </div>
               </div>
               <div className="flex items-center gap-2 justify-center py-3 animate-fadeIn">
-                <div className="flex flex-col p-2 border cursor-pointer text-md font-medium bg-gradient-to-r from-teal-500 to-teal-900 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300 ease-in-out">
-                  <span className="text-gray-100 px-5 text">កាងារទាំងអស់</span>
+                <div className="flex flex-col p-20 rounded-xl border cursor-pointer text-md font-medium bg-blue-gray-800/30 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300 ease-in-out">
                   <span className="text-gray-100 px-5 text-xl">
                     {jobs?.length}
                   </span>
+                  <span className="text-gray-100 px-5 text text-nowrap">
+                    កាងារទាំងអស់
+                  </span>
                 </div>
-                <div className="flex flex-col p-2 border cursor-pointer  text-md font-medium bg-gradient-to-r from-teal-500 to-teal-900 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300 ease-in-out">
-                  <span className="text-gray-100 px-5">ក្រុមហ៊ុន</span>
+                <div className="flex flex-col p-20 rounded-xl border cursor-pointer  text-md font-medium bg-blue-gray-800/30 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300 ease-in-out">
                   <span className="text-gray-100 px-5 text-xl">3</span>
+                  <span className="text-gray-100 px-5 text-nowrap">
+                    ក្រុមហ៊ុន
+                  </span>
                 </div>
-                <div className="flex flex-col p-2 border cursor-pointer  text-md font-medium bg-gradient-to-r from-teal-500 to-teal-900 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300 ease-in-out">
-                  <span className="text-gray-100 px-5">អ្នកប្រើប្រាស់សរុប</span>
-                  <span className="text-gray-100 px-5 text-xl">1256</span>
+                <div className="flex flex-col p-20 rounded-xl border cursor-pointer  text-md font-medium bg-blue-gray-800/30 hover:scale-105 hover:bg-gradient-to-l transition-transform duration-300 ease-in-out">
+                  <span className="text-gray-100 px-5 text-xl">2</span>
+                  <span className="text-gray-100 px-5 text-nowrap">
+                    អ្នកប្រើប្រាស់សរុប
+                  </span>
                 </div>
               </div>
             </div>

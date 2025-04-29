@@ -9,14 +9,13 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import Image from 'next/image';
 
 const CompanyLists = ({ company }) => {
-  console.log(company);
   return (
-    <div className="py-2 px-5 mt-1 grow border-b border-gray-200 bg-white cursor-pointer">
+    <div className="py-2 px-5 mt-1 grow border-b  border-gray-200 bg-white cursor-pointer">
       <div className="lg:flex lg:items-center lg:justify-between">
         <div className="text-lg w-full font-semibold text-bookmark-blue flex justify-between items-center">
           <div className="flex items-center">
             <div>
-              <Image src={company?.logoUrl} width={50} height={50} />
+              <Image src={company?.logoUrl} width={50} height={50} alt="" />
             </div>
             <span className="text-cyan-700 font-medium text-sm px-2">
               {company?.name}
@@ -27,11 +26,7 @@ const CompanyLists = ({ company }) => {
           </button>
         </div>
       </div>
-
       <div className="min-w-0 flex-1">
-        {/* <h2 className=" font-bold text-slate-900 sm:text-xl lg:text-2xl">
-            {job?.title}
-          </h2> */}
         <div className="mt-1 flex flex-col space-y-2">
           <div className="flex gap-2 items-center">
             <div className="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-cyan-800 ring-1 ring-inset ring-green-300/20 w-fit">

@@ -49,12 +49,12 @@ const Footer = () => {
               </h2>
               {/* 1 */}
               {!isLoading ? (
-                jobs.map((job, index) => {
+                jobs.slice(0, 2).map((job, index) => {
                   return (
                     <div key={index} className="w-full flex flex-col mt-6">
                       <div className="w-full flex gap-4">
                         <img
-                          className="lg:w-[8rem] lg:h-[5rem] md:w-[6rem] md:h-[4rem] xs:w-[8rem] xs:h-[5rem] w-[6rem] h-[3rem] rounded-sm xs:outline xs:outline-[4px]"
+                          className="lg:w-[5rem] lg:h-[5rem] md:w-[6rem] md:h-[4rem] xs:w-[8rem] xs:h-[5rem] w-[6rem] h-[3rem] rounded-sm xs:outline xs:outline-[4px]"
                           src={job?.icon}
                           alt="Gallery Image"
                         />
@@ -106,7 +106,7 @@ const Footer = () => {
           </div>
           <hr className="bg-gray mt-14" />
           <div className="w-full flex gap-2 flex-col items-center justify-center py-4">
-            <div>Copyright © 2024 Power.ME All Right Reserved</div>
+            <div>Copyright © 2024 jobSpace All Right Reserved</div>
           </div>
         </div>
       </footer>

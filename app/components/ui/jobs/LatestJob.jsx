@@ -37,7 +37,7 @@ export default function JobList() {
   const GridDisplay = () => {
     return (
       <>
-        <div className="max-w-7xl mx-auto border-b-2 border-gray-300 grid grid-cols-4 gap-x-2 gap-y-2 ">
+        <div className="max-w-7xl mx-auto py-20 border-b-2 border-gray-300 grid grid-cols-4 gap-x-2 gap-y-2 ">
           {groupedJobs?.map((group, index) => (
             <motion.div key={index} className="col-span-2 w-full">
               {group.map((job, jobIndex) => (
@@ -62,7 +62,7 @@ export default function JobList() {
     );
   };
   return (
-    <div className="bg-blue-gray-50 py-5">
+    <div className="bg-blue-gray-300/40 py-5">
       <div className="max-w-7xl mx-auto mt-4 bg-white flex px-4 border border-b border-gray-300 items-center justify-between">
         <div className=" text-blue-gray-600 text-md font-semibold py-3 px-1 ">
           Latest jobs

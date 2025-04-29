@@ -52,7 +52,7 @@ const JobDetails = () => {
             <div class="bg-white/90 dark:bg-gray-800/90 p-8 rounded-lg backdrop-blur-sm">
               <div class="max-w-2xl">
                 <h2 class="text-2xl md:text-3xl font-bold mb-4 dark:text-white">
-                  Our Company
+                  {job?.Company.name}
                 </h2>
 
                 <p class="text-gray-700 dark:text-gray-300 text-base md:text-lg mb-6">
@@ -60,9 +60,6 @@ const JobDetails = () => {
                   Voluptatum, repellendus.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
-                  <button class="bg-teal-600 dark:bg-red-700 text-white px-6 py-2 rounded-md hover:bg-red-700 dark:hover:bg-red-800 transition-colors">
-                    Apply
-                  </button>
                   <a
                     href="#"
                     class="text-teal-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 flex items-center transition-colors"
@@ -97,7 +94,7 @@ const JobDetails = () => {
           />
           <div className=" bg-white rounded-lg p-6 items-center mb-6">
             <h1 className="text-4xl font-bold mb-8">{job?.title}</h1>
-            <div className="min-w-0 flex-1">
+            <div className="flex justify-between">
               <div className="mt-1 flex flex-col space-y-2">
                 <div className="flex gap-2 items-center">
                   <div className="flex gap-1 items-center bg-teal-400 text-white text-sm px-2 py-1 rounded">
@@ -130,18 +127,27 @@ const JobDetails = () => {
                   </div>
                 </div>
               </div>
+              <Link href={`/jobs/apply/${job?.id}`} class="bg-teal-600 dark:bg-red-700 text-white px-6 py-2 rounded-md hover:bg-red-700 dark:hover:bg-red-800 transition-colors">
+                Click to Apply
+              </Link>
             </div>
           </div>
           <div className="px-10 py-5 bg-gray-100 rounded-md">
             {job?.description ? parse(job?.description) : null}
           </div>
-          <div className="font-semibold text-blue-gray-900 text-lg pt-5 pb-1 px-2">
+          <div
+            className="font-semibold text-blue-gray-900 text-lg pt-5 pb-1 px-2"
+          >
             How to Apply
           </div>
           <div className="text-lg leading-8 mb-20">
             {job?.contact && job?.contact.length > 0 ? (
               job?.contact.map((contact, index) => (
-                <Link href={contact} key={index} className="flex items-center text-blue-600">
+                <Link
+                  href={contact}
+                  key={index}
+                  className="flex items-center text-blue-600"
+                >
                   <span className="text-blue-600">{contact}</span>
                   <BiLinkExternal />
                 </Link>

@@ -118,6 +118,16 @@ const Navbar = () => {
             Home
           </Link>
           <Link
+            href={'/dashboard'}
+            className={`${
+              currentPath === '/dashboard'
+                ? 'text-orange-600 font-bold'
+                : 'flex items-center gap-2'
+            }`}
+          >
+            Dashboard
+          </Link>
+          <Link
             href={'/jobs'}
             className={`${
               currentPath === '/jobs'

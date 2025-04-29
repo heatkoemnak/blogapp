@@ -181,8 +181,7 @@ model Application {
   applicationFor String
   email          String
   about          String?
-  attachments    String[]
-  supportLink    String
+  attachment    String?
   userID         String   @unique @db.ObjectId
   User           User     @relation(fields: [userID], references: [id], onDelete: Cascade)
   jobID          String   @unique @db.ObjectId
@@ -222,6 +221,7 @@ model Announcement {
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
 }
+
 
 model Comment {
   id           String       @id @default(auto()) @map("_id") @db.ObjectId

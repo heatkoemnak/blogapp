@@ -29,7 +29,7 @@ export default async function RootLayout({ children }) {
               <div className="lg:hidden">
                 <BottomMenu />
               </div>
-              <div className="bg-blue-gray-500">{children}</div>
+              <div className="">{children}</div>
               <div className="hidden lg:flex">
                 <Footer />
               </div>

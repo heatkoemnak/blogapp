@@ -23,9 +23,7 @@ const Hero = () => {
           <div class="container mx-auto px-4 py-24 md:py-32 relative z-10">
             <div class="flex flex-col md:flex-row items-center justify-between">
               <div class="w-full md:w-1/2 mb-12 md:mb-0">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                  Welcome to jobSpace
-                </h1>
+                
                 <p class="text-xl mb-8 text-gray-300">
                   Unlock your potential with jobSpace and find your dream job.
                 </p>
