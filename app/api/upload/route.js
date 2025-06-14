@@ -1,13 +1,6 @@
 import formidable from 'formidable';
 import fs from 'fs';
 import pdf from 'pdf-parse';
-
-export const config = {
-    api: {
-        bodyParser: false, // Disabling default body parsing
-    },
-};
-
 const parsePDF = async(filePath) => {
     const dataBuffer = fs.readFileSync(filePath);
     const data = await pdf(dataBuffer);
