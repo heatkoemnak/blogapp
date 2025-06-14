@@ -6,13 +6,11 @@ import { LiaEditSolid } from 'react-icons/lia';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { CgExport, CgImport } from 'react-icons/cg';
 import Processing from '@/app/components/ui/Reusable/Processing';
-import CompanyForm from '@/app/components/ui/Reusable/CompanyForm';
 import OrgLayout from '@/app/components/Dashboard/OrgLayout';
 import DeleteCompanyPopup from '@/app/components/ui/Reusable/DeleteCompanyPopup';
 import useSWR, { mutate } from 'swr';
 import axios from 'axios';
 import { BiSave } from 'react-icons/bi';
-
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Organizations() {
@@ -305,12 +303,9 @@ export default function Organizations() {
         </table>
         <div className="flex justify-start items-center  bg-gray-100">
           {isEdit && (
-            <button onClick={togglePopup} className="px-4 py-2  text-gray-600">
+            <Link href="/dashboard/orgs/new" className="px-4 py-2  text-gray-600">
               {isOpen ? 'Close' : 'Add'} an organization..
-            </button>
-          )}
-          {isOpen && (
-            <CompanyForm setIsOpen={setIsOpen} setIsSuccess={setIsSuccess} />
+            </Link>
           )}
         </div>
         <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">

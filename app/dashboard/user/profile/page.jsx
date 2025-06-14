@@ -79,15 +79,15 @@ const UserProfile = () => {
                             Full name
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            John Doe
+                           {session?.user?.name || 'John Doe'}
                           </dd>
                         </div>
                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                           <dt className="text-sm font-medium text-gray-500">
-                            Email address
+                            {session?.user?.name || 'John Doe'}
                           </dt>
                           <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            johndoe@example.com
+                            {session?.user?.email || 'john.doe@me.com'}
                           </dd>
                         </div>
                         <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">

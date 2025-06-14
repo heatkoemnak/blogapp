@@ -11,12 +11,16 @@ import useSWR from 'swr';
 import { timeAgo } from '@/app/utils/timeAgo';
 import { useSession } from 'next-auth/react';
 import Processing from '@/app/components/ui/Reusable/Processing';
+import { BiSave } from 'react-icons/bi';
+import CompanyForm from '@/app/components/ui/Reusable/CompanyForm';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const JobPage = () => {
   const { data: session } = useSession();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+
   const { data, error, isLoading } = useSWR(
     `/api/jobs/user/${session?.user?.email}`,
     fetcher,
@@ -42,103 +46,114 @@ const JobPage = () => {
   if (isLoading) {
     return <Processing state="Loading..." />;
   }
-
+const toogleEdit = () => {
+    setIsEdit((prev) => !prev);
+  };
   return (
     <JobLayoutDashbord>
       <HeaderSection title="Jobs" />
       <div className="flex items-center mt-4 px-4 justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4">
-        <div className="relative flex items-center gap-2">
-          <button
-            id="dropdownActionButton"
-            onClick={toggleDropdown}
-            className="flex gap-1 items-center text-white bg-teal-400 border border-gray-300 focus:outline-none hover:bg-teal-500 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-            type="button"
-          >
-            Edit
-            <LiaEditSolid />
-          </button>
-          <button
-            id="dropdownActionButton"
-            onClick={toggleDropdown}
-            className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-            type="button"
-          >
-            Action
-            <svg
-              className="w-2.5 h-2.5 ms-2.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
-          </button>
-          {isDropdownOpen && (
-            <div className="absolute shadow-lg top-10 left-14 z-10 bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700 dark:divide-gray-600">
-              <ul className="py-1 list-none text-sm text-gray-700 dark:text-gray-200">
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  <CgImport />
-                  Import
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  <CgExport />
-                  Export
-                </Link>
-              </ul>
-              <div className="py-1">
-                <Link
-                  href="#"
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  <RiDeleteBinLine />
-                  Delete
-                </Link>
+                <div className="relative flex items-center gap-2">
+                  <button
+                    id="dropdownActionButton"
+                    onClick={toogleEdit}
+                    className="flex gap-1 items-center text-white bg-teal-400 border border-gray-300 focus:outline-none hover:bg-teal-500 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                    type="button"
+                  >
+                    {isEdit ? (
+                      <div className="flex gap-1 items-center">
+                        <BiSave />
+                        <span className="text-white">Save</span>
+                      </div>
+                    ) : (
+                      <div className="flex gap-1 items-center">
+                        <span className="text-white">Edit</span>
+                        <LiaEditSolid />
+                      </div>
+                    )}
+                  </button>
+                  <button
+                    id="dropdownActionButton"
+                    onClick={toggleDropdown}
+                    className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                    type="button"
+                  >
+                    Action
+                    <svg
+                      className="w-2.5 h-2.5 ms-2.5"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 10 6"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m1 1 4 4 4-4"
+                      />
+                    </svg>
+                  </button>
+                  {isDropdownOpen && (
+                    <div className="absolute shadow-lg top-10 left-14 z-10 bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700 dark:divide-gray-600">
+                      <ul className="py-1 list-none text-sm text-gray-700 dark:text-gray-200">
+                        <Link
+                          href="#"
+                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          <CgImport />
+                          Import
+                        </Link>
+                        <Link
+                          href="#"
+                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          <CgExport />
+                          Export
+                        </Link>
+                      </ul>
+                      <div className="py-1">
+                        <Link
+                          href="#"
+                          className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          <RiDeleteBinLine />
+                          Delete
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <label htmlFor="table-search" className="sr-only">
+                  Search
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 start-0 flex items-center pl-3 pointer-events-none">
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    id="table-search-users"
+                    className=" p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search for users"
+                  />
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-        <label htmlFor="table-search" className="sr-only">
-          Search
-        </label>
-        <div className="relative">
-          <div className="absolute inset-y-0 start-0 flex items-center pl-3 pointer-events-none">
-            <svg
-              className="w-4 h-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-              />
-            </svg>
-          </div>
-          <input
-            type="text"
-            id="table-search-users"
-            className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search for users"
-          />
-        </div>
-      </div>
       <table className="w-full text-sm text-left rtl:text-right text-gray-800 ">
         <thead className="text-xs text-gray-700 uppercase dark:text-gray-400 bg-gray-100 border border-gray-200">
           <tr>
@@ -230,10 +245,20 @@ const JobPage = () => {
           ))}
         </tbody>
       </table>
-      <div className="flex justify-start items-center  bg-gray-100">
+      {/* <div className="flex justify-start items-center  bg-gray-100">
         <Link href={'/dashboard/job.create'} className="px-4 py-2  text-gray-600">
           {isOpen ? 'Close' : 'Add'} a job...
         </Link>
+      </div> */}
+      <div className="flex justify-start items-center  bg-gray-100">
+        {isEdit && (
+          <Link href={'/dashboard/job.list/new'} className="px-4 py-2  text-gray-600">
+            {isOpen ? 'Close' : 'Add'} a job...
+          </Link>
+        )}
+        {isOpen && (
+          <CompanyForm setIsOpen={setIsOpen} />
+        )}
       </div>
 
       <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
