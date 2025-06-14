@@ -1,15 +1,18 @@
 'use client';
 
-import LandingSearch from '../components/LandingSearch';
+import Footer from '../components/Footer';
 import MainSection from '../components/MainSection';
-import LatestJob from '../components/ui/jobs/LatestJob';
-import Search from '../components/ui/Search';
+import Navbar from '../components/Navbar';
+import PDFUploader from '../components/PDF/PDFUploader';
 
 const Jobs = () => {
   return (
     <>
-      <Search />
+      <Navbar />
+      {/* <Search /> */}
+      <PDFUploader />
       <MainSection />
+      <Footer/>
     </>
   );
 };

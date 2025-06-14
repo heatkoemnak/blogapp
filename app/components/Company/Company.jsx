@@ -67,7 +67,7 @@ const Company = () => {
           <span>Back</span>
         </button>
         <div className="text-center">
-          <h3 className="text-2xl font-semibold">Your Company</h3>
+          <h3 className="text-2xl font-semibold">Your Organization</h3>
           <p className="text-sm text-gray-600">
             Select a company to create a job
           </p>

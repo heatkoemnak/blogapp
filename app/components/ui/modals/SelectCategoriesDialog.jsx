@@ -101,13 +101,13 @@ export function SelectCategoriesDialog({ ...props }) {
             ))}
         </div>
         <div className="col-span-full ">
-          <div class=" bg-slate-500 rounded-xl">
-            <div class=" flex gap-2 py-2 text-sm h-10 px-3 text-gray-500 border-r border-gray-300">
+          <div className=" bg-slate-500 rounded-xl">
+            <div className=" flex gap-2 py-2 text-sm h-10 px-3 text-gray-500 border-r border-gray-300">
               <input
                 value={linkInput}
                 onChange={(e) => setLinkInput(e.target.value)}
                 type="text"
-                class="block w-full max-w-xs pr-4 pl-20 py-2 bg-white text-sm font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none leading-relaxed"
+                className="block w-full max-w-xs pr-4 pl-20 py-2 bg-white text-sm font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-full placeholder-gray-400 focus:outline-none leading-relaxed"
                 placeholder="www.Pagedone.com"
               />
               <button

@@ -1,5 +1,7 @@
 'use client';
 import Logo from './Logo';
+import useSWR from 'swr';
+
 import {
   FaFacebook,
   FaInstagramSquare,
@@ -7,49 +9,45 @@ import {
   FaWhatsappSquare,
 } from 'react-icons/fa';
 import { useBlogContext } from '../context/BlogProvider';
-
+const fetcher = async (url) => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    const error = new Error('An error occurred while fetching data.');
+    error.info = await res.json();
+    error.status = res.status;
+    console.log(error);
+    throw error;
+  }
+  return res.json();
+};
 const Footer = () => {
-  const { jobs,isLoading } = useBlogContext();
+  // const { jobs, isLoading } = useBlogContext();
+  const { data, error, isLoading } = useSWR('/api/jobs', fetcher);
+
   return (
-    <div className="w-full h-full -z-1">
+    <div className="w-full h-full -z-1 border-t-2 border-gray-50 bg-gradient-to-b from-gray-50 to-gray-100">
       {/* Footer  */}
-      <footer className="w-full h-fit bg-black/75 text-white relative bottom-0">
+      <footer className="w-full h-fit bg-white text-gray-600 relative bottom-0">
         <div className="w-full mx-auto sm:px-10 px-4 pb-10">
-          <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 justify-items-start pt-12">
+          <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 justify-items-center pt-12">
             {/* col 1 */}
             <div className="mt-4">
-              <div className="flex-1 flex justify-between items-center">
+              <div className="flex-1 flex justify-end items-end">
                 <Logo />
               </div>
               <p className="mt-4">
-                This website build by Heat Koemnak, A passionate developer,
-                contributed 36 Tailwind components to this site, earning
-                second-best contributor status over three months.
+                &copy; {new Date().getFullYear()} JobHub, Inc. All Rights
+                Reserved.
               </p>
-              {/* Socials */}
-              <div className="flex gap-2 items-center text-2xl text-white mt-6">
-                <div className="flex items-center justify-center p-3 border rounded-full hover:bg-blue-500">
-                  <FaFacebook />
-                </div>
-                <div className="flex items-center justify-center p-3 border rounded-full hover:bg-pink-500">
-                  <FaInstagramSquare />
-                </div>
-                <div className="flex items-center justify-center p-3 border rounded-full hover:bg-green-500">
-                  <FaWhatsappSquare />
-                </div>
-                <div className="flex items-center justify-center p-3 border rounded-full hover:bg-gray-900">
-                  <FaTiktok />
-                </div>
-              </div>
             </div>
             {/* col - 2 */}
             <div className="mt-4">
-              <h2 className="text-white text-3xl font-semibold mb-8">
+              <h2 className="text-gray-600 text-3xl font-semibold mb-8">
                 Latest Jobs
               </h2>
               {/* 1 */}
               {!isLoading ? (
-                jobs.slice(0, 2).map((job, index) => {
+                data?.slice(0, 2).map((job, index) => {
                   return (
                     <div key={index} className="w-full flex flex-col mt-6">
                       <div className="w-full flex gap-4">
@@ -62,7 +60,9 @@ const Footer = () => {
                           <h3 className="xs:text-lg text-sm font-semibold">
                             {job?.title}
                           </h3>
-                          <p className="text-sm text-gray-500">{job?.Company?.name}</p>
+                          <p className="text-sm text-gray-500">
+                            {job?.Company?.name}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -80,27 +80,25 @@ const Footer = () => {
                 </div>
               )}
             </div>
+
             {/* col - 4 */}
             <div className="w-full mt-4 lg:pl-6">
-              <h4 className="text-white text-3xl font-semibold mb-6">
-                Newsletter
+              <h4 className="text-gray-600 text-3xl font-semibold mb-6">
+                Follow Us
               </h4>
-              <p className="text-gray-300 mb-7">
-                Join our subscribers list to get the latest news, updates and
-                special offers directly in your inbox
-              </p>
-              <div className="w-full flex justify-center items-center rounded bg-gray-700">
-                <input
-                  type="text"
-                  className="w-full h-full pl-4 text-gray-200 bg-gray-700 lg:text-left placeholder:text-gray-400 focus:outline-none focus:border-gray-500"
-                  placeholder="Email"
-                />
-                <button
-                  type="submit"
-                  className="h-full py-3 xs:px-6 px-2 bg-gradient-to-r from-orange-400 font-black to-purple-500 "
-                >
-                  Subscribe
-                </button>
+              <div className="flex gap-2 items-center text-2xl text-teal-600 mt-6">
+                <div className="flex items-center justify-center p-3 border rounded-full hover:bg-blue-500">
+                  <FaFacebook />
+                </div>
+                <div className="flex items-center justify-center p-3 border rounded-full hover:bg-pink-500">
+                  <FaInstagramSquare />
+                </div>
+                <div className="flex items-center justify-center p-3 border rounded-full hover:bg-green-500">
+                  <FaWhatsappSquare />
+                </div>
+                <div className="flex items-center justify-center p-3 border rounded-full hover:bg-gray-900">
+                  <FaTiktok />
+                </div>
               </div>
             </div>
           </div>

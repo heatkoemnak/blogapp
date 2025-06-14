@@ -14,6 +14,9 @@ export async function GET() {
         JobLocation: true, // Include job location details
         JobSalary: true, // Include job salary details
         ProvinceCity: true, // Include province and city details
+        Districts: true,
+        Communes: true,
+        Applications: true, // Include application details
       },
       orderBy: {
         createdAt: 'desc',
@@ -23,7 +26,6 @@ export async function GET() {
     // Return the jobs in the response
     return NextResponse.json(jobs, { status: 200 });
   } catch (error) {
-    console.error('Error fetching jobs:', error.message);
     return NextResponse.json(
       { message: 'Failed to fetch jobs', error: error.message },
       { status: 500 }

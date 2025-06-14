@@ -95,61 +95,7 @@ export const removeImage = async (publicId) => {
     throw error;
   }
 };
-// };
-// export const submitPost = async ({
-//   postId,
-//   title,
-//   content,
-//   images,
-//   authorEmail,
-//   categoryNames,
-//   links,
-//   publishedAt,
-// }) => {
-//   console.log(
-//     postId,
-//     title,
-//     content,
-//     images,
-//     authorEmail,
-//     categoryNames,
-//     links,
-//     publishedAt
-//   );
-//   try {
-//     const url = method === 'POST' ? '/api/blog' : `/api/blog/${postId}`;
-//     const response = await fetch(url, {
-//       method,
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({
-//         title,
-//         content,
-//         images,
-//         authorEmail,
-//         categoryNames,
-//         links,
-//         publishedAt,
-//       }),
-//     });
 
-//     if (!response.ok) {
-//       throw new CustomError(handleErrorResponse(response), response.status);
-//     }
-//     const updatedData = await response.json();
-//     return updatedData;
-//   } catch (error) {
-//     if (error instanceof CustomError) {
-//       console.error(
-//         `Custom Error: ${error.message} (Status: ${error.statusCode})`
-//       );
-//     } else {
-//       console.error(`Unexpected Error: ${error.message}`);
-//     }
-//     throw error;
-//   }
-// };
 export const deleteResource = async (id) => {
   console.log(id);
   try {

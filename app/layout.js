@@ -1,15 +1,13 @@
-import { Nunito } from 'next/font/google';
 import './globals.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import AuthProvider from './components/AuthProvider/AuthProvider';
 import { getServerSession } from 'next-auth';
-import Navbar from './components/Navbar';
 import { BlogProvider } from './context/BlogProvider';
 import BottomMenu from './components/ui/BottomMenu';
-import Footer from './components/Footer';
 import { SkeletonTheme } from 'react-loading-skeleton';
+import { Fredoka  } from 'next/font/google';
 
-const inter = Nunito({ subsets: ['latin'], weight: ['400'] });
+const fredoka = Fredoka({ subsets: ['latin'], weight: ['400'] });
 
 export const metadata = {
   title: 'JobSpace',
@@ -20,18 +18,16 @@ export default async function RootLayout({ children }) {
   const session = await getServerSession();
 
   return (
-    <html lang="en" className={inter.className}>
-      <body classNam="">
+    <html lang="en" className={fredoka.className}>
+      <body>
         <SkeletonTheme baseColor="#202020" highlightColor="#444">
           <BlogProvider>
             <AuthProvider session={session}>
-              <Navbar />
               <div className="lg:hidden">
                 <BottomMenu />
               </div>
               <div className="">{children}</div>
               <div className="hidden lg:flex">
-                <Footer />
               </div>
             </AuthProvider>
           </BlogProvider>

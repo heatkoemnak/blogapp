@@ -8,21 +8,18 @@ generator client {
 }
 
 model User {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  id            String        @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
-  email         String         @unique
+  email         String        @unique
   password      String?
   image         String?
   role          String
-  onPlan        Boolean?       @default(false)
-  announcement  Announcement[]
-  replies       Reply[]
-  comments      Comment[]
+  onPlan        Boolean?      @default(false)
   accounts      Account[]
   sessions      Session[]
   emailVerified DateTime?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   Job           Job[]
   Application   Application[]
   Company       Company[]
@@ -116,22 +113,22 @@ model JobCategory {
 }
 
 model Company {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String
   industry      String
   establishedAt DateTime?
   headquarters  String?
-  contactNumber String
-  email         String   @unique
+  contactNumber String?
+  email         String    @unique
   website       String?
   logoUrl       String?
   employees     Int?
   description   String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   Job           Job[]
-  User          User?    @relation(fields: [userID], references: [id])
-  userID        String?  @db.ObjectId
+  User          User?     @relation(fields: [userID], references: [id])
+  userID        String?   @db.ObjectId
 }
 
 model Job {
@@ -177,23 +174,30 @@ model Job {
 
 model Application {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  Fullname       String
-  applicationFor String
+  name           String
   email          String
-  about          String?
-  attachment    String?
-  userID         String   @unique @db.ObjectId
-  User           User     @relation(fields: [userID], references: [id], onDelete: Cascade)
-  jobID          String   @unique @db.ObjectId
+  phone          String
+  position       String
+  linkedin       String?
+  portfolio      String?
+  resume         String?
+  coverLetter    String?
+  expectedSalary String?
+  status         String?
+  attachment     String?
+  appliedDate    DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  userID         String   @db.ObjectId
+  User           User     @relation(fields: [userID], references: [id])
+  jobID          String   @db.ObjectId
   Job            Job?     @relation(fields: [jobID], references: [id])
 }
 
 model PostCategory {
-  id             String       @id @default(auto()) @map("_id") @db.ObjectId
-  AnnouncementId String       @db.ObjectId
-  categoryId     String       @db.ObjectId
-  announcement   Announcement @relation(fields: [AnnouncementId], references: [id])
-  category       Category     @relation(fields: [categoryId], references: [id])
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  categoryId String   @db.ObjectId
+  category   Category @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
@@ -202,52 +206,6 @@ model Category {
   categories PostCategory[]
   createdAt  DateTime       @default(now())
   updatedAt  DateTime       @updatedAt
-}
-
-model Announcement {
-  id          String         @id @default(auto()) @map("_id") @db.ObjectId
-  title       String
-  content     String
-  images      String[]
-  author      User           @relation(fields: [authorEmail], references: [email])
-  authorEmail String
-  categories  PostCategory[]
-  links       String[]
-  published   Boolean        @default(true)
-  comments    Comment[]
-  likes       Int            @default(0)
-  views       Int            @default(0)
-  publishedAt String?
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-}
-
-
-model Comment {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  text         String?
-  author       User?        @relation(fields: [authorEmail], references: [email])
-  authorEmail  String?
-  announcement Announcement @relation(fields: [postId], references: [id])
-  postId       String       @db.ObjectId
-  replies      Reply[]
-  publishedAt  String?
-  image        String?
-  file         String?
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-}
-
-model Reply {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  text        String
-  publishedAt String?
-  author      User     @relation(fields: [authorEmail], references: [email])
-  authorEmail String
-  comment     Comment  @relation(fields: [commentId], references: [id])
-  commentId   String   @db.ObjectId
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
 }
 
 model Account {

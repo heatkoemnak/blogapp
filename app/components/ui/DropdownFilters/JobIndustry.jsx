@@ -10,7 +10,7 @@ const JobIndustry = ({ setShowJobIndustry, showMoreThreshold = 5 }) => {
     const [showAll, setShowAll] = useState(false);
   
   const [selectedOption, setSelectedOption] = useState('');
-  console.log(industriesList);
+  // console.log(industriesList);
   const dropdownRef = useRef(null);
   const displayedIndustriesList = useMemo(() => {
     if (showAll || !industriesList) return industriesList;

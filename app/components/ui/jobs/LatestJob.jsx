@@ -46,9 +46,9 @@ export default function JobList() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{
-                    delay: jobIndex * 0.1, // Adjust delay for desired stagger
-                    duration: 1.2, // Adjust duration for animation speed
-                    ease: [0.4, 0.1, 0.4, 1], // Apply easing for smoother animation
+                    delay: jobIndex * 0.1, 
+                    duration: 1.2, 
+                    ease: [0.4, 0.1, 0.4, 1],
                   }}
                   className="col-span-2 w-full "
                 >
@@ -62,8 +62,8 @@ export default function JobList() {
     );
   };
   return (
-    <div className="bg-blue-gray-300/40 py-5">
-      <div className="max-w-7xl mx-auto mt-4 bg-white flex px-4 border border-b border-gray-300 items-center justify-between">
+    <div className="bg-white py-5">
+      <div className="max-w-7xl mx-auto mt-4 bg-white flex px-4 items-center justify-between">
         <div className=" text-blue-gray-600 text-md font-semibold py-3 px-1 ">
           Latest jobs
         </div>

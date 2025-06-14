@@ -3,13 +3,13 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBlogContext } from '@/app/context/BlogProvider';
 
-export function TypeSelection({ setSelectedJobType }) {
+export function TypeSelection({ setSelectedJobType, name }) {
   const { jobTypes } = useBlogContext();
 
   const showMoreThreshold = 6; // Number of options shown initially
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false); // Show More/Less toggle
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState(name || '');
   const dropdownRef = useRef(null);
 
   const displayedTypesList = useMemo(() => {

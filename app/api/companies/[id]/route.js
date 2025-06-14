@@ -1,19 +1,22 @@
 import prisma from '@/libs/prismadb';
 import { NextResponse } from 'next/server';
 
-export async function GET({ params }) {
+export async function GET(req, { params }) {
   const { id } = params;
   console.log(id);
 
   try {
-    const company = await prisma.company.findUnique({
-      where: { id: id },
+    const companies = await prisma.company.findMany({
+      where: { userID: id },
+      include: {
+        Job: true,
+      },
     });
-    if (!company) {
-      throw new Error('Post not found with this id.');
+    if (!companies) {
+      return NextResponse.json({ message: 'No companies found for this user' });
     }
-    console.log(company);
-    return NextResponse.json(company, { status: 200 });
+    console.log(companies);
+    return NextResponse.json(companies, { status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(
@@ -23,24 +26,23 @@ export async function GET({ params }) {
   }
 }
 export async function PUT(request, { params }) {
+  const { id } = params;
   try {
-    const { title, body, links, categoryId, authorEmail, publishedAt, image } =
+    const { name, industry, contactNumber, email, website, logoUrl } =
       await request.json();
-    const { id } = params;
 
-    const newPost = await prisma.post.update({
+    const newUpdate = await prisma.company.update({
       where: { id: id },
       data: {
-        title,
-        body,
-        links,
-        image,
-        categoryId,
-        authorEmail,
-        publishedAt,
+        name,
+        industry,
+        contactNumber,
+        email,
+        website,
+        logoUrl,
       },
     });
-    return NextResponse.json(newPost, { status: 201 });
+    return NextResponse.json(newUpdate, { status: 201 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(
@@ -52,11 +54,11 @@ export async function PUT(request, { params }) {
 export async function DELETE(req, { params }) {
   const { id } = params;
   try {
-    await prisma.post.delete({
+    await prisma.company.delete({
       where: { id: id },
     });
     return NextResponse.json(
-      { message: 'Post deleted successfully' },
+      { message: 'Company deleted successfully' },
       { status: 200 }
     );
   } catch (error) {

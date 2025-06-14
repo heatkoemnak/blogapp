@@ -8,8 +8,9 @@ export function JobCategorySelection({
   selectedJobIndustry,
   setSelectedCategory,
   showMoreThreshold = 10,
+  name,
 }) {
-  const [selectedOption, setCategorySelect] = useState(null);
+  const [selectedOption, setCategorySelect] = useState(name || null);
   const [showAll, setShowAll] = useState(false);
 
   // Determine the category list based on selected industry or fallback to all categories

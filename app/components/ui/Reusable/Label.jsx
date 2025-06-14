@@ -4,7 +4,7 @@ const Label = ({ labelName }) => {
   return (
     <label
       htmlFor={labelName}
-      className="flex gap-1 py-2 items-center text-gray-600 text-base font-medium leading-relaxed"
+      className="flex gap-1 px-2 py-2 items-center text-gray-600 text-sm leading-relaxed"
     >
       {labelName}
       <svg

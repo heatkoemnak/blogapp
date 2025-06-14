@@ -6,10 +6,11 @@ import { useBlogContext } from '@/app/context/BlogProvider';
 export function IndustrySelection({
   showMoreThreshold = 6,
   setSelectedJobIndustry,
+  name,
 }) {
   const { industriesList } = useBlogContext();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState(name || '');
   const [showAll, setShowAll] = useState(false);
   const dropdownRef = useRef(null);
   console.log(industriesList);

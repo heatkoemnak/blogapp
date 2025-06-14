@@ -5,13 +5,14 @@ import { useBlogContext } from '@/app/context/BlogProvider';
 
 export function SelectCountry({
   setSelectedCountry,
-  showMoreThreshold = 5, // Default number of items before "Show More"
+  showMoreThreshold = 5,
+  name, // Default number of items before "Show More"
 }) {
   const { countries } = useBlogContext();
   console.log(countries);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState(name || '');
   const [showAll, setShowAll] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -23,7 +24,7 @@ export function SelectCountry({
 
   // Handle option selection
   const handleSelect = (country) => {
-    setSelectedOption(country.name);
+    setSelectedOption(country.country);
     setIsOpen(false);
     if (setSelectedCountry) setSelectedCountry(country);
   };
@@ -100,8 +101,8 @@ export function SelectCountry({
                       <input
                         type="radio"
                         name="country"
-                        value={country.name}
-                        checked={selectedOption === country.name}
+                        value={country}
+                        checked={selectedOption === country}
                         onChange={() => handleSelect(country)}
                         className="cursor-pointer w-4 h-4 accent-cyan-700"
                       />

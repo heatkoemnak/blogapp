@@ -25,16 +25,16 @@
 //         handler={handleOpen}
 //       >
 //         {props.imageSrc && props.imageSrc.length > 0 ? (
-//           <div class="grid bg-white p-5 rounded-xl grid-cols-4 gap-6">
+//           <div className="grid bg-white p-5 rounded-xl grid-cols-4 gap-6">
 //             {props.imageSrc.map((src, index) => (
 //               <div key={index}>
 //                 <img src={src} alt="Image preview" />
 //               </div>
 //             ))}
-//             <div class="w-full py-9 bg-gray-50 rounded-2xl border border-gray-300 gap-3 grid border-dashed">
-//               <div class="grid gap-2">
-//                 <div class="flex items-center justify-center">
-//                   <label class="cursor-pointer">
+//             <div className="w-full py-9 bg-gray-50 rounded-2xl border border-gray-300 gap-3 grid border-dashed">
+//               <div className="grid gap-2">
+//                 <div className="flex items-center justify-center">
+//                   <label className="cursor-pointer">
 //                     <input
 //                       type="file"
 //                       multiple
@@ -42,7 +42,7 @@
 //                       onChange={props.handleFileChange}
 //                       hidden
 //                     />
-//                     <h4 class="flex flex-col items-center justify-center text-center text-gray-500 text-sm font-medium leading-snug">
+//                     <h4 className="flex flex-col items-center justify-center text-center text-gray-500 text-sm font-medium leading-snug">
 //                       <LuImagePlus className="text-gray-500" size={50} />
 //                       Add more images
 //                     </h4>
@@ -52,12 +52,12 @@
 //             </div>
 //           </div>
 //         ) : (
-//           <div class="w-full py-9 bg-gray-50 rounded-2xl border border-gray-300 gap-3 grid border-dashed">
-//             <div class="grid gap-2">
-//               <div class="flex items-center justify-center">
-//                 <label class="cursor-pointer">
+//           <div className="w-full py-9 bg-gray-50 rounded-2xl border border-gray-300 gap-3 grid border-dashed">
+//             <div className="grid gap-2">
+//               <div className="flex items-center justify-center">
+//                 <label className="cursor-pointer">
 //                   <input type="file" multiple accept="image/*" hidden />
-//                   <h4 class="flex flex-col items-center justify-center text-center text-gray-500 text-sm font-medium leading-snug">
+//                   <h4 className="flex flex-col items-center justify-center text-center text-gray-500 text-sm font-medium leading-snug">
 //                     <LuImagePlus className="text-gray-500" size={50} />
 //                     Add more images
 //                   </h4>

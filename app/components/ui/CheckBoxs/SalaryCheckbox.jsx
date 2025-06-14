@@ -2,50 +2,50 @@
 
 import { useBlogContext } from '@/app/context/BlogProvider';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-const SalaryCheckbox = () => {
-  const [selectedCategories, setSelectedCategories] = useState([]); // State for selected job types
-  const { jobSalaries } = useBlogContext();
-  console.log(jobSalaries);
-  const router = useRouter();
-  console.log(router);
-  const handleCheckboxChange = (event) => {
-    const value = event.target.value;
-    setSelectedCategories((prevSelected) => {
-      if (prevSelected.includes(value)) {
-        return prevSelected.filter((item) => item !== value);
-      } else {
-        return [...prevSelected, value];
-      }
-    });
+import { useRouter, useSearchParams } from 'next/navigation';
+import ClearFilter from '../Reusable/ClearFilter';
 
-    window.scrollTo({
-      top: 900,
-      behavior: 'smooth',
-    });
+const SalaryCheckbox = () => {
+  const [selectedCategory, setSelectedCategory] = useState(''); // State for selected job type
+  const { jobSalaries } = useBlogContext();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const search = searchParams.get('search');
+  console.log('search:', search);
+  console.log('category:', selectedCategory);
+
+  const handleRadioChange = (event) => {
+    const value = event.target.value;
+
+    if (selectedCategory === value) {
+      setSelectedCategory('');
+    } else {
+      setSelectedCategory(value);
+    }
   };
 
   const handleClear = () => {
-    // if (selectedCategories.length > 0) {
-    //   window.scrollTo({
-    //     top: 0,
-    //     behavior: 'smooth',
-    //   });
-    // } else {
-    //   window.scrollTo({
-    //     top: 900, // Scroll to the top of the page
-    //     behavior: 'smooth',
-    //   });
-    // }
+    if (selectedCategory !== '') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    } else {
+      window.scrollTo({
+        top: 900, // Scroll to the top of the page
+        behavior: 'smooth',
+      });
+    }
 
-    setSelectedCategories([]);
+    setSelectedCategory('');
     router.push(`/jobs?search=`);
   };
+
   useEffect(() => {
-    const query = selectedCategories.join(',');
-    if (query === '') return;
-    router.push(`/jobs?search=${query}`);
-  }, [selectedCategories, router]);
+    if (selectedCategory !== '') {
+      router.push(`/jobs?search=${selectedCategory}`);
+    }
+  }, [selectedCategory, router]);
 
   return (
     <div className="w-full bg-white">
@@ -53,27 +53,22 @@ const SalaryCheckbox = () => {
         <div className="font-semibold text-blue-gray-900 text-md px-2">
           Salary
         </div>
-        <button
-          type="button"
-          onClick={handleClear}
-          className="font-semibold text-gray-600 text-sm pt-5 px-2"
-        >
-          Clear
-        </button>
+        {selectedCategory !== '' && <ClearFilter handleClear={handleClear} />}
       </div>
-      {jobSalaries.map((jobLevel) => (
+      {jobSalaries?.map((salary) => (
         <label
-          key={jobLevel.label}
+          key={salary.label}
           className="py-1 px-3 flex items-center w-full hover:bg-gray-200 cursor-pointer"
         >
           <input
-            type="checkbox"
-            value={jobLevel.label}
-            checked={selectedCategories.includes(jobLevel.label)}
-            onChange={handleCheckboxChange}
+            type="radio"
+            name="salary"
+            value={salary.label}
+            checked={selectedCategory && search === salary.label}
+            onChange={handleRadioChange}
             className="mr-4 w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <span className="flex-1 text-gray-900 text-sm">{jobLevel.label}</span>
+          <span className="flex-1 text-gray-900 text-sm">{salary.label}</span>
         </label>
       ))}
     </div>

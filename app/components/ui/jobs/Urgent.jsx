@@ -7,12 +7,12 @@ const Urgency = ({ jobs, search, filterList }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <div class="w-full flex justify-center ">
-      <div class="w-full h-auto flex flex-col">
-        <div class=" bg-blue-gray-300/40 text-white font-semibold text-lg  px-5 py-3 border-b border-gray-300">
+    <div className="w-full flex justify-center ">
+      <div className="w-full h-auto flex flex-col">
+        <div className=" bg-blue-gray-300/40 text-white font-semibold text-lg  px-5 py-3 border-b border-gray-300">
           Job Urgent
         </div>
-        <div class="w-full h-auto bg-white" id="journal-scroll">
+        <div className="w-full h-auto bg-white" id="journal-scroll">
           {search?.length > 0 && (
             <div className="py-2 px-4 bg-gray-100 text-gray-700 rounded-md mb-4">
               {filterList?.length > 0 ? (

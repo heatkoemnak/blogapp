@@ -87,7 +87,7 @@ export function ExampleJob({ job }) {
               <span className="text-xs">{timeAgo(job?.createdAt)}</span>
             </div>
             <div>
-              <button class="mr-2 my-1 uppercase tracking-wider px-2 text-cyan-800 border-cyan-800 hover:bg-cyan-800 hover:text-white border text-sm font-semibold rounded py-1 transition transform duration-500 cursor-pointer">
+              <button className="mr-2 my-1 uppercase tracking-wider px-2 text-cyan-800 border-cyan-800 hover:bg-cyan-800 hover:text-white border text-sm font-semibold rounded py-1 transition transform duration-500 cursor-pointer">
                 Apply
               </button>
             </div>

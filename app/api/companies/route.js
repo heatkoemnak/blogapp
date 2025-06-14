@@ -6,6 +6,7 @@ export async function GET() {
     const companies = await prisma.company.findMany({
       include: {
         Job: true,
+        User: true,
       },
     });
 
@@ -21,7 +22,7 @@ export async function GET() {
 export async function POST(request) {
   const { name, industry, contactNumber, email, website, logoUrl, userID } =
     await request.json();
-  if (!name || !industry || !contactNumber || !email || !userID) {
+  if (!name || !industry|| !email || !userID) {
     return NextResponse.json({ message: 'Missing required fields' });
   }
   try {
