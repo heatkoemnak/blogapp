@@ -11,12 +11,15 @@ import DeleteCompanyPopup from '@/app/components/ui/Reusable/DeleteCompanyPopup'
 import useSWR, { mutate } from 'swr';
 import axios from 'axios';
 import { BiSave } from 'react-icons/bi';
+import { MdAddAPhoto } from 'react-icons/md';
+import { GoDuplicate } from "react-icons/go";
+import * as XLSX from 'xlsx';
+import { IoAddCircleOutline } from 'react-icons/io5';
+
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Organizations() {
   const { data: session } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState(null);
@@ -34,11 +37,6 @@ export default function Organizations() {
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
-  const toogleEdit = () => {
-    setIsEdit((prev) => !prev);
-  };
-
-  const togglePopup = () => setIsOpen(!isOpen);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -71,6 +69,24 @@ export default function Organizations() {
       setLoading(false);
     }
   };
+const handleCustomExport = () => {
+  if (!data) return;
+
+  const exportData = data.map((company, index) => ({
+    ID: company.id,
+    Name: company.name,
+    Email: company.email,
+    Industry: company.industry,
+    'Job Count': company.Job?.length ?? 0,
+    Phone: company.contactNumber,
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(exportData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Companies');
+  XLSX.writeFile(workbook, 'companies_export.xlsx');
+};
+
   if (isLoading) {
     return <Processing state="Loading..." />;
   }
@@ -88,23 +104,36 @@ export default function Organizations() {
           <div className="relative flex items-center gap-2">
             <button
               id="dropdownActionButton"
-              onClick={toogleEdit}
-              className="flex gap-1 items-center text-white bg-teal-400 border border-gray-300 focus:outline-none hover:bg-teal-500 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              className="flex gap-1 items-center text-white bg-teal-400 border border-gray-300 focus:outline-none hover:bg-teal-500 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-3 py-1 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
               type="button"
             >
-              {isEdit ? (
-                <div className="flex gap-1 items-center">
-                  <BiSave />
-                  <span className="text-white">Save</span>
-                </div>
-              ) : (
-                <div className="flex gap-1 items-center">
-                  <span className="text-white">Edit</span>
-                  <LiaEditSolid />
-                </div>
-              )}
+                <Link href="/dashboard/orgs/new" className="flex gap-1 items-center">
+                  <IoAddCircleOutline className="text-white" size={18} />
+                  <span className="text-white">Create</span>
+                </Link>
             </button>
-            <button
+
+            <Link href={`/dashboard/excel-uploader/table.org`}
+              className="inline-flex items-center text-white bg-teal-500 border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-3 py-1 dark:bg-gray-800 dark:border-gray-600 dark:focus:ring-gray-700"
+              type="button"
+              >
+                      <button className="bg-blue cursor-pointer hover:bg-blue-light text-white font-normal w-full inline-flex items-center">
+                      <CgImport className='text-white' size={18} />
+                      <span className="ml-2">Import</span>
+                      </button>
+            </Link>
+
+              <button
+              onClick={handleCustomExport}
+              className="inline-flex items-center text-white bg-teal-500 border border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-3 py-1 dark:bg-gray-800 dark:border-gray-600 dark:focus:ring-gray-700"
+            >
+              <CgExport className='text-white' size={18} />
+              <span className="ml-2">Export</span>
+            </button>
+
+          </div>
+          <div className='relative flex items-center gap-2'>
+          <button
               id="dropdownActionButton"
               onClick={toggleDropdown}
               className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
@@ -127,22 +156,15 @@ export default function Organizations() {
                 />
               </svg>
             </button>
-            {isDropdownOpen && (
-              <div className="absolute shadow-lg top-10 left-14 z-10 bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700 dark:divide-gray-600">
+             {isDropdownOpen && (
+              <div className="absolute shadow-lg top-10 left-0 z-10 bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700 dark:divide-gray-600">
                 <ul className="py-1 list-none text-sm text-gray-700 dark:text-gray-200">
                   <Link
                     href="#"
                     className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                   >
-                    <CgImport />
-                    Import
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    <CgExport />
-                    Export
+                    <GoDuplicate />
+                    Duplicate
                   </Link>
                 </ul>
                 <div className="py-1">
@@ -156,7 +178,7 @@ export default function Organizations() {
                 </div>
               </div>
             )}
-          </div>
+            </div>
           <label htmlFor="table-search" className="sr-only">
             Search
           </label>
@@ -186,7 +208,7 @@ export default function Organizations() {
             />
           </div>
         </div>
-        <table className="w-full text-sm text-left rtl:text-right text-gray-800 ">
+        <table id="orgTable" className="w-full text-sm text-left rtl:text-right text-gray-800 ">
           <thead className="text-xs text-gray-800 uppercase dark:text-gray-400 bg-gray-100 border border-gray-200">
             <tr>
               <th scope="col" className="p-4">
@@ -197,7 +219,7 @@ export default function Organizations() {
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <label htmlFor="checkbox-all-search" className="sr-only">
-                    checkbox
+                    Checkbox
                   </label>
                 </div>
               </th>
@@ -246,11 +268,19 @@ export default function Organizations() {
                   scope="row"
                   className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  <img
-                    className="w-10 h-10 rounded-full"
-                    src={company.logoUrl}
-                    alt={company.name}
-                  />
+                  {
+                    company.logoUrl ?(
+                      <img
+                        className="w-10 h-10 rounded-full"
+                        src={company.logoUrl}
+                        alt={company.name}
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
+                        <MdAddAPhoto  className="w-10 h-10 text-gray-500" />
+                      </div>
+                    )
+                  }
                   <div className="ps-3">
                     <div className="text-base font-semibold">
                       {company.name}
@@ -301,13 +331,7 @@ export default function Organizations() {
             ))}
           </tbody>
         </table>
-        <div className="flex justify-start items-center  bg-gray-100">
-          {isEdit && (
-            <Link href="/dashboard/orgs/new" className="px-4 py-2  text-gray-600">
-              {isOpen ? 'Close' : 'Add'} an organization..
-            </Link>
-          )}
-        </div>
+
         <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
           <div className="flex flex-1 justify-between sm:hidden">
             <a

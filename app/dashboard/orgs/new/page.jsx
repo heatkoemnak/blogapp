@@ -35,7 +35,8 @@ const AddCompany = () => {
     industry: '',
     email: '',
   });
-  console.log(required);
+  console.log(FORM_DATA);
+  console.log('Session:', session);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -106,7 +107,7 @@ const AddCompany = () => {
     };
 
     try {
-      await fetch('/api/companies', {
+      await fetch('/api/companies/create.one', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(COMPNAY_DATA),

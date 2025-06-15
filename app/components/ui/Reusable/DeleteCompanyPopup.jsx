@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 const DeleteCompanyPopup = ({
-  compnayName,
+  companyName,
   handleDelete,
   error,
   loading,
@@ -23,7 +23,7 @@ const DeleteCompanyPopup = ({
       {showPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-md shadow-lg">
-            <h2 className="text-xl font-semibold">{compnayName}</h2>
+            <h2 className="text-xl font-semibold">{companyName}</h2>
             <p className="mt-2 text-gray-600">
               Are you sure you want to delete this company?
             </p>
