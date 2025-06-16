@@ -7,8 +7,8 @@ import { CgImport } from 'react-icons/cg';
 import OrgLayout from '@/app/components/Dashboard/OrgLayout';
 import { mutate } from 'swr';
 import axios from 'axios';
-import * as XLSX from 'xlsx';
 import { useRouter } from 'next/navigation';
+import * as XLSX from 'xlsx';
 
 export default function TableOrg() {
   const { data: session } = useSession();
@@ -45,7 +45,7 @@ export default function TableOrg() {
     }
 
     try {
-      const formattedData = data1.map((row) => ({
+      const formattedData = data1?.map((row) => ({
         name: row?.companyName,
         industry: row?.Industry,
         contactNumber: String(row?.Phone || ''), // Ensure phone is a string
@@ -183,7 +183,7 @@ export default function TableOrg() {
                     <td className="px-4 py-3 border">[Email]</td>
                     <td className="px-4 py-3 border">[Phone]</td>
                 </tr>
-                ): data1.map((row, i) => (
+                ): data1?.map((row, i) => (
                 <tr key={i} className="text-gray-800 dark:text-gray-400 border-b">
                     {editIndex === i ? (
                     // --- EDIT MODE ROW ---
