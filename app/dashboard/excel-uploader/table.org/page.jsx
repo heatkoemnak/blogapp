@@ -48,7 +48,7 @@ export default function TableOrg() {
       const formattedData = data1?.map((row) => ({
         name: row?.companyName,
         industry: row?.Industry,
-        contactNumber: String(row?.Phone || ''), // Ensure phone is a string
+        contactNumber: row?.Phone || '', // Ensure phone is a string
         email: row?.Email,
         website: row?.Website || '',
         userID: session?.user?.id || '',

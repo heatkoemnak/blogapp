@@ -30,7 +30,6 @@ const CompanyForm = ({ setIsOpen, setIsSuccess }) => {
     industry: '',
     email: '',
   });
-  console.log(required);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
