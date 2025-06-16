@@ -1,6 +1,4 @@
-// pages/api/jobs/sorted-by-salary.ts
 import prisma from '@/libs/prismadb';
-import { max } from 'date-fns';
 import { NextResponse } from 'next/server';
 
 export async function GET(req) {

@@ -19,15 +19,12 @@ export async function POST(request) {
         userID,
       },
     });
-
     return NextResponse.json(
       newCompany,
       { message: 'Post created successfully' },
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
-    console.error(error);
     throw new Error('Failed to create the post with associated categories');
   }
 }

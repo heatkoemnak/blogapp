@@ -70,7 +70,7 @@ export default function Organizations() {
 const handleCustomExport = () => {
   if (!data) return;
 
-  const exportData = data.map((company, index) => ({
+  const exportData = data?.map((company, index) => ({
     ID: company.id,
     Name: company.name,
     Email: company.email,
@@ -270,8 +270,8 @@ const handleCustomExport = () => {
                     company.logoUrl ?(
                       <img
                         className="w-10 h-10 rounded-full"
-                        src={company.logoUrl}
-                        alt={company.name}
+                        src={company?.logoUrl}
+                        alt={company?.name}
                       />
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
@@ -281,31 +281,31 @@ const handleCustomExport = () => {
                   }
                   <div className="ps-3">
                     <div className="text-base font-semibold">
-                      {company.name}
+                      {company?.name}
                     </div>
                     <div className="font-normal text-gray-500">
                       {company?.email}
                     </div>
                   </div>
                 </th>
-                <td className="px-6 py-4">{company.industry}</td>
+                <td className="px-6 py-4">{company?.industry}</td>
                 <td className="px-6 py-4">{company.Job?.length}</td>
                 <td className="px-6 py-4">
                   <div className="flex items-center">
-                    {company.contactNumber}
+                    {company?.contactNumber}
                   </div>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex justify-center items-center gap-4">
                     <Link
-                      href={`/dashboard/orgs/views/${company.id}`}
+                      href={`/dashboard/orgs/views/${company?.id}`}
                       className="font-medium text-teal-400 hover:underline"
                     >
                       View
                     </Link>
                     <span className="mx-2">|</span>
                     <Link
-                      href={`/dashboard/orgs/update/${company.id}`}
+                      href={`/dashboard/orgs/update/${company?.id}`}
                       className="font-medium text-teal-400 hover:underline"
                     >
                       Edit
@@ -316,8 +316,8 @@ const handleCustomExport = () => {
                       className="font-medium text-red-600 hover:underline"
                     >
                       <DeleteCompanyPopup
-                        compnayName={company.name}
-                        companyId={company.id}
+                        compnayName={company?.name}
+                        companyId={company?.id}
                         handleDelete={() => handleDelete(company.id)}
                         error={error}
                         loading={loading}

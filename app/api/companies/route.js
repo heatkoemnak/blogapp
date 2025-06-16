@@ -33,7 +33,6 @@ export async function POST(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
     console.error(error);
     throw new Error('Failed to create the post with associated categories');
   }

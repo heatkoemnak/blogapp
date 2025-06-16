@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { MdOutlineAddAPhoto, MdSettingsBackupRestore } from 'react-icons/md';
-import { uploadIcon } from '@/app/utils/api';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { Toaster } from 'react-hot-toast';
@@ -12,6 +11,7 @@ import OrgLayout from '@/app/components/Dashboard/OrgLayout';
 import Link from 'next/link';
 import { BiSave } from 'react-icons/bi';
 import { LiaEditSolid } from 'react-icons/lia';
+import { uploadIcon } from '@/app/utils/api';
 
 const AddCompany = () => {
   const { data: session } = useSession();
@@ -27,7 +27,6 @@ const AddCompany = () => {
   });
   const [image, setImage] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
-  const [error, setError] = useState(null);
     const [isEdit, setIsEdit] = useState(true);
   const [loading, setLoading] = useState(false);
   const [required, setRequired] = useState({
@@ -35,8 +34,6 @@ const AddCompany = () => {
     industry: '',
     email: '',
   });
-  console.log(FORM_DATA);
-  console.log('Session:', session);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -119,7 +116,6 @@ const AddCompany = () => {
       setImageSrc(null);
       router.push('/dashboard/orgs');
       setRequired({});
-      setError(null);
     } catch (error) {
       console.error('Error:', error);
       setError(error.message || 'Something went wrong');
