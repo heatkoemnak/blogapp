@@ -5,28 +5,19 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { CgImport } from 'react-icons/cg';
 import OrgLayout from '@/app/components/Dashboard/OrgLayout';
-import useSWR, { mutate } from 'swr';
+import { mutate } from 'swr';
 import axios from 'axios';
 import * as XLSX from 'xlsx';
 import { useRouter } from 'next/navigation';
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
 export default function TableOrg() {
   const { data: session } = useSession();
+  const [data1, setData] = useState([]);
   const router = useRouter();
 
-  // State for the imported data
-  const [data1, setData] = useState([]);
-
-  // State to manage which row is being edited
   const [editIndex, setEditIndex] = useState(null); // Index of the row in edit mode
   const [editRowData, setEditRowData] = useState(null); // Temp data for the row being edited
 
-  const { data, isLoading } = useSWR(
-    session?.user?.id ? `/api/companies/${session?.user?.id}` : null,
-    fetcher
-  );
 
   // Handles file upload and parsing
   const handleFileUpload = (e) => {

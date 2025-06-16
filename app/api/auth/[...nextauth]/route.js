@@ -53,7 +53,6 @@ const authOptions = {
 
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log(user, account, profile);
       const existingUser = await prisma.user.findUnique({
         where: { email: user.email },
       });
@@ -63,8 +62,6 @@ const authOptions = {
       }
       // Handle Google login
       const { email, name, image } = user;
-
-      console.log(existingUser);
 
       if (!existingUser) {
         // If the user doesn't exist, create a new user
@@ -78,7 +75,6 @@ const authOptions = {
       }
 
       if (account.provider === 'google') {
-        console.log(existingUser);
 
         if (existingUser) {
           // If the user doesn't exist, create a new user

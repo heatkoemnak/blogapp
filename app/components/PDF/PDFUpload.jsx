@@ -54,8 +54,8 @@ const PDFUpload = ({ setMatchedJobs }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    // accept: 'application/pdf',
-    // maxFiles: 1,
+    accept: 'application/pdf',
+    maxFiles: 1,
   });
 
   return (

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { LiaEditSolid } from 'react-icons/lia';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { CgExport, CgImport } from 'react-icons/cg';
 import Processing from '@/app/components/ui/Reusable/Processing';
@@ -10,7 +9,6 @@ import OrgLayout from '@/app/components/Dashboard/OrgLayout';
 import DeleteCompanyPopup from '@/app/components/ui/Reusable/DeleteCompanyPopup';
 import useSWR, { mutate } from 'swr';
 import axios from 'axios';
-import { BiSave } from 'react-icons/bi';
 import { MdAddAPhoto } from 'react-icons/md';
 import { GoDuplicate } from "react-icons/go";
 import * as XLSX from 'xlsx';

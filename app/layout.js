@@ -3,9 +3,9 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import AuthProvider from './components/AuthProvider/AuthProvider';
 import { getServerSession } from 'next-auth';
 import { BlogProvider } from './context/BlogProvider';
-import BottomMenu from './components/ui/BottomMenu';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import { Fredoka  } from 'next/font/google';
+import BottomMenu from './components/ui/BottomMenu';
 
 const fredoka = Fredoka({ subsets: ['latin'], weight: ['400'] });
 

@@ -1,5 +1,3 @@
-// import { connectMongoDB } from '@/libs/mongodb';
-// import User from '@/models/user';
 import bcrypt from 'bcryptjs';
 import { userValidate } from '../validation/userValidate';
 import { NextResponse } from 'next/server';
@@ -25,7 +23,6 @@ export async function POST(req) {
       role,
       password: hashedPassword,
     });
-    // const newUser = new User({ name, email, password: hashedPassword });
     return NextResponse.json(
       { message: 'User created successfully.' },
       {
