@@ -77,9 +77,6 @@ const MainSection = () => {
     return () => clearTimeout(timer);
   }, [SearchHandler]);
 
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
   if (error) {
     return (
       <div className="max-w-6xl relative mx-auto">
