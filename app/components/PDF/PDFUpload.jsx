@@ -14,10 +14,6 @@ const PDFUpload = ({ setMatchedJobs }) => {
   const onDrop = useCallback(
     async (acceptedFiles) => {
       const file = acceptedFiles[0];
-      if (file.type !== 'application/pdf') {
-        toast.error('Please upload a PDF file');
-        return;
-      }
 
       setSelectedFile(file);
       setIsLoading(true);
@@ -54,8 +50,6 @@ const PDFUpload = ({ setMatchedJobs }) => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: 'application/pdf',
-    maxFiles: 1,
   });
 
   return (
