@@ -160,14 +160,24 @@ const JobRow = ({ job, appId, grid }) => {
           <div className="flex gap-1 items-center">
             {session ? (
               <>
-              <Link
-                href={session?.user?.id !== job?.author?.id ? `/jobs/apply/${job?.id}` : ''}
-                className={`bg-teal-400 text-white text-sm px-2 py-1 rounded-full hover:bg-teal-800 transition-colors duration-300 ${session?.user?.id === job?.author?.id ? 'cursor-not-allowed opacity-50' : ''}`}
-              >
-                {session?.user?.id === job?.author?.id
-                  ? `${job?.Applications?.length} Applied`
-                  : 'Apply'}
-              </Link>
+              <>
+                {session?.user?.id !== job?.author?.id && (
+                  <Link
+                    href={`/jobs/apply/${job?.id}`}
+                    className="bg-teal-400 text-white text-sm px-2 py-1 rounded-full hover:bg-teal-800 transition-colors duration-300"
+                  >
+                    Apply
+                  </Link>
+                )}
+                {session?.user?.id === job?.author?.id && (
+                  <Link
+                    href=""
+                    className="bg-teal-400 text-white text-sm px-2 py-1 rounded-full hover:bg-teal-800 transition-colors duration-300 cursor-not-allowed opacity-50"
+                  >
+                    {`${job?.Applications?.length} Applied`}
+                  </Link>
+                )}
+              </>
               {grid ? (
                 <RiArrowRightUpBoxLine
                 size={25}
