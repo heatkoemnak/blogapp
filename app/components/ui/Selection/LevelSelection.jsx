@@ -5,11 +5,11 @@ import { useBlogContext } from '@/app/context/BlogProvider';
 
 export function LevelSelection({
   showMoreThreshold = 6, // Default number of items to show before "Show More" toggle
-  setSelectedJobLevel,
+  setSelectedJobLevel,name
 }) {
   const { jobLevels } = useBlogContext();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState(name||'');
   const [showAll, setShowAll] = useState(false);
   const dropdownRef = useRef(null);
 

@@ -136,33 +136,33 @@ const EmployerRegister = () => {
                 <p className="text-red-500 text-xs mt-1">{errors.email}</p>
               )}
             </div>
-            <div class="space-y-2 py-2">
+            <div className="space-y-2 py-2">
               <div>
-                <label for="password" class="text-gray-900 block">
+                <label for="password" className="text-gray-900 block">
                   {' '}
                   Password
                 </label>
 
-                <div class="relative">
+                <div className="relative">
                   <input
                     name="password"
                     type={visiblePassword ? `text` : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
-                    class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm  focus:ring-0 focus:border-teal-500 placeholder-gray-400"
+                    className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm  focus:ring-0 focus:border-teal-500 placeholder-gray-400"
                     placeholder="••••••••"
                   />
                   <div
                     onClick={() => setVisiblePassword(!visiblePassword)}
-                    class="cursor-pointer absolute inset-y-0 right-0 flex items-center px-8 text-gray-600 border-l border-gray-300"
+                    className="cursor-pointer absolute inset-y-0 right-0 flex items-center px-8 text-gray-600 border-l border-gray-300"
                   >
                     {visiblePassword ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                         stroke="currentColor"
                         className="w-5 h-5"
                       >
@@ -252,7 +252,7 @@ const EmployerRegister = () => {
           <div>
             <button
               type="submit"
-              class="block w-full py-2 text-center text-white bg-teal-500 border border-teal-500 rounded hover:bg-transparent hover:text-teal-500 transition uppercase font-roboto font-medium"
+              className="block w-full py-2 text-center text-white bg-teal-500 border border-teal-500 rounded hover:bg-transparent hover:text-teal-500 transition uppercase font-roboto font-medium"
             >
               Register
             </button>

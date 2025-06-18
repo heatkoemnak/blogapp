@@ -6,10 +6,11 @@ import { useBlogContext } from '@/app/context/BlogProvider';
 export function SalarySelection({
   showMoreThreshold = 6, // Default number of visible items before "Show More"
   setSelectedSalaryRange,
+  name,
 }) {
   const { jobSalaries } = useBlogContext(); // Use jobSalaries from context
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState(name || '');
   const [showAll, setShowAll] = useState(false); // Toggle for showing all items
   const dropdownRef = useRef(null);
 

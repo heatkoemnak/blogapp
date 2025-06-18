@@ -10,13 +10,13 @@ import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 
-export default function ClosingDate({ closingDate, setClosingDate }) {
+export default function ClosingDate({ closingDate, setClosingDate, name }) {
   return (
     <div className="py-4">
       <Popover placement="bottom">
         <PopoverHandler>
           <Input
-            value={closingDate ? format(closingDate, 'PPP') : ''}
+            value={closingDate ? format(closingDate, 'PPP') : name}
             className="bg-cyan-50 text-gray-900"
             onChange={() => null}
           />
@@ -24,7 +24,7 @@ export default function ClosingDate({ closingDate, setClosingDate }) {
         <PopoverContent>
           <DayPicker
             mode="single"
-            selected={closingDate}
+            selected={closingDate || name}
             onSelect={setClosingDate}
             showOutsideDays
             className="border-0"

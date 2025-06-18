@@ -8,10 +8,11 @@ const CategoriesLists = () => {
 
   return (
     <aside className="w-full rounded-lg border-2 mt-4 p-4 max-w-md mx-auto">
-      <ul className="flex items-start flex-wrap mt-4">
-        <li className="flex mx-1">
+      <h2 className="font-bold text-2xl mb-4">Browse by Categories</h2>
+      <ul className=" list-none">
+        <li className="">
           <Link
-            className="p-2 px-3 mb-4 rounded-full font-medium hover:bg-transparent hover:border bg-teal-400/50 text-teal-500"
+            className="p-1 px-3 mb-4 rounded-none font-medium hover:bg-transparent hover:border bg-teal-400/50 text-teal-500"
             href={{
               pathname: '/jobs/',
               query: { search: '' },
@@ -22,9 +23,9 @@ const CategoriesLists = () => {
         </li>
         {jobCategories &&
           jobCategories.slice(0, 5).map((cate, index) => (
-            <li key={index} className="flex mx-1">
+            <li key={index} className="">
               <Link
-                className="p-1 px-3 mb-4 rounded-full font-medium hover:bg-transparent hover:border bg-teal-400/15 text-teal-500"
+                className=" px-1 rounded-none font-medium hover:bg-transparent hover:border  text-teal-500"
                 href={{
                   pathname: '/jobs/',
                   query: { search: cate?.name },
@@ -36,9 +37,9 @@ const CategoriesLists = () => {
           ))}
 
         {jobCategories && jobCategories.length > 5 && (
-          <li className="flex mx-1">
+          <li className="flex flex-col mx-1">
             <Link
-              className="p-1 px-3 mb-4 rounded-full font-medium hover:bg-transparent hover:border bg-teal-400/15 text-teal-500"
+              className="p-1 px-3 rounded-full font-medium hover:bg-transparent hover:border bg-teal-400/15 text-teal-500"
               href={{
                 pathname: '/jobs/',
                 query: { search: '' },

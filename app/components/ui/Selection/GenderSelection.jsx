@@ -18,8 +18,12 @@ const genderList = [
   },
 ];
 
-export function GenderSelection({ setSelectedGender, showMoreThreshold = 3 }) {
-  const [selectedOption, setSelectedValue] = useState(null);
+export function GenderSelection({
+  setSelectedGender,
+  showMoreThreshold = 3,
+  name,
+}) {
+  const [selectedOption, setSelectedValue] = useState(name || null);
   const [showAll, setShowAll] = useState(false);
   console.log(selectedOption);
 

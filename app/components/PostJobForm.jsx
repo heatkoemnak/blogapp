@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 
 import { IndustrySelection } from './ui/Selection/IndustrySelection';
@@ -15,8 +15,6 @@ import { SelectProvinceCity } from './ui/Selection/location/SelectProvinceCity';
 import { SelectDistrict } from './ui/Selection/location/SelectDistrict';
 import { SelectCommune } from './ui/Selection/location/SelectCommune';
 import { JobDescription } from './ui/TextArea/JobDescription';
-import { JobRequirement } from './ui/TextArea/JobRequirement';
-import { JobResponsibility } from './ui/TextArea/JobResponsibility';
 
 import { uploadImage } from '../utils/api';
 import Image from 'next/image';
@@ -24,7 +22,6 @@ import ClosingDate from './ui/Selection/ClosingDate';
 import { useBlogContext } from '../context/BlogProvider';
 import { SelectCategoriesDialog } from './ui/modals/SelectCategoriesDialog';
 import Label from './ui/Reusable/Label';
-import Link from 'next/link';
 import { ArrowLeftIcon } from '@heroicons/react/20/solid';
 const PostJobForm = () => {
   const { data: session } = useSession();
@@ -369,7 +366,7 @@ const PostJobForm = () => {
                     <p className="text-sm text-red-500 mt-1">{errors.image}</p>
                   )}
                   <div className="col-span-full">
-                    <div class="w-full py-9 bg-gray-50 border border-gray-300 gap-3 grid border-dashed">
+                    <div className="w-full py-9 bg-gray-50 border border-gray-300 gap-3 grid border-dashed">
                       <div className="flex w-full items-center justify-center">
                         {imageSrc ? (
                           <div className="flex justify-center animate-pulse place-items-center rounded-lg ">
@@ -382,7 +379,7 @@ const PostJobForm = () => {
                             />
                           </div>
                         ) : (
-                          <div class="flex flex-col items-center justify-center ">
+                          <div className="flex flex-col items-center justify-center ">
                             <div className="flex bg-blue-gray-100 border border-gray-400 rounded-full w-40 h-40 justify-center items-center">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -396,22 +393,22 @@ const PostJobForm = () => {
                                     id="icon"
                                     d="M16.296 25.3935L19.9997 21.6667L23.7034 25.3935M19.9997 35V21.759M10.7404 27.3611H9.855C6.253 27.3611 3.33301 24.4411 3.33301 20.8391C3.33301 17.2371 6.253 14.3171 9.855 14.3171V14.3171C10.344 14.3171 10.736 13.9195 10.7816 13.4326C11.2243 8.70174 15.1824 5 19.9997 5C25.1134 5 29.2589 9.1714 29.2589 14.3171H30.1444C33.7463 14.3171 36.6663 17.2371 36.6663 20.8391C36.6663 24.4411 33.7463 27.3611 30.1444 27.3611H29.2589"
                                     stroke="#4F46E5"
-                                    stroke-width="1.6"
+                                    strokeWidth="1.6"
                                     stroke-linecap="round"
                                   />
                                 </g>
                               </svg>
                             </div>
 
-                            <h2 class="text-center text-gray-400   text-xs leading-4">
+                            <h2 className="text-center text-gray-400   text-xs leading-4">
                               PNG, JPG or PDF, smaller than 15MB
                             </h2>
                           </div>
                         )}
                       </div>
 
-                      <div class="grid gap-2">
-                        <div class="flex items-center justify-center">
+                      <div className="grid gap-2">
+                        <div className="flex items-center justify-center">
                           <label>
                             <input
                               type="file"
@@ -419,7 +416,7 @@ const PostJobForm = () => {
                               onChange={handleFileChange}
                               hidden
                             />
-                            <div class="flex w-28 h-9 px-2 flex-col bg-cyan-800 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">
+                            <div className="flex w-28 h-9 px-2 flex-col bg-cyan-800 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">
                               {imageSrc ? 'Change icon' : 'Upload job icon'}
                             </div>
                           </label>
@@ -511,7 +508,7 @@ const PostJobForm = () => {
                   )}
                 </div>
               </div>
-              <h2 class=" text-lg font-semibold text-blue-gray-900 ">
+              <h2 className=" text-lg font-semibold text-blue-gray-900 ">
                 Job description
               </h2>
               <div>

@@ -21,11 +21,8 @@ const JobDetails = () => {
   const id = params.id;
   const [job, setJob] = useState(null);
 
-  console.log(id);
-  console.log(job);
-
   const getAJobById = () => {
-    const foundJob = jobs.find((company) => company.id === id);
+    const foundJob = jobs.find((company) => company?.id === id);
     setJob(foundJob);
   };
 
@@ -37,44 +34,50 @@ const JobDetails = () => {
 
   return (
     <>
-      <div className="mt-5">
-        <div class="relative w-full min-h-[500px] overflow-hidden">
-          <div class="absolute inset-0">
+      <div className="mt-0">
+        <div className="relative w-full min-h-[500px] overflow-hidden">
+          <div className="absolute inset-0">
             <img
               src="https://www.mustgo.com/wp-content/uploads/2018/04/iStock-692910484.jpg"
               alt="დუბროვნიკი"
-              class="w-full h-full object-cover"
+              className="max-w-6xl mx-auto h-auto object-cover"
             />
-            <div class="absolute inset-0 bg-black/0 dark:bg-black/40"></div>
+            <div className="absolute inset-0 bg-black/0 dark:bg-black/40"></div>
           </div>
 
-          <div class="relative w-full md:w-[600px] lg:w-[700px] p-8 md:p-12 mt-8 md:mt-12 mx-auto md:mr-8 lg:mr-12">
-            <div class="bg-white/90 dark:bg-gray-800/90 p-8 rounded-lg backdrop-blur-sm">
-              <div class="max-w-2xl">
-                <h2 class="text-2xl md:text-3xl font-bold mb-4 dark:text-white">
-                  {job?.Company.name}
+          <div className="relative w-full md:w-[600px] lg:w-[700px] p-8 md:p-12 mt-8 md:mt-12 mx-auto md:mr-8 lg:mr-12">
+            <div className="bg-white/90 dark:bg-gray-800/90 p-8 rounded-lg backdrop-blur-sm">
+              <div className="max-w-2xl">
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 dark:text-white">
+                  {job?.Company?.name}
                 </h2>
 
-                <p class="text-gray-700 dark:text-gray-300 text-base md:text-lg mb-6">
+                <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg mb-6">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Voluptatum, repellendus.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <Link
+                    href={`/jobs`}
+                    className="bg-white/90 dark:bg-gray-800/90 p-2 rounded-lg"
+                  >
+                    Back
+                  </Link>
                   <a
                     href="#"
-                    class="text-teal-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 flex items-center transition-colors"
+                    className="text-teal-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 flex items-center transition-colors"
                   >
                     Learn more
                     <svg
-                      class="w-4 h-4 ml-2"
+                      className="w-4 h-4 ml-2"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
                       <path
                         stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M9 5l7 7-7 7"
                       />
                     </svg>
@@ -84,15 +87,15 @@ const JobDetails = () => {
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mt-5 bg-white mx-auto p-10">
-          <Image
-            src={job?.icon}
-            width={500}
-            height={500}
-            alt=""
-            class="w-40 h-40 object-cover"
-          />
+        <div className="max-w-6xl mt-5 bg-white mx-auto p-10">
           <div className=" bg-white rounded-lg p-6 items-center mb-6">
+            <Image
+              src={job?.Company?.logoUrl || job?.Company?.icon}
+              width={200}
+              height={200}
+              alt=""
+              className="w-20 h-20 object-cover"
+            />
             <h1 className="text-4xl font-bold mb-8">{job?.title}</h1>
             <div className="flex justify-between">
               <div className="mt-1 flex flex-col space-y-2">
@@ -127,7 +130,10 @@ const JobDetails = () => {
                   </div>
                 </div>
               </div>
-              <Link href={`/jobs/apply/${job?.id}`} class="bg-teal-600 dark:bg-red-700 text-white px-6 py-2 rounded-md hover:bg-red-700 dark:hover:bg-red-800 transition-colors">
+              <Link
+                href={`/jobs/apply/${job?.id}`}
+                className="bg-teal-600 dark:bg-red-700 text-white px-6 py-2 rounded-md hover:bg-red-700 dark:hover:bg-red-800 transition-colors"
+              >
                 Click to Apply
               </Link>
             </div>
@@ -135,9 +141,7 @@ const JobDetails = () => {
           <div className="px-10 py-5 bg-gray-100 rounded-md">
             {job?.description ? parse(job?.description) : null}
           </div>
-          <div
-            className="font-semibold text-blue-gray-900 text-lg pt-5 pb-1 px-2"
-          >
+          <div className="font-semibold text-blue-gray-900 text-lg pt-5 pb-1 px-2">
             How to Apply
           </div>
           <div className="text-lg leading-8 mb-20">
@@ -163,3 +167,4 @@ const JobDetails = () => {
 };
 
 export default JobDetails;
+

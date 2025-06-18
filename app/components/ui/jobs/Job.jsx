@@ -24,8 +24,8 @@ export function Job({ job }) {
   console.log(job);
   return (
     <div className="relative rounded-lg shadow-md  p-5 border-2 border-teal-100/30 bg-white cursor-pointer">
-      <div class=" absolute top-1 right-0 z-10 pl-5 pr-3 whitespace-no-wrap">
-        <span class="text-gray-400 text-xs">{timeAgo(job?.createdAt)}</span>
+      <div classNAme=" absolute top-1 right-0 z-10 pl-5 pr-3 whitespace-no-wrap">
+        <span classNAme="text-gray-400 text-xs">{timeAgo(job?.createdAt)}</span>
       </div>
       <div className="lg:flex lg:items-center lg:justify-between">
         <div className="text-lg font-semibold text-bookmark-blue flex space-x-1 items-center">
@@ -81,7 +81,7 @@ export function Job({ job }) {
             <div className="flex gap-2">
               <button
                 onClick={() => router.push(`/jobs/apply/${job?.id}`)}
-                class="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
+                classNAme="mr-2 my-1 tracking-wider px-2 text-teal-700 border-teal-100 hover:bg-cyan-800 hover:text-white border text-sm font-medium rounded-full py-1 transition transform duration-500 cursor-pointer"
               >
                 Apply
               </button>
@@ -102,7 +102,7 @@ export function Job({ job }) {
               </div>
             </div>
             {/* <div>
-              <button class="mr-2 my-1 uppercase tracking-wider px-2 text-cyan-800 border-cyan-800 hover:bg-cyan-800 hover:text-white border text-sm font-semibold rounded py-1 transition transform duration-500 cursor-pointer">
+              <button classNAme="mr-2 my-1 uppercase tracking-wider px-2 text-cyan-800 border-cyan-800 hover:bg-cyan-800 hover:text-white border text-sm font-semibold rounded py-1 transition transform duration-500 cursor-pointer">
                 Apply
               </button>
             </div> */}

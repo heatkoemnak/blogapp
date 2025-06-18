@@ -2,13 +2,13 @@
 
 import Hero from './components/Hero';
 import LandingSearch from './components/LandingSearch';
-import LatestJob from './components/ui/jobs/LatestJob';
+import Navbar from './components/Navbar';
 
 export default function Home() {
   return (
     <>
+      <Navbar />
       <LandingSearch />
-      <LatestJob />
       <Hero />
     </>
   );

@@ -5,11 +5,11 @@ import { useBlogContext } from '@/app/context/BlogProvider';
 
 export function SelectProvinceCity({
   showMoreThreshold = 6, // Default number of items to show before "Show More" toggle
-  setSelectProvinceCity,
+  setSelectProvinceCity,name
 }) {
   const { provinceCities } = useBlogContext();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState(name||'');
   const [showAll, setShowAll] = useState(false);
   const dropdownRef = useRef(null);
 

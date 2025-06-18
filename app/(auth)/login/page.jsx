@@ -5,6 +5,7 @@ import { signIn, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { redirect, useRouter } from 'next/navigation';
 import { RegisterOptionModal } from '@/app/components/ui/modals/RegisterOptionModal';
+import { IoArrowBackCircleOutline } from 'react-icons/io5';
 
 const Login = () => {
   const { status, data } = useSession();
@@ -59,10 +60,25 @@ const Login = () => {
   return (
     <div className="flex  min-h-screen items-center justify-center ">
       <div className="w-full max-w-lg space-y-2 p-8 mb-12 bg-white">
-        <h2 class="text-2xl uppercase font-medium mb-1">Login</h2>
-        <p class="text-gray-600 mb-6 text-sm">
-          Welcome! So good to have you back!
-        </p>
+        <div>
+          <Link
+            href={'/'}
+            className="flex items-center gap-1 px-2 hover:bg-teal-100 py-1 rounded-full cursor-pointer text-gray-700 transition-colors"
+          >
+            <IoArrowBackCircleOutline
+              size={25}
+              className="cursor-pointer hover:text-yellow-800"
+            />
+
+            <span className="text-sm">Back</span>
+          </Link>
+        </div>
+        <div className="text-center">
+          <h2 className="text-2xl uppercase font-medium mb-1">Login</h2>
+          <p className="text-gray-600 mb-6 text-sm">
+            Welcome! So good to have you back!
+          </p>
+        </div>
         <form onSubmit={handleLogin} className="mt-8 space-y-6">
           <div className=" py-2 -space-y-px">
             <div className="py-2">
@@ -90,33 +106,33 @@ const Login = () => {
                 <p className="text-red-500 text-xs mt-1">{errors.email}</p>
               )}
             </div>
-            <div class="space-y-2 py-2">
+            <div className="space-y-2 py-2">
               <div>
-                <label for="password" class="text-gray-900 block">
+                <label for="password" className="text-gray-900 block">
                   {' '}
                   Password
                 </label>
 
-                <div class="relative">
+                <div className="relative">
                   <input
                     name="password"
                     type={visiblePassword ? `text` : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     id="password"
-                    class="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm  focus:ring-0 focus:border-teal-500 placeholder-gray-400"
+                    className="block w-full border border-gray-300 px-4 py-3 text-gray-600 text-sm  focus:ring-0 focus:border-teal-500 placeholder-gray-400"
                     placeholder="••••••••"
                   />
                   <div
                     onClick={() => setVisiblePassword(!visiblePassword)}
-                    class="cursor-pointer absolute inset-y-0 right-0 flex items-center px-8 text-gray-600 border-l border-gray-300"
+                    className="cursor-pointer absolute inset-y-0 right-0 flex items-center px-8 text-gray-600 border-l border-gray-300"
                   >
                     {visiblePassword ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                         stroke="currentColor"
                         className="w-5 h-5"
                       >
@@ -186,7 +202,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              class="block w-full py-2 text-center text-white bg-teal-500 border border-teal-500 rounded hover:bg-transparent hover:text-teal-500 transition uppercase font-roboto font-medium"
+              className="block w-full py-2 text-center text-white bg-teal-500 border border-teal-500 rounded hover:bg-transparent hover:text-teal-500 transition uppercase font-roboto font-medium"
             >
               Login
             </button>
@@ -209,7 +225,7 @@ const Login = () => {
             <button
               type="button"
               onClick={() => signIn('google')}
-              class=" text-black justify-center bg-blue-gray-50 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2"
+              className=" text-black justify-center bg-blue-gray-50 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2"
             >
               <Image
                 src={`/google-icon.svg`}

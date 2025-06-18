@@ -1,9 +1,8 @@
-import React from "react"
+import React from 'react';
 
 export default function JobIconUpload() {
   return (
     <>
-      {/*<!-- Component: Dropzone file input --> */}
       <div className="relative my-6 bg-white">
         <input
           id="id-dropzone01"
@@ -39,7 +38,6 @@ export default function JobIconUpload() {
           </span>
         </label>
       </div>
-      {/*<!-- End Dropzone file input --> */}
     </>
-  )
+  );
 }

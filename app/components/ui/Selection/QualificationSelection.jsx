@@ -21,8 +21,9 @@ const qualificationList = [
 export function QualificationSelection({
   setSelectionQualification,
   showMoreThreshold = 3,
+  name,
 }) {
-  const [selectedOption, setSelectedValue] = useState(null);
+  const [selectedOption, setSelectedValue] = useState(name || null);
   const [showAll, setShowAll] = useState(false);
   console.log(selectedOption);
 

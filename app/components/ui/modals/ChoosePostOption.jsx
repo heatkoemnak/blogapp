@@ -26,9 +26,6 @@ export function ChoosePostOption() {
         case 'standard':
           router.push('/company');
           break;
-        case 'announcement':
-          router.push('/announcement');
-          break;
         case 'advertise':
           router.push('/advertisement');
           break;
@@ -47,16 +44,32 @@ export function ChoosePostOption() {
     <>
       <button
         onClick={handleOpen}
-        className="text-white bg-gradient-to-r from-teal-400 to-teal-700 px-5 py-2 rounded-full hover:shadow-lg hover:from-teal-500 hover:to-teal-800"
+        className="flex items-center gap-2 bg-gradient-to-r from-teal-500 via-green-400 to-teal-700 text-white font-semibold text-sm px-2 py-0 rounded-full shadow-md hover:from-teal-600 hover:to-green-600 hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-teal-400"
       >
-        Post a Job - Free
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        Post a Job{' '}
+        <span className="ml-1 bg-white/20 px-2 py-0.5 rounded text-xs font-medium">
+          Free
+        </span>
       </button>
 
       <Dialog size="sm" open={open} handler={handleOpen} className="p-6">
         <DialogHeader className="relative flex justify-between items-center">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Select Post Option
+              Job posting options
             </Typography>
             <Typography variant="small" className="mt-1 text-gray-500">
               Choose the type of post you’d like to create.
@@ -67,7 +80,7 @@ export function ChoosePostOption() {
           </IconButton>
         </DialogHeader>
 
-        <DialogBody className="pt-4">
+        <DialogBody className="pt-4" style={{ fontFamily: 'Roboto' }}>
           <div className="space-y-2">
             {[
               {
@@ -76,14 +89,9 @@ export function ChoosePostOption() {
                 description: 'Free',
               },
               {
-                id: 'announcement',
-                title: 'Announcement',
-                description: 'Free',
-              },
-              {
                 id: 'advertise',
                 title: 'Advertising',
-                description: 'Available within 24 hours. $5.00',
+                description: 'Available within 24 hours.',
               },
             ].map((option) => (
               <div key={option.id}>
@@ -101,9 +109,12 @@ export function ChoosePostOption() {
                   className="block cursor-pointer rounded-lg border bg-white p-5 hover:bg-gray-100 peer-checked:border-green-500 peer-checked:bg-green-50 peer-checked:shadow-md transition duration-150 ease-in-out"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-900 text-lg font-semibold">
+                    <Typography
+                      variant="large"
+                      className="mt-1 text-gray-700 font-normal"
+                    >
                       {option.title}
-                    </span>
+                    </Typography>
                     <span className="text-green-400">{option.description}</span>
                   </div>
                 </label>

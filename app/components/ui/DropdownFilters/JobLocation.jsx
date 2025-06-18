@@ -5,7 +5,7 @@ import { useBlogContext } from '@/app/context/BlogProvider';
 
 export function JobLocation({ setSelectedJobLevel, showMoreThreshold = 6 }) {
   const { provinceCities } = useBlogContext();
-  console.log(provinceCities);
+  // console.log(provinceCities);
   const [isOpen, setIsOpen] = useState(false);
   const [showAll, setShowAll] = useState(false);
 

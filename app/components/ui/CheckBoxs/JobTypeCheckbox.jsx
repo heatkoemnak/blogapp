@@ -2,24 +2,22 @@
 
 import React, { useState, useEffect } from 'react';
 import { Chip } from '@material-tailwind/react';
-import { JOBTypes } from '@/app/data';
 import { useRouter } from 'next/navigation';
 import { useBlogContext } from '@/app/context/BlogProvider';
+import ClearFilter from '../Reusable/ClearFilter';
 
 export function JobTypeCheckbox() {
-  const [selectedCategories, setSelectedCategories] = useState([]); // State for selected job types
+  const [selectedCategory, setSelectedCategory] = useState(''); // State for selected job type
   const { jobTypes } = useBlogContext();
   const router = useRouter();
 
   const handleCheckboxChange = (event) => {
     const value = event.target.value;
-    setSelectedCategories((prevSelected) => {
-      if (prevSelected.includes(value)) {
-        return prevSelected.filter((item) => item !== value);
-      } else {
-        return [...prevSelected, value];
-      }
-    });
+    if (selectedCategory === value) {
+      setSelectedCategory('');
+    } else {
+      setSelectedCategory(value);
+    }
 
     window.scrollTo({
       top: 900,
@@ -28,7 +26,7 @@ export function JobTypeCheckbox() {
   };
 
   const handleClear = () => {
-    if (selectedCategories.length > 0) {
+    if (selectedCategory !== '') {
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
@@ -40,15 +38,15 @@ export function JobTypeCheckbox() {
       });
     }
 
-    setSelectedCategories([]);
+    setSelectedCategory('');
     router.push(`/jobs?search=`);
   };
 
   useEffect(() => {
-    const query = selectedCategories.join(',');
+    const query = selectedCategory;
     if (query === '') return;
     router.push(`/jobs?search=${query}`);
-  }, [selectedCategories, router]);
+  }, [selectedCategory, router]);
 
   return (
     <div className="w-full bg-white">
@@ -56,15 +54,9 @@ export function JobTypeCheckbox() {
         <div className="font-semibold text-blue-gray-900 text-md pt-5 px-2">
           Job types
         </div>
-        <button
-          type="button"
-          onClick={handleClear}
-          className="font-semibold text-gray-600 text-sm pt-5 px-2"
-        >
-          Clear
-        </button>
+        {selectedCategory !== '' && <ClearFilter handleClear={handleClear} />}
       </div>
-      {jobTypes.map((type) => (
+      {jobTypes?.map((type) => (
         <label
           key={type.id}
           className="py-1 px-3 flex items-center w-full hover:bg-gray-200 cursor-pointer"
@@ -72,7 +64,7 @@ export function JobTypeCheckbox() {
           <input
             type="checkbox"
             value={type.name}
-            checked={selectedCategories.includes(type.name)}
+            checked={selectedCategory === type.name}
             onChange={handleCheckboxChange}
             className="mr-4 w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />

@@ -3,6 +3,7 @@
 import React from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const ProfileDropdown = () => {
   const { status, data: session } = useSession();
@@ -13,13 +14,18 @@ const ProfileDropdown = () => {
       <div className="absolute z-50 top-16 left-0 flex items-center justify-center">
         <div className="w-full max-w-sm rounded-lg bg-white p-3 drop-shadow-xl divide-y divide-gray-200">
           {status === 'authenticated' && (
-            <Link href={`/profile/${session?.user?.id}`} className="flex space-x-4 items-center p-4">
+            <Link
+              href={`/profile/${session?.user?.id}`}
+              className="flex space-x-4 items-center p-4"
+            >
               <div
                 aria-label="avatar"
                 className="flex mr-auto items-center space-x-4"
               >
                 {session?.user?.image ? (
-                  <img
+                  <Image
+                    width={40}
+                    height={40}
                     className="w-10 h-10 rounded-full"
                     src={
                       session?.user?.image ||
@@ -96,140 +102,7 @@ const ProfileDropdown = () => {
               </svg>
             </Link>
           )}
-          {/* <div aria-label="navigation" className="py-2">
-            <nav className="grid gap-1 text-md">
-              <Link
-                href="/blogs"
-                className="flex items-center space-x-3 py-2 px-4 w-full text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                </svg>
-                <span>All blogs</span>
-              </Link>
-              <Link
-                className={`flex gap-2 items-center text-white bg-gradient-to-r from-orange-500 to-purple-500 hover:bg-gradient-to-l focus:ring-1 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2  ${
-                  currentPath === '/create-post'
-                    ? 'text-blue-500 font-semibold'
-                    : 'text-gray-900'
-                }`}
-                href="/create-post"
-              >
-                <FaRegEdit size={24} />
-                Write
-              </Link>
-              <Link
-                href="/profile"
-                className="flex items-center space-x-3 py-2 px-4 w-full text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                </svg>
-                <span>My Profile</span>
-              </Link>
 
-              <Link
-                href="/my-blog"
-                className="flex items-center  space-x-3 py-2 px-4 w-full  text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M14 3v4a1 1 0 0 0 1 1h4" />
-                  <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
-                  <path d="M9 17h6" />
-                  <path d="M9 13h6" />
-                </svg>
-                <span>My Dashboard</span>
-              </Link>
-              <Link
-                href="/setting"
-                className="flex items-center  space-x-3 py-2 px-4 w-full  text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
-                  <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
-                </svg>
-                <span>Settings</span>
-              </Link>
-              <Link
-                href="/help"
-                className="flex items-center  space-x-3 py-2 px-4 w-full  text-gray-600 focus:outline-none hover:bg-gray-100 rounded-md"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  className="w-5 h-5"
-                  width={24}
-                  height={24}
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M19.875 6.27c.7 .398 1.13 1.143 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033z" />
-                  <path d="M12 16v.01" />
-                  <path d="M12 13a2 2 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" />
-                </svg>
-                <span>Helper Center</span>
-              </Link>
-            </nav>
-          </div> */}
           {session ? (
             <div aria-label="footer" className="pt-2">
               <Link
@@ -311,8 +184,8 @@ const ProfileDropdown = () => {
               href="/login"
               className="flex items-center space-x-3 py-2 px-4 w-full   text-gray-600 focus:outline-none rounded-md"
             >
-              <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2  text-sm font-medium text-gray-800 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+              <button className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2  text-sm font-medium text-gray-800 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
+                <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
                   Sign in
                 </span>
               </button>
