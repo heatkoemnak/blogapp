@@ -82,7 +82,12 @@ const AllJobs = ({ filterList, jobs }) => {
         ? jobList
             .slice((page - 1) * jobsPerPage, page * jobsPerPage)
             .map((job, index) => <JobRow key={index} job={job} grid={isGrid} />)
-        : null}
+        :
+          <div className="col-span-2 text-center text-gray-500 py-4">
+            No jobs found matching your criteria.
+          </div>
+
+              }
     </div>
   );
 
