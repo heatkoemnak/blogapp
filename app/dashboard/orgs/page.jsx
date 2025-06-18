@@ -316,7 +316,7 @@ const handleCustomExport = () => {
                       className="font-medium text-red-600 hover:underline"
                     >
                       <DeleteCompanyPopup
-                        companyName={company?.name}
+                        compnayName={company?.name}
                         companyId={company?.id}
                         handleDelete={() => handleDelete(company.id)}
                         error={error}
