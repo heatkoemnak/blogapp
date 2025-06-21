@@ -1,23 +1,22 @@
 // components/PostList.js
 'use client';
 import { useCallback, useEffect, useState } from 'react';
+import ErrorHandlerMessage from './ui/Reusable/ErrorHandlerMessage';
 import { JobTypeCheckbox } from './ui/CheckBoxs/JobTypeCheckbox';
+import { JobLocation } from './ui/DropdownFilters/JobLocation';
+import CategoriesLists from './ui/Selection/CategoriesLists';
+import JobIndustry from './ui/DropdownFilters/JobIndustry';
+import SalaryCheckbox from './ui/CheckBoxs/SalaryCheckbox';
 import { JobLevelList } from './ui/CheckBoxs/JobLevelList';
 import { useBlogContext } from '../context/BlogProvider';
-import { JobLocation } from './ui/DropdownFilters/JobLocation';
-
-import SalaryCheckbox from './ui/CheckBoxs/SalaryCheckbox';
+import Processing from './ui/Reusable/Processing';
+import { useSearchParams } from 'next/navigation';
 import CompanyLists from './CompanyLists';
 import Announcement from './Announcement';
-import JobIndustry from './ui/DropdownFilters/JobIndustry';
-import CategoriesLists from './ui/Selection/CategoriesLists';
-import { useSearchParams } from 'next/navigation';
-import axios from 'axios';
 import AllJobs from './ui/jobs/AllJobs';
-import Processing from './ui/Reusable/Processing';
 import Logo from './Logo';
 import useSWR from 'swr';
-import ErrorHandlerMessage from './ui/Reusable/ErrorHandlerMessage';
+
 const fetcher = async (url) => {
   const res = await fetch(url);
   if (!res.ok) {
@@ -33,7 +32,6 @@ const MainSection = () => {
   const searchParams = useSearchParams();
   const search = searchParams.get('search');
   const sortBy = searchParams.get('sort');
-  console.log(sortBy);
   const { data, error, isLoading } = useSWR(
     sortBy ? `/api/jobs/sorted-by-salary/?sort=${sortBy}` : `/api/jobs`,
     fetcher,

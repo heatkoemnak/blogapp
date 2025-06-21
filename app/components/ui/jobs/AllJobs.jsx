@@ -26,21 +26,22 @@ const sortOptions = [
 ];
 
 const AllJobs = ({ filterList, jobs }) => {
-  const [isGrid, showGridSystem] = useState(false);
-  const [page, setPage] = useState(1);
-  const [jobsPerPage, setJobsPerPage] = useState(3);
-  const [totalPages, setTotalPages] = useState(
-    Math.ceil(jobs?.length / jobsPerPage)
-  );
 
   const router = useRouter();
+  const initialRender = useRef(true);
+  const params = new URLSearchParams();
   const searchParams = useSearchParams();
-  const search = searchParams.get('search');
   const sortBy = searchParams.get('sort');
-
+  const search = searchParams.get('search');
   const [text, setText] = useState('');
   const [query] = useDebounce(text, 500);
-  const initialRender = useRef(true);
+  const [isGrid, showGridSystem] = useState(false);
+  const [page, setPage] = useState(1);
+  const [filter, setFilter] = useState(false);
+  const [jobsPerPage, setJobsPerPage] = useState(3);
+  const [totalPages, setTotalPages] = useState(Math.ceil(jobs?.length / jobsPerPage) );
+  if (query) params.append('search', query);
+  if (sortBy) params.append('sort', sortBy);
 
   const jobList = search?.length ? filterList : jobs;
   const hasResults = jobList?.length > 0;
@@ -58,43 +59,28 @@ const AllJobs = ({ filterList, jobs }) => {
       initialRender.current = false;
       return;
     }
-    const params = new URLSearchParams();
-    if (query) params.append('search', query);
-    if (sortBy) params.append('sort', sortBy);
-
     const searchString = params.toString();
     router.push(`/jobs${searchString ? `?${searchString}` : ''}`);
   }, [query, router, sortBy]);
 
-  const handlePageChange = (page) => {
-    setPage(page);
-  };
-
-  const toggleView = () => {
-    showGridSystem(!isGrid);
-  };
-
   const GridDisplay = () => (
-    <div
-      className={`grid ${isGrid ? 'grid-cols-2' : 'grid-cols-1'} gap-1 mt-2`}
-    >
-      {hasResults
-        ? jobList
-            .slice((page - 1) * jobsPerPage, page * jobsPerPage)
-            .map((job, index) => <JobRow key={index} job={job} grid={isGrid} />)
+    <div className={`grid ${isGrid ? 'grid-cols-2' : 'grid-cols-1'} gap-1 mt-2`}>
+      {hasResults ? jobList.slice((page - 1) * jobsPerPage, page * jobsPerPage).map((job, index) => <JobRow key={index} job={job} grid={isGrid} />)
         :
-          <div className="col-span-2 text-center text-gray-500 py-4">
+        <div className="col-span-2 text-center text-gray-500 py-4">
             No jobs found matching your criteria.
           </div>
-
-              }
+      }
     </div>
   );
+  
+    const handlePageChange = (page) => {
+      setPage(page);
+    };
 
-  const groupJobsBySortOption = (jobs, option) => {
-    // Implement sorting logic here based on the option
-    return jobs;
-  };
+    const toggleView = () => {
+      showGridSystem(!isGrid);
+    };
 
   return (
     <div>
@@ -125,17 +111,17 @@ const AllJobs = ({ filterList, jobs }) => {
           )}
           <Menu as="div" className="relative inline-block text-left border py-1 px-2 ml-2">
             <div className="flex items-center">
-              <MenuButton className="group flex items-center text-sm font-medium text-gray-900 hover:text-teal-900">
+              <button onClick={() => setFilter(prev => !prev)} className="group flex items-center text-sm font-medium text-gray-900 hover:text-teal-900">
                 Sort
                 <ChevronDownIcon className="size-5 shrink-0 text-gray-900 group-hover:text-teal-500" />
                 <BiFilterAlt className="size-4 text-gray-600" />
-              </MenuButton>
+              </button>
             </div>
 
-            <MenuItems
-              transition
-              className="absolute right-0 z-10 mt-2 w-52 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+            <div
+              className="absolute right-0 z-10 mt-2 w-52 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 transition focus:outline-none"
             >
+              {filter && (
               <div className="py-1">
                 {sortOptions.map((option) => (
                   <MenuItem key={option.name}>
@@ -152,7 +138,9 @@ const AllJobs = ({ filterList, jobs }) => {
                   </MenuItem>
                 ))}
               </div>
-            </MenuItems>
+              )
+              }
+            </div>
           </Menu>
         </div>
       </div>

@@ -206,6 +206,9 @@ const Applications = () => {
               Apply for
             </th>
             <th scope="col" className="px-6 py-3">
+              Company
+            </th>
+            <th scope="col" className="px-6 py-3">
               Tel
             </th>
             <th scope="col" className="px-6 py-3">
@@ -263,8 +266,10 @@ const Applications = () => {
                       </div>
                     </div>
                   </th>
+
                   <td className="px-6 py-4">{application.email}</td>
                   <td className="px-6 py-4">{application.position}</td>
+                  <td className="px-6 py-4">{application?.Job?.Company?.name}</td>
                   <td className="px-6 py-4">{application.phone}</td>
                   <td className="px-6 py-4">
                     <Link
@@ -288,7 +293,7 @@ const Applications = () => {
           ))}
         </tbody>
       </table>
-    
+
       {/* <AllApplication /> */}
     </ApplicationDashboardLayout>
   );

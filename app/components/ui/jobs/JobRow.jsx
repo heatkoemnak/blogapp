@@ -160,7 +160,6 @@ const JobRow = ({ job, appId, grid }) => {
           <div className="flex gap-1 items-center">
             {session ? (
               <>
-              <>
                 {session?.user?.id !== job?.author?.id && (
                   <Link
                     href={`/jobs/apply/${job?.id}`}
@@ -178,20 +177,7 @@ const JobRow = ({ job, appId, grid }) => {
                   </Link>
                 )}
               </>
-              {grid ? (
-                <RiArrowRightUpBoxLine
-                size={25}
-                className="text-gray-600 mx-1"
-                />
-              ) : (
-                <Link
-                href={`jobs/${job?.id}`}
-                className="px-1 py-0 bg-white border text-gray-600 hover:bg-teal-400 hover:text-white rounded-full ml-4"
-                >
-                    Views
-                  </Link>
-                )}
-                </>
+
             ) : (
               <div className="flex items-center ">
                 <Tooltip text="Login to make an apply." position="right">
@@ -204,6 +190,21 @@ const JobRow = ({ job, appId, grid }) => {
                 </Tooltip>
               </div>
             )}
+            <>
+            {grid ? (
+                <RiArrowRightUpBoxLine
+                size={25}
+                className="text-gray-600 mx-1"
+                />
+              ) : (
+                <Link
+                href={`jobs/${job?.companyId}?id=${job?.id}`}
+                className="px-1 py-0 bg-white border text-gray-600 hover:bg-teal-400 hover:text-white rounded-full ml-4"
+                >
+                    Views
+                  </Link>
+                )}
+            </>
           </div>
           <span className="flex gap-1 text-sm text-red-400">
             {' '}

@@ -6,165 +6,172 @@ import {
   MapPinIcon,
 } from '@heroicons/react/24/solid';
 import { HiBuildingOffice2 } from 'react-icons/hi2';
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { useBlogContext } from '@/app/context/BlogProvider';
-import parse from 'html-react-parser';
-import Image from 'next/image';
 import { RiCalendarCloseFill } from 'react-icons/ri';
-import { BiLinkExternal } from 'react-icons/bi';
+import { useParams } from 'next/navigation';
+import useSWR from 'swr';
+import Image from 'next/image';
+import parse from 'html-react-parser';
 import Link from 'next/link';
+import Processing from '@/app/components/ui/Reusable/Processing';
+import { LiaIndustrySolid } from 'react-icons/lia';
+import { BiSolidCategory } from 'react-icons/bi';
+import { MdOutlinePublic } from 'react-icons/md';
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const JobDetails = () => {
-  const { jobs } = useBlogContext();
   const params = useParams();
-  const id = params.id;
-  const [job, setJob] = useState(null);
+  // const id = params.id;
+  // console.log(id);
+  const { data, error, isLoading } = useSWR( `/api/jobs/company/${params.id}`,
+    fetcher
+  );
 
-  const getAJobById = () => {
-    const foundJob = jobs.find((company) => company?.id === id);
-    setJob(foundJob);
-  };
-
-  useEffect(() => {
-    if (jobs && id) {
-      getAJobById();
-    }
-  }, []);
+  if (isLoading) return <Processing state="Loading job details..." />;
+  if (error || !data) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <>
-      <div className="mt-0">
-        <div className="relative w-full min-h-[500px] overflow-hidden">
-          <div className="absolute inset-0">
-            <img
-              src="https://www.mustgo.com/wp-content/uploads/2018/04/iStock-692910484.jpg"
-              alt="დუბროვნიკი"
-              className="max-w-6xl mx-auto h-auto object-cover"
-            />
-            <div className="absolute inset-0 bg-black/0 dark:bg-black/40"></div>
-          </div>
+    <div className="mt-1">
+      {/* Highlighted Company Header */}
+              <button type="button" onClick={() => window.history.back()} className="inline-block text-teal-600 px-4 py-2 rounded-md hover:bg-gray-200">Back</button>
+      <div className="relative  max-w-5xl mx-auto min-h-[300px] overflow-hidden">
+        <div className="group bg-teal-400 p-2 transition-all duration-300 lg:p-6">
 
-          <div className="relative w-full md:w-[600px] lg:w-[700px] p-8 md:p-12 mt-8 md:mt-12 mx-auto md:mr-8 lg:mr-12">
-            <div className="bg-white/90 dark:bg-gray-800/90 p-8 rounded-lg backdrop-blur-sm">
-              <div className="max-w-2xl">
-                <h2 className="text-2xl md:text-3xl font-bold mb-4 dark:text-white">
-                  {job?.Company?.name}
-                </h2>
-
-                <p className="text-gray-700 dark:text-gray-300 text-base md:text-lg mb-6">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Voluptatum, repellendus.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href={`/jobs`}
-                    className="bg-white/90 dark:bg-gray-800/90 p-2 rounded-lg"
-                  >
-                    Back
-                  </Link>
-                  <a
-                    href="#"
-                    className="text-teal-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 flex items-center transition-colors"
-                  >
-                    Learn more
-                    <svg
-                      className="w-4 h-4 ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="max-w-6xl mt-5 bg-white mx-auto p-10">
-          <div className=" bg-white rounded-lg p-6 items-center mb-6">
+          <div className="flex items-center gap-x-4">
             <Image
-              src={job?.Company?.logoUrl || job?.Company?.icon}
-              width={200}
-              height={200}
-              alt=""
-              className="w-20 h-20 object-cover"
+              src={data?.Company?.logoUrl || data?.Company?.icon || '/placeholder.png'}
+              alt="Company Logo"
+              width={40}
+              height={40}
+              className="w-12 h-12 object-cover rounded-full bg-white"
             />
-            <h1 className="text-4xl font-bold mb-8">{job?.title}</h1>
-            <div className="flex justify-between">
-              <div className="mt-1 flex flex-col space-y-2">
-                <div className="flex gap-2 items-center">
-                  <div className="flex gap-1 items-center bg-teal-400 text-white text-sm px-2 py-1 rounded">
-                    <BriefcaseIcon className="h-4 w-4 shrink-0" />
-                    <span className=" text-sm">{job?.JobType.name}</span>
-                  </div>
-                  <div className="flex gap-1 items-center">
-                    <MapPinIcon className="h-4 w-4 shrink-0 text-gray-500" />
-                    <span className="text-gray-700 text-sm">
-                      {job?.ProvinceCity.name}
-                    </span>
-                  </div>
-                  <div className="flex gap-1 items-center">
-                    <CurrencyDollarIcon className="h-4 w-4 shrink-0 text-yellow-800" />
-                    <span className="text-gray-700 text-sm">
-                      {job?.JobSalary.label}
-                    </span>
-                  </div>
-                  <div className="flex gap-1 items-center">
-                    <HiBuildingOffice2 className="h-4 w-4 shrink-0 text-yellow-800" />
-                    <span className="text-gray-700 text-sm">
-                      {job?.Company.name}
-                    </span>
-                  </div>
-                  <div className="flex gap-1 items-center">
-                    <RiCalendarCloseFill className="h-4 w-4 shrink-0 text-red-800" />
-                    <span className="text-gray-700 text-sm">
-                      {job?.closeDate}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <Link
-                href={`/jobs/apply/${job?.id}`}
-                className="bg-teal-600 dark:bg-red-700 text-white px-6 py-2 rounded-md hover:bg-red-700 dark:hover:bg-red-800 transition-colors"
-              >
-                Click to Apply
-              </Link>
+            <div>
+              <h3 className="text-xl font-bold text-white">{data?.Company?.name}</h3>
             </div>
           </div>
-          <div className="px-10 py-5 bg-gray-100 rounded-md">
-            {job?.description ? parse(job?.description) : null}
+          <div className="mt-2 text-white space-y-1">
+            <h3 className="text-2xl font-semibold">{data?.title}</h3>
+             <div className="flex text-sm items-center gap-1 text-gray-200">
+              <MdOutlinePublic className="h-4 w-4 " />
+              {data?.publishedAt}, {data?.ProvinceCity?.name}
+            </div>
+              {/* <span className="text-sm text-gray-300">{data?.ProvinceCity?.name}</span> */}
           </div>
-          <div className="font-semibold text-blue-gray-900 text-lg pt-5 pb-1 px-2">
-            How to Apply
-          </div>
-          <div className="text-lg leading-8 mb-20">
-            {job?.contact && job?.contact.length > 0 ? (
-              job?.contact.map((contact, index) => (
-                <Link
-                  href={contact}
-                  key={index}
-                  className="flex items-center text-blue-600"
-                >
-                  <span className="text-blue-600">{contact}</span>
-                  <BiLinkExternal />
-                </Link>
-              ))
-            ) : (
-              <p>No contact information</p>
-            )}
+          <div className="text-right space-x-2">
+            <Link
+              href={`/jobs/apply/${data?.id}`}
+              className="inline-block bg-white text-teal-600 px-4 py-1 rounded-full hover:bg-gray-200"
+            >
+              Apply Now
+            </Link>
+            <button
+              type="button"
+              className="inline-block bg-white text-teal-600 px-4 py-1 rounded-full hover:bg-gray-200"
+            >
+              Save Job
+            </button>
           </div>
         </div>
       </div>
-    </>
+
+      {/* Job Info + Description Grid */}
+      <div className="max-w-5xl -mt-20 mx-auto grid gap-1 grid-cols-7">
+        {/* Left Column - Job Info */}
+        <div className="col-span-2 rounded-s-md  bg-gray-50 p-6 shadow">
+          <h2 className="text-2xl font-semibold">Job Details</h2>
+          <div className=" flex flex-col  space-y-2 text-sm text-gray-700">
+            <div className="flex items-center gap-2">
+              <BriefcaseIcon className="h-5 w-5 text-teal-600" />
+              {data?.JobType?.name}
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPinIcon className="h-5 w-5 text-gray-600" />
+              {data?.ProvinceCity?.name}, {data?.JobLocation?.country}
+            </div>
+            {
+              data?.JobLocation?.address && (
+                <div className="flex items-center gap-2">
+                  <HiBuildingOffice2 className="h-5 w-5 text-gray-600" />
+                  {data?.JobLocation?.address}
+                </div>
+              )
+            }
+            {
+              data?.JobSalary?.label && (
+                <div className="flex items-center gap-2">
+                  <CurrencyDollarIcon className="h-5 w-5 text-yellow-600" />
+                  {data?.JobSalary?.label}
+                </div>
+              )
+            }
+            {
+              data?.JobIndustry?.name && (
+                <div className="flex items-center gap-2">
+                  <LiaIndustrySolid  className="h-5 w-5 text-blue-700" />
+                  {data?.JobIndustry?.name}
+                </div>
+              )
+            }
+
+            <div className="flex items-center gap-2">
+              <BiSolidCategory   className="h-5 w-5 text-blue-700" />
+              {data?.JobCategory?.name}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <RiCalendarCloseFill className="h-5 w-5 text-red-600" />
+              {data?.closeDate}
+            </div>
+              {
+            data?.JobLevel?.name && (
+              <div className="flex items-center gap-2">
+                {/* <GiTeacher className="h-5 w-5 text-blue-700" /> */}
+                <b>Job Level:</b> {data?.JobLevel?.name}
+              </div>
+            )
+           }
+              {
+            data?.gender && (
+              <div className="flex items-center gap-2">
+                {/* <GiTeacher className="h-5 w-5 text-blue-700" /> */}
+                <b>Gender:</b> {data?.gender}
+              </div>
+            )
+           }
+              {
+            data?.qualification && (
+              <div className="flex items-center gap-2">
+                {/* <GiTeacher className="h-5 w-5 text-blue-700" /> */}
+                <b>Qualification:</b> {data?.qualification}
+              </div>
+            )
+           }
+              {
+            data?.pax && (
+              <div className="flex items-center gap-2">
+                {/* <GiTeacher className="h-5 w-5 text-blue-700" /> */}
+                <b>Pax:</b> {data?.pax}
+              </div>
+            )
+           }
+              {
+            data?.Districts && data?.Communes && (
+              <div className="flex items-center gap-2">
+                {/* <GiTeacher className="h-5 w-5 text-blue-700" /> */}
+                <b>Location:</b> {data?.Districts?.name}, {data?.Communes?.name}
+              </div>
+            )
+           }
+          </div>
+        </div>
+
+        {/* Right Column - Job Description */}
+        <div className="col-span-5 bg-white p-10 text-sm text-gray-800">
+          {data?.description ? parse(data.description) : <p>No description provided.</p>}
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default JobDetails;
-

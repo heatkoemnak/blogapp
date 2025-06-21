@@ -113,7 +113,7 @@ const Application = ({ params }) => {
       .then((response) => {
         console.log('Application submitted successfully:', response.data);
         toast.success('Application submitted successfully!');
-        router.push('/dashboard/user/application');
+        router.push('/dashboard/application');
       })
       .catch((error) => {
         console.error('Error submitting application:', error.message);

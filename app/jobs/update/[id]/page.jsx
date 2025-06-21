@@ -22,6 +22,9 @@ import { useBlogContext } from '@/app/context/BlogProvider';
 import Label from '@/app/components/ui/Reusable/Label';
 import ClosingDate from '@/app/components/ui/Selection/ClosingDate';
 import useSWR from 'swr';
+import Processing from '@/app/components/ui/Reusable/Processing';
+import ErrorHandlerMessage from '@/app/components/ui/Reusable/ErrorHandlerMessage';
+import PopUpError from '@/app/components/ui/Reusable/PopUpError';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -66,6 +69,10 @@ const UpdateJob = () => {
   const [selectDistrict, setSelectDistrict] = useState(null);
   const [selectCommune, setSelectCommune] = useState(null);
   const [selectQualification, setSelectionQualification] = useState(null);
+
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
 
   useEffect(() => {
     if (data) {
@@ -259,11 +266,12 @@ const UpdateJob = () => {
     setCompany(foundCompany);
   };
 
-  if (isLoading) return <p>Loading job details...</p>;
-  if (error) return <p className="text-red-600">Failed to load job</p>;
+  if (isLoading) return <Processing state="Loading.." />;
+
   if (!data) return <p>Job not found</p>;
   return (
     <form className="bg-white border-t">
+
       <div className=" max-w-5xl mx-auto">
         <div className="border-b p-5 border-gray-900/10 pb-12">
           <div className="grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
@@ -539,7 +547,7 @@ const UpdateJob = () => {
                   )}
                 </div>
               </div>
-              <h2 className=" text-lg font-semibold text-blue-gray-900 ">
+            <h2 className=" text-lg font-semibold text-blue-gray-900 ">
                 Job description
               </h2>
               <div>
@@ -550,7 +558,7 @@ const UpdateJob = () => {
                 />
               </div>
             </div>
-
+{/*
             <div className="col-span-full relative flex items-center justify-between">
               <label
                 htmlFor="categories"
@@ -559,7 +567,7 @@ const UpdateJob = () => {
                 How to apply?
               </label>
               <SelectCategoriesDialog links={links} setLinks={setLinks} />
-            </div>
+            </div> */}
             <div className="col-span-full relative flex items-center justify-between">
               <label
                 htmlFor="categories"
@@ -574,6 +582,7 @@ const UpdateJob = () => {
               />
             </div>
           </div>
+
           <div className="flex gap-2 mt-20 text-right ">
             {loading ? (
               <div className="h-screen flex justify-center items-center">

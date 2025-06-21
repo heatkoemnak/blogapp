@@ -8,16 +8,9 @@ export async function GET() {
             include: {
                 Job: {
                     include: {
-                        JobType: true,
-                        Company: true, // Include company details if needed
-                        JobCategory: true, // Include job category
-                        JobIndustry: true, // Include job industry details
-                        JobLevel: true, // Include job level
-                        JobLocation: true, // Include job location details
-                        JobSalary: true, // Include job salary details
-                        ProvinceCity: true, // Include province and city details
+                        Company: true,
                     },
-                },
+                }
             },
         });
         if (!applications) {
