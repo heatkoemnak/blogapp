@@ -23,7 +23,7 @@ const JobDetails = () => {
   const params = useParams();
   // const id = params.id;
   // console.log(id);
-  const { data, error, isLoading } = useSWR( `/api/jobs/company/${params.id}`,
+  const { data, error, isLoading } = useSWR( `/api/jobs/${params.id}`,
     fetcher
   );
 

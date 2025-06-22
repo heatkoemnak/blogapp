@@ -8,7 +8,6 @@ import {
   FaTiktok,
   FaWhatsappSquare,
 } from 'react-icons/fa';
-import { useBlogContext } from '../context/BlogProvider';
 const fetcher = async (url) => {
   const res = await fetch(url);
   if (!res.ok) {
@@ -21,7 +20,6 @@ const fetcher = async (url) => {
   return res.json();
 };
 const Footer = () => {
-  // const { jobs, isLoading } = useBlogContext();
   const { data, error, isLoading } = useSWR('/api/jobs', fetcher);
 
   return (

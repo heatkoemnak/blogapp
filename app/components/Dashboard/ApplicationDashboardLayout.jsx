@@ -46,15 +46,6 @@ function ApplicationDashboardLayout({ children }) {
 
   return (
     <LayoutAction>
-      {/* <div className="px-6 py-5 ">
-        <ul className="flex gap-5 list-none ">
-          {navItemsToShow.map(({ label, href }) => (
-            <li key={href}>
-              <Link href={href}>{label}</Link>
-            </li>
-          ))}
-        </ul>
-      </div> */}
       <section className="flex-1 rounded-md">{children}</section>
     </LayoutAction>
   );

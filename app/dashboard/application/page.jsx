@@ -11,13 +11,20 @@ import Processing from '@/app/components/ui/Reusable/Processing';
 import useSWR from 'swr';
 import { TbFolderOpen } from 'react-icons/tb';
 import { IoMdArrowDropright } from 'react-icons/io';
+import { useSession } from 'next-auth/react';
+import { mutate } from 'swr';
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const Applications = () => {
+  const { data: session } = useSession();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [loadingId, setLoadingId] = useState(null);
   const [groupByPosition, setGroupByPosition] = useState(false);
-  const { data, error, isLoading } = useSWR(`/api/jobs/apply`, fetcher, {});
+  const { data, error, isLoading } = useSWR(session?.user?.role ==='candidate' ? `/api/jobs/applications/users/${session?.user?.id}`: `/api/jobs/apply?email=${session?.user?.email}` , fetcher, {
+  });
+  const [loading, setLoading] = useState(false);
+  const [Error, setError] = useState(null);
   console.log(data);
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
@@ -51,9 +58,38 @@ const Applications = () => {
   const handleGroupByPosition = () => {
     setGroupByPosition(!groupByPosition);
   };
+  const handleStatusChange =(id, newStatus) => {
+     updateApplicationStatus(id, newStatus)
+  }
+
+  async function updateApplicationStatus(id, newStatus) {
+  setLoadingId(id);
+  setError(null);
+  try {
+    const res = await fetch(`/api/jobs/applications/${id}/status`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to update status');
+    }
+
+    await mutate(`/api/jobs/apply?email=${session?.user?.email}`);
+  } catch (error) {
+    setError(error.message);
+    throw error;
+  } finally {
+    setLoadingId(null);
+  }
+}
+
 
   const groupedApplications = groupByPosition
-    ? data.reduce((acc, current) => {
+    ? data?.reduce((acc, current) => {
         const key = current.position;
         if (!acc[key]) {
           acc[key] = [];
@@ -103,6 +139,27 @@ const Applications = () => {
               />
             </svg>
           </button>
+          {
+            selected.length > 0 && (
+              <button
+                onClick={() => {
+                  selected.forEach((id) => {
+                    updateApplicationStatus(id, 'accepted')
+                      .then(() => {
+                        console.log(`Application ${id} updated to accepted`);
+                      })
+                      .catch((error) => {
+                        console.error(`Error updating application ${id}:`, error);
+                      });
+                  });
+                  setSelected([]);
+                }}
+                className="inline-flex items-center text-white bg-green-500 border border-gray-300 focus:outline-none hover:bg-green-600 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              >
+                Accept Selected
+              </button>
+            )
+          }
           {isDropdownOpen && (
             <div className="absolute shadow-lg top-10 left-14 z-10 bg-white divide-y divide-gray-100 rounded-lg w-44 dark:bg-gray-700 dark:divide-gray-600">
               <ul className="py-1 list-none text-sm text-gray-700 dark:text-gray-200">
@@ -214,9 +271,21 @@ const Applications = () => {
             <th scope="col" className="px-6 py-3">
               Resume
             </th>
-            <th scope="col" className="px-6 py-3">
+            {
+              session?.user?.role === 'employer' && (
+                <>
+                <th scope="col" className="px-6 py-3">
+                  View
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
+                </>
+              )
+            }
+            {/* <th scope="col" className="px-6 py-3">
               Action
-            </th>
+            </th> */}
           </tr>
         </thead>
         <tbody>
@@ -279,14 +348,56 @@ const Applications = () => {
                       Resume
                     </Link>
                   </td>
-                  <td className="px-6 py-4">
-                    <Link
-                      href="#"
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Edit
-                    </Link>
-                  </td>
+                  {
+                    session?.user?.role === 'employer' && (
+                      <>
+                      <td className="px-6 py-4">
+                        <Link
+                          href={`/dashboard/application/${application.id}`}
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        >
+                          View
+                        </Link>
+                      </td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => {
+                          if (application.status === 'public') {
+                            handleStatusChange(application?.id, 'reviewing');
+                          } else if (application.status === 'reviewing') {
+                            handleStatusChange(application?.id, 'shortlisted');
+                          } else if (application.status === 'shortlisted') {
+                            handleStatusChange(application?.id, 'accepted');
+                          } else if (application.status === 'accepted') {
+                            handleStatusChange(application?.id, 'rejected');
+                          }
+
+                        }}
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      >
+                        {loadingId === application.id ? (
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                      ) : (
+                        application?.status === 'public' ? (
+                          <span className="text-blue-600">Pending</span>
+                        ) : application?.status === 'reviewing' ? (
+                          <span className="text-yellow-600">Reviewing</span>
+                        ) : application?.status === 'shortlisted' ? (
+                          <span className="text-green-600">Shortlisted</span>
+                        ) : application?.status === 'accepted' ? (
+                          <span className="text-green-600">Accepted</span>
+                        ) : (
+                          <span className="text-red-600">Rejected</span>
+                        )
+                      )}
+                      </button>
+                    </td>
+                    </>
+                    )
+                  }
                 </tr>
               ))}
             </Fragment>

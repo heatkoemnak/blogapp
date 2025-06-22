@@ -16,15 +16,32 @@ import Layout from '../components/Dashboard/Layout';
 import Link from 'next/link';
 import ProtectedRoute from '../components/ProtectedRoute/ProtectedRoute';
 import HeaderSection from '../components/ui/Reusable/HeaderSection';
-
+import useSWR from 'swr';
+const fetcher = (url) => fetch(url).then((res) => res.json());
 function Dashboard() {
   const { data: session } = useSession();
+const { data, error, isLoading } = useSWR(session?.user?.role ==='candidate' ? `/api/jobs/applications/users/${session?.user?.id}`: `/api/jobs/apply?email=${session?.user?.email}` , fetcher, {
+  });
+  const pendingCount = data?.filter(app =>
+  app.status === 'public' || app.status === 'reviewing'
+)?.length || 0;
+const reviewingCount = data?.filter(app => app.status === 'reviewing')?.length || 0;
+const acceptedCount = data?.filter(app => app.status === 'accepted')?.length || 0;
+const rejectedCount = data?.filter(app => app.status === 'rejected')?.length || 0;
+const shortlistedCount = data?.filter(app => app.status === 'shortlisted')?.length || 0;
 
+
+  if (error) return <div>Error loading data</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (!session) {
+    signIn();
+    return <div>Redirecting...</div>;
+  }
   const cardData = [
     {
       id: 1,
       icon: <BriefcaseIcon className="w-12 h-12 text-teal-700" />,
-      number: 3,
+      number: data?.length || 0,
       description: 'Open Positions',
       buttonText: 'View Details',
       route: '/dashboard/open',
@@ -33,7 +50,7 @@ function Dashboard() {
     {
       id: 2,
       icon: <PiNewspaperClippingFill className="w-12 h-12 text-teal-700" />,
-      number: 12,
+      number: data?.length || 0,
       description: 'New Applications',
       buttonText: 'Check Applications',
       route: '/dashboard/new',
@@ -42,18 +59,18 @@ function Dashboard() {
     {
       id: 3,
       icon: <MdPendingActions className="w-12 h-12 text-teal-700" />,
-      number: 8,
-      description: 'Pending Reviews',
+      number: pendingCount,
+      description: 'Pending',
       buttonText: 'Review Now',
       route: '/dashboard/new',
       role: 'employer',
     },
     {
-      id: 4,
-      icon: <MdOutlineSchedule className="w-12 h-12 text-teal-700" />,
-      number: 3,
-      description: 'Upcoming Interviews',
-      buttonText: 'View Schedule',
+      id: 3,
+      icon: <MdPendingActions className="w-12 h-12 text-teal-700" />,
+      number: reviewingCount,
+      description: 'Reviewing',
+      buttonText: 'Review Now',
       route: '/dashboard/new',
       role: 'employer',
     },
@@ -69,25 +86,43 @@ function Dashboard() {
     {
       id: 6,
       icon: <FaListCheck className="w-12 h-12 text-teal-700" />,
-      number: 20,
+      number: shortlistedCount,
       description: 'Shortlist',
       buttonText: 'View Shortlist',
       route: '/dashboard/new',
       role: 'employer',
     },
     {
+      id: 4,
+      icon: <MdOutlineSchedule className="w-12 h-12 text-teal-700" />,
+      number: acceptedCount,
+      description: 'Upcoming Interviews',
+      buttonText: 'View Schedule',
+      route: '/dashboard/new',
+      role: 'employer',
+    },
+    {
       id: 6,
       icon: <VscGitStashApply className="w-12 h-12 text-teal-700" />,
-      number: 5,
+      number: data?.length || 0,
       description: 'Applied',
       buttonText: 'View applications',
-      route: '/dashboard/user/applied',
+      route: '/dashboard/application',
       role: 'candidate',
     },
     {
       id: 6,
+      icon: <VscGitStashApply className="w-12 h-12 text-teal-700" />,
+      number: data?.length || 0,
+      description: 'Applied',
+      buttonText: 'View applications',
+      route: '/dashboard/application',
+      role: 'employer',
+    },
+    {
+      id: 6,
       icon: <FaListCheck className="w-12 h-12 text-teal-700" />,
-      number: 1,
+      number: shortlistedCount,
       description: 'Shortlist',
       buttonText: 'View Shortlist',
       route: '/dashboard/new',
@@ -96,7 +131,7 @@ function Dashboard() {
     {
       id: 6,
       icon: <RiCalendarScheduleLine className="w-12 h-12 text-teal-700" />,
-      number: 1,
+      number: shortlistedCount,
       description: 'Interviews',
       buttonText: 'View Shcedules',
       route: '/dashboard/new',
@@ -105,11 +140,20 @@ function Dashboard() {
     {
       id: 6,
       icon: <AiOutlineCloseSquare className="w-12 h-12 text-teal-700" />,
-      number: 2,
+      number: rejectedCount,
       description: 'Rejected',
       buttonText: 'View Rejected',
       route: '/dashboard/new',
       role: 'candidate',
+    },
+    {
+      id: 6,
+      icon: <AiOutlineCloseSquare className="w-12 h-12 text-teal-700" />,
+      number: rejectedCount,
+      description: 'Rejected',
+      buttonText: 'View Rejected',
+      route: '/dashboard/new',
+      role: 'employer',
     },
     {
       id: 6,

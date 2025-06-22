@@ -83,15 +83,23 @@ const MainSection = () => {
     );
   }
 
+  if (!data || isLoading) {
+    return (
+      <div className="max-w-6xl relative mx-auto">
+        <Processing state="Job Loading..." />
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="max-w-6xl relative mx-auto ">
-        {isLoading && (
+        {/* {isLoading && (
           <>
             <Logo />
             <Processing state="Job Loading..." />
           </>
-        )}
+        )} */}
         <div
           className={` grid grid-cols-7 gap-x-6 gap-y-2 ${
             isLoading ? 'opacity-50 ' : 'opacity-100'

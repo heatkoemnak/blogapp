@@ -198,7 +198,7 @@ const JobRow = ({ job, appId, grid }) => {
                 />
               ) : (
                 <Link
-                href={`jobs/${job?.companyId}?id=${job?.id}`}
+                href={`jobs/${job?.id}?cpId=${job?.companyId}`}
                 className="px-1 py-0 bg-white border text-gray-600 hover:bg-teal-400 hover:text-white rounded-full ml-4"
                 >
                     Views

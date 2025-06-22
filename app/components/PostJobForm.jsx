@@ -23,6 +23,7 @@ import { useBlogContext } from '../context/BlogProvider';
 import { SelectCategoriesDialog } from './ui/modals/SelectCategoriesDialog';
 import Label from './ui/Reusable/Label';
 import { ArrowLeftIcon } from '@heroicons/react/20/solid';
+import { SelectCompany } from './ui/Selection/company/SelectCompany';
 const PostJobForm = () => {
   const { data: session } = useSession();
   const date = new Date();
@@ -31,6 +32,9 @@ const PostJobForm = () => {
   const companyId = params.id;
   console.log(companyId);
   const [company, setCompany] = useState(null);
+  const [companyID, setCompanyId] = useState(null);
+  console.log(companyID);
+
   console.log(company);
   const { jobCategories, companies, provinceCities } = useBlogContext();
   console.log(jobCategories);
@@ -213,7 +217,7 @@ const PostJobForm = () => {
           gender: selectedGender?.name,
           qualification: selectQualification?.name,
           jobCategoryId: selectedCategory?.id,
-          companyId: companyId,
+          companyId: companyID,
           jobTypeId: selectedJobType?.id,
           jobIndustryId: selectedJobIndustry?.id,
           jobLevelId: selectedJobLevel?.id,
@@ -238,17 +242,17 @@ const PostJobForm = () => {
       router.push('/jobs');
     }
   };
-  useEffect(() => {
-    if (companies.length && companyId) {
-      companyName();
-    }
-  }, [companies, companyId]); // Will re-run when companies or companyId changes
+  // useEffect(() => {
+  //   if (companies.length && companyId) {
+  //     companyName();
+  //   }
+  // }, [companies, companyId]); // Will re-run when companies or companyId changes
 
-  const companyName = () => {
-    // Safely find the company matching the ID
-    const foundCompany = companies.find((company) => company.id === companyId);
-    setCompany(foundCompany);
-  };
+  // const companyName = () => {
+  //   // Safely find the company matching the ID
+  //   const foundCompany = companies.find((company) => company.id === companyId);
+  //   setCompany(foundCompany);
+  // };
   return (
     <form className="bg-white border-t">
       <div className=" max-w-7xl mx-auto">
@@ -256,25 +260,17 @@ const PostJobForm = () => {
           <div className="grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
             <div className="col-span-full  ">
               {/* add jobTitle */}
-              <div className="flex w-full justify-between items-center">
-                <div className=" p-2 ">
-                  <button type="button" onClick={() => router.back()}>
-                    <div className="flex items-center text-blue-gray-900 hover:text-blue-600 transition-colors">
-                      <ArrowLeftIcon className="h-5 w-5 mr-2" />
-                      Back
-                    </div>
-                  </button>
-                  <div className=" p-2 ">
-                    <h2 className="text-2xl font-semibold text-blue-gray-900">
-                      Post new job
-                    </h2>
-                  </div>
-                </div>
-                <div className=" p-2 mb-5 ">
+              <div className="flex w-full justify-end items-center">
+
+                {/* <div className=" p-2 mb-5 ">
                   <span>company</span>
                   <h2 className="text-2xl font-semibold text-blue-gray-900">
                     {company?.name}
                   </h2>
+                </div> */}
+                <div className="max-w-xl flex items-center gap-2">
+                  <Label labelName="Company Name" />
+                  <SelectCompany setCompanyId={setCompanyId}/>
                 </div>
               </div>
               <div className="col-span-full flex flex-col md:flex-row items-center justify-between ">

@@ -252,7 +252,7 @@ const toogleEdit = () => {
       </div> */}
       <div className="flex justify-start items-center  bg-gray-100">
         {isEdit && (
-          <Link href={'/dashboard/job.list/new'} className="px-4 py-2  text-gray-600">
+          <Link href={'/dashboard/job.create'} className="px-4 py-2  text-gray-600">
             {isOpen ? 'Close' : 'Add'} a job...
           </Link>
         )}

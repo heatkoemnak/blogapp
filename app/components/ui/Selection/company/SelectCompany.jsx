@@ -5,13 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import useSWR from 'swr';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
-export function SelectDistrict({
-  selectProvinceCity,
-  setSelectDistrict,
+export function SelectCompany({
+//   selectProvinceCity,
+//   setSelectDistrict,
+setCompanyId,
   showMoreThreshold = 5,
 }) {
   // const { districts } = useBlogContext();
-const { data, error, isLoading } = useSWR('/api/jobs/location', fetcher);
+const { data, error, isLoading } = useSWR('/api/companies', fetcher);
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -20,21 +21,22 @@ const { data, error, isLoading } = useSWR('/api/jobs/location', fetcher);
   const dropdownRef = useRef(null);
 
   // Memoized district list
-  const districtList = useMemo(() => {
-    return selectProvinceCity?.data?.districts || data?.districts || [];
-  }, [selectProvinceCity, data?.districts]);
+  const companylist = useMemo(() => {
+    return data || [];
+  }, [ data]);
 
   // Memoized list for "Show More" functionality
-  const displayedDistricts = useMemo(() => {
-    if (showAll || !districtList) return districtList;
-    return districtList?.slice(0, showMoreThreshold);
-  }, [showAll, districtList, showMoreThreshold]);
+  const displayedCompanies = useMemo(() => {
+    if (showAll || !companylist) return companylist;
+    return companylist?.slice(0, showMoreThreshold);
+  }, [showAll, companylist, showMoreThreshold]);
 
   // Handle district selection
-  const handleSelect = (district) => {
-    setSelectedOption(district.name);
+  const handleSelect = (company) => {
+    setSelectedOption(company.name);
+    setCompanyId(company?.id); // Assuming company has an _id field
     setIsOpen(false);
-    if (setSelectDistrict) setSelectDistrict(district);
+    // if (setSelectDistrict) setSelectDistrict(company);
   };
 
   // Toggle "Show More" functionality
@@ -58,16 +60,16 @@ const { data, error, isLoading } = useSWR('/api/jobs/location', fetcher);
     }
   }, []);
 
-  if (!districtList?.length) {
+  if (!companylist?.length) {
     return (
       <div className="w-full max-w-lg py-2 mx-auto text-center text-gray-500">
-        No districts available.
+        No company available.
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-lg py-2 mx-auto">
+    <div className="min-w-52 max-w-lg py-2 mx-auto">
       <div className="relative" ref={dropdownRef}>
         {/* Trigger Button */}
         <div
@@ -75,7 +77,7 @@ const { data, error, isLoading } = useSWR('/api/jobs/location', fetcher);
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <span className="text-base font-medium text-gray-700">
-            {selectedOption || 'Select a District'}
+            {selectedOption || 'Select a company'}
           </span>
           <svg
             className={`transform transition-transform duration-200 ${
@@ -102,39 +104,39 @@ const { data, error, isLoading } = useSWR('/api/jobs/location', fetcher);
               className="absolute top-full left-0 right-0 bg-white border border-gray-300 shadow-sm mt-2 z-10"
             >
               <div className="space-y-2 p-4 max-h-64 overflow-y-auto">
-                {displayedDistricts.map((district, index) => (
+                {displayedCompanies.map((company, index) => (
                   <div
-                    key={district.name}
+                    key={company.name}
                     className="flex items-center cursor-pointer"
-                    onClick={() => handleSelect(district)}
+                    onClick={() => handleSelect(company)}
                   >
                     <input
                       type="radio"
-                      name="district"
-                      value={district.name}
-                      checked={selectedOption === district.name}
-                      onChange={() => handleSelect(district)}
+                      name="company"
+                      value={company.name}
+                      checked={selectedOption === company.name}
+                      onChange={() => handleSelect(company)}
                       className="cursor-pointer w-4 h-4 accent-cyan-700"
                     />
                     <label
-                      htmlFor={district.name}
+                      htmlFor={company.name}
                       className="ml-2 text-base text-gray-800 cursor-pointer"
                     >
-                      {district.name}
+                      {company.name}
                     </label>
                   </div>
                 ))}
               </div>
 
               {/* Show More/Less */}
-              {districtList.length > showMoreThreshold && (
+              {companylist.length > showMoreThreshold && (
                 <div
                   className="text-sm text-cyan-800 cursor-pointer px-4 pb-2"
                   onClick={toggleShowAll}
                 >
                   {showAll
                     ? 'Show Less'
-                    : `Show More (${districtList.length - showMoreThreshold})`}
+                    : `Show More (${companylist.length - showMoreThreshold})`}
                 </div>
               )}
             </motion.div>

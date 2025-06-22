@@ -1,15 +1,18 @@
 'use client';
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useBlogContext } from '@/app/context/BlogProvider';
+// import { useBlogContext } from '@/app/context/BlogProvider';
+import useSWR from 'swr';
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
 export function SelectCountry({
   setSelectedCountry,
   showMoreThreshold = 5,
   name, // Default number of items before "Show More"
 }) {
-  const { countries } = useBlogContext();
-  console.log(countries);
+  // const { countries } = useBlogContext();
+  // console.log(countries);
+const { data, error, isLoading } = useSWR('/api/jobs/location', fetcher);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(name || '');
@@ -18,9 +21,9 @@ export function SelectCountry({
 
   // Memoized country list for "Show More" functionality
   const displayedCountries = useMemo(() => {
-    if (showAll || !countries) return countries;
-    return countries.slice(0, showMoreThreshold);
-  }, [showAll, countries, showMoreThreshold]);
+    if (showAll || !data?.countries) return data?.countries;
+    return data?.countries.slice(0, showMoreThreshold);
+  }, [showAll, data?.countries, showMoreThreshold]);
 
   // Handle option selection
   const handleSelect = (country) => {
@@ -115,7 +118,7 @@ export function SelectCountry({
                     </div>
                   ))}
                 </div>
-                {countries.length > showMoreThreshold && (
+                {data?.countries?.length > showMoreThreshold && (
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -126,7 +129,7 @@ export function SelectCountry({
                   >
                     {showAll
                       ? 'Show Less'
-                      : `Show More (${countries.length - showMoreThreshold})`}
+                      : `Show More (${data?.countries?.length - showMoreThreshold})`}
                   </motion.div>
                 )}
               </motion.div>

@@ -2,23 +2,26 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useBlogContext } from '@/app/context/BlogProvider';
+import useSWR from 'swr';
 
+const fetcher = (url) => fetch(url).then((res) => res.json());
 export function SelectCommune({
   selectDistrict,
   setSelectCommune,
   showMoreThreshold = 5, // Default number of items to show
 }) {
-  const { communes } = useBlogContext();
+  // const { communes } = useBlogContext();
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
   const [showAll, setShowAll] = useState(false);
   const dropdownRef = useRef(null);
+const { data, error, isLoading } = useSWR('/api/jobs/location', fetcher);
 
   // Memoized list of communes
   const communeList = useMemo(() => {
-    return selectDistrict?.communes || communes || [];
-  }, [selectDistrict, communes]);
+    return selectDistrict?.data?.communes || data?.communes || [];
+  }, [selectDistrict, data?.communes]);
 
   // Memoized list for the "Show More" functionality
   const displayedCommunes = useMemo(() => {
