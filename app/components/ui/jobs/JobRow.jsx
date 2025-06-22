@@ -14,7 +14,7 @@ import { MdOutlineBookmarkAdd, MdOutlineBookmarkAdded } from 'react-icons/md';
 import { BriefcaseIcon, CurrencyDollarIcon } from '@heroicons/react/20/solid';
 import { RiArrowRightUpBoxLine, RiCalendarCloseFill } from 'react-icons/ri';
 
-const JobRow = ({ job, appId, grid }) => {
+const JobRow = ({ job, grid }) => {
   const { data: session } = useSession();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const router = useRouter();

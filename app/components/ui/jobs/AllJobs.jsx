@@ -65,7 +65,7 @@ const AllJobs = ({ filterList, jobs }) => {
 
   const GridDisplay = () => (
     <div className={`grid ${isGrid ? 'grid-cols-2' : 'grid-cols-1'} gap-1 mt-2`}>
-      {hasResults ? jobList.slice((page - 1) * jobsPerPage, page * jobsPerPage).map((job, index) => <JobRow key={index} job={job} grid={isGrid} />)
+      {hasResults ? jobList.slice((page - 1) * jobsPerPage, page * jobsPerPage)?.map((job, index) => <JobRow key={index} job={job} grid={isGrid} />)
         :
         <div className="col-span-2 text-center text-gray-500 py-4">
             No jobs found matching your criteria.
@@ -73,7 +73,7 @@ const AllJobs = ({ filterList, jobs }) => {
       }
     </div>
   );
-  
+
     const handlePageChange = (page) => {
       setPage(page);
     };
