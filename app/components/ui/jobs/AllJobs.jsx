@@ -37,6 +37,7 @@ const AllJobs = ({ filterList, jobs }) => {
   const [query] = useDebounce(text, 500);
   const [isGrid, showGridSystem] = useState(false);
   const [page, setPage] = useState(1);
+  const jobListRef = useRef(null);
   const [filter, setFilter] = useState(false);
   const [jobsPerPage, setJobsPerPage] = useState(3);
   const [totalPages, setTotalPages] = useState(Math.ceil(jobs?.length / jobsPerPage) );
@@ -62,6 +63,11 @@ const AllJobs = ({ filterList, jobs }) => {
     const searchString = params.toString();
     router.push(`/jobs${searchString ? `?${searchString}` : ''}`);
   }, [query, router, sortBy]);
+useEffect(() => {
+  if (search && hasResults && jobListRef.current) {
+    jobListRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}, [search, hasResults]);
 
   const GridDisplay = () => (
     <div className={`grid ${isGrid ? 'grid-cols-2' : 'grid-cols-1'} gap-1 mt-2`}>
@@ -84,94 +90,93 @@ const AllJobs = ({ filterList, jobs }) => {
 
   return (
     <div>
-      <div className="grid grid-cols-4 border-2 border-gray-300 bg-white mt-4 justify-between items-center">
-        <div className="col-span-3 text-gray-700 font-semibold text-md">
-          <Search text={text} setText={setText} />
-        </div>
-        <div className="col-span-1 w-full flex items-center justify-center">
-          {isGrid ? (
-            <button
-              type="button"
-              onClick={toggleView}
-              className="ml-5 p-2 text-teal-700 hover:text-gray-500 sm:ml-7"
-            >
-              <MdViewList size={20} className="text-teal-500" />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={toggleView}
-              className="ml-5 p-2 sm:ml-7"
-            >
-              <BiGridHorizontal
-                size={25}
-                className="cursor-pointer text-gray-900 hover:text-gray-500"
-              />
-            </button>
-          )}
-          <Menu as="div" className="relative inline-block text-left border py-1 px-2 ml-2">
-            <div className="flex items-center">
-              <button onClick={() => setFilter(prev => !prev)} className="group flex items-center text-sm font-medium text-gray-900 hover:text-teal-900">
-                Sort
-                <ChevronDownIcon className="size-5 shrink-0 text-gray-900 group-hover:text-teal-500" />
-                <BiFilterAlt className="size-4 text-gray-600" />
-              </button>
-            </div>
+     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-white border border-gray-300 rounded-md px-4 py-3 mt-4 shadow-sm">
+  {/* Search Bar */}
+  <div className="w-full md:w-2/3">
+    <Search text={text} setText={setText} />
+  </div>
 
-            <div
-              className="absolute right-0 z-10 mt-2 w-52 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black/5 transition focus:outline-none"
+  {/* View Toggle + Sort Dropdown */}
+  <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+    {/* Grid/List Toggle */}
+    <button
+      type="button"
+      onClick={toggleView}
+      className="flex items-center gap-1 px-3 py-2 rounded-md border border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-800"
+    >
+      {isGrid ? (
+        <>
+          <MdViewList size={18} className="text-teal-500" />
+          <span className="text-sm">List View</span>
+        </>
+      ) : (
+        <>
+          <BiGridHorizontal size={18} className="text-gray-700" />
+          <span className="text-sm">Grid View</span>
+        </>
+      )}
+    </button>
+
+    {/* Sort Dropdown */}
+    <div className="relative inline-block text-left">
+  <button
+    onClick={() => setFilter((prev) => !prev)}
+    className="flex items-center gap-1 px-3 py-2 text-sm border border-gray-200 bg-gray-50 rounded-md hover:bg-gray-100 text-gray-800"
+  >
+    Sort
+    <ChevronDownIcon className="w-4 h-4" />
+    <BiFilterAlt className="w-4 h-4 text-gray-500" />
+  </button>
+
+  {filter && (
+    <div className="absolute right-0 z-20 mt-2 w-52 rounded-md bg-white shadow-lg ring-1 ring-black/10">
+      <ul className="py-1 list-none text-sm text-gray-700">
+        {sortOptions.map((option) => (
+          <li key={option.name}>
+            <Link
+              href={option.href}
+              className={`block px-4 py-2 hover:bg-gray-100 transition ${
+                option.current ? 'font-semibold text-teal-700' : 'text-gray-700'
+              }`}
             >
-              {filter && (
-              <div className="py-1">
-                {sortOptions.map((option) => (
-                  <MenuItem key={option.name}>
-                    <Link
-                      href={option.href}
-                      className={`block px-4 text-sm ${
-                        option.current
-                          ? 'font-medium text-gray-900'
-                          : 'text-gray-900'
-                      } data-[focus]:bg-gray-100 data-[focus]:outline-none`}
-                    >
-                      {option.name}
-                    </Link>
-                  </MenuItem>
-                ))}
-              </div>
-              )
-              }
-            </div>
-          </Menu>
-        </div>
-      </div>
+              {option.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>
+
+  </div>
+</div>
+
       <div className="border-gray-300">
         {search?.length > 0 && (
-          <div className="py-2 px-4 bg-gray-100 text-gray-700">
-            <p>
+          <div className="my-4 rounded-md border border-gray-200 bg-white shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 px-4 py-3">
               {hasResults ? (
-                <div className="flex justify-between py-2 px-4 bg-gray-100 text-gray-700 rounded-md mb-4">
-                  <span>
-                    Found {jobList.length} result(s) for{' '}
-                    <strong>{search}</strong>
+                <>
+                  <span className="text-gray-700 text-sm sm:text-base">
+                    🔍 Found <strong>{jobList.length}</strong> result{jobList.length > 1 && 's'} for <strong>{search}</strong>
                   </span>
                   <button
-                    type="button"
                     onClick={handleClear}
-                    className="flex items-center gap-1 font-semibold text-red-600 text-sm pt-5 px-2"
+                    className="flex items-center gap-1 text-sm font-medium text-red-600 hover:text-red-800 transition"
                   >
-                    <MdOutlineClearAll size={20} />
-                    <span>Clear</span>
+                    <MdOutlineClearAll size={18} />
+                    <span>Clear Search</span>
                   </button>
-                </div>
-              ) : (
-                <>
-                  No results found for <strong>{search}</strong>. Please try a
-                  different keyword.
                 </>
+              ) : (
+                <span className="text-gray-600 text-sm">
+                  ❌ No results found for <strong>{search}</strong>. Try a different keyword.
+                </span>
               )}
-            </p>
+            </div>
           </div>
         )}
+
         <GridDisplay />
         {hasResults && (
           <nav className="flex justify-between items-center mt-4">

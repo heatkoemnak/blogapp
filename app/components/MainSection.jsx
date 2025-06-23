@@ -28,7 +28,7 @@ const fetcher = async (url) => {
   return res.json();
 };
 
-const MainSection = () => {
+const MainSection = ({setIsSearch}) => {
   const searchParams = useSearchParams();
   const search = searchParams.get('search');
   const sortBy = searchParams.get('sort');
@@ -70,6 +70,10 @@ const MainSection = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       SearchHandler();
+      if (search) {
+        setIsSearch(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -107,14 +111,7 @@ const MainSection = () => {
         >
           <div className="lg:w-full h-fit col-span-2 bg-white px-5 mt-4 ">
             <div className="lg:w-full h-fit col-span-1 bg-white px-5 ">
-              <div className="flex justify-between items-center">
-                <div className="font-semibold text-blue-gray-900 text-md pt-5 px-2">
-                  Categories
-                </div>
-                <div className="font-semibold text-gray-600 text-sm pt-5 px-2">
-                  Clear
-                </div>
-              </div>
+
               <CategoriesLists />
               <JobTypeCheckbox />
               <JobLevelList />

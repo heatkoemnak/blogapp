@@ -7,8 +7,8 @@ const CategoriesLists = () => {
   const { jobCategories } = useBlogContext();
 
   return (
-    <aside className="w-full rounded-lg border-2 mt-4 p-4 max-w-md mx-auto">
-      <h2 className="font-bold text-2xl mb-4">Browse by Categories</h2>
+    <aside className="w-full rounded-lg border mt-4 p-4 max-w-md mx-auto">
+      <div className="font-semibold text-md mb-2">Browse by Categories</div>
       <ul className=" list-none">
         <li className="">
           <Link

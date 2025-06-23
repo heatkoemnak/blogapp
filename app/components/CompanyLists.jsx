@@ -16,7 +16,7 @@ const CompanyLists = ({ company }) => {
           <div className="h-10 w-10 rounded-full overflow-hidden">
             <Image src={company?.logoUrl} width={50} height={50} alt="" />
           </div>
-          <span className="text-lg font-semibold ml-3">{company?.name}</span>
+          <span className="text-md font-semibold ml-3">{company?.name}</span>
         </div>
         <button className="text-teal-700 border-cyan-800 hover:bg-cyan-800 hover:text-white border text-xs font-medium rounded-full py-1 px-2 transition transform duration-500">
           View

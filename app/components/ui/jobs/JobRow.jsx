@@ -13,6 +13,7 @@ import { AiOutlineLike } from 'react-icons/ai';
 import { MdOutlineBookmarkAdd, MdOutlineBookmarkAdded } from 'react-icons/md';
 import { BriefcaseIcon, CurrencyDollarIcon } from '@heroicons/react/20/solid';
 import { RiArrowRightUpBoxLine, RiCalendarCloseFill } from 'react-icons/ri';
+import { MdOutlinePublic } from 'react-icons/md';
 
 const JobRow = ({ job, grid }) => {
   const { data: session } = useSession();
@@ -67,7 +68,7 @@ const JobRow = ({ job, grid }) => {
     <>
       <div className="w-5xl card-bg-color py-6 px-6 rounded-none shadow-lg">
         <div className="flex items-center justify-between ">
-          <h2 className="text-2xl font-bold -mt-2">{job?.title}</h2>
+          <h2 className="text-xl font-medium -mt-2">{job?.title}</h2>
           <div className="flex items-center gap-2 -mt-5">
             <Link href={`/jobs/${job?.id}`}>
               <Image
@@ -97,7 +98,7 @@ const JobRow = ({ job, grid }) => {
             {!grid && (
               <div className="flex items-center text-blue-gray-600">
                 <CurrencyDollarIcon className="h-4 w-4 mr-1" />
-                <span>{job?.JobSalary?.label}</span>
+                <span className='text-sm'>{job?.JobSalary?.label}</span>
               </div>
             )}
             {!grid && (
@@ -106,11 +107,11 @@ const JobRow = ({ job, grid }) => {
                 {job?.JobType?.name}
               </div>
             )}
-            <button className="text-sm hover:text-teal-700">
+            <button className="text-sm text-gray-500 hover:text-teal-700">
               {job?.ProvinceCity?.name}
             </button>
-            <span>|</span>
-            <span className="text-sm text-gray-400">
+            <span className="flex items-center gap-1 text-sm text-gray-500">
+              <MdOutlinePublic className="h-4 w-4 inline-block mr-1" />
               {timeAgo(job?.createdAt)}
             </span>
           </div>
@@ -199,7 +200,7 @@ const JobRow = ({ job, grid }) => {
               ) : (
                 <Link
                 href={`jobs/${job?.id}?cpId=${job?.companyId}`}
-                className="px-1 py-0 bg-white border text-gray-600 hover:bg-teal-400 hover:text-white rounded-full ml-4"
+                className="px-2 py-0 bg-white border text-gray-600 hover:bg-teal-400 hover:text-white rounded-full ml-4"
                 >
                     Views
                   </Link>
