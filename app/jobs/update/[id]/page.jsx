@@ -272,26 +272,13 @@ const UpdateJob = () => {
   return (
     <form className="bg-white border-t">
 
-      <div className=" max-w-5xl mx-auto">
+      <div className=" max-w-7xl mx-auto">
         <div className="border-b p-5 border-gray-900/10 pb-12">
           <div className="grid grid-cols-1 gap-x-2 gap-y-3 sm:grid-cols-6">
             <div className="col-span-full  ">
               {/* add jobTitle */}
-              <div className="flex w-full justify-between items-center">
-                <div className=" p-2 ">
-                  <button type="button" onClick={() => router.back()}>
-                    <div className="flex items-center text-blue-gray-900 hover:text-blue-600 transition-colors">
-                      <ArrowLeftIcon className="h-5 w-5 mr-2" />
-                      Back
-                    </div>
-                  </button>
-                  <div className=" p-2 ">
-                    <h2 className="text-2xl font-semibold text-blue-gray-900">
-                      Post new job
-                    </h2>
-                  </div>
-                </div>
-                <div className=" p-2 mb-5 ">
+              <div className="flex w-full justify-end items-center">
+                <div className=" p-2 mb-1">
                   <span>Organization</span>
                   <h2 className="text-2xl font-semibold text-blue-gray-900">
                     {data?.Company?.name}

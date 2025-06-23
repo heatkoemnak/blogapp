@@ -38,6 +38,7 @@ export async function GET(req, { params }) {
 }
 export async function DELETE(req, { params }) {
   const { id } = params;
+  console.log(id);
   try {
     await prisma.job.delete({
       where: { id: id },

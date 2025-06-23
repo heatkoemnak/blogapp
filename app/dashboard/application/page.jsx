@@ -87,6 +87,24 @@ const Applications = () => {
   }
 }
 
+const getStatusLabel = (status) => {
+  switch (status) {
+    case 'public':
+      return 'Pending';
+    case 'reviewing':
+      return 'Reviewing';
+    case 'shortlisted':
+      return 'Shortlisted';
+    case 'accepted':
+      return 'Accepted';
+    case 'rejected':
+      return 'Rejected';
+    default:
+      return 'Unknown';
+  }
+};
+
+
 
   const groupedApplications = groupByPosition
     ? data?.reduce((acc, current) => {
@@ -107,15 +125,6 @@ const Applications = () => {
       <HeaderSection title="Applications" />
       <div className="flex items-center mt-4 px-4 justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4">
         <div className="relative flex items-center gap-2">
-          {/* <button
-            id="dropdownActionButton"
-            onClick={toggleDropdown}
-            className="flex gap-1 items-center text-white bg-teal-400 border border-gray-300 focus:outline-none hover:bg-teal-500 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-            type="button"
-          >
-            Edit
-            <LiaEditSolid />
-          </button> */}
           <button
             id="dropdownActionButton"
             onClick={toggleDropdown}
@@ -253,8 +262,11 @@ const Applications = () => {
                 />
               </div>
             </th>
-            <th scope="col" className="px-6 py-3">
-              Name
+            <th scope="col" className="px-6 py-3 items-center">
+              {
+                session?.user?.role === 'employer' ?
+                  'Applicant': 'Name'
+              }
             </th>
             <th scope="col" className="px-6 py-3">
               Email
@@ -271,21 +283,13 @@ const Applications = () => {
             <th scope="col" className="px-6 py-3">
               Resume
             </th>
-            {
-              session?.user?.role === 'employer' && (
-                <>
-                <th scope="col" className="px-6 py-3">
-                  View
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Status
-                </th>
-                </>
-              )
-            }
-            {/* <th scope="col" className="px-6 py-3">
-              Action
-            </th> */}
+            <th scope="col" className="px-6 py-3">
+              View
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Status
+            </th>
+
           </tr>
         </thead>
         <tbody>
@@ -308,23 +312,41 @@ const Applications = () => {
                   key={application.id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
-                  <td className="w-4 p-4">
-                    <div className="flex items-center">
-                      <input
-                        type="checkbox"
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                        checked={selected.includes(application.id)}
-                        onChange={() => handleToggle(application.id)}
-                        aria-label={`Select ${application.name}`}
-                      />
-                      <label
-                        htmlFor="checkbox-table-search-1"
-                        className="sr-only"
+                  <td className="px-6 py-2">
+                    {session?.user?.role === 'employer' ? (
+                      <select
+                        value={application.status}
+                        onChange={(e) => handleStatusChange(application.id, e.target.value)}
+                        disabled={loadingId === application.id}
+                        className="border rounded-md text-sm px-2 py-1 text-gray-700 dark:text-white dark:bg-gray-700 dark:border-gray-600"
                       >
-                        checkbox
-                      </label>
-                    </div>
+                        <option value="public" className='text-blue-600'>Pending</option>
+                        <option value="reviewing" className='text-yellow-600'>Reviewing</option>
+                        <option value="shortlisted" className='text-green-600'>Shortlisted</option>
+                        <option value="accepted" className='text-green-700 font-semibold'>Accepted</option>
+                        <option value="rejected" className='text-red-600'>Rejected</option>
+                      </select>
+                    ) :''
+                    // (
+                    //   <span
+                    //     className={
+                    //       application.status === 'public'
+                    //         ? 'text-blue-600'
+                    //         : application.status === 'reviewing'
+                    //         ? 'text-yellow-600'
+                    //         : application.status === 'shortlisted'
+                    //         ? 'text-green-600'
+                    //         : application.status === 'accepted'
+                    //         ? 'text-green-700 font-semibold'
+                    //         : 'text-red-600'
+                    //     }
+                    //   >
+                    //     {getStatusLabel(application.status)}
+                    //   </span>
+                    // )
+                    }
                   </td>
+
                   <th
                     scope="row"
                     className="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -348,9 +370,7 @@ const Applications = () => {
                       Resume
                     </Link>
                   </td>
-                  {
-                    session?.user?.role === 'employer' && (
-                      <>
+
                       <td className="px-6 py-4">
                         <Link
                           href={`/dashboard/application/${application.id}`}
@@ -360,44 +380,42 @@ const Applications = () => {
                         </Link>
                       </td>
                     <td className="px-6 py-4">
-                      <button
-                        onClick={() => {
-                          if (application.status === 'public') {
-                            handleStatusChange(application?.id, 'reviewing');
-                          } else if (application.status === 'reviewing') {
-                            handleStatusChange(application?.id, 'shortlisted');
-                          } else if (application.status === 'shortlisted') {
-                            handleStatusChange(application?.id, 'accepted');
-                          } else if (application.status === 'accepted') {
-                            handleStatusChange(application?.id, 'rejected');
-                          }
-
-                        }}
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                      >
-                        {loadingId === application.id ? (
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
+                      {session?.user?.role === 'employer' ? (
+                        <button
+                          onClick={() => {
+                            if (application.status === 'public') {
+                              handleStatusChange(application?.id, 'reviewing');
+                            } else if (application.status === 'reviewing') {
+                              handleStatusChange(application?.id, 'shortlisted');
+                            } else if (application.status === 'shortlisted') {
+                              handleStatusChange(application?.id, 'accepted');
+                            } else if (application.status === 'accepted') {
+                              handleStatusChange(application?.id, 'rejected');
+                            }
+                          }}
+                          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                        >
+                          {loadingId === application.id ? (
+                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0..." />
+                            </svg>
+                          ) : (
+                            getStatusLabel(application.status)
+                          )}
+                        </button>
                       ) : (
-                        application?.status === 'public' ? (
-                          <span className="text-blue-600">Pending</span>
-                        ) : application?.status === 'reviewing' ? (
-                          <span className="text-yellow-600">Reviewing</span>
-                        ) : application?.status === 'shortlisted' ? (
-                          <span className="text-green-600">Shortlisted</span>
-                        ) : application?.status === 'accepted' ? (
-                          <span className="text-green-600">Accepted</span>
-                        ) : (
-                          <span className="text-red-600">Rejected</span>
-                        )
+                        <span className={
+                          application.status === 'public' ? 'text-blue-600' :
+                          application.status === 'reviewing' ? 'text-yellow-600' :
+                          application.status === 'shortlisted' ? 'text-green-600' :
+                          application.status === 'accepted' ? 'text-green-600' :
+                          'text-red-600'
+                        }>
+                          {getStatusLabel(application.status)}
+                        </span>
                       )}
-                      </button>
                     </td>
-                    </>
-                    )
-                  }
                 </tr>
               ))}
             </Fragment>
